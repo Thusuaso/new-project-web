@@ -687,7 +687,11 @@
                 {{ formatTL(toplam_try_profit) }}
               </template>
             </Column>
-
+            <Column field="kar_zarar_tl_yuzdesi" header="Kar Zarar TL(%)">
+              <template #body="slotProps">
+                % {{ slotProps.data.kar_zarar_tl_yuzdesi }}
+              </template>
+            </Column>
             <Column
               field="dosya_kapanma_date"
               header="Kapanma T."
@@ -1305,6 +1309,11 @@
                 <div>
                   {{ formatTL(toplam_try_profit) }}
                 </div>
+              </template>
+            </Column>
+            <Column field="kar_zarar_tl_yuzdesi" header="Kar Zarar TL(%)">
+              <template #body="slotProps">
+                % {{ slotProps.data.kar_zarar_tl_yuzdesi }}
               </template>
             </Column>
 
