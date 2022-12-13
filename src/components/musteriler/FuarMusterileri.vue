@@ -225,7 +225,6 @@
       </div>
       <Button
         class="p-button-info"
-        :disabled="button_disable"
         @click="save"
         label="Kaydet"
       ></Button>
@@ -275,7 +274,6 @@ export default {
       musteri_ulke_list: [],
       fuarMusteriAyrinti: [],
       userId: null,
-      button_disable: true,
       select_fuar_musteri:[]
     };
   },
@@ -306,7 +304,6 @@ export default {
       this.newFuarMusteri.linkArka = `https://mekmar-image.fra1.digitaloceanspaces.com/fuar/${
         this.newFuarMusteri.customer + " " + event.name
       }`;
-      this.button_disable = false;
     },
     deleteMust(event) {
       service.setNewFuarMusterileSil(event).then((data) => {
