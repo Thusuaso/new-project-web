@@ -128,6 +128,9 @@ const MusteriIslemService = {
       .get("listeler/getBgpMusterilerAyrintiList/" + id)
       .then((res) => res.data);
   },
+  setCustomersCopyTo(teklifMusteriAyrinti) {
+    return axios.post('listeler/teklifmusteriler/customersCopyto', teklifMusteriAyrinti).then(res => res.data);
+  }
 };
 
 export default MusteriIslemService;

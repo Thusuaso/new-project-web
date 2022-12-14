@@ -36,7 +36,7 @@
       header="Teklif Müşteriler Ayrıntı"
       :modal="true"
       :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
-      :style="{ width: '50vw' }"
+      :style="{ width: '55vw' }"
     >
       <br />
       <div class="columns">
@@ -122,6 +122,9 @@
             label="Sil"
           ></Button>
         </div>
+        <div class="column is-3">
+          <Button class="p-button-primary" @click="copyToCustomers" label="Müşterilere Kopyala" />
+        </div> 
       </div>
     </Dialog>
     <Dialog
@@ -260,6 +263,24 @@ export default {
     this.userId = this.$store.getters.__getUserId;
   },
   methods: {
+    copyToCustomers() {
+      service.setCustomersCopyTo(this.teklifMusteriAyrinti).then(data => {
+        if (data) {
+          this.$toast.add({severity:'success',summary:'Kopyalama',detail:'Müşterilere Başarıyla Kopayalandı',life:3000})
+        }
+      })
+    },
+    resetData() {
+      this.newTeklifMusteri= {
+        customer: "",
+        company: "",
+        email: "",
+        phone: "",
+        country: 0,
+        adress: "",
+        user: 0,
+      }
+    },
     isNew() {
       this.teklifMusteriFormNew = true;
       this.select_ulke = "";
@@ -314,7 +335,7 @@ export default {
             life: 3000,
             
           });
-
+          this.resetData()
           if (this.userId == 10 || this.userId == 47 || this.userId == 13) {
             this.$store.dispatch("teklif_musteri_load_act", data.result)
           } else {

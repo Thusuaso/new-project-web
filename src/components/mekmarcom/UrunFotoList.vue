@@ -1,5 +1,6 @@
 <template>
 <section>
+    {{ urunid }}
     <div class="columns">
         <div class="column is-12">
             <PickList 

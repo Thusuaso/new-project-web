@@ -269,6 +269,18 @@ export default {
     });
   },
   methods: {
+    resetData() {
+      this.newBgpMusteri= {
+      customer: "",
+      company: "",
+      email: "",
+      phone: "",
+      country: 0,
+      user: 0,
+      adress: "",
+      orderer: "",
+      }
+    },
     deleteMust(event) {
       service.setNewBgpMusterileSil(event).then((data) => {
         if (data.status) {
@@ -329,6 +341,7 @@ export default {
             detail: "Kayıt İşlemi Başarılı",
             life: 3000,
           });
+          this.resetData()
           if (this.userId == 10 || this.userId == 47 || this.userId == 13) {
             this.$store.dispatch("bgp_musteri_load_act", data.liste);
           } else {

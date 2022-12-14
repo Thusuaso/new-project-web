@@ -312,14 +312,23 @@
     <TabPanel header="Fotolar" >
       
       <br />
-      <Carousel v-if="fotolist.length>0" :value="fotolist" :numVisible="1" :numScroll="1" orientation="vertical" verticalViewPortHeight="330px"
-        :responsiveOptions="responsiveOptions">
-        <template #item="slotProps">
-           
-            <img width="350" height="400" :src="slotProps.data.nocdn" /> 
 
-        </template>
-      </Carousel>
+      <div class="container" style="width:100%;">
+        <div class="containerRestriction" style="text-align:center;margin-left:80px;">
+          <Galleria :value="fotolist" :responsiveOptions="responsiveOptions" :numVisible="5" containerStyle="max-width: 640px"
+            :circular="true" :autoPlay="true" :transitionInterval="2000" v-if="fotolist.length>0">
+            <template #item="slotProps">
+              <img :src="slotProps.item.nocdn" style="width: 100%;height:350px; display: block;" />
+            </template>
+            <template #thumbnail="slotProps">
+              <img :src="slotProps.item.nocdn" style="display: block;" />
+            </template>
+          </Galleria>
+        </div>
+        
+      </div>
+      
+      <br/>
       <div class="columns">
         <div class="column">
           <FileUpload mode="basic" @select="fotoGonder($event)" v-model="file" :maxFileSize="5000000" :multiple="true"  />
@@ -356,12 +365,12 @@
       </div>
     </TabPanel>
   </TabView>
-
-        <div class="columns">
-          <div class="column">
+        <br/>
+        <div class="columns is-centered">
+          <div class="column is-2">
             <Button label="Kaydet" @click="urunIslem" class="p-button-success" />
           </div>
-          <div class="column">
+          <div class="column is-2">
             <Button label="Sil" @click="urunSil" class="p-button-danger" />
           </div>
         </div>
@@ -369,7 +378,7 @@
 <script>
 import mekmarService from "../../service/MekmarService";
 import { mapGetters } from "vuex";
-// import UrunFotoList from "../../components/mekmarcom/UrunFotoList";
+import UrunFotoList from "../../components/mekmarcom/UrunFotoList";
 import spaceService from "../../service/SpaceService";
 import digitalOceanService from "../../service/DigitalOceanService";
 import OnerilenUrun from "../../components/mekmarcom/OnerilenUrun";
@@ -377,7 +386,7 @@ import service from "../../service/MekmarPanelService";
 
 export default {
   components: {
-    // UrunFotoList,
+    UrunFotoList,
     OnerilenUrun,
   },
   props: ["yeniurun", "kategoriList"],

@@ -301,6 +301,20 @@ export default {
     this.userId = this.$store.getters.__getUserId;
   },
   methods: {
+    resetData() {
+      this.newFuarMusteri= {
+        customer: "",
+        company: "",
+        email: "",
+        phone: "",
+        country: 0,
+        user: 0,
+        adress: "",
+        orderer: "",
+        linkArka: "",
+        linkOn: ""
+      }
+    },
     fuarDosyaGonder(event) {
       if (this.newFuarMusteri != "") {
         digitalOcean.fotoGonderFuar(event, this.newFuarMusteri.customer);
@@ -395,6 +409,7 @@ export default {
             life: 3000,
           });
           this.$store.dispatch("fuar_musteri_load_act", data.liste);
+          this.resetData()
         } else {
           this.$toast.add({
             severity: "error",

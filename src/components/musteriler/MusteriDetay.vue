@@ -1,5 +1,5 @@
 <template>
-  <section>
+    <br/>
     <div class="columns">
       <div class="column is-9">
         <div class="columns">
@@ -273,7 +273,6 @@
         </div>
       </section>
     </Dialog>
-  </section>
 </template>
 <script>
 import { mapGetters } from "vuex";

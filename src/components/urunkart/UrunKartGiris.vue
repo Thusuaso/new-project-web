@@ -41,9 +41,17 @@
             <label for="urun">Ürün Adı</label>
           </span>
         </div>
+        <div class="column">
+          <span class="p-float-label">
+            <AutoComplete id="yuzey" v-model="yuzeyIslem" :suggestions="filterYuzeyIslemList" field="yuzeyIslemAdi"
+              :dropdown="true" @complete="aramaYuzeyIslem($event)" @item-select="yuzeyIslemDegisim" @input="isYuzeyBosluk"
+              :class="{ 'p-invalid': v$.yuzeyIslem.$invalid && submitted }" />
+            <label for="yuzey">Yüzey İşlem</label>
+          </span>
+        </div>
       </div>
       <div class="columns">
-        <div class="column is-2">
+        <div class="column">
           <span class="p-float-label">
             <AutoComplete
               id="en"
@@ -58,7 +66,7 @@
             <label for="en">En</label>
           </span>
         </div>
-        <div class="column is-2">
+        <div class="column">
           <span class="p-float-label">
             <AutoComplete
               id="boy"
@@ -73,7 +81,7 @@
             <label for="boy">Boy</label>
           </span>
         </div>
-        <div class="column is-2">
+        <div class="column">
           <span class="p-float-label">
             <AutoComplete
               id="kenar"
@@ -90,22 +98,7 @@
             <label for="kenar">Kenar</label>
           </span>
         </div>
-        <div class="column is-6">
-          <span class="p-float-label">
-            <AutoComplete
-              id="yuzey"
-              v-model="yuzeyIslem"
-              :suggestions="filterYuzeyIslemList"
-              field="yuzeyIslemAdi"
-              :dropdown="true"
-              @complete="aramaYuzeyIslem($event)"
-              @item-select="yuzeyIslemDegisim"
-              @input="isYuzeyBosluk"
-              :class="{ 'p-invalid': v$.yuzeyIslem.$invalid && submitted }"
-            />
-            <label for="yuzey">Yüzey İşlem</label>
-          </span>
-        </div>
+
       </div>
       <div class="columns">
         <div class="column">
