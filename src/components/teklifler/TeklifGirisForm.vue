@@ -162,7 +162,7 @@
         <template #content>
           <TabView style="margin-top: -10px">
             <TabPanel header="Teklif Açıklama">
-              <Textarea v-model="teklif.aciklama" rows="7" cols="46" />
+              <Textarea v-model="teklif.aciklama" rows="5" cols="46" />
             </TabPanel>
             <TabPanel header="Hatırlatma Belge">
               <div class="columns">
@@ -283,23 +283,33 @@
       <Card>
         <template #content>
           <div class="columns">
-            <div class="column" style="margin-top: -10px">
+            <div class="column">
               <span class="p-float-label">
-                <InputText id="sirket" type="text" v-model="teklif.company" :disabled="true" />
+                <InputText id="sirket" type="text" v-model="teklif.company" style="width:450px;"/>
                 <label for="sirket">Şirket</label>
               </span>
             </div>
             <div class="column">
               <span class="p-float-label">
-                <InputText type="email" id="email" v-model="teklif.email" :disabled="true" />
+                <InputText type="email" id="email" v-model="teklif.email" style="width:450px;" />
                 <label for="email">Email</label>
               </span>
             </div>
             <div class="column">
               <span class="p-float-label">
-                <InputText id="phone" v-model="teklif.phone" :disabled="true" />
+                <InputText id="phone" v-model="teklif.phone" style="width:450px;" />
                 <label for="phone">Telefon</label>
               </span>
+            </div>
+            
+          </div>
+          <br/>
+          <div class="columns">
+            <div class="column">
+                <span class="p-float-label">
+                  <Textarea id="adress" v-model="teklif.adress" row="8" cols="57" />
+                  <label for="adress">Adres</label>
+                </span>
             </div>
           </div>
         </template>
@@ -1571,7 +1581,13 @@ export default {
     teklifGuncelleme() {
       this.dis_teklifkaydet = true;
       this.urunLoading = true;
+      this.musteri.company = this.teklif.company
+      this.musteri.email = this.teklif.email
+      this.musteri.phone = this.teklif.phone
+      this.musteri.adress = this.teklif.adress
+      this.guncellenenMusteri.push({ ...this.musteri });
       if (this.kayit_kontrol()) {
+        
         const veri = {
           teklif: this.teklif,
           eklenenUrunler: this.degisim_yeni_urun,
@@ -1608,24 +1624,26 @@ export default {
           }
 
           this.urunLoading = false;
+          this.emitter.emit('teklif_kaydet',true)
         });
       }
     },
     teklifSilmeIslemi() {
       this.$store.dispatch("teklif_form_load_act", false);
 
-      // teklifService.teklifSilme(this.teklif.id).then((data) => {
-      //   if (data.status) {
-      //     this.dis_teklifgoster = false;
-      //     this.$toast.add({
-      //       severity: "success",
-      //       summary: "Bilgi Ekranı",
-      //       detail: "Teklif Bilgileri Silindi.",
-      //       life: 1000,
-      //     });
-      //     socket.emit("teklif_sil_event");
-      //   }
-      // });
+      teklifService.teklifSilme(this.teklif.id).then((data) => {
+        if (data.status) {
+          this.dis_teklifgoster = false;
+          this.$toast.add({
+            severity: "success",
+            summary: "Bilgi Ekranı",
+            detail: "Teklif Bilgileri Silindi.",
+            life: 1000,
+          });
+          socket.emit("teklif_sil_event");
+          this.emitter.emit('teklif_yenileme', true)
+        }
+      });
     },
     yeniKayitBaslangicIslemler() {
       this.dis_takipEt = true;
@@ -1787,9 +1805,7 @@ export default {
     }
   },
   mounted() {
-    this.emitter.on('isnew',(data)=>{
-      console.log("isnew",data)
-    })
+
   }
 };
 </script>

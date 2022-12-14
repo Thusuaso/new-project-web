@@ -20,10 +20,10 @@
               :loading="teklifLoading"
               selectionMode="single"
               v-model:selection="selectTeklif"
-              dataKey="id"
               :scrollable="true"
               scrollHeight="400px"
-              :filters="filters"
+              v-model:filters="filters"
+              filterDisplay="row"
               @filter="teklifFilterEvent($event)"
               @row-select="teklifSec"
             >
@@ -49,15 +49,21 @@
                 header="Teklif No"
                 headerStyle="width:7%;"
                 bodyStyle="text-align:center;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   {{ slotProps.data.sira }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
                 </template>
               </Column>
               <Column
                 field="musteriAdi"
                 header="Müşteri"
                 headerStyle="width:12%;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   <div
@@ -68,6 +74,10 @@
                   >
                     {{ slotProps.data.musteriAdi }}
                   </div>
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
                 </template>
 
                 <template #footer>
@@ -118,10 +128,10 @@
               :loading="teklifLoading"
               selectionMode="single"
               v-model:selection="selectTeklifBlist"
-              dataKey="id"
               :scrollable="true"
               scrollHeight="400px"
-              :filters="filtersBlist"
+              v-model:filters="filtersBlist"
+              filterDisplay="row"
               @filter="teklifBlistFilterEvent($event)"
               @row-select="teklifSecBlist"
             >
@@ -147,15 +157,21 @@
                 header="Teklif No"
                 headerStyle="width:8%;"
                 bodyStyle="text-align:center;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   {{ slotProps.data.sira }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
                 </template>
               </Column>
               <Column
                 field="musteriAdi"
                 header="Müşteri"
                 headerStyle="width:12%;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   <div
@@ -166,6 +182,10 @@
                   >
                     {{ slotProps.data.musteriAdi }}
                   </div>
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
                 </template>
 
                 <template #footer>
@@ -212,7 +232,7 @@
 import teklifService from "../../service/TeklifService";
 import socket from "../../service/SocketService";
 import TeklifGirisForm from "../../components/teklifler/TeklifGirisForm";
-
+import { FilterMatchMode } from 'primevue/api'
 export default {
   components: {
     teklifGirisForm: TeklifGirisForm,
@@ -230,8 +250,16 @@ export default {
       teklifFormvisible: false,
       teklifFormBaslik: "",
       teklifId: 0,
-      filters: {},
-      filtersBlist: {},
+      filters: {
+        'sira': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'musteriAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+
+
+      },
+      filtersBlist: {
+        'sira': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'musteriAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+      },
       grafikData: null,
       oncelik_grafikData: null,
       datakey: null,
@@ -240,7 +268,7 @@ export default {
   },
   created() {
     this.baslangicListeYukle();
-    let username = this.$store.getters.getUser;
+    let username = this.$store.getters.__getUsername;
 
     socket.siparis.on("teklif_sil_emit", () => {
       this.baslangicListeYukle();
@@ -319,10 +347,11 @@ export default {
       }
     },
     teklifFilterEvent(event) {
-      this.toplam_teklif_sayisi = event.filterValue.length;
+      console.log("teklifFilterEvent",event)
+      this.toplam_teklif_sayisi = event.filteredValue.length;
     },
     teklifBlistFilterEvent(event) {
-      this.toplam_teklif_sayisi_blist = event.filterValue.length;
+      this.toplam_teklif_sayisi_blist = event.filteredValue.length;
     },
     grafikListHepsiYukle() {
       teklifService.teklifListeGrafikHepsi().then((data) => {
@@ -341,6 +370,20 @@ export default {
       });
     },
   },
+  mounted() {
+    this.emitter.on('teklif_yenileme', data => {
+      if (data) {
+        this.baslangicListeYukle()
+      }
+    })
+  }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.teklif-goruldu{
+  background-color:transparent;
+}
+.teklif-gorulmedi {
+  background-color:yellow;
+}
+</style>

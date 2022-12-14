@@ -335,19 +335,18 @@
         <Column
           field="siraNo"
           header="S"
-          headerStyle="width:60%;"
           bodyStyle="text-align:left"
         >
           <template #body="slotProps">
             {{ slotProps.data.siraNo }}
           </template>
         </Column>
-        <Column field="tedarikciAdi" header="Kimden" headerStyle="width:90%;">
+        <Column field="tedarikciAdi" header="Kimden">
           <template #body="slotProps">
             {{ slotProps.data.tedarikciAdi }}
           </template>
         </Column>
-        <Column field="iscilik" header="İşçilik" headerStyle="width:70%;">
+        <Column field="iscilik" header="İşçilik">
           <template #body="slotProps">
             {{ slotProps.data.iscilik }}
           </template>
@@ -1523,6 +1522,8 @@ export default {
     this.urunService.getUrunBirimList().then((data) => {
       this.urunBirimList = data;
     });
+
+
   },
 
   mounted() {
@@ -1547,6 +1548,10 @@ export default {
         this.emitter.emit("urunKartAlanTemizleme", true);
       }
     },
+    siparisUrunler(){
+      this.dataSatirTopla(this.siparisUrunler);
+
+    }
   },
 };
 </script>

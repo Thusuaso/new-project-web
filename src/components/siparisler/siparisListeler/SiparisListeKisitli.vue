@@ -20,7 +20,17 @@
         @filter="siparisFilterDegisim"
         :paginator="true"
          :rows="15"
+         :globalFilterFields="['musteriAdi', 'siparisNo', 'urunAdi', 'en', 'boy', 'kenar','tedarikciAdi']"
       >
+      <template #header>
+        <div class="flex justify-content-between">
+          <Button type="button" icon="pi pi-filter-slash" label="Clear" class="p-button-outlined" @click="clearFilter1()" />
+          <span class="p-input-icon-left">
+            <i class="pi pi-search" />
+            <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+          </span>
+        </div>
+      </template>
         <Column field="sira" header="S">
           <template #body="slotProps">
             <span class="p-column-title">S</span>
@@ -366,6 +376,7 @@ export default {
         boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         tedarikciAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS }
       },
       selectedSiparis: null,
       dtSiparisler: null,

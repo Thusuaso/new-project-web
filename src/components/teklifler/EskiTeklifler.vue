@@ -8,6 +8,9 @@
           filterDisplay="menu"
           :paginator="true"
           :rows="10"
+          :resizableColumns="true" 
+          columnResizeMode="expand" 
+          showGridlines
         >
           <Column field="tarih" header="Tarih" :sortable="true">
             <template #body="slotProps">

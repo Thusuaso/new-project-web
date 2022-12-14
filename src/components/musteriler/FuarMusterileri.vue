@@ -4,7 +4,6 @@
     <DataTable
       v-model:value="fuarMusteri"
       v-if="fuarMusteri.length > 0"
-      responsiveLayout="scroll"
       v-model:filters="filters"
       filterDisplay="row"
       selectionMode="single"
@@ -12,6 +11,9 @@
       @row-select="fuar_musteri_secim_event($event)"
       :scrollable="true"
       scrollHeight="400px"
+      :resizableColumns="true" 
+      columnResizeMode="expand" 
+      showGridlines
     >
       <Column field="customer" header="Müşteri Adı">
         <template #filter="{ filterModel, filterCallback }">
@@ -114,7 +116,14 @@
             <label for="satisci">Satışçı</label>
           </span>
         </div>
+        <div class="column">
+          <fileUpload v-if="fuarMusteriAyrinti.linkOn != null" :baslik="'Ön Yüz'" @sunucuDosyaYolla="fuarDosyaGonder($event)">
+          </fileUpload>
+          <fileUpload v-if="fuarMusteriAyrinti.linkArka != null" :baslik="'Arka Yüz'"
+            @sunucuDosyaYolla="fuarDosyaGonder2($event)"></fileUpload>
+        </div>
       </div>
+      
       <div class="columns">
         <div class="column is-6">
           <img id="onYuz" :src="fuarMusteriAyrinti.linkOn" />
@@ -294,16 +303,40 @@ export default {
   },
   methods: {
     fuarDosyaGonder(event) {
-      digitalOcean.fotoGonderFuar(event, this.newFuarMusteri.customer);
+      if (this.newFuarMusteri != "") {
+        digitalOcean.fotoGonderFuar(event, this.newFuarMusteri.customer);
+
+      } else {
+        digitalOcean.fotoGonderFuar(event, this.fuarMusteriAyrinti.customer);
+
+      }
+      
       this.newFuarMusteri.linkOn = `https://mekmar-image.fra1.digitaloceanspaces.com/fuar/${
         this.newFuarMusteri.customer + " " + event.name
-      }`;
+
+        }`;
+      this.fuarMusteriAyrinti.linkOn = `https://mekmar-image.fra1.digitaloceanspaces.com/fuar/${this.fuarMusteriAyrinti.customer + " " + event.name
+
+        }`;
+      alert('Başarıyla Yüklendi')
+
     },
     fuarDosyaGonder2(event) {
+      if (this.newFuarMusteri != "") {
+        digitalOcean.fotoGonderFuar(event, this.newFuarMusteri.customer);
+
+      } else {
+        digitalOcean.fotoGonderFuar(event, this.fuarMusteriAyrinti.customer);
+
+      }
       digitalOcean.fotoGonderFuar(event, this.newFuarMusteri.customer);
       this.newFuarMusteri.linkArka = `https://mekmar-image.fra1.digitaloceanspaces.com/fuar/${
         this.newFuarMusteri.customer + " " + event.name
-      }`;
+        }`;
+      this.fuarMusteriAyrinti.linkArka = `https://mekmar-image.fra1.digitaloceanspaces.com/fuar/${this.fuarMusteriAyrinti.customer + " " + event.name
+
+        }`;
+        alert('Başarıyla Yüklendi')
     },
     deleteMust(event) {
       service.setNewFuarMusterileSil(event).then((data) => {

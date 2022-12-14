@@ -14,18 +14,21 @@
           :scrollable="true"
           scrollHeight="500px"
           v-model:filters="filters"
-          filterDisplay="menu"
+          filterDisplay="row"
           :paginator="true"
           :rows="10"
           selectionMode="single"
           v-model:selection="selectTeklif"
           @row-select="teklifSec($event)"
+          :resizableColumns="true" 
+          columnResizeMode="expand" 
+          showGridlines
         >
           <Column
             field="teklifno"
             header="No"
-            headerStyle="width:80px;"
-            bodyStyle="text-align:center;"
+            bodyStyle="text-align:left;"
+            :showFilterMenu="false"
           >
             <template #body="slotProps">
               {{ slotProps.data.teklifno }}
@@ -38,10 +41,11 @@
                 class="p-column-filter"
                 placeholder="Search by Offer No"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
-          <Column field="tarih" header="Tarih" :sortable="true">
+          <Column field="tarih" header="Tarih" :sortable="true" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.tarih }}
             </template>
@@ -53,10 +57,11 @@
                 class="p-column-filter"
                 placeholder="Search by Date"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
-          <Column field="kullaniciadi" header="Kimden">
+          <Column field="kullaniciadi" header="Kimden" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.kullaniciadi }}
             </template>
@@ -68,10 +73,11 @@
                 class="p-column-filter"
                 placeholder="Search by Username"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
-          <Column field="musteriadi" header="Müşteri" :sortable="true">
+          <Column field="musteriadi" header="Müşteri" :sortable="true" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.musteriadi }}
             </template>
@@ -83,10 +89,11 @@
                 class="p-column-filter"
                 placeholder="Search by Customer"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
-          <Column field="ulkeadi" header="Ülke" :sortable="true">
+          <Column field="ulkeadi" header="Ülke" :sortable="true" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.ulkeadi }}
             </template>
@@ -98,10 +105,11 @@
                 class="p-column-filter"
                 placeholder="Search by Country"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
-          <Column field="kategoriadi" header="Kategori">
+          <Column field="kategoriadi" header="Kategori" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.kategoriadi }}
             </template>
@@ -113,10 +121,11 @@
                 class="p-column-filter"
                 placeholder="Search by Category"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
-          <Column field="urunadi" header="Ürün" :sortable="true">
+          <Column field="urunadi" header="Ürün" :sortable="true" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.urunadi }}
             </template>
@@ -128,14 +137,15 @@
                 class="p-column-filter"
                 placeholder="Search by Product"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
           <Column
             field="kalinlik"
             header="K"
-            headerStyle="width:70px;"
             bodyStyle="text-align:center;"
+            :showFilterMenu="false"
           >
             <template #body="slotProps">
               {{ slotProps.data.kalinlik }}
@@ -148,10 +158,11 @@
                 class="p-column-filter"
                 placeholder="Search by Edge"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
-          <Column field="enboy" header="E">
+          <Column field="enboy" header="E" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.enboy }}
             </template>
@@ -163,10 +174,11 @@
                 class="p-column-filter"
                 placeholder="Search by Dimension"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
-          <Column field="islemadi" header="Yüzey İşlem">
+          <Column field="islemadi" header="Yüzey İşlem" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.islemadi }}
             </template>
@@ -178,13 +190,13 @@
                 class="p-column-filter"
                 placeholder="Search by Surface"
                 v-tooltip.top.focus="'Filter as you type'"
+                style="width:80px;"
               />
             </template>
           </Column>
           <Column
             field="fobfiyat"
             header="Fob"
-            headerStyle="width:80px;"
             bodyStyle="text-align:center;"
           >
             <template #body="slotProps">
@@ -194,7 +206,6 @@
           <Column
             field="tekliffiyat"
             header="Teklif"
-            headerStyle="width:80px;"
             bodyStyle="text-align:center;"
           >
             <template #body="slotProps">
@@ -204,7 +215,6 @@
           <Column
             field="birim"
             header="Birim"
-            headerStyle="width:80px;"
             bodyStyle="text-align:center;"
           >
             <template #body="slotProps">

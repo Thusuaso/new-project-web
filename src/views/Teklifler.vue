@@ -174,6 +174,7 @@
     :modal="true"
     maximizable
     position="top"
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '65vw'}"
   >
     <kullanici-teklif-liste :kullaniciAdi="selectKullaniciAdi" />
   </Dialog>
@@ -192,6 +193,8 @@
     :modal="true"
     maximizable
     position="top"
+    style="width:100%;"
+
   >
     <eskiTeklifler :eskitekliflist="eskitekliflist" />
   </Dialog>
@@ -201,6 +204,7 @@
     :modal="true"
     maximizable
     position="top"
+    style="width:100%;"
   >
     <tumTeklifler :tumtekliflist="tumtekliflist" />
   </Dialog>

@@ -990,6 +990,9 @@ export default {
         this.iscilikData = data
         this.maliyetYenile()
 
+    })
+    this.emitter.on('save_button_activated', data => {
+      this.kayitDurum = data
      })
   },
 };

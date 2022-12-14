@@ -1,6 +1,6 @@
 <template>
   <div class="columns">
-    <div class="column is-4">
+    <div class="column is-5">
       <Card>
         <template #content>
           <span class="p-float-label">
@@ -206,15 +206,15 @@
       <br />
     </div>
 
-    <div class="column is-8">
+    <div class="column is-7">
       <Card class="cardStyle">
         <template #content>
-          <span class="p-float-label">
+          <span class="p-float-label" >
             <Textarea
               id="uretimAciklama"
               rows="6"
               :autoResize="false"
-              cols="85"
+              cols="65"
               v-model="profData.uretimAciklama"
               @change="veriDegisim"
             />
@@ -229,7 +229,7 @@
               id="sevkiyatAciklama"
               rows="6"
               :autoResize="false"
-              cols="85"
+              cols="65"
               v-model="profData.sevkiyatAciklama"
               @change="veriDegisim"
             />
@@ -244,7 +244,7 @@
               id="finansAciklama"
               rows="6"
               :autoResize="false"
-              cols="85"
+              cols="65"
               v-model="profData.finansAciklama"
               @change="veriDegisim"
             />
@@ -760,6 +760,8 @@ export default {
 
         this.filterTeslimTurList = result;
       }, 250);
+      this.emitter.emit('save_button_activated',true)
+
     },
     aramaOdemeTur(event) {
       setTimeout(() => {
@@ -776,6 +778,7 @@ export default {
 
         this.filterOdemeTurList = result;
       }, 250);
+
     },
 
     aramaFaturaTur(event) {
@@ -811,6 +814,8 @@ export default {
       }, 250);
     },
     teslimTurDegisim() {
+      this.emitter.emit('save_button_activated', false)
+
       this.profData.teslimTurId = this.teslimTur.id;
 
       if (
@@ -901,12 +906,16 @@ export default {
       }
       this.kayitKontrol();
       this.emitter.emit("odemeTur", this.odemeTur.id);
+      this.emitter.emit('save_button_activated', false)
+
     },
     faturaTurDegisim() {
       this.profData.faturaKesimTurId = this.faturaTur.id;
 
       this.kayitKontrol();
       this.emitter.emit("faturaTur", this.faturaTur.id);
+      this.emitter.emit('save_button_activated', false)
+
     },
     vadeDegisim() {
       this.profData.vade = this.localService.getDateString(this.vade);
@@ -916,6 +925,8 @@ export default {
     ulkeDegisim() {
       this.profData.ulkeId = this.ulke.id;
       this.kayitKontrol();
+      this.emitter.emit('save_button_activated', false)
+
     },
     kayitKontrol() {
       let index = 0;
@@ -996,9 +1007,13 @@ export default {
     },
     veriDegisim() {
       this.kayitKontrol();
+      this.emitter.emit('save_button_activated', false)
+
     },
 
     DepoDegisim() {
+      this.emitter.emit('save_button_activated', false)
+
       var top = 0;
       var topAdet = 0;
 
@@ -1100,6 +1115,8 @@ export default {
         this.profData.sigorta_tutar = 0;
       }
       this.kayitKontrol();
+      this.emitter.emit('save_button_activated', false)
+
     },
     currencyDegisim(property, _value) {
       let value = parseFloat(_value);
@@ -1120,6 +1137,8 @@ export default {
 
       this.kayitKontrol();
       this.emitter.emit("navlunDigerTutarDegisim");
+      this.emitter.emit('save_button_activated', false)
+
     },
   },
 };
@@ -1144,4 +1163,5 @@ export default {
 .cardStyle {
   height: 179.5px;
 }
+
 </style>

@@ -26,7 +26,7 @@ const getters = {
   },
   __isAuthentication(state) {
 
-    return state.userId != null;
+    return state.username != null;
   }
 
 }

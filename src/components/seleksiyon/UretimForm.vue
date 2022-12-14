@@ -219,6 +219,7 @@
                       @input="toplam_adet_hesapla"
                       v-model="detail.kutuadet"
                       :disabled="slk_form"
+                      style="width:120px;"
                     />
                     <label for="kutuadet">Kutu Sayısı</label>
                   </span>
@@ -232,6 +233,7 @@
                       @input="toplam_adet_hesapla"
                       v-model="detail.kutuiciadet"
                       :disabled="slk_form"
+                      style="width:120px;"
                     />
                     <label for="kutuiciadet">Kutu İçi Adet</label>
                   </span>
@@ -245,6 +247,7 @@
                       @input="m2_hesaplama"
                       v-model="detail.adet"
                       :disabled="slk_form"
+                      style="width:120px;"
                     />
                     <label for="adet">Toplam Adet</label>
                   </span>
@@ -263,6 +266,7 @@
                       :class="{
                         'p-invalid': v$.detail.miktar.$invalid && submitted,
                       }"
+                      style="width:120px;"
                     />
                     <label for="miktar">Sipariş Miktarı</label>
                   </span>
@@ -279,6 +283,7 @@
                       :class="{
                         'p-invalid': v$.detail.sqm_miktar.$invalid && submitted,
                       }"
+                      style="width:120px;"
                     />
                     <label for="sqm">SQM</label>
                   </span>
@@ -294,6 +299,7 @@
                       :class="{
                         'p-invalid': v$.kasaadet.$invalid && submitted,
                       }"
+                      style="width:120px;"
                     />
                     <label for="kasa">Kasa</label>
                   </span>
@@ -1080,11 +1086,14 @@ export default {
             }
           }
         }
-        if (this.detail.tedarikciid == 1 || this.detail.tedarikciid == 123) {
-          this.seleksiyonKasaNo();
-        } else {
-          this.kasaNoAuto();
+        if (this.kasano == "") {
+          if (this.detail.tedarikciid == 1 || this.detail.tedarikciid == 123) {
+            this.seleksiyonKasaNo();
+          } else {
+            this.kasaNoAuto();
+          }
         }
+        
       }, 1000);
     },
     kasaNoAuto() {
@@ -1135,7 +1144,7 @@ export default {
         this.kasaadet = 1;
         this.detail.duzenleyen = "Muhsin";
         this.tedarikci = { id: "1", name: "Mekmer" };
-        this.tarih = new Date();
+        
       }
     },
     urunKartShow() {
@@ -1195,8 +1204,11 @@ export default {
       });
     } else {
       if (this.kayitstatu) {
+        this.tarih = new Date();
+
         service.getUrunDetayModel().then((data) => {
           this.detail = data;
+          this.detail.miktar = null
           this.detail.tanim = this.seleksiyon_siparisdetaylist.find(
             (x) =>
               x.siparisno == this.detail.siparisaciklama &&

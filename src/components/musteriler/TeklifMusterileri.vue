@@ -1,7 +1,6 @@
 <template>
   <div>
     <Button class="p-button-primary" @click="isNew" label="Yeni"></Button>
-    <Button class="p-button-primary" @click="emitter.emit('isnew',true)" label="Emit"></Button>
 
     <DataTable
       :value="teklifMusteri"
@@ -14,7 +13,7 @@
       :scrollable="true" 
       scrollHeight="400px"
     >
-      <Column field="customer" header="Müşteri Adı">
+      <Column field="customer" header="Müşteri Adı" :showFilterMenu="false">
         <template #filter="{ filterModel, filterCallback }">
           <InputText
             type="text"
