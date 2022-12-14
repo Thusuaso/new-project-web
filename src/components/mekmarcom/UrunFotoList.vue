@@ -30,10 +30,11 @@
     </div>
     <div class="columns is-centered">
             <div class="column is-3">
-                <b-button @click="fotoDataDegisim" 
+                <Button @click="fotoDataDegisim"
+                class="p-button-primary" 
                 :loading="loading" 
                 :disabled="iskaydet" 
-                type="is-success" expanded> KAYDET </b-button>
+                 label="Kaydet"> </Button>
             </div>
         </div>
 </section>
@@ -66,7 +67,6 @@ export default {
     created(){ 
 
         this.fotolist = [...this.pickfotolist]; 
-        console.log('Foto list : ', this.fotolist)
         
     },
     methods : {

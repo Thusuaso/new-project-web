@@ -3,7 +3,11 @@ const state = {
   siparisler: null,
   isNewClicked: false,
   yuklemeList: [],
-  profData:[]
+  profData: [],
+  teslimTurList: [],
+  odemeTurList: [],
+  faturaKesimTurList: [],
+  ulkeList:[]
 };
 
 const actions = {
@@ -21,10 +25,34 @@ const actions = {
   },
   profData_load_act({ commit }, data) {
     commit("profData_load_mut", data);
+  },
+  teslim_tur_load_act({ commit }, data) {
+    commit('teslim_tur_load_mut',data)
+  },
+  odeme_tur_load_act({ commit }, data) {
+    commit('odeme_tur_load_mut',data)
+  },
+  fatura_tur_load_act({ commit }, data) {
+    commit('fatura_tur_load_mut',data)
+  },
+  ulke_tur_load_act({ commit }, data) {
+    commit('ulke_tur_load_mut',data)
   }
 };
 
 const mutations = {
+  teslim_tur_load_mut(state, data) {
+    state.teslimTurList = data
+  },
+  odeme_tur_load_mut(state, data) {
+    state.odemeTurList = data
+  },
+  fatura_tur_load_mut(state, data) {
+    state.faturaKesimTurList = data
+  },
+  ulke_tur_load_mut(state, data) {
+    state.ulkeList = data
+  },
   tedarikci_list_yukle_mut(state, data) {
     state.tedarikciList = data;
   },
@@ -60,6 +88,21 @@ const getters = {
   },
   profData(state) {
     return state.profData
+  },
+  teslimTurList(state) {
+    return state.teslimTurList
+  }
+  ,
+  odemeTurList(state) {
+    return state.odemeTurList
+  }
+  ,
+  faturaKesimTurList(state) {
+    return state.faturaKesimTurList
+  }
+  ,
+  ulkeList(state) {
+    return state.ulkeList
   }
 };
 

@@ -515,7 +515,7 @@ import service from "@/service/SeleksiyonService";
 import LocalService from "@/service/LocalService";
 import UrunKartMenu from "@/components/shared/UrunKartMenu";
 import socket from "@/service/SocketService";
-import SiparisService from "@/service/SiparisService";
+import siparisService from "@/service/SiparisService";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
@@ -708,7 +708,7 @@ export default {
         if (status) {
           socket.siparis.emit("seleksiyon_kayitsil_event", this.detail.id);
           if (this.kayit_tur == "Sipariş") {
-            this.siparisService
+            siparisService
               .getSiparisUrun(this.siparis.name)
               .then((siparis_data) => {
                 socket.siparis.emit(
@@ -757,7 +757,7 @@ export default {
                 );
 
                 if (this.detail.uretimturid == 2) {
-                  this.siparisService
+                  siparisService
                     .getSiparisUrun(this.siparis.name)
                     .then((siparis_data) => {
                       socket.siparis.emit(
@@ -914,7 +914,7 @@ export default {
           socket.siparis.emit("seleksiyon_coklukayit_event", data.kasa_list);
 
           if (this.kayit_tur.name == "Sipariş") {
-            this.siparisService
+            siparisService
               .getSiparisUrun(this.siparis)
               .then((siparis_data) => {
                 socket.siparis.emit(
@@ -1171,7 +1171,6 @@ export default {
   },
   created() {
     this.localService = new LocalService();
-    this.siparisService = new SiparisService();
     if (!this.kayitstatu) {
       service.getUrunDetay(this.kasano).then((data) => {
         this.detail = data;

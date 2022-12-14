@@ -79,7 +79,7 @@
 </template>
 <script>
 import KullaniciService from '../../../service/KullaniciService';
-import SiparisService from '../../../service/SiparisService'
+import siparisService from '../../../service/SiparisService'
 export default {
     props:['sipBilgiler','isPesinat'],
     data(){
@@ -115,7 +115,6 @@ export default {
     created(){
         this.siparislerBilgisi = this.sipBilgiler
         this.kullaniciService = new KullaniciService()
-        this.siparisService = new SiparisService()
         this.kullaniciListLoad()
         this.sipNoDuzenleme()
         this.productList()
@@ -127,7 +126,7 @@ export default {
     methods:{
         siparisibol() {
             
-            this.siparisService.setsiparisBolmeGuncelle(this.sipBilgiler).then(data => {
+            siparisService.setsiparisBolmeGuncelle(this.sipBilgiler).then(data => {
                 if (data) {
                     this.$toast.add({ severity: 'success', summary: 'Sipariş Bölme', detail: 'Sipariş bölme başarıyla gerçekleştirildi.', life: 3000 })
                 } else {

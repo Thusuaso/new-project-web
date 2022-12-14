@@ -242,7 +242,7 @@
   </div>
 </template>
 <script>
-import SiparisService from "../../../service/SiparisService";
+import siparisService from "../../../service/SiparisService";
 export default {
   data() {
     return {
@@ -264,9 +264,7 @@ export default {
     };
   },
   props: ["siparisNo", "yeniSiparis"],
-  siparisService: null,
   created() {
-    this.siparisService = new SiparisService();
   },
   methods: {
     formatPrice(value) {
@@ -306,7 +304,7 @@ export default {
   },
   mounted() {
     if (!this.yeniSiparis) {
-      this.siparisService.getMasrafListesi(this.siparisNo).then((data) => {
+      siparisService.getMasrafListesi(this.siparisNo).then((data) => {
         console.log("getMasrafListesi", data);
         this.masrafListesi = data;
         this.masraflarTop = 0;

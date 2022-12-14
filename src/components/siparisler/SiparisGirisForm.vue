@@ -425,7 +425,7 @@ import SiparisBilgileri from "./siparisGiris/SiparisBilgileri";
 import ProformaBilgileri from "../../components/siparisler/siparisGiris/ProformaBilgileri";
 import Masraflar from "../../components/siparisler/siparisGiris/Masraflar";
 import Tedarikciler from "../../components/siparisler/siparisGiris/Tedarikciler";
-import SiparisService from "../../service/SiparisService";
+import siparisService from "../../service/SiparisService";
 import MusteriService from "../../service/MusteriService";
 import KullaniciService from "../../service/KullaniciService";
 import LocalService from "../../service/LocalService";
@@ -532,7 +532,6 @@ export default {
     gidecekSipBilgileri: GidecekSipBilgileriRaporuUretim,
     // Etiketler
   },
-  siparisService: null,
   musteriService: null,
   kullaniciService: null,
   localService: null,
@@ -679,7 +678,7 @@ export default {
         siparisUrunler: this.siparisUrunler,
       };
       this.kayitDurum = true;
-      this.siparisService.setSiparisKaydet(siparisVeri).then((data) => {
+      siparisService.setSiparisKaydet(siparisVeri).then((data) => {
         if (data.status == true) {
           this.$toast.add({
             severity: "success",
@@ -719,7 +718,7 @@ export default {
         urunlerSilinenler: this.urunler_silinenler,
       };
 
-      this.siparisService.setSiparisGuncelle(siparisVeri).then((data) => {
+      siparisService.setSiparisGuncelle(siparisVeri).then((data) => {
         if (data.status == true) {
           this.$toast.add({
             severity: "success",
@@ -778,11 +777,11 @@ export default {
         then: then,
         now: now,
         orderNo: orderNo,
-        username: JSON.parse(localStorage.getItem("user")).kullaniciAdi,
+        username: this.$store.getters.__getUsername,
         info: info,
       };
       if (!this.yeniSiparis) {
-        this.siparisService.getOpChangeMailSend(datas).then((data) => {
+        siparisService.getOpChangeMailSend(datas).then((data) => {
           console.log(data);
         });
       }
@@ -801,11 +800,11 @@ export default {
         then: then,
         now: now,
         orderNo: orderNo,
-        username: JSON.parse(localStorage.getItem("user")).kullaniciAdi,
+        username: this.$store.getters.__getUsername,
         info: info,
       };
       if (!this.yeniSiparis) {
-        this.siparisService.getOpChangeMailSend(datas).then((data) => {
+        siparisService.getOpChangeMailSend(datas).then((data) => {
           console.log(data);
         });
       }
@@ -872,22 +871,25 @@ export default {
     kullaniciListYukle() {
       this.kullaniciService.getKullaniciList().then((data) => {
         this.kullaniciList = data;
+        
 
         this.kullanici = data.find((x) => x.id == this.siparis.siparisSahibi);
         this.kullaniciOp = data.find((x) => x.id == this.siparis.operasyon);
+        this.kullaniciFinans = data.find((x) => x.id == this.siparis.finansman);
+
       });
 
       this.kullaniciService.getOperasyonKullaniciList().then((data) => {
         this.OperasyonkullaniciList = data;
 
         this.FinansmankullaniciList = data;
-        this.kullaniciFinans = data.find((x) => x.id == this.siparis.finansman);
-        this.kullaniciOp = data.find((x) => x.id == this.siparis.operasyon);
       });
     },
     siparisList() {
       if (!this.yeniSiparis) {
-        this.siparisService.getSiparis(this.dtSiparisNo).then((data) => {
+        siparisService.getSiparis(this.dtSiparisNo).then((data) => {
+          this.$store.dispatch("profData_load_act", data.siparis);
+
           this.sipData = data;
           this.siparis = data.siparis;
           this.kullaniciListYukle();
@@ -895,7 +897,6 @@ export default {
 
           this.siparisUrunler = data.siparisUrunler;
           // this.profData = data.siparis;
-          this.$store.dispatch("profData_load_act", data.siparis);
           this.urunModel = data.urunModel;
           this.siparisUrunLoading = false;
 
@@ -938,7 +939,7 @@ export default {
               this.eta = this.localService.getStringDate(this.siparis.eta)
           }*/
 
-          this.siparisService
+          siparisService
             .getMasrafListesi(this.dtSiparisNo)
             .then((data) => {
               this.localMasraflar = data.filter((x) => x.tur != "Navlun");
@@ -951,15 +952,17 @@ export default {
           this.siparisUrunLoading = false;
         });
       } else {
-        this.siparisService.getSiparisModel().then((data) => {
+        siparisService.getSiparisModel().then((data) => {
+          this.$store.dispatch("profData_load_act", data.siparis);
+
           this.siparis = data.siparis;
+          
 
           this.kullaniciListYukle();
           this.musteriListYukle();
           this.maliyetYenile();
           this.siparisUrunler = data.siparisUrunler;
           // this.profData = data.siparis;
-          this.$store.dispatch("profData_load_act", data.siparis);
 
           this.siparisUrunLoading = false;
           this.urunModel = data.urunModel;
@@ -969,7 +972,6 @@ export default {
   },
   created() {
     this.maliyet.iscilik = 0;
-    this.siparisService = new SiparisService();
     this.musteriService = new MusteriService();
     this.kullaniciService = new KullaniciService();
     this.localService = new LocalService();

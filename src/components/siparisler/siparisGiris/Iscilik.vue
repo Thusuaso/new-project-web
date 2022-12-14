@@ -153,9 +153,9 @@
   </div>
 </template>
 <script>
-import TedarikciService from "../../../service/TedarikciService";
+import tedarikciService from "../../../service/TedarikciService";
 import CurrencyInput from "../../../components/shared/CurrencyInput";
-import SiparisService from "../../../service/SiparisService";
+import siparisService from "../../../service/SiparisService";
 import LocalService from "../../../service/LocalService";
 import socket from "../../../service/SocketService";
 export default {
@@ -247,12 +247,12 @@ export default {
         this.giderModel.siparisNo = this.siparisNo;
         this.giderModel.urunKartId = this.urunKartId;
         //data verisi geliyor true false
-        this.siparisService.setIscilikKaydet(this.giderModel).then(() => {
+        siparisService.setIscilikKaydet(this.giderModel).then(() => {
           this.giderListYukle();
           this.btn_reset();
         });
       } else {
-        this.siparisService.setIscilikGuncelle(this.giderModel).then(() => {
+        siparisService.setIscilikGuncelle(this.giderModel).then(() => {
           this.giderListYukle();
           this.btn_reset();
         });
@@ -260,14 +260,14 @@ export default {
     },
     btn_sil_click() {
       this.$store.dispatch("iscilik_delete_act", this.giderModel.tutar);
-      this.siparisService.setIscilikSil(this.giderModel).then(() => {
+      siparisService.setIscilikSil(this.giderModel).then(() => {
         this.giderListYukle();
         this.btn_reset();
       });
     },
     giderListYukle() {
       this.giderToplam = 0;
-      this.siparisService
+      siparisService
         .getIscilikList(this.siparisNo, this.urunKartId)
         .then((data) => {
           this.giderListesi = data;
@@ -302,27 +302,23 @@ export default {
       this.giderModel.tedarikciId = this.tedarikci.id;
     },
   },
-  tedarikciService: null,
-  siparisService: null,
   localService: null,
 
   created() {
-    this.tedarikciService = new TedarikciService();
-    this.siparisService = new SiparisService();
     this.localService = new LocalService();
   },
   mounted() {
-    this.siparisService.getGiderModel().then((data) => {
+    siparisService.getGiderModel().then((data) => {
       this.dataGiderModel = data;
       this.giderModel = { ...this.dataGiderModel };
     });
-    this.tedarikciService.getTedarikciMenuList().then((data) => {
+    tedarikciService.getTedarikciMenuList().then((data) => {
       this.tedarikciList = data;
     });
 
     this.giderListYukle();
 
-    this.siparisService.getGiderList().then((data) => (this.giderList = data));
+    siparisService.getGiderList().then((data) => (this.giderList = data));
   },
 };
 </script>

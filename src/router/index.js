@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from "../store";
 import service from "../service/Customers";
-import urunKartService from "@/service/UrunKartService";
-import depoService from "@/service/DepoService";
+import urunKartService from "../service/UrunKartService";
+import depoService from "../service/DepoService";
+import tedarikciService from "../service/TedarikciService";
+import siparisService from "../service/SiparisService";
 const routes = [
   {
     path: "/login",
@@ -539,15 +541,25 @@ const routes = [
     component: () => import("@/views/siparisler/Uretim"),
     beforeEnter(to, from, next) {
       if (store.getters.__isAuthentication) {
-        store.dispatch("loadingBeginAct");
-        store.dispatch("datatableLoadingBeginAct");
-
         urunKartService.getUrunKartMenuList().then((data) => {
           store.dispatch("isUrunKartLoad");
           store.dispatch("urunKartMenuAct", data);
-          store.dispatch("loadingEndAct");
-          store.dispatch("datatableLoadingEndAct");
         });
+        tedarikciService.getTedarikciMenuList().then((data) => {
+          store.dispatch("tedarikci_list_yukle_act", data);
+        });
+        siparisService.getTeslimTurList().then(data => {
+          store.dispatch("teslim_tur_load_act",data)
+        })
+        siparisService.getOdemeTurList().then(data => {
+          store.dispatch("odeme_tur_load_act",data)
+        })
+        siparisService.getFaturaKesimTurList().then(data => {
+          store.dispatch("fatura_tur_load_act",data)
+        })
+        siparisService.getUlkeList().then(data => {
+          store.dispatch("ulke_tur_load_act",data)
+        })
         next();
       } else {
         next("/login");

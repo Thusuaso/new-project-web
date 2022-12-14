@@ -166,7 +166,7 @@
   </div>
 </template>
 <script>
-import SiparisService from "../../service/SiparisService";
+import siparisService from "../../service/SiparisService";
 import { mapGetters } from "vuex";
 import SiparisGirisForm from "./SiparisGirisForm";
 // import socket from '../../service/SocketService';
@@ -246,7 +246,6 @@ export default {
   computed: {
     ...mapGetters(["servis_adres", "getMobilWidth"]),
   },
-  siparisService: null,
   created() {
     if (this.getMobilWidth < 600) {
       this.isDesktop = false;
@@ -261,9 +260,7 @@ export default {
     } else if (userName == "hakan") {
       this.backColor = "green";
     }
-    this.siparisService = new SiparisService();
     this.selectedColumns = this.columns;
-    this.siparisService = new SiparisService();
     serviceRapor.getYuklemeYilListesi().then((yil_list) => {
       for (let item of yil_list) {
         this.yil_listesi.push(item);
@@ -306,7 +303,7 @@ export default {
 
     if (this.siparisTur == "bekleyen") siparisDurum = 1;
     if (this.siparisTur == "sevk") siparisDurum = 3;
-    this.siparisService.getSiparisList(siparisDurum, year).then((data) => {
+    siparisService.getSiparisList(siparisDurum, year).then((data) => {
       this.siparisler = data;
       this.siparisHepsiEvent();
       this.toplamGuncelle(this.siparisler);
@@ -337,7 +334,7 @@ export default {
 
       if (this.siparis_list_hepsi) {
 
-        this.siparisService.getSiparisHepsiList(siparisDurum).then((data) => {
+        siparisService.getSiparisHepsiList(siparisDurum).then((data) => {
           this.siparisler = data;
           this.SiparislerEvent = data;
           setTimeout(() => {
@@ -372,7 +369,7 @@ export default {
 
       } else {
 
-        this.siparisService
+        siparisService
           .getSiparisList(siparisDurum, this.select_yil.yil)
           .then((data) => {
             this.siparisler = data;

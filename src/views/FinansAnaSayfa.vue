@@ -2,7 +2,7 @@
   <section>
     <div class="columns is-multiline">
       <div class="column is-3">
-        <Checkbox @input="konteynerHepsiEvent" v-model="konteyner_list_hepsi" />
+        <Checkbox @change="konteynerHepsiEvent" v-model="konteyner_list_hepsi" :binary="true" />
         Hepsi
       </div>
       <div class="columns is-multiline">

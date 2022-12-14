@@ -1,5 +1,4 @@
 <template>
-  
   <TabView>
     
     <TabPanel header="Ürün">
@@ -25,9 +24,8 @@
       <div class="columns">
         <div classs="column is-6">
           <span class="p-float-label">
-            <TextArea
+            <Textarea
               id="aciklama_en"
-              type="text"
               v-model="urunDetay.aciklama_en"
               rows="7"
               cols="100"
@@ -116,7 +114,7 @@
         <div class="columns">
           <div classs="column is-6">
             <span class="p-float-label">
-              <TextArea id="aciklama_en" type="text" v-model="urunDetay.aciklama_fr" rows="7" cols="100" />
+              <Textarea id="aciklama_en" type="text" v-model="urunDetay.aciklama_fr" rows="7" cols="100" />
               <label for="aciklama_en">Açıklama</label>
             </span>
           </div>
@@ -177,7 +175,7 @@
       <div class="columns">
         <div classs="column is-6">
           <span class="p-float-label">
-            <TextArea id="aciklama_en" type="text" v-model="urunDetay.aciklama_es" rows="7" cols="100" />
+            <Textarea id="aciklama_en" type="text" v-model="urunDetay.aciklama_es" rows="7" cols="100" />
             <label for="aciklama_en">Açıklama</label>
           </span>
         </div>
@@ -328,9 +326,21 @@
 
         </div>
         <div class="column">
-        
+            <Button class="p-button-primary" label="Foto List Aç"  @click="isfotolist = true"></Button>
+            <Dialog v-model:visible="isfotolist" :style="{ width : '1000px' }" :modal="true">
+              <section class="section">
+                <div class="container">
+                  <div class="columns">
+                    <div class="column is-12">
+                      <UrunFotoList :urunid="urunDetay.urunid" />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </Dialog>
         </div>
       </div>
+
     </TabPanel>
     <TabPanel header="Dosya İşlemler">
       <br />
@@ -481,10 +491,17 @@ export default {
     if (!this.yeniurun) {
       this.kategori = this.kategoriList.find(
         (x) => x.kategori_id == this.urunDetay.kategori_id
-      ).kategoriadi_en;
+      );
       this.stoneType = this.kategoriList.find(
         (x) => x.kategori_id == this.urunDetay.stonetype
-      ).kategoriadi_en;
+      );
+      this.renkEn = this.enRenkListesi.find(x => x.name == this.urunDetay.renk_en)
+      this.renkFr = this.frRenkListesi.find(x => x.name == this.urunDetay.renk_fr)
+      this.renkEs = this.esRenkListesi.find(x => x.name == this.urunDetay.renk_es)
+
+
+
+
     }
 
     this.keys = [];
@@ -500,12 +517,7 @@ export default {
     if (this.keyListEs) {
       if (this.keyListEs.length > 0) this.keys_es = this.keyListEs;
     }
-    if (!this.urunKayit) {
-      this.renkFr = this.urunDetay.renk_fr;
-
-      this.renkEn = this.urunDetay.renk_en;
-      this.renkEs = this.urunDetay.renk_es;
-    }
+    
   },
   methods: {
     formatPrice(value) {
@@ -601,7 +613,7 @@ export default {
           service.getProductDetailData(res.urunid).then((data) => {
             this.$store.dispatch("loadUrun", data);
             this.urunKayit = false;
-            this.emitter.emit("urunBilgiGuncelleme");
+            this.$emit("urunBilgiGuncelleme");
             this.loading = false;
           });
         }

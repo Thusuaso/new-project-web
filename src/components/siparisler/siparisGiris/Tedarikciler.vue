@@ -245,7 +245,7 @@
 </template>
 <script>
 import service from "../../../service/SeleksiyonService";
-import SiparisService from "../../../service/SiparisService";
+import siparisService from "../../../service/SiparisService";
 import LocalService from "../../../service/LocalService";
 import fileService from "../../../service/FileService";
 import serviceRapor from "../../../service/RaporService";
@@ -311,7 +311,6 @@ export default {
   mounted() {
     this.urunList = null;
     this.emitter.on("tedarikciler", (data) => {
-      console.log('tedarikciler')
       this.tedarikciler = data;
       for (let item of data) {
         if (this.controlTedarikciList(item.tedarikciAdi) != false) {
@@ -319,14 +318,14 @@ export default {
         }
       }
     });
-    this.siparisService.getSiparicIcSiparis().then((data) => {
+    siparisService.getSiparicIcSiparis().then((data) => {
       this.teslimTurList = data.siparisTeslimTur;
       this.faturaTurList = data.siparisFaturaTur;
 
       // this.teslimTur = this.teslimTurList.find(x=>x.id == this.profData.id)
       // this.faturaTur1 = this.faturaTurList.find(x=>x.id == this.profData.id)
     });
-    this.siparisService
+    siparisService
       .getTedarikciUrunAyrintiListYukle(this.siparisNo)
       .then((data) => {
         this.siparisUrunleryeni = data.tedarikciUrunliste;
@@ -335,7 +334,6 @@ export default {
   },
 
   created() {
-    this.siparisService = new SiparisService();
     this.localService = new LocalService();
 
     let gun = this.date.getDate();

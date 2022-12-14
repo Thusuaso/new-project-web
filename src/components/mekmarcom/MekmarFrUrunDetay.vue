@@ -246,7 +246,7 @@
                     </div>
                     <div class="column is-2">
                         <b-button type="is-success" expanded @click="isfotolist = true">Foto List Aç</b-button>
-                        <Dialog :visible.sync="isfotolist" :modal="true" position="top">
+                        <Dialog v-model:visible="isfotolist" :modal="true" position="top">
                             <section class="section">
                                 <div class="container">
                                     <div class="columns">
@@ -448,7 +448,7 @@ export default {
                     mekmarService.getUrunDetay(this.urunDetay.urunid).then(data => {
                          
                          this.$store.dispatch('loadUrun',data)
-                         this.emitter.emit('urunFotoGuncelleme')
+                         this.$emit('urunFotoGuncelleme')
                          this.loading = false;
                     })
                 }

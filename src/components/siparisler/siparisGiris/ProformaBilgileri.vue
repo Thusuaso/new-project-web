@@ -554,7 +554,6 @@
   </div>
 </template>
 <script>
-import SiparisService from "../../../service/SiparisService";
 import LocalService from "../../../service/LocalService";
 import store from "@/store";
 
@@ -566,7 +565,14 @@ import { required } from "@vuelidate/validators";
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["isNewClicked","profData"]),
+    ...mapGetters([
+      "isNewClicked",
+      "profData", 
+      "teslimTurList",
+      "odemeTurList",
+      "faturaKesimTurList",
+      "ulkeList"
+    ]),
   },
   components: {
     customFileInput: CustomInputFile,
@@ -582,16 +588,12 @@ export default {
       diger_4: true,
       dis_urun_giris: false,
       sigorta_tutar: true,
-      teslimTurList: null,
       filterTeslimTurList: null,
       odemeTur: null,
-      odemeTurList: null,
       filterOdemeTurList: null,
       faturaTur: null,
-      faturaKesimTurList: null,
       filterFaturaTurList: null,
       ulke: null,
-      ulkeList: null,
       dis_takipEt: true,
       dis_sigorta: true,
       filterUlkeList: null,
@@ -621,15 +623,13 @@ export default {
       faturaKesimTurId: { required },
     },
   },
-  siparisService: null,
   localService: null,
   created() {
-    this.siparisService = new SiparisService();
     this.localService = new LocalService();
     this.esProfData = this.profData;
     store.dispatch("navlun_ilk_degeri_act", this.esProfData);
     this.yeniKayitBaslangicIslemler();
-
+    this.dataLoad();
     if (this.profData.depo) {
       this.diger_4 = true;
       this.dis_takipEt = true;
@@ -657,36 +657,25 @@ export default {
     // if (this.profData.vade.length > 0) {
     //   this.vade = this.localService.getStringDate(this.profData.vade);
     // }
-    this.dataLoad();
-    this.yeniKayitBaslangicIslemler();
+    
   },
   methods: {
     dataLoad() {
-      this.siparisService.getTeslimTurList().then((data) => {
-        this.teslimTurList = data;
 
         this.teslimTur = this.teslimTurList.find(
           (x) => x.id == this.profData.teslimTurId
         );
-      });
-      this.siparisService.getOdemeTurList().then((data) => {
-        this.odemeTurList = data;
+
         this.odemeTur = this.odemeTurList.find(
           (x) => x.id == this.profData.odemeTurId
         );
-      });
-      this.siparisService.getFaturaKesimTurList().then((data) => {
-        this.faturaKesimTurList = data;
+        console.log(this.faturaKesimTurList)
+        console.log(this.profData)
 
         this.faturaTur = this.faturaKesimTurList.find(
           (x) => x.id == this.profData.faturaKesimTurId
         );
-      });
-      this.siparisService.getUlkeList().then((data) => {
-        this.ulkeList = data;
-
         this.ulke = this.ulkeList.find((x) => x.id == this.profData.ulkeId);
-      });
     },
     komisyonInput(event) {
       console.log("komisyonInput", event);
@@ -1141,6 +1130,11 @@ export default {
 
     },
   },
+  watch: {
+    profData() {
+      this.dataLoad();
+    }
+  }
 };
 </script>
 

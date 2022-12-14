@@ -210,7 +210,7 @@
 </template>
 
 <script>
-import SiparisService from "@/service/SiparisService";
+import siparisService from "@/service/SiparisService";
 import KullaniciService from "@/service/KullaniciService";
 
 import service from "@/service/MusteriIslemService";
@@ -260,9 +260,8 @@ export default {
       }
     });
 
-    this.serviceSip = new SiparisService();
     this.kullaniciService = new KullaniciService();
-    this.serviceSip.getUlkeList().then((data) => {
+    siparisService.getUlkeList().then((data) => {
       this.musteri_ulke_list = data;
     });
     this.kullaniciService.getKullaniciList().then((data) => {

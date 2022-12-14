@@ -475,7 +475,6 @@
 </template>
 
 <script>
-import TedarikciService from "../../../service/TedarikciService";
 import UrunService from "../../../service/UrunService";
 import store from "@/store";
 import UrunKartBilgi from "./UrunKartBilgi";
@@ -880,19 +879,17 @@ export default {
       }, 250);
     },
     aramaBirim(event) {
-      setTimeout(() => {
-        let result;
-        if (event.query.length === 0) {
-          result = this.urunBirimList;
-        } else {
-          result = this.urunBirimList.filter((ted) => {
-            return ted.birimAdi
-              .toLowerCase()
-              .startsWith(event.query.toLowerCase());
-          });
-        }
-        this.filterUrunBirimList = result;
-      }, 250);
+      let result;
+      if (event.query.length === 0) {
+        result = [...this.urunBirimList];
+      } else {
+        result = this.urunBirimList.filter((ted) => {
+          return ted.birimAdi
+            .toLowerCase()
+            .startsWith(event.query.toLowerCase());
+        });
+      }
+      this.filterUrunBirimList = result;
     },
     idOlustur() {
       let result = "";
@@ -1508,14 +1505,9 @@ export default {
   },
 
   urunService: null,
-  tedarikciService: null,
   created() {
     this.urunService = new UrunService();
-    this.tedarikciService = new TedarikciService();
     store.dispatch("tedarikci_als_fiyati_act", this.siparisUrunler);
-    this.tedarikciService.getTedarikciMenuList().then((data) => {
-      this.$store.dispatch("tedarikci_list_yukle_act", data);
-    });
     socket.siparis.on("tedarikciListesiEmit", (data) => {
       this.$store.dispatch("tedarikci_list_yukle_act", data);
     });
@@ -1527,9 +1519,7 @@ export default {
   },
 
   mounted() {
-    this.tedarikciService.getTedarikciMenuList().then((data) => {
-      this.$store.dispatch("tedarikci_list_yukle_act", data);
-    });
+
     socket.siparis.on("tedarikciListesiEmit", (data) => {
       this.$store.dispatch("tedarikci_list_yukle_act", data);
     });

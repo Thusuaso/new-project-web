@@ -155,7 +155,7 @@
   </div>
 </template>
 <script>
-import SiparisService from "../../../service/SiparisService";
+import siparisService from "../../../service/SiparisService";
 import excelService from "../../../service/ExcelService";
 import { mapGetters } from "vuex";
 
@@ -192,13 +192,11 @@ export default {
     ...mapGetters(["servis_adres"]),
   },
   props: ["siparisNo", "yeniSiparis"],
-  siparisService: null,
   created() {
-    this.siparisService = new SiparisService();
   },
   mounted() {
     if (!this.yeniSiparis) {
-      this.siparisService.getCekiListesi(this.siparisNo).then((data) => {
+      siparisService.getCekiListesi(this.siparisNo).then((data) => {
         this.cekiListesi = data;
 
         for (let key in this.cekiListesi) {

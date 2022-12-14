@@ -207,7 +207,7 @@
 <script>
 import service from "@/service/MusteriIslemService";
 import { mapGetters } from "vuex";
-import SiparisService from "@/service/SiparisService";
+import siparisService from "@/service/SiparisService";
 import KullaniciService from "@/service/KullaniciService";
 import { FilterMatchMode } from "primevue/api";
 export default {
@@ -250,9 +250,8 @@ export default {
         this.$store.dispatch("teklif_musteri_load_act", result)
       }
     }),
-      (this.serviceSip = new SiparisService());
     this.kullaniciService = new KullaniciService();
-    this.serviceSip.getUlkeList().then((data) => {
+    siparisService.getUlkeList().then((data) => {
       this.musteri_ulke_list = data;
     });
     this.kullaniciService.getKullaniciList().then((data) => {

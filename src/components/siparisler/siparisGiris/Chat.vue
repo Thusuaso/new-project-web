@@ -268,7 +268,6 @@ export default {
   },
   computed: {},
   props: ["siparisNo", "yeniSiparis"],
-  siparisService: null,
   created() {
     Opservice.getSonGorusmeList(this.siparisNo).then((data) => {
       for (let key in data) {

@@ -233,7 +233,7 @@
 </template>
 
 <script>
-import TedarikciService from "../../../service/TedarikciService";
+import tedarikciService from "../../../service/TedarikciService";
 import UrunService from "../../../service/UrunService";
 import UrunKartBilgi from "./UrunKartBilgi";
 //import CurrencyInput from '../../shared/CurrencyInput';
@@ -693,16 +693,14 @@ export default {
     },
   },
   urunService: null,
-  tedarikciService: null,
   created() {
     this.urunService = new UrunService();
-    this.tedarikciService = new TedarikciService();
   },
   mounted() {
     this.urunService.getUrunBirimList().then((data) => {
       this.urunBirimList = data;
     });
-    this.tedarikciService
+    tedarikciService
       .getTedarikciMenuList()
       .then((data) => (this.tedarikciList = data));
 

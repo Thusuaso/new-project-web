@@ -40,6 +40,7 @@ import FileUpload from "primevue/fileupload";
 import Rating from "primevue/rating";
 import BadgeDirective from "primevue/badgedirective";
 import ElementPlus from "element-plus";
+import PickList from 'primevue/picklist';
 import "element-plus/dist/index.css";
 import "/node_modules/primeflex/primeflex.css";
 import mitt from 'mitt'
@@ -80,6 +81,8 @@ app.component("Carousel", Carousel);
 app.component("Chips", Chips);
 app.component("FileUpload", FileUpload);
 app.component("Rating", Rating);
+app.component("PickList", PickList);
+
 app.directive("badge", BadgeDirective);
 
 app.directive("tooltip", Tooltip);
