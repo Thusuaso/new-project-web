@@ -10,6 +10,7 @@ const s3 = new AWS.S3({
 
 const digitalOceanService = {
   fotoGonder(file) {
+    console.log("fotoGonder",file)
     let filename = file.name;
     const params = {
       Bucket: "mekmar-image",

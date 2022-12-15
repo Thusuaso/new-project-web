@@ -8,6 +8,7 @@ const state = {
   frRenkListesi: null,
   esRenkListesi: null,
   ebatListesi: null,
+  ebatListNormal:null,
   kenarIslemList: null,
   urunList: null,
   pickfotolist: null,
@@ -39,7 +40,7 @@ const mutations = {
     state.ebatListesi = data.ebatlist;
     state.kenarIslemList = data.finishlist;
     state.fotolist = data.fotolist;
-
+    state.ebatListNormal = data.ebatListNormal
     if (state.fotolist.length)
       state.pickfotolist = [state.fotolist.slice(0, 10), []];
 
@@ -98,6 +99,9 @@ const getters = {
   onerilernUrunlerList(state) {
     return state.onerilernUrunlerList;
   },
+  ebatListNormal(state) {
+    return state.ebatListNormal
+  }
 };
 
 export default {

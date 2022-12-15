@@ -220,7 +220,7 @@
             <div class="columns">
               <div class="column">
                 <span class="p-float-label">
-                  <AutoComplete id="kenar" v-model="kenarIslem" :suggestions="filterKenarIslemList" optionLabel="name"
+                  <AutoComplete id="kenar" v-model="kenarIslem" :suggestions="filterKenarIslemList" @complete="searchKenarIslemListesi($event)" optionLabel="name"
                     @item-select="kenarIslemDegisim" />
             
                   <label for="kenar">Kenar İşlem</label>
@@ -236,7 +236,7 @@
             
             </div>
             <DataTable :value="urunDetay.kenarIslemList" dataKey="id" selectionMode="simple" v-model:selection="selectKenarIslem"
-              @row-select="kenarIslemDegisim($event)">
+              @row-select="kenarIslemSelected($event)">
               <template #header>
                 <div class="columns is-multiline">
                   <div class="column is-12">
@@ -255,7 +255,7 @@
           <div class="columns">
             <div class="column">
               <span class="p-float-label">
-                <AutoComplete id="ebat" v-model="ebat" :suggestions="filterEbatListesi" optionLabel="name"
+                <AutoComplete id="ebat" v-model="ebat" :suggestions="filterEbatListesi" @complete="searchEbatListesi($event)" optionLabel="name"
                   @item-select="ebatDegisim" />
                 
                 <label for="ebat">Ebat Ekle</label>
@@ -284,7 +284,7 @@
             dataKey="id"
             selectionMode="simple"
             v-model:selection="selectEbat"
-            @row-select="ebatDegisim($event)">
+            @row-select="ebatSelected($event)">
             <Column field="ebat" header="Ebat" bodyStyle="text-align:center">
               <template #body="slotProps">
                 {{ slotProps.data.ebat }}
@@ -404,17 +404,18 @@ export default {
       "fotolist",
       "onerilernUrunlerList",
       "keyListFr",
+      "ebatListNormal",
     ]),
-    filterEbatListesi() {
-      return this.ebatListesi.filter((option) => {
-        return (
-          option.name
-            .toString()
-            .toLowerCase()
-            .indexOf(this.ebat.toLowerCase()) >= 0
-        );
-      });
-    },
+    // filterEbatListesi() {
+    //   return this.ebatListesi.filter((option) => {
+    //     return (
+    //       option.name
+    //         .toString()
+    //         .toLowerCase()
+    //         .indexOf(this.ebat.toLowerCase()) >= 0
+    //     );
+    //   });
+    // },
     filterKategoriList() {
       return this.kategoriList.filter((option) => {
         return (
@@ -435,20 +436,22 @@ export default {
         );
       });
     },
-    filterKenarIslemList() {
-      return this.kenarIslemList.filter((option) => {
-        return (
-          option.name
-            .toString()
-            .toLowerCase()
-            .indexOf(this.kenarIslem.toLowerCase()) >= 0
-        );
-      });
-    },
+    // filterKenarIslemList() {
+    //   return this.kenarIslemList.filter((option) => {
+    //     return (
+    //       option.name
+    //         .toString()
+    //         .toLowerCase()
+    //         .indexOf(this.kenarIslem.toLowerCase()) >= 0
+    //     );
+    //   });
+    // },
   },
   data() {
     
     return {
+      filterKenarIslemList:[],
+      filterEbatListesi:[],
       responsiveOptions: [
         {
           breakpoint: '1024px',
@@ -529,6 +532,38 @@ export default {
     
   },
   methods: {
+    searchEbatListesi(event) {
+      setTimeout(() => {
+        let result;
+        if (event.query.length === 0) {
+          result = [...this.ebatListesi];
+        } else {
+          result = this.ebatListesi.filter((ted) => {
+            return ted.name
+              .toLowerCase()
+              .startsWith(event.query.toLowerCase());
+          });
+        }
+
+        this.filterEbatListesi = result;
+      }, 250);
+    },
+    searchKenarIslemListesi(event) {
+      setTimeout(() => {
+        let result;
+        if (event.query.length === 0) {
+          result = [...this.kenarIslemList];
+        } else {
+          result = this.kenarIslemList.filter((ted) => {
+            return ted.name
+              .toLowerCase()
+              .startsWith(event.query.toLowerCase());
+          });
+        }
+
+        this.filterKenarIslemList = result;
+      }, 250);
+    },
     formatPrice(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -717,16 +752,27 @@ export default {
     },
 
     kenarIslemDegisim(event) {
-      this.kenarIslem = event.value.name;
+      this.kenarIslem = event.value;
       this.selectKenarIslem = event.value;
-      this.isyuzeyekle = true;
+      this.isyuzeyekle = false;
+      this.isyuzeysil = false;
+    },
+    kenarIslemSelected(event) {
+      this.kenarIslem = event.data;
+      this.selectKenarIslem = event.data;
+      this.isyuzeyekle = false;
       this.isyuzeysil = false;
     },
     ebatDegisim(event) {
-      console.log("ebatDegisim",event)
-      this.ebat = event.value.name;
-      this.selectEbat = event.value;
+      this.ebat = event.value;
       this.ebatFiyat = event.value.value;
+      this.isebatekle = false;
+      this.isebatsil = false;
+    },
+    ebatSelected(event) {
+
+      this.ebat = this.ebatListNormal.find(x=>x.id == event.data.id)
+      this.ebatFiyat = event.data.fiyat;
       this.isebatekle = false;
       this.isebatsil = false;
     },
@@ -737,7 +783,8 @@ export default {
       return link;
     },
     ebatKayitIslem() {
-      if (this.selectEbat) {
+
+      if (this.selectEbat != null) {
         this.ebatGuncelle();
       } else {
         this.ebatKaydet();
@@ -751,11 +798,10 @@ export default {
 
       const ebatData = {
         urunid: this.urunDetay.urunid,
-        ebat: this.ebat,
+        ebat: this.ebat.name,
         fiyat: this.ebatFiyat,
         birim: this.urunDetay.birim,
       };
-      this.loading = true;
       service.ebatKaydet(ebatData).then((data) => {
         this.urunDetay.ebatlar = data.ebatlist;
         this.ebat = "";
@@ -763,19 +809,17 @@ export default {
         this.isebatsil = true;
         this.isebatekle = true;
         this.isebatyenile = false;
-        this.loading = false;
       });
     },
     ebatGuncelle() {
       const ebatData = {
         urunid: this.urunDetay.urunid,
-        ebat: this.ebat,
+        ebat: this.ebat.name,
         fiyat: this.ebatFiyat,
         birim: this.urunDetay.birim,
         id: this.selectEbat.id,
       };
 
-      this.loading = true;
       service.ebatGuncelle(ebatData).then((data) => {
         this.urunDetay.ebatlar = data.ebatlist;
         this.ebat = "";
@@ -788,11 +832,12 @@ export default {
       });
     },
     ebatSil() {
-      if (this.selectEbat) {
-        this.loading = true;
+      if (this.ebat != null) {
+        
+
         let model = {
           urunid: this.urunDetay.urunid,
-          id: this.selectEbat.id,
+          id: this.ebat.id,
         };
         service.ebatSil(model).then((data) => {
           this.isebatsil = true;
@@ -819,12 +864,11 @@ export default {
       }
 
       const yuzeyData = {
-        islemadi: this.kenarIslem,
+        islemadi: this.kenarIslem.name,
         dil: "en",
         kategori_id: this.urunDetay.kategori_id,
         urunid: this.urunDetay.urunid,
       };
-      this.loading = true;
       service.kenarIslemKaydet(yuzeyData).then((data) => {
         this.urunDetay.kenarIslemList = data.finishlist;
         this.kenarIslem = "";
@@ -832,10 +876,9 @@ export default {
       });
     },
     yuzeySil() {
-      if (this.selectKenarIslem) {
-        this.loading = true;
+      if (this.kenarIslem != null) {
         let model = {
-          id: this.selectKenarIslem.id,
+          id: this.kenarIslem.id,
           urunid: this.urunDetay.urunid,
         };
         service.kenarIslemSil(model).then((data) => {
@@ -844,7 +887,6 @@ export default {
           this.isyuzeysil = true;
           this.selectKenarIslem = null;
           this.kenarIslem = "";
-          this.loading = false;
         });
       }
     },

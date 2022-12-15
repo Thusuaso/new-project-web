@@ -1,6 +1,5 @@
 <template>
 <section>
-    {{ urunid }}
     <div class="columns">
         <div class="column is-12">
             <PickList 
@@ -33,7 +32,6 @@
             <div class="column is-3">
                 <Button @click="fotoDataDegisim"
                 class="p-button-primary" 
-                :loading="loading" 
                 :disabled="iskaydet" 
                  label="Kaydet"> </Button>
             </div>
@@ -161,12 +159,14 @@ export default {
         },
         fotoDataDegisim(){
 
-            this.loading = true;
             const fotodata = { 'fotoSilList' : this.fotosillist,'fotoSiraDegisim' : this.fotodegisimlist };
            
             mekmarService.fotoListDegisim(fotodata).then(res => {
                
-                 if(res.status)  this.getProductDetailData()
+                if (res.status) {
+                    this.getProductDetailData()
+                    this.$toast.add({ severity: 'success', summary:'Fotoğraf Sıra Değişimi',detail:'Fotoğraf Sıra Değiştirme Başarıyla Gerçekleşti',life:3000})
+                 }  
                 
             })
         },
@@ -175,7 +175,6 @@ export default {
             service.getProductDetailData(this.urunid).then(data => {
 
                  this.$store.dispatch('loadUrun',data)
-                 this.loading = false
             })
         }
     }
