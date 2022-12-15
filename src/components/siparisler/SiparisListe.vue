@@ -270,12 +270,12 @@ export default {
       this.yil_baslik = this.select_yil.yil;
     });
     this.loading = true;
-    let siparisDurum = 2;
+    // let siparisDurum = 2;
     this.select_yil = { yil: "Hepsi", id: 0 };
 
-    if (this.siparisTur == "bekleyen") siparisDurum = 1;
-    if (this.siparisTur == "sevk") siparisDurum = 3;
-    this.$store.dispatch("datatableLoadingBeginAct");
+    // if (this.siparisTur == "bekleyen") siparisDurum = 1;
+    // if (this.siparisTur == "sevk") siparisDurum = 3;
+    // this.$store.dispatch("datatableLoadingBeginAct");
     // this.select_yil.yil = 2022;
     // this.siparisService
     //   .getSiparisList(siparisDurum, this.select_yil.yil)
@@ -487,7 +487,6 @@ export default {
     },
     statuSecim2() {
       //statü değişiminde
-      console.log("FirmaAdi", this.FirmaAdi);
       if (this.siparis_list_hepsi == false) {
         if (this.FirmaAdi) {
           let result;

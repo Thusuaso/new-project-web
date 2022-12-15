@@ -612,7 +612,6 @@ export default {
       if (!this.urunKayit) this.urunGuncelle();
     },
     urunKaydet() {
-      this.loading = true;
 
       this.anahtarAyarla();
 
@@ -623,7 +622,6 @@ export default {
             this.$store.dispatch("loadUrun", data);
             this.urunKayit = false;
             this.$emit("urunBilgiGuncelleme");
-            this.loading = false;
           });
         }
       });
@@ -704,14 +702,14 @@ export default {
       }
 
       this.urunDetay.kategori_id = this.kategoriList.find(
-        (x) => x.kategoriadi_en === this.kategori
+        (x) => x.kategoriadi_en === this.kategori.kategoriadi_en
       ).kategori_id;
       this.urunDetay.stonetype = this.kategoriList.find(
-        (x) => x.kategoriadi_en === this.stoneType
+        (x) => x.kategoriadi_en === this.stoneType.kategoriadi_en
       ).kategori_id;
-      this.urunDetay.renk_en = this.renkEn;
-      this.urunDetay.renk_fr = this.renkFr;
-      this.urunDetay.renk_es = this.renkEs;
+      this.urunDetay.renk_en = this.renkEn.name;
+      this.urunDetay.renk_fr = this.renkFr.name;
+      this.urunDetay.renk_es = this.renkEs.name;
 
       this.urunDetay.anahtarlar_en = anahtar_en;
       this.urunDetay.anahtarlar_fr = anahtar_fr;
