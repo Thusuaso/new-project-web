@@ -1272,6 +1272,26 @@ export default {
       return durum;
     },
     resetProduct() {
+      this.urun = {
+        'birim':"",
+        'birimId': 0,
+        'enBoy':"",
+        'enBoyId':0,
+        'fobFiyat': 0,
+        'id': 0,
+        'kalinlik':"",
+        'kalinlikId': 0,
+        'kategoriAdi': "",
+        'kategoriId':0,
+        'tarih': "",  
+        'teklifFiyat': 0,
+        'teklifId': 0,
+        'urunAdi': "",    
+        'urunId': 0,
+        'yuklemeTipi': "", 
+        'yuzeyIslem': "",
+        'yuzeyIslemId':""
+      }
       this.urunTarihi = null;
       this.kategori = null;
       this.urunL = null;
@@ -1300,9 +1320,9 @@ export default {
       this.urun.yuzeyIslem = this.yuzey.name ? this.yuzey.name : this.yuzey;
       this.urun.teklifId = this.teklif.id;
 
-      //  if(!this.urun_kontrol.kategoriAdi)
 
       this.yuklemeTipKontrol();
+
 
       this.urun.tarih = this.localService.getDateString(this.urunTarihi);
 
@@ -1316,6 +1336,7 @@ export default {
           this.degisim_yeni_urun.push(this.urun);
         }
         this.urunListesi.push(this.urun);
+
       } else {
         if (!this.urunkayit) {
           //değişim yeni ürünlerde kontrolü
@@ -1330,6 +1351,7 @@ export default {
       }
 
       this.urun = this.dtUrun;
+      console.log("dtUrun",this.dtUrun)
       this.dis_urunSil = true;
       this.resetProduct();
       //  }
@@ -1776,6 +1798,7 @@ export default {
         this.teklif = data.teklif;
         this.urunListesi = data.urunler;
         this.dtUrun = data.teklifModel;
+
         this.urun = this.dtUrun;
         //dosya işlemleri
         this.dis_fotoGonder = false;
