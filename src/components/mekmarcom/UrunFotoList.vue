@@ -111,6 +111,8 @@ export default {
 
             }
             this.kayitKontrol();
+            this.$toast.add({ severity: 'success', summary: 'Fotoğraf Sıra Değiştirme', detail: 'Fotoğraf Sıra Değiştirme Başarıyla Gerçekleşti', life: 3000 })
+
             
         },
         fotoGeriAl(event){
@@ -165,7 +167,7 @@ export default {
                
                 if (res.status) {
                     this.getProductDetailData()
-                    this.$toast.add({ severity: 'success', summary:'Fotoğraf Sıra Değişimi',detail:'Fotoğraf Sıra Değiştirme Başarıyla Gerçekleşti',life:3000})
+                    this.$toast.add({ severity: 'success', summary:'Fotoğraf Silme',detail:'Fotoğraf Silme İşlemi Başarıyla Gerçekleşti',life:3000})
                  }  
                 
             })
