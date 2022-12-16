@@ -289,7 +289,7 @@
                   class="p-inputtext-sm"
                   id="navlunSatis"
                   :disAktif="dis_urun_giris"
-                  @change="currencyDegisim('navlunSatis', $event)"
+                  @input="currencyDegisim('navlunSatis', $event)"
                   v-model="profData.navlunSatis"
                   mode="currency"
                   currency="USD"
@@ -317,7 +317,7 @@
                   id="navlunAlis"
                   :disAktif="dis_urun_giris"
                   v-model="profData.navlunAlis"
-                  @change="currencyDegisim('navlunAlis', $event)"
+                  @input="currencyDegisim('navlunAlis', $event)"
                   mode="currency"
                   currency="USD"
                   locale="jp-JP"
@@ -343,7 +343,7 @@
                 <InputNumber
                   class="p-inputtext-sm"
                   id="digerTutar1"
-                  @change="currencyDegisim('detayTutar_1', $event)"
+                  @input="currencyDegisim('detayTutar_1', $event)"
                   v-model="profData.detayTutar_1"
                   :disAktif="dis_urun_giris"
                   mode="currency"
@@ -371,7 +371,7 @@
                 <InputNumber
                   class="p-inputtext-sm"
                   id="detayAlis_1"
-                  @change="currencyDegisim('detayAlis_1', $event)"
+                  @input="currencyDegisim('detayAlis_1', $event)"
                   v-model="profData.detayAlis_1"
                   :disAktif="dis_urun_giris"
                   mode="currency"
@@ -401,7 +401,7 @@
                 <InputNumber
                   class="p-inputtext-sm"
                   id="detayTutar_2"
-                  @change="currencyDegisim('detayTutar_2', $event)"
+                  @input="currencyDegisim('detayTutar_2', $event)"
                   v-model="profData.detayTutar_2"
                   :disAktif="dis_urun_giris"
                   mode="currency"
@@ -429,7 +429,7 @@
                 <InputNumber
                   class="p-inputtext-sm"
                   id="detayAlis_2"
-                  @change="currencyDegisim('detayAlis_2', $event)"
+                  @input="currencyDegisim('detayAlis_2', $event)"
                   v-model="profData.detayAlis_2"
                   :disAktif="dis_urun_giris"
                   mode="currency"
@@ -459,7 +459,7 @@
                 <InputNumber
                   class="p-inputtext-sm"
                   id="detayTutar_3"
-                  @change="currencyDegisim('detayTutar_3', $event)"
+                  @input="currencyDegisim('detayTutar_3', $event)"
                   v-model="profData.detayTutar_3"
                   :disAktif="dis_urun_giris"
                   mode="currency"
@@ -487,7 +487,7 @@
                 <InputNumber
                   class="p-inputtext-sm"
                   id="detayAlis_3"
-                  @change="currencyDegisim('detayAlis_3', $event)"
+                  @input="currencyDegisim('detayAlis_3', $event)"
                   v-model="profData.detayAlis_3"
                   :disAktif="dis_urun_giris"
                   mode="currency"
@@ -516,7 +516,7 @@
                 <InputNumber
                   class="p-inputtext-sm"
                   id="detayTutar_4"
-                  @change="currencyDegisim('detayTutar_4', $event)"
+                  @input="currencyDegisim('detayTutar_4', $event)"
                   v-model="profData.detayTutar_4"
                   :disAktif="diger_4"
                   mode="currency"
@@ -541,7 +541,7 @@
             </div>
             <div class="column is-6">
               <span class="p-float-label">
-                <InputNumber class="p-inputtext-sm" id="sigorta_tutar" @change="currencyDegisim('sigorta_tutar', $event)"
+                <InputNumber class="p-inputtext-sm" id="sigorta_tutar" @input="currencyDegisim('sigorta_tutar', $event)"
                   v-model="profData.sigorta_tutar" :disabled="sigorta_tutar" mode="currency" currency="USD" locale="jp-JP" />
             
                 <label for="sigorta_tutar">Sigorta Alış</label>
@@ -1108,7 +1108,8 @@ export default {
 
     },
     currencyDegisim(property, _value) {
-      let value = parseFloat(_value);
+      console.log("_value", _value.formattedValue)
+      let value = parseFloat(_value.value);
       if (property == "navlunSatis") {
         this.profData.navlunSatis = value;
         this.dis_urun_giris = true;
@@ -1125,7 +1126,7 @@ export default {
       if (property == "detayAlis_3") this.profData.detayAlis_3 = value;
 
       this.kayitKontrol();
-      this.emitter.emit("navlunDigerTutarDegisim");
+      this.$emit("navlunDigerTutarDegisim");
       this.emitter.emit('save_button_activated', false)
 
     },
