@@ -20,29 +20,46 @@
         class="p-datatable-responsive p-datatable-cars"
         :value="urunList"
         v-model:filters="filters"
-        dataKey="_id"
+        filterDisplay="row"
         selectionMode="simple"
         v-model:selection="selectUrun"
         @row-select="urunSecim($event)"
+        
       >
-        <Column field="urunid" header="Id">
+        <Column field="urunid" header="Id" :showFilterMenu="false">
           <template #body="slotProps">
             {{ slotProps.data.urunid }}
           </template>
+          <template #filter="{filterModel,filterCallback}">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by" v-tooltip.top.focus="'Filter as you type'" style="width:70px;" />
+          </template>
         </Column>
-        <Column field="renk_en" header="Renk">
+        <Column field="renk_en" header="Renk" :showFilterMenu="false">
           <template #body="slotProps">
             {{ slotProps.data.renk_en }}
           </template>
+          <template #filter="{filterModel,filterCallback}">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by country" v-tooltip.top.focus="'Filter as you type'" style="width:70px;" />
+          </template>
         </Column>
-        <Column field="urunkod" header="Kod">
+        <Column field="urunkod" header="Kod" :showFilterMenu="false">
           <template #body="slotProps">
             {{ slotProps.data.urunkod }}
           </template>
+          <template #filter="{filterModel,filterCallback}">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by country" v-tooltip.top.focus="'Filter as you type'" style="width:70px;" />
+          </template>
         </Column>
-        <Column field="urunadi_en" header="Ürün Adı">
+        <Column field="urunadi_en" header="Ürün Adı" :showFilterMenu="false">
           <template #body="slotProps">
             {{ slotProps.data.urunadi_en }}
+          </template>
+          <template #filter="{filterModel,filterCallback}">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by country" v-tooltip.top.focus="'Filter as you type'" style="width:70px;" />
           </template>
         </Column>
         <Column field="tedarikciadi" header="Tedarikçi">
@@ -87,7 +104,7 @@
 import MekmarUrunDetay from "../components/mekmarcom/MekmarUrunDetay";
 import { mapGetters } from "vuex";
 import service from "../service/MekmarPanelService";
-
+import { FilterMatchMode } from 'primevue/api'
 export default {
   components: {
     MekmarUrunDetay,
@@ -98,7 +115,15 @@ export default {
       kategoriList: null,
       urunList: null,
       kategori: "Marble",
-      filters: {},
+      filters: {
+        urunid: { value:null, matchMode: FilterMatchMode.STARTS_WITH },
+        renk_en: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        urunkod: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        urunadi_en: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+
+
+
+      },
       selectUrun: null,
       isUrunDetay: false,
       urunDetayBaslik: "",

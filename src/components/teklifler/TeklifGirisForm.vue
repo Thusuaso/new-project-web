@@ -978,6 +978,7 @@ export default {
             life: 3000,
           });
           this.$store.dispatch("loadTekliflerEnBoy", data.datas);
+          this.isEnBoyButton = false
         } else {
           this.$toast.add({
             severity: "error",
