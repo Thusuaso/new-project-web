@@ -77,10 +77,9 @@ export default {
 
       const data = { ...this.takip_form[0] };
       service.sevkTakipGuncelle(data).then((res) => {
-        console.log("sevkTakipGuncelle", data);
         if (res) {
           alert("Bilgiler Güncellendi.");
-          this.emitter.emit("sevkTakipFormGuncelle");
+          this.$emit("sevkTakipFormGuncelle");
         }
       });
     },

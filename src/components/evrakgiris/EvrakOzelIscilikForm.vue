@@ -13,7 +13,7 @@
               class="p-button-success"
               iconPos="left"
               icon="fas fa-download"
-              :disabled="dis_DosyaAc"
+              :disabled="dis_download"
             />
           </a>
         </div>
@@ -47,6 +47,9 @@ export default {
         this.tedarikciList = data;
         this.TedarikciTur = this.tedarikciList.find((x) => x.ID == this.id);
       });
+    this.tedarikciLink = this.SiparisEvrakList.Listem.Draft
+
+
   },
   data() {
     return {

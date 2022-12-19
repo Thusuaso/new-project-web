@@ -59,6 +59,8 @@ export default {
     } else {
       this.dis_download = true;
     }
+    console.log("SiparisEvrakList", this.SiparisEvrakList)
+
   },
   methods: {
     faturaDosyaGonder(event) {

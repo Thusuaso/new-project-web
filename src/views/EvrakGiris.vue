@@ -117,6 +117,7 @@
             position="top"
             :modal="true"
             maximizable
+            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
           >
             <EvrakDigerForm />
           </Dialog>
@@ -127,6 +128,7 @@
             position="top"
             :modal="true"
             maximizable
+            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
           >
             <EvrakTedarikciForm />
           </Dialog>
@@ -135,7 +137,8 @@
             v-model:header="evrakFormBaslik"
             position="top"
             :modal="true"
-            maximizable=""
+            maximizable
+            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
           >
             <NakliyeFaturaGiris />
           </Dialog>
@@ -145,6 +148,7 @@
             position="top"
             :modal="true"
             maximizable
+            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
           >
             <EvrakDenizcilikForm />
           </Dialog>
@@ -154,6 +158,7 @@
             position="top"
             :modal="true"
             maximizable
+            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
           >
             <GumrukIlaclamaForm />
           </Dialog>
@@ -163,6 +168,7 @@
             position="top"
             :modal="true"
             maximizable
+            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
           >
             <EvrakOzelIscilikForm />
           </Dialog>
@@ -510,9 +516,11 @@ export default {
             .faturaDosyaGonder(file, this.evrakID, this.SiparisTur.siparisno)
             .then((data) => {
               console.log("faturaDosyaGonder ", data);
+              
             });
           this.KayitIslemi();
         }
+        alert('Evraklar Başarıyla Yüklendi.')
       } else {
         alert("Sipariş Seçiniz..");
       }
@@ -537,12 +545,12 @@ export default {
           this.evrak.kullaniciAdi = this.$store.__getUsername;
           this.evrakLink = `https://file-service.mekmar.com/file/download/${this.evrakID}/${this.SiparisTur.siparisno}`;
           this.dis_download = false;
-
           return;
         } else {
           alert("Ops! Lütfen Yeniden Deneyiniz.");
         }
       });
+      this.table_loading = true
       service.getEvrakFaturaList(this.SiparisTur.siparisno).then((data) => {
         this.$store.dispatch("loadEvrakForm1", data.color_listesi);
         this.table_loading = false;
@@ -553,6 +561,7 @@ export default {
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     select_ayrinti_sec(event) {
+
       if (this.SiparisTur) {
         this.select_ayrinti = event.data;
 
@@ -564,10 +573,14 @@ export default {
           this.select_ayrinti.Faturaid != 50 &&
           this.select_ayrinti.Faturaid != 3
         ) {
+          this.table_loading = true;
+
           service.getEvrakFaturaList(this.SiparisTur.siparisno).then((data) => {
             this.Listem = data.fatura_listesi.find(
               (x) => x.faturano == this.select_ayrinti.Faturaid
             );
+            this.table_loading = false;
+
             this.SatutusEvrak = data;
 
             const veri = {
@@ -584,10 +597,15 @@ export default {
             this.select_ayrinti = null;
           });
         } else if (this.select_ayrinti.Faturaid == 30) {
+          this.table_loading = true;
+
           service.getEvrakFaturaList(this.SiparisTur.siparisno).then((data) => {
             this.Listem = data.fatura_listesi.find(
               (x) => x.faturano == this.select_ayrinti.Faturaid
             );
+            this.table_loading = false;
+
+
             this.SatutusEvrak = data;
 
             const veri = {
@@ -604,10 +622,14 @@ export default {
             this.select_ayrinti = null;
           });
         } else if (this.select_ayrinti.Faturaid == 13) {
+          this.table_loading = true;
+
           service.getEvrakFaturaList(this.SiparisTur.siparisno).then((data) => {
             this.Listem = data.fatura_listesi.find(
               (x) => x.faturano == this.select_ayrinti.Faturaid
             );
+            this.table_loading = false;
+
             this.SatutusEvrak = data;
 
             const veri = {
@@ -624,10 +646,14 @@ export default {
             this.select_ayrinti = null;
           });
         } else if (this.select_ayrinti.Faturaid == 50) {
+          this.table_loading = true;
+
           service.getEvrakFaturaList(this.SiparisTur.siparisno).then((data) => {
             this.Listem = data.fatura_listesi.find(
               (x) => x.faturano == this.select_ayrinti.Faturaid
             );
+            this.table_loading = false;
+
             this.SatutusEvrak = data;
 
             const veri = {
@@ -635,7 +661,6 @@ export default {
               ID: this.select_ayrinti.Faturaid,
               siparisno: this.SiparisTur.siparisno,
             };
-
             this.$store.dispatch("loadEvrakForm", veri);
 
             this.is_denizcilik = true;
@@ -644,10 +669,14 @@ export default {
             this.select_ayrinti = null;
           });
         } else if (this.select_ayrinti.Faturaid == 40) {
+          this.table_loading = true;
+
           service.getEvrakFaturaList(this.SiparisTur.siparisno).then((data) => {
             this.Listem = data.fatura_listesi.find(
               (x) => x.faturano == this.select_ayrinti.Faturaid
             );
+            this.table_loading = false;
+
             this.SatutusEvrak = data;
 
             const veri = {
@@ -664,10 +693,14 @@ export default {
             this.select_ayrinti = null;
           });
         } else if (this.select_ayrinti.Faturaid == 73) {
+          this.table_loading = true;
+
           service.getEvrakFaturaList(this.SiparisTur.siparisno).then((data) => {
             this.Listem = data.fatura_listesi.find(
               (x) => x.faturano == this.select_ayrinti.Faturaid
             );
+            this.table_loading = false;
+
             this.SatutusEvrak = data;
 
             const veri = {
