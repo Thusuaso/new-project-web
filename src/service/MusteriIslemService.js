@@ -130,6 +130,20 @@ const MusteriIslemService = {
   },
   setCustomersCopyTo(teklifMusteriAyrinti) {
     return axios.post('listeler/teklifmusteriler/customersCopyto', teklifMusteriAyrinti).then(res => res.data);
+  },
+  setCustomerSurface(customers) {
+    return axios.post('listeler/musteriler/musteriSurface',customers).then(res=>res.data)
+  },
+  setCustomerSurfaceUpdate(customers) {
+    return axios.put('listeler/musteriler/musteriSurface',customers).then(res=>res.data)
+  },
+  setCustomerSurfaceDelete(id) {
+    return axios.delete('listeler/musteriler/musteriSurface/delete/' + id).then(res=>res.data)
+  },
+
+
+  getCustomerSurfaceList() {
+    return axios.get('listeler/musteriler/musteriSurfaceList').then(res=>res.data)
   }
 };
 

@@ -14,6 +14,8 @@
               :scrollable="true"
               scrollHeight="350%"
               selectionMode="single"
+              v-model:selection="selectedOdeme"
+              @row-select="isSelectedOdeme($event)"
             >
               <Column
                 field="sira"
@@ -84,6 +86,47 @@
               </Column>
             </DataTable>
           </div>
+          <Dialog v-model:visible="is_change_form" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '55vw'}" >
+              <br/>
+              <br />
+
+              <div class="columns is-centered" style="margin-left:75px;">
+                <div class="column">
+                  <span class="p-float-label">
+                    <AutoComplete v-model="odeme.siparisno" :suggestions="filteredPoList" @complete="searchPo($event)"
+                      optionLabel="siparisNo" />
+                    <label for="sipNo">Sipariş No</label>
+                  </span>
+                </div>
+                <div class="column">
+                  <span class="p-float-label">
+                    <InputNumber v-model="odeme.tutar" mode="currency" currency="USD" locale="en-US" @input="odeme.tutar = $event.value"/>
+                    <label for="tutar">Tutar</label>
+                  </span>
+                </div>
+
+              </div>
+              <div class="columns" style="margin-left:65px;">
+                <div class="column">
+                  <div class="column">
+                    <span class="p-float-label">
+                      <Textarea v-model="odeme.aciklama" id="aciklama" row="10" cols="54"
+                         />
+                      <label for="aciklama">Açıklama</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <Button class="p-button-primary" @click="save" label="Kaydet" style="width:100%;"/>
+              <br/>
+              <br />
+              <br />
+              <br />
+
+              
+              
+          </Dialog>
         </div>
       </div>
     </div>
@@ -106,11 +149,27 @@ export default {
         this.secim_loading = false;
         this.ayrinti_loading = false;
         this.odeme_loading = false;
+
       });
+      this.odeme =  {
+
+        siparisno: "",
+          tutar: 0,
+            odemeId: 0
+      }
     });
   },
   data() {
     return {
+      odeme: {
+
+        siparisno: "",
+        tutar: 0,
+        odemeId:0
+      },
+      filteredPoList:[],
+      is_change_form:false,
+      selectedOdeme:[],
       filters: {},
       select_ayrinti: null,
       select_odeme: null,
@@ -133,9 +192,36 @@ export default {
       "finans_odeme_secim_toplam",
       "finans_odeme_secim_list",
       "servis_adres",
+      "finans_po_list"
     ]),
   },
   methods: {
+
+    save() { 
+
+      this.odeme.odemeId = this.selectedOdeme.id
+      service.setOdemelerAyrintiTablosu(this.odeme).then(data => { 
+        console.log(data)
+      })
+    },
+    searchPo(event) { 
+        let result;
+        if (event.query.length === 0) {
+          result = [...this.finans_po_list];
+        } else {
+          result = this.finans_po_list.filter((ted) => {
+            return ted.siparisNo
+              .toLowerCase()
+              .startsWith(event.query.toLowerCase());
+          });
+        }
+
+        this.filteredPoList = result;
+    },
+    isSelectedOdeme(event) { 
+      console.log("isSelectedOdeme", event)
+      this.is_change_form = true
+    },
     formatPrice(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

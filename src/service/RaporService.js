@@ -685,7 +685,8 @@ const raporService = {
         getYuklemeAllAll(){
 
         return axios.get('/raporlar/listeler/sevkiyatRaporAllAll').then(res => res.data)
-    },
+  },
+  
 };
 
 export default raporService;

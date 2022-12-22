@@ -104,6 +104,9 @@
                     <router-link to="/musteriler/ulkeyeGoreMusteriler">
                         <el-menu-item index="8-3"> Ülkeye Göre Müşteriler </el-menu-item>
                     </router-link>
+                    <router-link to="/musteriler/seleksiyonaGoreMusteriler">
+                        <el-menu-item index="8-4"> Seleksiyon Müşterileri </el-menu-item>
+                    </router-link>
                 </el-sub-menu>
                 <el-sub-menu index="9" v-if="isOthers" v-show="is_h">
                     <template #title>Atlanta SM</template>
@@ -124,13 +127,13 @@
                             <el-menu-item index="10-10-2"> Sevkiyat Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/sevkiyatRaporuAll">
-                            <el-menu-item index="10-10-2"> Sevkiyat Raporu Hepsi </el-menu-item>
+                            <el-menu-item index="10-10-3"> Sevkiyat Raporu Hepsi </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/stokRaporu">
-                            <el-menu-item index="10-10-3"> Stok Raporu </el-menu-item>
+                            <el-menu-item index="10-10-4"> Stok Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/ocakListesi">
-                            <el-menu-item index="10-10-4"> Ocak Listesi Raporu </el-menu-item>
+                            <el-menu-item index="10-10-5"> Ocak Listesi Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/uretilecekUrunler">
                             <el-menu-item index="10-10-6"> Üretilecek Ürünler </el-menu-item>

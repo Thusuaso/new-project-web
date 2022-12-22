@@ -705,16 +705,15 @@ export default {
       this.$store.dispatch("datatableLoadingBeginAct");
 
       service.uretimSil(this.detail.kasano).then((status) => {
+        this.$store.dispatch('loadUretimList', status.data2)
+
         if (status) {
           socket.siparis.emit("seleksiyon_kayitsil_event", this.detail.id);
           if (this.kayit_tur == "Sipariş") {
             siparisService
               .getSiparisUrun(this.siparis.name)
               .then((siparis_data) => {
-                socket.siparis.emit(
-                  "seleksiyon_siparisdegisim_event",
-                  siparis_data
-                );
+                console.log(siparis_data)
                 this.dataSifirla();
                 this.$emit("seleksiyon_form_kapat");
                 this.$toast.add({
@@ -749,12 +748,15 @@ export default {
         this.isGuncelle = true;
         if (this.kayit_kontrol()) {
           service.uretimGuncelle(this.detail).then((status) => {
+            this.$store.dispatch('loadUretimList', status.data2)
+
             if (status) {
               service.getUretim(this.detail.kasano).then((uretim_data) => {
                 socket.siparis.emit(
                   "seleksiyon_kayitguncelle_event",
                   uretim_data
                 );
+
 
                 if (this.detail.uretimturid == 2) {
                   siparisService
@@ -912,7 +914,7 @@ export default {
         if (data.kayit_durum) {
           this.$store.dispatch("seleksiyonKaydetClickActions");
           socket.siparis.emit("seleksiyon_coklukayit_event", data.kasa_list);
-
+          this.$store.dispatch('loadUretimList', data.data2)
           if (this.kayit_tur.name == "Sipariş") {
             siparisService
               .getSiparisUrun(this.siparis)

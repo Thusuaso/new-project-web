@@ -480,9 +480,7 @@ export default {
         this.musteri_model.musteri_temsilci_id = this.select_temsilci.id;
 
         this.musteri_model.ulke_id = this.select_ulke.id;
-        let kullaniciadi = JSON.parse(
-          localStorage.getItem("user")
-        ).kullaniciAdi;
+        let kullaniciadi = this.$store.getters.__getUsername
         this.musteri_model.kullanici_id = this.musteri_temsilci_list.find(
           (x) => x.kullanici_adi === kullaniciadi
         ).id;

@@ -20,7 +20,7 @@
       </div>
       <div class="column is-4">
         <span class="p-float-label">
-          <InputText id="line" type="text" v-model="eta" />
+          <Calendar id="line" type="text" v-model="eta" />
           <label for="line">Eta</label>
         </span>
       </div>

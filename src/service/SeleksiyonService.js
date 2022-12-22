@@ -157,6 +157,9 @@ const SeleksiyonService = {
   },
   setCrate(data) {
     return axios.post("/seleksiyon/setCrateAll", data).then((res) => res.data);
+  },
+  getIsfControl(evrakAdi) {
+    return axios.get("/islemler/tedarikci/isfControl/" + evrakAdi).then(res=>res.data)
   }
 };
 

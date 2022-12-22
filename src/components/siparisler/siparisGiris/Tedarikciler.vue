@@ -110,6 +110,10 @@
         v-model:selection="selectUrun"
         :scrollable="true"
         scrollHeight="200px"
+        :resizableColumns="true" 
+        columnResizeMode="fit" 
+        showGridlines 
+        responsiveLayout="scroll"
       >
         <Column field="urunAdi" header="Ürün Adı">
           <template #body="slotProps">
@@ -343,10 +347,7 @@ export default {
     this.date = gun + "-" + (ay + 1) + "-" + yil;
   },
   methods: {
-    formatDecimal(value) {
-      let val = (value / 1).toFixed(2).replace(".", ",");
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
+
     controlTedarikciList(event) {
       for (let item of this.tedarikciList) {
         if (item.tedarikciadi == event) {
@@ -538,57 +539,77 @@ export default {
 
       this.urunList[0].kullaniciAdi = this.$store.getters.__getUsername;
       const evrak = this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
+      service.getIsfControl(evrak).then(data => { 
+        if (data) {
+          fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
+            console.log(data)
+            const bilgi = {
+              evrak: this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf",
+              siparisno: this.siparisNo,
+              kullaniciAdi: this.$store.getters.__getUsername,
+            };
+            this.bilgi = bilgi;
+            service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
+              if (veri.Status) {
+                alert("Başarılı şekilde yuklendi.");
 
-      fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
-        const bilgi = {
-          evrak: this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf",
-          siparisno: this.siparisNo,
-          kullaniciAdi: this.$store.getters.__getUsername,
-        };
-        this.bilgi = bilgi;
-        service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
-          if (veri.Status) {
-            alert("Başarılı şekilde yuklendi.");
+                this.IcSiparisDosyaGonder();
+              } else {
+                alert("Ops! Tekrar Deneyiniz. Yüklenemedi.");
+              }
+            });
+          });
+        } else {
+          this.$toast.add({ severity: 'danger', summary: 'ISF', detail: 'Zaten kayıtlı bir ISF belgesi', life: 3000 });
+         }
+      })
+      
+    
+    
 
-            this.IcSiparisDosyaGonder();
-          } else {
-            alert("Ops! Tekrar Deneyiniz. Yüklenemedi.");
-          }
-        });
-      });
     },
     faturaDosyaGonder(event) {
       if (event.size > 1000000) {
-        alert("Lütfen Evrak Boyutunu Kontrol Ediniz.");
+        this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'Evrak boyutunu kontrol ediniz.', life: 3000 });
+
       } else {
         this.faturaGonderBilgileri = event;
 
         if (!this.urunList) {
-          alert("Tedarikçi Seçiniz ..");
+          this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'Lütfen tedarikçi seçiniz.', life: 3000 });
+
 
           return;
         }
         this.urunList[0].kullaniciAdi = this.$store.getters.__getUsername;
         const evrak =
           this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
-        fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
-          console.log(data);
-          const bilgi = {
-            evrak: this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf",
-            siparisno: this.siparisNo,
-            kullaniciAdi: this.$store.getters.__getUsername,
-          };
-          this.bilgi = bilgi;
-          service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
-            if (veri.Status) {
-              alert("Başarılı şekilde yuklendi.");
+        service.getIsfControl(evrak).then(data => {
+          if (data) {
+            fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
+              console.log(data);
+              const bilgi = {
+                evrak: this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf",
+                siparisno: this.siparisNo,
+                kullaniciAdi: this.$store.getters.__getUsername,
+              };
+              this.bilgi = bilgi;
+              service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
+                if (veri.Status) {
+                  this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
 
-              this.IcSiparisDosyaGonder();
-            } else {
-              alert("Ops! Tekrar Deneyiniz. Yüklenemedi.");
-            }
-          });
-        });
+                  this.IcSiparisDosyaGonder();
+                } else {
+                  this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'ISF kaydedilemedi, Lütfen tekrar deneyiniz.', life: 3000 });
+
+                }
+              });
+            });
+          } else {
+            this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'Zaten kayıtlı bir ISF belgesi', life: 3000 });
+          }
+        })
+        
       }
     },
     formatDecimal(value) {

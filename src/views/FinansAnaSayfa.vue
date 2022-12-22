@@ -443,6 +443,7 @@ export default {
       this.select_konteyner = event.data;
       service.getFinansAyrintiListYukle(event.data.id).then((data) => {
         store.dispatch("finansAyrintiListYukleAct", data);
+        store.dispatch("finansPoListLoadAct", data.po_list)
         this.konteynerBaslik = event.data.musteriadi;
         this.isKonteyner = true;
       });

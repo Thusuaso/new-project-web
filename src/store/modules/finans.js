@@ -17,6 +17,7 @@ const state = {
   finans_ayrinti_odeme_toplam: 0,
   finans_odeme_secim_list: null,
   finans_odeme_secim_toplam: 0,
+  finans_po_list:[]
 };
 
 const actions = {
@@ -35,6 +36,9 @@ const actions = {
   finansOdemeSecimListYukleAct({ commit }, data) {
     commit("finansOdemeSecimListYukleMut", data);
   },
+  finansPoListLoadAct({ commit }, data) {
+    commit("finansPoListLoadMut",data)
+  }
 };
 
 const mutations = {
@@ -170,6 +174,9 @@ const mutations = {
       state.finans_odeme_secim_toplam += item.tutar;
     }
   },
+  finansPoListLoadMut(state, data) {
+    state.finans_po_list = data
+  }
 };
 
 const getters = {
@@ -228,6 +235,9 @@ const getters = {
   finans_toplam_eski_pesinat(state) {
     return state.finans_toplam_eski_pesinat;
   },
+  finans_po_list(state) {
+    return state.finans_po_list
+  }
 };
 
 export default {

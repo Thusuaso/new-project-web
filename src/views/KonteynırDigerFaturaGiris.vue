@@ -297,6 +297,10 @@ export default {
         { id: 7, name: "Gümrük" },
         { id: 13, name: "Navlun" },
         { id: 9, name: "Liman" },
+        { id: 100, name: "Lashing" },
+        { id: 101, name: "Booking" },
+        { id: 102, name: "Spanzet" }
+
       ],
     };
   },

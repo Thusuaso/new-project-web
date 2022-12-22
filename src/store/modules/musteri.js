@@ -17,6 +17,9 @@ const state = {
     fuarMusteri: [],
     fuarMusteriAyrinti: [],
     bgpMusteri: [],
+    customerSurfaceList: [],
+    surfaceList: [],
+    customerSurfaceListA:[]
     
 }
 
@@ -68,11 +71,23 @@ const actions = {
     },
     bgp_musteri_load_act({ commit }, data) {
         commit("bgp_musteri_load_mut",data)
+    },
+    customers_surface_list_load_act({ commit }, data) {
+        commit('customers_surface_list_load_mut',data)
     }
 }
 
 const mutations = {
+    customers_surface_list_load_mut(state, data) {
+        state.customerSurfaceList = data.customersList
+        state.surfaceList = data.surfaceList
+        state.customerSurfaceListA = []
+        for (let i of data.surfaceList) {
+            state.customerSurfaceListA.push({ surfaceName:i.surface ,dataList:data.customersList.filter(x => x.surfaceId == i.id) })
+        }
 
+
+    },
 
     musteri_listesi_yukle_mut(state,data){
 
@@ -124,7 +139,12 @@ const mutations = {
 }
 
 const getters = {
-
+    customerSurfaceList(state) {
+        return state.customerSurfaceList
+    },
+    surfaceList(state) {
+        return state.surfaceList
+    },
     musteri_listesi(state){
 
         return state.musteri_listesi
@@ -177,6 +197,9 @@ const getters = {
     },
     bgpMusteri(state) {
         return state.bgpMusteri
+    },
+    customerSurfaceListA(state) {
+        return state.customerSurfaceListA
     }
 }
 

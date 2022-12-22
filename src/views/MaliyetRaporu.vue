@@ -492,6 +492,54 @@
                 {{ formatPrice(toplam_liman) }}
               </template>
             </Column>
+            <Column field="lashing" header="Lashing" headerStyle="width:70px" bodyStyle="text-align:center">
+              <template #body="slotProps">
+                <div :style="{
+                  'background-color':
+                    slotProps.data.lashing_evrak.length == 0 &&
+                    slotProps.data.lashing > 0
+                      ? '#F1948A'
+                      : '',
+                }">
+                  {{ formatPrice(slotProps.data.lashing) }}
+                </div>
+              </template>
+              <template #footer>
+                {{ formatPrice(toplam_lashing) }}
+              </template>
+            </Column>
+            <Column field="booking" header="Booking" headerStyle="width:70px" bodyStyle="text-align:center">
+              <template #body="slotProps">
+                <div :style="{
+                  'background-color':
+                    slotProps.data.booking_evrak.length == 0 &&
+                    slotProps.data.booking > 0
+                      ? '#F1948A'
+                      : '',
+                }">
+                  {{ formatPrice(slotProps.data.booking) }}
+                </div>
+              </template>
+              <template #footer>
+                {{ formatPrice(toplam_booking) }}
+              </template>
+            </Column>
+            <Column field="spazlet" header="Spazlet" headerStyle="width:70px" bodyStyle="text-align:center">
+              <template #body="slotProps">
+                <div :style="{
+                  'background-color':
+                    slotProps.data.spazlet_evrak.length == 0 &&
+                      slotProps.data.spazlet > 0
+                      ? '#F1948A'
+                      : '',
+                }">
+                  {{ formatPrice(slotProps.data.spazlet) }}
+                </div>
+              </template>
+              <template #footer>
+                {{ formatPrice(toplam_spazlet) }}
+              </template>
+            </Column>
             <Column
               field="sigorta"
               header="Sigorta"
@@ -1157,6 +1205,54 @@
                 {{ formatPrice(toplam_navlun) }}
               </template>
             </Column>
+            <Column field="lashing" header="Lashing" headerStyle="width:70px" bodyStyle="text-align:center">
+              <template #body="slotProps">
+                <div :style="{
+                  'background-color':
+                    slotProps.data.lashing > 0 &&
+                    slotProps.data.lashing_evrak.length <= 0
+                      ? '#F1948A'
+                      : '',
+                }">
+                  {{ formatPrice(slotProps.data.lashing) }}
+                </div>
+              </template>
+              <template #footer>
+                {{ formatPrice(toplam_lashing) }}
+              </template>
+            </Column>
+            <Column field="booking" header="Booking" headerStyle="width:70px" bodyStyle="text-align:center">
+              <template #body="slotProps">
+                <div :style="{
+                  'background-color':
+                    slotProps.data.booking > 0 &&
+                    slotProps.data.booking_evrak.length <= 0
+                      ? '#F1948A'
+                      : '',
+                }">
+                  {{ formatPrice(slotProps.data.booking) }}
+                </div>
+              </template>
+              <template #footer>
+                {{ formatPrice(toplam_booking) }}
+              </template>
+            </Column>
+            <Column field="spazlet" header="Spazlet" headerStyle="width:70px" bodyStyle="text-align:center">
+              <template #body="slotProps">
+                <div :style="{
+                  'background-color':
+                    slotProps.data.spazlet > 0 &&
+                    slotProps.data.spazlet_evrak.length <= 0
+                      ? '#F1948A'
+                      : '',
+                }">
+                  {{ formatPrice(slotProps.data.spazlet) }}
+                </div>
+              </template>
+              <template #footer>
+                {{ formatPrice(toplam_spazlet) }}
+              </template>
+            </Column>
             <Column
               field="detay_1"
               header="Diğer 1"
@@ -1405,6 +1501,12 @@ export default {
       toplam_gumruk: 0,
       toplam_ilaclama: 0,
       toplam_liman: 0,
+      toplam_booking: 0,
+      toplam_lashing: 0,
+      toplam_spazlet: 0,
+
+
+
       toplam_navlun: 0,
       toplam_pazarlama: 0,
       toplam_banka_masrafi: 0,
@@ -1630,6 +1732,11 @@ export default {
       this.toplam_gumruk = 0;
       this.toplam_ilaclama = 0;
       this.toplam_liman = 0;
+      this.toplam_lashing = 0;
+      this.toplam_booking = 0;
+      this.toplam_spazlet = 0;
+
+
       this.toplam_navlun = 0;
       this.toplam_pazarlama = 0;
       this.toplam_banka_masrafi = 0;
@@ -1651,6 +1758,12 @@ export default {
         this.toplam_gumruk += item.gumruk;
         this.toplam_ilaclama += item.ilaclama;
         this.toplam_liman += item.liman;
+        this.toplam_lashing += item.lashing;
+        this.toplam_booking += item.booking;
+        this.toplam_spazlet += item.spazlet;
+
+
+
         this.toplam_navlun += item.navlun;
         this.toplam_pazarlama += item.pazarlama;
         this.toplam_banka_masrafi += item.banka_masrafi;

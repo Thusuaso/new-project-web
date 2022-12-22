@@ -151,7 +151,7 @@
                 </DataTable>
               </div>
             </div>
-            <div class="columns" v-if="liman.length > 0 || nakliye.length > 0">
+            <div class="columns" v-if="liman.length > 0 || nakliye.length > 0 || lashing.length>0 ">
               <div class="column" v-if="liman.length > 0">
                 <DataTable v-model:value="liman" class="p-datatable-sm">
                   <template #header>
@@ -234,6 +234,96 @@
                   </Column>
                 </DataTable>
               </div>
+              <div class="column" v-if="lashing.length > 0">
+                <DataTable v-model:value="lashing" class="p-datatable-sm">
+                  <template #header>
+                    <div class="columns is-multiline">
+                      <div class="column is-12">
+                        <span style="font-size: 15px">Lashing Masraf Listesi</span>
+                      </div>
+                    </div>
+                  </template>
+                  <Column field="tur" header="Fatura Adı">
+                    <template #body="slotProps">
+                      {{ slotProps.data.tur }}
+                    </template>
+                  </Column>
+                  <Column field="aciklama" header="Fatura Açıklama" headerStyle="width:180px;" bodyStyle="word-break:break-word;">
+                    <template #body="slotProps">
+                      {{ slotProps.data.aciklama }}
+                    </template>
+                  </Column>
+                  <Column field="tutar" header="Tutar" bodyStyle="text-align:center;" footerStyle="text-align:center;">
+                    <template #body="slotProps">
+                      {{ formatPrice(slotProps.data.tutar) }}
+                    </template>
+                    <template #footer>
+                      {{ formatPrice(lashingToplam) }}
+                    </template>
+                  </Column>
+                </DataTable>
+              </div>
+
+            </div>
+            <div class="columns" v-if="booking.length>0 || spazlet.length>0">
+                <div class="column" v-if="booking.length > 0">
+                  <DataTable v-model:value="booking" class="p-datatable-sm">
+                    <template #header>
+                      <div class="columns is-multiline">
+                        <div class="column is-12">
+                          <span style="font-size: 15px">Booking Masraf Listesi</span>
+                        </div>
+                      </div>
+                    </template>
+                    <Column field="tur" header="Fatura Adı">
+                      <template #body="slotProps">
+                        {{ slotProps.data.tur }}
+                      </template>
+                    </Column>
+                    <Column field="aciklama" header="Fatura Açıklama" headerStyle="width:180px;" bodyStyle="word-break:break-word;">
+                      <template #body="slotProps">
+                        {{ slotProps.data.aciklama }}
+                      </template>
+                    </Column>
+                    <Column field="tutar" header="Tutar" bodyStyle="text-align:center;" footerStyle="text-align:center;">
+                      <template #body="slotProps">
+                        {{ formatPrice(slotProps.data.tutar) }}
+                      </template>
+                      <template #footer>
+                        {{ formatPrice(bookingToplam) }}
+                      </template>
+                    </Column>
+                  </DataTable>
+                </div>
+                <div class="column" v-if="spazlet.length > 0">
+                  <DataTable v-model:value="spazlet" class="p-datatable-sm">
+                    <template #header>
+                      <div class="columns is-multiline">
+                        <div class="column is-12">
+                          <span style="font-size: 15px">Spazlet Masraf Listesi</span>
+                        </div>
+                      </div>
+                    </template>
+                    <Column field="tur" header="Fatura Adı">
+                      <template #body="slotProps">
+                        {{ slotProps.data.tur }}
+                      </template>
+                    </Column>
+                    <Column field="aciklama" header="Fatura Açıklama" headerStyle="width:180px;" bodyStyle="word-break:break-word;">
+                      <template #body="slotProps">
+                        {{ slotProps.data.aciklama }}
+                      </template>
+                    </Column>
+                    <Column field="tutar" header="Tutar" bodyStyle="text-align:center;" footerStyle="text-align:center;">
+                      <template #body="slotProps">
+                        {{ formatPrice(slotProps.data.tutar) }}
+                      </template>
+                      <template #footer>
+                        {{ formatPrice(spazletToplam) }}
+                      </template>
+                    </Column>
+                  </DataTable>
+                </div>
             </div>
           </template>
         </Card>
@@ -254,13 +344,20 @@ export default {
       nakliye: [],
       navlun: [],
       liman: [],
+      lashing: [],
+      booking: [],
+      spazlet:[],
       ilaclamaToplam: 0,
       gumrukToplam: 0,
       nakliyeToplam: 0,
       navlunToplam: 0,
       limanToplam: 0,
+      lashingToplam: 0,
+      bookingToplam: 0,
+      spazletToplam:0,
       masraflarTop: 0,
       masraflarTopList: [],
+      
     };
   },
   props: ["siparisNo", "yeniSiparis"],
@@ -301,11 +398,28 @@ export default {
         this.limanToplam += item.tutar;
       }
     },
+    lashingTop(event) { 
+      this.lashingToplam = 0;
+      for (let item of event) { 
+        this.lashingToplam += item.tutar
+      }
+    },
+    bookingTop(event) {
+      this.bookingToplam = 0;
+      for (let item of event) {
+        this.bookingToplam += item.tutar
+      }
+    },
+    spazletTop(event) {
+      this.spazletToplam = 0;
+      for (let item of event) {
+        this.spazletToplam += item.tutar
+      }
+    }
   },
   mounted() {
     if (!this.yeniSiparis) {
       siparisService.getMasrafListesi(this.siparisNo).then((data) => {
-        console.log("getMasrafListesi", data);
         this.masrafListesi = data;
         this.masraflarTop = 0;
         for (let i of data) {
@@ -317,11 +431,21 @@ export default {
         this.nakliye = data.filter((x) => x.tur == "Nakliye Faturası");
         this.navlun = data.filter((x) => x.tur == "Navlun");
         this.liman = data.filter((x) => x.tur == "Liman Masrafı");
+        this.lashing = data.filter(x => x.tur == 'Lashing Faturası')
+        this.booking = data.filter(x => x.tur == 'Booking Faturası')
+        this.spazlet = data.filter(x => x.tur == 'Spazlet Faturası')
+
+
         this.ilaclamaTop(this.ilaclama);
         this.gumrukTop(this.gumruk);
         this.nakliyeTop(this.nakliye);
         this.navlunTop(this.navlun);
         this.limanTop(this.liman);
+        this.lashingTop(this.lashing)
+        this.bookingTop(this.booking)
+        this.spazletTop(this.spazlet)
+
+
       });
     }
   },

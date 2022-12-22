@@ -626,7 +626,17 @@ const routes = [
       }
     },
   },
-  
+  {
+    path: "/musteriler/seleksiyonaGoreMusteriler",
+    component: () => import("@/views/SeleksiyonMusterileri"),
+    beforeEnter(to, from, next) {
+      if (store.getters.__isAuthentication) {
+        next();
+      } else {
+        next("/login");
+      }
+    },
+  },
 ]
 
 const router = createRouter({

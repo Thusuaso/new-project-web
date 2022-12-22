@@ -120,6 +120,9 @@ const FinansService = {
       .post("finans/listeler/odemelerAyrintiListesiExcel", data_list)
       .then((res) => res.data);
   },
+  setOdemelerAyrintiTablosu(data) {
+    return axios.post("finans/listeler/odemelerDegisim",data)
+  }
 };
 
 export default FinansService;
