@@ -1,10 +1,12 @@
 <template>
     <Button class="p-button-primary" @click="newForm" label="Yeni" />
-
-    <div class="card" style="height: calc(100vh - 143px)">
-        <div class="mainData" >
+    <AutoComplete id="surface" name="phone" v-model="selectedSurface" :suggestions="filteredSurfaceList"
+        @complete="searchSurface($event)" optionLabel="surface" style="margin-left:100px;" @item-select="isSelectedSurface($event)"/>
+    <Button class="p-button-info" label="Hepsi" @click="allCleaner" style="margin-left:100px;"/>
+    <div class="card" style="height: calc(100vh - 143px);margin-top:25px;padding-top:10px;">
+        <div class="mainData"  v-if="!isFilter">
             <div class="mainDataRestricted" v-for="i in customerSurfaceListA" :key="i">
-                <h3 style="font-size:20;font-weight:bold;">
+                <h3 style="font-size:20;font-weight:bold;background-color:aliceblue;">
                     {{ i.surfaceName }}
                 </h3>
                 <DataTable 
@@ -24,14 +26,46 @@
                 >
                     <Column field="firstName" header="Name" :showFilterMenu="false">
                         <template #filter="{filterModel,filterCallback}">
-                            <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter"
+                            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
                                 :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
                         </template>
                     </Column>
                     <Column field="lastName" header="Surname" :showFilterMenu="false">
                         <template #filter="{filterModel,filterCallback}">
-                            <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter"
+                            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
                                 :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                        </template>
+                    </Column>
+                    <Column field="adress" header="Adress"></Column>
+                    <Column field="city" header="City"></Column>
+                    <Column field="email" header="Email"></Column>
+                    <Column field="phone" header="Phone"></Column>
+                </DataTable>
+                <br/>
+            </div>
+        </div>
+
+        <div class="mainData" v-else-if="isFilter">
+            <div class="mainDataRestricted">
+                <h3 style="font-size:20;font-weight:bold;">
+                    {{ surfaceName }}
+                </h3>
+                <DataTable :value="filteredSurface" :scrollable="true" scrollHeight="flex" v-model:filters="filters"
+                    filterDisplay="row" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll"
+                    style="font-size:80%;" v-model:selection="selectedProduct1" selectionMode="single"
+                    @row-select="isSelectedCust($event)">
+                    <Column field="firstName" header="Name" :showFilterMenu="false">
+                        <template #filter="{filterModel,filterCallback}">
+                            <InputText type="text" v-model="filterModel.value" @input="filterCallback()"
+                                class="p-column-filter" :placeholder="`Search by name - `"
+                                v-tooltip.top.focus="'Hit enter key to filter'" />
+                        </template>
+                    </Column>
+                    <Column field="lastName" header="Surname" :showFilterMenu="false">
+                        <template #filter="{filterModel,filterCallback}">
+                            <InputText type="text" v-model="filterModel.value" @input="filterCallback()"
+                                class="p-column-filter" :placeholder="`Search by name - `"
+                                v-tooltip.top.focus="'Hit enter key to filter'" />
                         </template>
                     </Column>
                     <Column field="adress" header="Adress"></Column>
@@ -104,6 +138,9 @@ export default {
     },
     data() { 
         return {
+            surfaceName:"",
+            filteredSurface:[],
+            isFilter:false,
             filteredSurfaceList: [],
             
             selectedSurface: "",
@@ -133,6 +170,16 @@ export default {
         })
     },
     methods: {
+        allCleaner() {
+            this.isFilter = false
+            this.selectedSurface = null
+        },
+        
+        isSelectedSurface(event) {
+            this.isFilter = true
+            this.surfaceName = event.value.surface
+            this.filteredSurface = (this.customerSurfaceList.filter(x => x.surfaceId == event.value.id))
+        },
         searchSurface(event) {
                 let result;
                 if (event.query.length === 0) {

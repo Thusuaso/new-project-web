@@ -154,8 +154,10 @@ export default {
       this.odeme =  {
 
         siparisno: "",
-          tutar: 0,
-            odemeId: 0
+        tutar: 0,
+        odemeId: 0,
+        aciklama: "",
+        kullanici: this.$store.getters.__getUsername
       }
     });
   },
@@ -165,7 +167,9 @@ export default {
 
         siparisno: "",
         tutar: 0,
-        odemeId:0
+        odemeId: 0,
+        aciklama: "",
+        kullanici:this.$store.getters.__getUsername
       },
       filteredPoList:[],
       is_change_form:false,
@@ -201,7 +205,12 @@ export default {
 
       this.odeme.odemeId = this.selectedOdeme.id
       service.setOdemelerAyrintiTablosu(this.odeme).then(data => { 
-        console.log(data)
+        if (data.status) {
+          this.$toast.add({severity:'success',summary:'Odeme',detail:'Odeme Bilgisi Başarıyla Değiştirildi',life:3000})
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'Odeme', detail: 'Odeme Bilgisi Değişim Hatası', life: 3000 })
+        }
+
       })
     },
     searchPo(event) { 
