@@ -10,7 +10,7 @@
             <td>
               <img
                 class="dairesel"
-                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/mehmet.jpeg'"
+                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/avatar4.png'"
                 bodyStyle="text-align:center"
                 width="50"
                 height="50"
@@ -79,6 +79,7 @@
                 bodyStyle="text-align:center"
                 width="50"
                 height="50"
+                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/avatar3.png'"
               />
             </td>
             <td>Hüseyin Özen</td>
@@ -107,7 +108,7 @@
             <td>
               <img
                 class="dairesel"
-                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/gizem1.jpeg'"
+                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/avatar6.png'"
                 bodyStyle="text-align:center"
                 width="50"
                 height="50"
@@ -139,7 +140,7 @@
             <td>
               <img
                 class="dairesel"
-                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/ozlem1.jpeg'"
+                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/avatar5.png'"
                 bodyStyle="text-align:center"
                 width="50"
                 height="50"
@@ -172,7 +173,7 @@
             <td>
               <img
                 class="dairesel"
-                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/hakan4.jpeg'"
+                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/avatar2.png'"
                 bodyStyle="text-align:center"
                 width="50"
                 height="50"
@@ -207,6 +208,7 @@
                 bodyStyle="text-align:center"
                 width="50"
                 height="50"
+                :src="'https://mekmar-image.fra1.digitaloceanspaces.com/personel/avatar1.png'"
               />
             </td>
             <td>Semih Demir</td>
