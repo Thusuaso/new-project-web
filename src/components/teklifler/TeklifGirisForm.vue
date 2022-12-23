@@ -47,7 +47,7 @@
         </template>
       </Card>
     </div>
-    <div class="column">
+    <!-- <div class="column">
       <Card style="height: 250px">
         <template #content>
           <ul style="margin-top: -10px">
@@ -99,7 +99,7 @@
           </ul>
         </template>
       </Card>
-    </div>
+    </div> -->
     <div class="column">
       <Card style="height: 250px">
         <template #content>
@@ -209,26 +209,21 @@
                 </div>
               </div>
             </TabPanel>
-            <TabPanel header="Son Görüşme">
-              <div class="columns">
-                <div class="column">
-                  <custom-file-input
-                    baslik="Gönder"
-                    @sunucuDosyaYolla="sonGorulmeDosyaGonder($event)"
-                  />
-                </div>
-
-                <div class="column">
-                  <a :href="songorulmeDosyaLink" target="_blank">
-                    <Button
-                      :disabled="dis_teklifSonGorulmeAc"
-                      iconPos="left"
-                      icon="fas fa-cloud-download-alt"
-                      class="p-button-success"
-                    />
-                  </a>
-                </div>
-              </div>
+            <TabPanel header="Proforma - Numune">
+              <Card>
+                <template #content>
+                  <div class="columns">
+                    <div class="column">
+                      <Button :disabled="dis_proforma" style="background-color: #67a5c2; color: #fff" label="Proforma" conPos="left"
+                        icon="fas fa-file-invoice-dollar" @click="proformaVisible = true" />
+                    </div>
+                    <div class="column">
+                      <Button :disabled="dis_numune" style="background-color: #67c2ad" label="Numune" iconPos="left"
+                        icon="fas fa-file-invoice" @click="numuneVisible = true" />
+                    </div>
+                  </div>
+                </template>
+              </Card>
             </TabPanel>
           </TabView>
         </template>
@@ -418,10 +413,9 @@
                 <InputNumber
                   id="fobFiyat"
                   v-model="fobFiyat"
-                  showButtons
+                  
                   mode="currency"
                   @input="urun.fobFiyat = $event.value"
-                  :disabled="false"
                   currency="USD"
                 />
                 <label for="fobFiyat">Fob Fiyat</label>
@@ -431,14 +425,27 @@
               <span class="p-float-label">
                 <InputNumber
                   id="fob"
-                  v-model="teklifFiyat"
-                  showButtons
+                  v-model="fcaFiyat"
+                  
                   mode="currency"
-                  @input="urun.teklifFiyat = $event.value"
-                  :disabled="dis_teklifFiyat"
+                  @input="urun.fcaFiyat = $event.value"
                   currency="USD"
                 />
-                <label for="fob">Fob</label>
+                <label for="fob">Fca</label>
+              </span>
+            </div>
+            <div class="column">
+              <span class="p-float-label">
+                <InputNumber id="fob" v-model="cFiyat"  mode="currency" @input="urun.cFiyat = $event.value"
+                   currency="USD" />
+                <label for="fob">C</label>
+              </span>
+            </div>
+            <div class="column">
+              <span class="p-float-label">
+                <InputNumber id="fob" v-model="dFiyat"  mode="currency" @input="urun.dFiyat = $event.value"
+                   currency="USD" />
+                <label for="fob">D</label>
               </span>
             </div>
           </div>
@@ -448,34 +455,7 @@
   </div>
 
   <div class="columns">
-    <div class="column is-3">
-      <Card>
-        <template #content>
-          <div class="columns">
-            <div class="column">
-              <Button
-                :disabled="dis_proforma"
-                style="background-color: #67a5c2; color: #fff"
-                label="Proforma"
-                conPos="left"
-                icon="fas fa-file-invoice-dollar"
-                @click="proformaVisible = true"
-              />
-            </div>
-            <div class="column">
-              <Button
-                :disabled="dis_numune"
-                style="background-color: #67c2ad"
-                label="Numune"
-                iconPos="left"
-                icon="fas fa-file-invoice"
-                @click="numuneVisible = true"
-              />
-            </div>
-          </div>
-        </template>
-      </Card>
-    </div>
+
     <div class="column is-9">
       <Card>
         <template #content>
@@ -619,24 +599,19 @@
                     {{ slotProps.data.fobFiyat }}
                   </template>
                 </Column>
-                <Column
-                  field="teklifFiyat"
-                  header="Teklif"
-                  headerStyle="width:7%"
-                  bodyStyle="text-align:center;"
-                >
+                <Column field="fcaFiyat" header="Fca" headerStyle="width:7%" bodyStyle="text-align:center;">
                   <template #body="slotProps">
-                    {{ slotProps.data.teklifFiyat }}
+                    {{ slotProps.data.fcaFiyat }}
                   </template>
                 </Column>
-                <Column
-                  field="yuklemeTipi"
-                  header="Y.Tipi"
-                  headerStyle="width:7%"
-                  bodyStyle="text-align:center;"
-                >
+                <Column field="cFiyat" header="C" headerStyle="width:7%" bodyStyle="text-align:center;">
                   <template #body="slotProps">
-                    {{ slotProps.data.yuklemeTipi }}
+                    {{ slotProps.data.cFiyat }}
+                  </template>
+                </Column>
+                <Column field="dFiyat" header="D" headerStyle="width:7%" bodyStyle="text-align:center;">
+                  <template #body="slotProps">
+                    {{ slotProps.data.dFiyat }}
                   </template>
                 </Column>
                 <Column
@@ -840,6 +815,9 @@ export default {
   },
   data() {
     return {
+      fcaFiyat: 0,
+      cFiyat: 0,
+      dFiyat: 0,
       submitted: false,
       urunListesi: [],
       fobFiyat: 0,
@@ -1247,6 +1225,9 @@ export default {
       this.urunTarihi = this.localService.getStringDate(this.urun.tarih);
       if (this.tip != "Fob") this.dis_teklifFiyat = false;
       this.fobFiyat = this.urun.fobFiyat;
+      this.fcaFiyat = this.urun.fcaFiyat;
+      this.cFiyat = this.urun.cFiyat;
+      this.dFiyat = this.urun.dFiyat
       this.teklifFiyat = this.urun.teklifFiyat;
     },
     urun_kontrol() {
@@ -1285,7 +1266,9 @@ export default {
         'kategoriAdi': "",
         'kategoriId':0,
         'tarih': "",  
-        'teklifFiyat': 0,
+        'fcaFiyat': 0,
+        'cFiyat': 0,
+        'dFiyat': 0,
         'teklifId': 0,
         'urunAdi': "",    
         'urunId': 0,
@@ -1301,7 +1284,10 @@ export default {
       this.yuzey = null;
       this.birim = null;
       this.fobFiyat = 0;
-      this.teklifFiyat = 0;
+      this.fcaFiyat = 0;
+      this.cFiyat = 0;
+      this.dFiyat = 0;
+
     },
     vazgecButonu() {
       this.selectUrun = null;
@@ -1799,7 +1785,6 @@ export default {
         this.teklif = data.teklif;
         this.urunListesi = data.urunler;
         this.dtUrun = data.teklifModel;
-
         this.urun = this.dtUrun;
         //dosya işlemleri
         this.dis_fotoGonder = false;
