@@ -264,11 +264,16 @@ export default {
   },
   methods: {
     copyToCustomers() {
+      if (confirm('Müşterilere kopyalamak istediğinize emin misiniz ?')) {
+
       service.setCustomersCopyTo(this.teklifMusteriAyrinti).then(data => {
         if (data) {
-          this.$toast.add({severity:'success',summary:'Kopyalama',detail:'Müşterilere Başarıyla Kopayalandı',life:3000})
+            this.$toast.add({ severity: 'success', summary: 'Kopyalama', detail: 'Müşterilere Başarıyla Kopayalandı', life: 3000 })
+
         }
       })
+      }
+
     },
     resetData() {
       this.newTeklifMusteri= {
