@@ -219,13 +219,16 @@
               <br />
 
               <span class="p-float-label">
-                <input-currency
+                <!-- <input-currency
                   id="pesinat"
                   :disAktif="disPesinat"
                   :value="siparis.pesinat"
-                  @input="siparis.pesinat = $event"
+                  @input="siparis.pesinat = $event.data"
                   class="inputs"
-                />
+                /> -->
+                <InputNumber class="p-inputtext-sm" id="detayAlis_3" @input="siparis.pesinat = $event.value.replace(',','.')"
+                  v-model="siparis.pesinat" :disabled="disPesinat" mode="currency" currency="USD" locale="jp-JP" inputStyle="text-align:center;" style="width:100%;height:40px;"/>
+
                 <label for="pesinat">Peşinat</label>
               </span>
             </template>
@@ -536,6 +539,10 @@ export default {
   kullaniciService: null,
   localService: null,
   methods: {
+    pesinatDegisim(event) {
+      console.log("pesinatDegisim", event)
+      this.siparis.pesinat = event.target._value
+    },
     close() {
       if (this.kayitDurum == false) {
         if (confirm("Kaydetmeden çıkmak istediğinize emin misiniz?")) {
@@ -892,6 +899,7 @@ export default {
 
           this.sipData = data;
           this.siparis = data.siparis;
+          this.pesinat = this.siparis.pesinat
           this.kullaniciListYukle();
           this.musteriListYukle();
 

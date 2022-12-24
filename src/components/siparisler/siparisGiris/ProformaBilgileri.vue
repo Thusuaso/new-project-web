@@ -1108,7 +1108,6 @@ export default {
 
     },
     currencyDegisim(property, _value) {
-      console.log("_value", _value.formattedValue)
       let value = parseFloat(_value.value);
       if (property == "navlunSatis") {
         this.profData.navlunSatis = value;
