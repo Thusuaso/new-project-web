@@ -894,7 +894,7 @@ export default {
         this.profData.pesinat = 0;
       }
       this.kayitKontrol();
-      this.emitter.emit("odemeTur", this.odemeTur.id);
+      this.$emit("odemeTur", this.odemeTur.id);
       this.emitter.emit('save_button_activated', false)
 
     },
@@ -992,7 +992,7 @@ export default {
 
       if (index > 0) durum = false;
 
-      this.emitter.emit("proformaBilgileriDegisim", durum);
+      this.$emit("proformaBilgileriDegisim", durum);
     },
     veriDegisim() {
       this.kayitKontrol();

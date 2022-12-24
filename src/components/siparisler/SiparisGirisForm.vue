@@ -751,7 +751,7 @@ export default {
       });
     },
     odemeTurDegisim(event) {
-      const username = this.$store.getters.getUser.toLowerCase();
+      const username = this.$store.getters.__getUsername.toLowerCase();
 
       this.disPesinat = true;
       if (event == 1) this.siparis.pesinat = this.siparis.genelToplam;
