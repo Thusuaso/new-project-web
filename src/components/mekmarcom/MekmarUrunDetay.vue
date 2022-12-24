@@ -490,6 +490,7 @@ export default {
       isfotolist: false,
       keys: null,
       keys_fr: null,
+      keys_es:null,
       products: null,
       product: "",
       isproduct: false,
@@ -577,14 +578,13 @@ export default {
 
       mekmarService.fotoKayit(fotoList).then((res) => {
         if (res) {
-          setTimeout(() => {
             for (let key in event.files) {
               digitalOceanService.fotoGonder(event.files[key]);
             }
             service.getProductDetailData(this.urunDetay.urunid).then((data) => {
               this.$store.dispatch("loadUrun", data);
             });
-          }, 6000);
+            this.$toast.add({severity:'success',summary:'Fotoğraf Kayıt',detail:'Fotoğraflar başarıyla kaydedildi.',life:3000})
         }
       });
     },
