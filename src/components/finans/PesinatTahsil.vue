@@ -102,8 +102,6 @@
       </div>
     </div>
   </section>
-
-
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -150,10 +148,10 @@ export default {
       });
     },
     tahsilat_select_event(event) {
-      this.select_pesinat = event;
+      this.select_pesinat = event.data;
 
       this.loading_pesinat = true;
-
+      console.log(event)
       this.$store.dispatch("select_pesinat_model_act", {
         ...this.select_pesinat,
       });
@@ -179,8 +177,8 @@ export default {
         pesinat_model: this.pesinat_model,
         tarih: this.localService.getDateString(this.tarih),
       };
-      const users = JSON.parse(localStorage.getItem("user"));
-      store_data.kullaniciadi = users.kullaniciAdi;
+      const users = this.$store.getters.__getUsername
+      store_data.kullaniciadi = users;
 
       service
         .finansPesinatKaydet(store_data)
