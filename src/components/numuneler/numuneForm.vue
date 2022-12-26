@@ -40,12 +40,10 @@
                   </div>
                   <div class="column">
                     <span class="p-float-label">
-                      <InputText
-                        id="miktar"
-                        v-model="numune.Miktar"
-                        :disAktif="false"
-                        @input="numune.Miktar = $event"
-                      />
+                      <InputNumber class="p-inputtext-sm" id="detayAlis_3" @input="numune.Miktar = $event.value"
+                        v-model="numune.Miktar" :disabled="disPesinat" mode="currency" currency="USD" locale="jp-JP"
+                        inputStyle="text-align:center;" style="width:100%;height:40px;" />
+
                       <label for="miktar">Miktar</label>
                     </span>
                   </div>
@@ -65,7 +63,7 @@
                           :disabled="dis_takipEt"
                           value="Customer Account"
                           v-model="odeme"
-                          @input="odemeSecim()"
+                          @change="odemeSecim()"
                           name="odeme"
                         />
                         <label class="p-checkbox-label">Customer Account</label>
@@ -75,7 +73,7 @@
                           :disabled="dis_takipEt"
                           value="Customer Paid to Mekmar"
                           v-model="odeme"
-                          @input="odemeSecim()"
+                          @change="odemeSecim()"
                           name="odeme"
                         />
                         <label class="p-checkbox-label"
@@ -87,7 +85,7 @@
                           :disabled="dis_takipEt"
                           value="Mekmar Paid"
                           v-model="odeme"
-                          @input="odemeSecim()"
+                          @change="odemeSecim()"
                           name="odeme"
                         />
                         <label class="p-checkbox-label">Mekmar Paid</label>
@@ -102,7 +100,7 @@
                         <RadioButton
                           :disabled="dis_Odeme"
                           value="Maya Paypal"
-                          @input="bankSecim()"
+                          @change="bankSecim()"
                           name="banka"
                           v-model="banka"
                         />
@@ -113,7 +111,7 @@
                           :disabled="dis_Odeme"
                           value="Maya Bank"
                           name="banka"
-                          @input="bankSecim()"
+                          @change="bankSecim()"
                           v-model="banka"
                         />
                         <label class="p-checkbox-label">Maya Bank</label>
@@ -123,7 +121,7 @@
                           :disabled="dis_Odeme"
                           value="Mekmar Bank"
                           name="banka"
-                          @input="bankSecim()"
+                          @change="bankSecim()"
                           v-model="banka"
                         />
                         <label class="p-checkbox-label">Mekmar Bank</label>
@@ -166,35 +164,22 @@
                       </div>
                       <div class="column is-3">
                         <span class="p-float-label">
-                          <currency-input
-                            id="kuryeSatis"
-                            :value="numune.kuryeSatis"
-                            :disabled="dis_Satis"
-                            @input="numune.kuryeSatis = $event"
-                          />
-                          <label for="kuryeSatis">$</label>
+                          <InputNumber id="Euro_Alis" v-model="numune.kuryeSatis" mode="currency" :disabled="dis_Satis" currency="USD" />
+                          <label for="Euro_Alis">Kurye Satış</label>
                         </span>
                       </div>
                       <div class="column is-3">
+
                         <span class="p-float-label">
-                          <TL
-                            id="TL_Satis"
-                            :value="numune.TL_Satis"
-                            :disabled="dis_Satis"
-                            @input="numune.TL_Satis = $event"
-                          />
-                          <label for="TL_Satis">₺</label>
+                          <InputNumber id="Euro_Alis" v-model="numune.TL_Satis" mode="currency" :disabled="dis_Satis" currency="USD" />
+                          <label for="Euro_Alis">₺</label>
                         </span>
                       </div>
                       <div class="column is-3">
+
                         <span class="p-float-label">
-                          <Euro
-                            id="Euro_Satis"
-                            :value="numune.Euro_Satis"
-                            :disabled="dis_Satis"
-                            @input="numune.Euro_Satis = $event"
-                          />
-                          <label for="Euro_Satis">€</label>
+                          <InputNumber id="Euro_Alis" v-model="numune.Euro_Satis" mode="currency" :disabled="dis_Satis" currency="EUR" />
+                          <label for="Euro_Alis">€</label>
                         </span>
                       </div>
                     </div>
@@ -218,6 +203,7 @@
           </div>
         </TabPanel>
         <TabPanel header="Ödeme Bilgileri">
+          <br/>
           <div class="columns">
             <div class="p-col-2">
               <span class="p-float-label">
@@ -499,9 +485,9 @@
             <span>Parite</span>
             <div class="p-col-12">
               <InputText
-                :value="numune.parite"
-                @input="numune.parite = $event"
+                v-model="numune.parite"
               />
+              
             </div>
           </div>
         </template>
@@ -516,8 +502,6 @@ import service from "../../service/NumuneService";
 import LocalService from "../../service/LocalService";
 import fileService from "../../service/FileService";
 import CurrencyInput from "../../components/shared/CurrencyInput2";
-import CurrencyInput_TL from "../../components/shared/CurrencyInput_TL";
-import CurrencyInput_Euro from "../../components/shared/CurrencyInput_Euro";
 import CustomInputFile from "../../components/shared/CustomInputFile";
 import socket from "../../service/SocketService";
 
@@ -595,8 +579,6 @@ export default {
   },
   components: {
     currencyInput: CurrencyInput,
-    TL: CurrencyInput_TL,
-    Euro: CurrencyInput_Euro,
     customFileInput: CustomInputFile,
   },
   props: {
@@ -744,6 +726,7 @@ export default {
       });
     },
     odemeSecim() {
+      this.dis_kaydet = false
       if (this.odeme) {
         this.numune.gonderiAdi = this.odeme;
         if (this.odeme == "Customer Account") {
@@ -896,10 +879,11 @@ export default {
     },
     aramaKategori(event) {
       setTimeout(() => {
-        console.log("kategoriList", this.kategoriList);
         let result;
 
-        if (event.query.length == 0) result = this.kategoriList;
+        if (event.query.length == 0) {
+          result = [...this.kategoriList]
+        }
         else {
           result = this.kategoriList.filter((x) => {
             return x.name.toLowerCase().startsWith(event.query.toLowerCase());
@@ -1048,7 +1032,7 @@ export default {
         eklenenUrunler: this.degisim_yeni_urun,
         guncellenenUrunler: this.degisim_guncellenen_urun,
 
-        kullaniciAdi: this.$store.getters.getUser,
+        kullaniciAdi: this.$store.getters.__getUsername,
         guncellenenMusteri: this.guncellenenMusteri,
         kategoriadd: this.kategoriadd,
       };
