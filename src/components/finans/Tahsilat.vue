@@ -1,4 +1,5 @@
 <template>
+  <br/>
   <section>
     <div class="columns">
       <div class="column is-6">
@@ -265,7 +266,6 @@ export default {
       const users = this.$store.getters.__getUsername;
 
       data.kullaniciadi = users;
-
       service.tahsilatKaydetme(data).then((res) => {
         if (res.status) {
           socket.siparis.emit("tahsilat_kayitdegisim_event", data.siparisno);
@@ -274,6 +274,7 @@ export default {
             res.anaSayfaDegisiklikList
           );
           this.default_data();
+
         }
       });
     },
@@ -291,6 +292,7 @@ export default {
 
       data.kullaniciadi = users;
 
+
       service.tahsilatGuncelleme(data).then((res) => {
         if (res.status) {
           socket.siparis.emit("tahsilat_kayitdegisim_event", data.siparisno);
@@ -299,6 +301,8 @@ export default {
             res.anaSayfaDegisiklikList
           );
           this.default_data();
+
+
         }
       });
     },
@@ -309,6 +313,7 @@ export default {
       }
       const id = this.thmusteri.id;
 
+
       service.tahsilatSilme(id).then((res) => {
         if (res) {
           socket.siparis.emit(
@@ -316,6 +321,8 @@ export default {
             this.thmusteri.siparisno
           );
           this.default_data();
+
+
         }
       });
     },

@@ -103,6 +103,7 @@
           v-model:selection="select_konteyner"
           ref="finans_ana_liste"
           @row-select="konteyner_item_select($event)"
+          :loading="datatableLoading"
         >
           <template #header>
             <div class="columns is-multiline">
@@ -323,12 +324,14 @@ export default {
   },
   created() {
     socket.siparis.on("tahsilat_kayitdegisim_emit", () => {
-      this.finans_loading = true;
+      this.$store.dispatch('datatableLoadingBeginAct')
+
       const d = new Date();
       const year = d.getFullYear(); // 2021
       service.getKonteynerAnaListe(year).then((data) => {
         store.dispatch("finansAnaListeYukleAct", data);
-        this.finans_loading = false;
+        this.$store.dispatch('datatableLoadingEndAct')
+
       });
     });
     if (window.innerWidth < 576) {
@@ -345,6 +348,7 @@ export default {
     this.yeni_yukleme = this.finans_toplam_bakiye;
     this.eski_pesinat = this.finans_toplam_eski_pesinat;
     this.eski_alacak = this.finans_toplam_devir;
+
   },
   data() {
     return {
@@ -385,6 +389,7 @@ export default {
       "depo_ana_list",
       "servis_adres",
       "finans_toplam_eski_pesinat",
+      'datatableLoading'
     ]),
   },
   methods: {

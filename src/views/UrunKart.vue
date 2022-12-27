@@ -282,6 +282,8 @@ export default {
               if (data.status) {
                 /*socket.siparis.emit('urunKartiSilmeEvent', data.urunKartTable)*/
                 store.dispatch("urunKartMenuAct", data.urunKartTable);
+                socket.siparis.emit("urunkart_silme_event", data.data);
+
                 socket.siparis.emit(
                   "anaSayfaDegisiklikEvent",
                   data.anaSayfaDegisiklik
