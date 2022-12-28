@@ -30,10 +30,10 @@
           selectionMode="single"
           dataKey="id"
           :paginator="true" 
-          :rows="20"
+          :rows="15"
           v-model:filters="filters"
           @row-select="urunKartDetayAc"
-          filterDisplay="row"
+          filterDisplay="menu"
           :scrollable="true" 
           scrollHeight="700px"
         >
@@ -42,16 +42,14 @@
             header="No"
             headerStyle="width: 100px;"
             bodyStyle="text-align: center;"
-            :showFilterMenu="false"
           >
             <template #body="slotProps">
               {{ slotProps.data.id }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Id"
               />
@@ -61,72 +59,66 @@
             field="kategoriAdi"
             header="Kategori"
             headerStyle="width: 150px"
-            :showFilterMenu="false"
           >
             <template #body="slotProps">
               {{ slotProps.data.kategoriAdi }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Category"
               />
             </template>
           </Column>
-          <Column field="urunAdi" header="Ürün" :showFilterMenu="false">
+          <Column field="urunAdi" header="Ürün" >
             <template #body="slotProps">
               {{ slotProps.data.urunAdi }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by ProductName"
               />
             </template>
           </Column>
-          <Column field="yuzey_1" header="Y1" :showFilterMenu="false">
+          <Column field="yuzey_1" header="Y1">
             <template #body="slotProps">
               {{ slotProps.data.yuzey_1 }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Surface 1"
               />
             </template>
           </Column>
-          <Column field="yuzey_2" header="Y2" :showFilterMenu="false">
+          <Column field="yuzey_2" header="Y2" >
             <template #body="slotProps">
               {{ slotProps.data.yuzey_2 }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Surface 2"
               />
             </template>
           </Column>
-          <Column field="yuzey_3" header="Y3" :showFilterMenu="false">
+          <Column field="yuzey_3" header="Y3">
             <template #body="slotProps">
               {{ slotProps.data.yuzey_3 }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Surface 3"
               />
@@ -137,16 +129,14 @@
             header="En"
             bodyStyle="text-align: center"
             headerStyle="width: 120px;"
-            :showFilterMenu="false"
           >
             <template #body="slotProps">
               {{ slotProps.data.en }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Width"
               />
@@ -157,16 +147,14 @@
             header="Boy"
             bodyStyle="text-align: center"
             headerStyle="width: 120px;"
-            :showFilterMenu="false"
           >
             <template #body="slotProps">
               {{ slotProps.data.boy }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Height"
               />
@@ -177,16 +165,14 @@
             header="Kenar"
             bodyStyle="text-align: center"
             headerStyle="width: 120px;"
-            :showFilterMenu="false"
           >
             <template #body="slotProps">
               {{ slotProps.data.kenar }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Edge"
               />
@@ -280,10 +266,8 @@ export default {
             .setUrunKartSil(this.urunKartId, this.username)
             .then((data) => {
               if (data.status) {
-                /*socket.siparis.emit('urunKartiSilmeEvent', data.urunKartTable)*/
+                socket.siparis.emit('urunKartiSilmeEvent', data.urunKartTable)
                 store.dispatch("urunKartMenuAct", data.urunKartTable);
-                socket.siparis.emit("urunkart_silme_event", data.data);
-
                 socket.siparis.emit(
                   "anaSayfaDegisiklikEvent",
                   data.anaSayfaDegisiklik

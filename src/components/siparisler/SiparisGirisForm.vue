@@ -659,8 +659,14 @@ export default {
       if (this.kayitDurum != true) {
         this.kayitDurum = true;
         store.dispatch("kayit_kontrol_degeri_act", true);
-        if (this.yeniSiparis) this.yeniSiparisKayit();
-        else this.siparisGuncelleme();
+        if (this.yeniSiparis){
+          this.yeniSiparisKayit()
+        }
+        else {
+          this.siparisGuncelleme();
+          socket.siparis.emit('siparis_event_list_emit')
+
+        } 
       } else {
         this.$toast.add({
           severity: "error",
@@ -694,7 +700,7 @@ export default {
             life: 5000,
           });
           this.kayitDurum = true;
-          socket.siparis.emit("siparis_yeni_event", this.siparis.siparisNo);
+          socket.siparis.emit("siparisler_list_event")
           this.yeniSiparis = false;
           socket.siparis.emit(
             "anaSayfaDegisiklikEvent",
@@ -735,14 +741,11 @@ export default {
           });
           this.urunler_yeni = [];
           this.kayitDurum = true;
-          let siparisDurum = "";
-          if (this.siparis.siparisDurumId == 1) siparisDurum = "bekleyen";
-          if (this.siparis.siparisDurumId == 2) siparisDurum = "üretim";
-          if (this.siparis.siparisDurumId == 3) siparisDurum = "sevk";
-          socket.siparis.emit("siparis_guncelleme_event", {
-            siparisNo: this.siparis.siparisNo,
-            siparisTur: siparisDurum,
-          });
+          // let siparisDurum = "";
+          // if (this.siparis.siparisDurumId == 1) siparisDurum = "bekleyen";
+          // if (this.siparis.siparisDurumId == 2) siparisDurum = "üretim";
+          // if (this.siparis.siparisDurumId == 3) siparisDurum = "sevk";
+          socket.siparis.emit("siparisler_list_event")
           socket.siparis.emit(
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklikList

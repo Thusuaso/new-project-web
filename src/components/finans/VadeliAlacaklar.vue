@@ -1,5 +1,6 @@
 <template>
   <section>
+    <br/>
     <div class="columns is-multiline is-centered">
       <div class="column is-12 is-centered">
         <DataTable :value="list">

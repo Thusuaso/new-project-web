@@ -27,11 +27,10 @@
                 {{ slotProps.data.id }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Id"
               />
@@ -47,11 +46,10 @@
                 {{ slotProps.data.kategoriAdi }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Category"
               />
@@ -63,11 +61,10 @@
                 {{ slotProps.data.urunAdi }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel}">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Product"
               />
@@ -79,11 +76,10 @@
                 {{ slotProps.data.yuzey_1 }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Surface 1"
               />
@@ -95,11 +91,10 @@
                 {{ slotProps.data.yuzey_2 }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Surface 2"
               />
@@ -111,11 +106,10 @@
                 {{ slotProps.data.yuzey_3 }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Surface 3"
               />
@@ -127,11 +121,10 @@
                 {{ slotProps.data.en }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Width"
               />
@@ -143,11 +136,10 @@
                 {{ slotProps.data.boy }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Height"
               />
@@ -159,11 +151,10 @@
                 {{ slotProps.data.kenar }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Edge"
               />

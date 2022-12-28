@@ -1,20 +1,16 @@
 <template>
   <section>
     <div class="columns is-multiline is-centered">
-      <div class="column is-12 is-centered">
         <DataTable
           :value="depo_ana_list"
           selectionMode="single"
           v-model:selection="select_depo"
           dataKey="id"
           @row-select="depo_item_sec($event)"
+          :loading="datatableLoading"
         >
           <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
                 <span style="font-size: 15px"> Atlanta SM Alacak Listesi </span>
-              </div>
-            </div>
           </template>
           <Column field="musteriadi" header="Müşteri">
             <template #body="slotProps">
@@ -59,7 +55,6 @@
             </template>
           </Column>
         </DataTable>
-      </div>
       <Dialog
         v-model:visible="is_form"
         v-model:header="form_baslik"
@@ -96,6 +91,7 @@ export default {
       "depo_ana_toplam_ciro",
       "depo_ana_toplam_odenen",
       "depo_ana_toplam_bakiye",
+      "datatableLoading"
     ]),
   },
   methods: {
@@ -106,10 +102,13 @@ export default {
 
     depo_item_sec(event) {
       this.select_depo = event.data;
+      this.$store.dispatch('datatableLoadingBeginAct')
       service.getDepoAyrintiListesi(event.data.id).then((data) => {
         this.$store.dispatch("depo_ayrinti_list_yukle_act", data);
         this.form_baslik = event.data.musteriadi + " Borç Alacak Listesi";
         this.is_form = true;
+        this.$store.dispatch('datatableLoadingEndAct')
+
       });
     },
   },

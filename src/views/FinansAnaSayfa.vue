@@ -1,5 +1,4 @@
 <template>
-  <section>
     <div class="columns is-multiline">
       <div class="column is-3">
         <Checkbox @change="konteynerHepsiEvent" v-model="konteyner_list_hepsi" :binary="true" />
@@ -83,7 +82,7 @@
       </div>
     </div>
 
-    <div class="columns" style="margin-top: -20px">
+    <div class="columns">
       <div class="column is-9">
         <DataTable
           :value="
@@ -261,22 +260,17 @@
         </DataTable>
       </div>
 
-      <Dialog
-        v-model:visible="isKonteyner"
-        v-model:header="konteynerBaslik"
-        :modal="true"
-        maximizable
-        position="top"
-      >
-        <FinansAyrintiList />
-      </Dialog>
-
       <div class="column is-3">
         <DepoAnaList />
         <VadeliAlacaklar />
       </div>
+
     </div>
-  </section>
+
+    <Dialog v-model:visible="isKonteyner" v-model:header="konteynerBaslik" :modal="true" maximizable position="top">
+      <FinansAyrintiList />
+    </Dialog>
+
 </template>
 <script>
 import { mapGetters } from "vuex";

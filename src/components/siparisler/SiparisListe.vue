@@ -169,7 +169,7 @@
 import siparisService from "../../service/SiparisService";
 import { mapGetters } from "vuex";
 import SiparisGirisForm from "./SiparisGirisForm";
-// import socket from '../../service/SocketService';
+import socket from '../../service/SocketService';
 import BmSiparisGirisForm from "./BmSiparisGirisForm";
 import service from "../../service/SeleksiyonService";
 import serviceRapor from "../../service/RaporService";
@@ -301,6 +301,21 @@ export default {
     const d = new Date();
     const year = d.getFullYear();
 
+    socket.siparis.on("siparisler_list_emit", () => {
+      this.$store.dispatch('datatableLoadingBeginAct')
+
+      if (this.siparisTur == "bekleyen") siparisDurum = 1;
+      if (this.siparisTur == "sevk") siparisDurum = 3;
+      siparisService.getSiparisList(siparisDurum, year).then((data) => {
+        this.siparisler = data;
+        this.siparisHepsiEvent();
+        this.toplamGuncelle(this.siparisler);
+        this.dtSiparisler = data;
+        this.toplamGuncelle(data);
+        this.$store.dispatch('datatableLoadingEndAct')
+
+      });
+    })
     if (this.siparisTur == "bekleyen") siparisDurum = 1;
     if (this.siparisTur == "sevk") siparisDurum = 3;
     siparisService.getSiparisList(siparisDurum, year).then((data) => {

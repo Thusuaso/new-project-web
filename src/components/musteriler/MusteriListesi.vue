@@ -245,6 +245,7 @@ export default {
     const users = this.$store.getters.__getUsername;
     this.musteri_tablo_yukle(users);
     socket.siparis.on("musteri_kayitdegisim_emit", () => {
+      const users = this.$store.getters.__getUsername;
       //yapılacak işlemler
       this.musteri_tablo_yukle(users);
     });

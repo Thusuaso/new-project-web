@@ -91,11 +91,10 @@
               {{ slotProps.data.musteriAdi }}
             </div>
           </template>
-          <template #filter="{ filterModel, filterCallback }">
+          <template #filter="{ filterModel }">
             <InputText
               type="text"
               v-model="filterModel.value"
-              @input="filterCallback()"
               class="p-column-filter"
               placeholder="Search by Customers"
             />
@@ -144,11 +143,10 @@
               {{ slotProps.data.siparisNo }}
             </div>
           </template>
-          <template #filter="{ filterModel, filterCallback }">
+          <template #filter="{ filterModel }">
             <InputText
               type="text"
               v-model="filterModel.value"
-              @input="filterCallback()"
               class="p-column-filter"
               placeholder="Search by Po"
             />
@@ -164,11 +162,10 @@
             <span class="p-column-title">Ürün Adı</span>
             {{ slotProps.data.urunAdi }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
+          <template #filter="{ filterModel }">
             <InputText
               type="text"
               v-model="filterModel.value"
-              @input="filterCallback()"
               class="p-column-filter"
               placeholder="Search by Product"
             />
@@ -196,11 +193,10 @@
             <span class="p-column-title">E</span>
             {{ slotProps.data.en }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
+          <template #filter="{ filterModel }">
             <InputText
               type="text"
               v-model="filterModel.value"
-              @input="filterCallback()"
               class="p-column-filter"
               placeholder="Search by Width"
             />
@@ -216,11 +212,10 @@
             <span class="p-column-title">B</span>
             {{ slotProps.data.boy }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
+          <template #filter="{ filterModel }">
             <InputText
               type="text"
               v-model="filterModel.value"
-              @input="filterCallback()"
               class="p-column-filter"
               placeholder="Search by Height"
             />
@@ -236,11 +231,10 @@
             <span class="p-column-title">K</span>
             {{ slotProps.data.kenar }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
+          <template #filter="{ filterModel }">
             <InputText
               type="text"
               v-model="filterModel.value"
-              @input="filterCallback()"
               class="p-column-filter"
               placeholder="Search by Edge"
             />
@@ -267,11 +261,10 @@
               {{ slotProps.data.tedarikciAdi }}
             </div>
           </template>
-          <template #filter="{ filterModel, filterCallback }">
+          <template #filter="{ filterModel }">
             <InputText
               type="text"
               v-model="filterModel.value"
-              @input="filterCallback()"
               class="p-column-filter"
               placeholder="Search by Supplier"
             />
