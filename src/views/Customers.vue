@@ -171,7 +171,6 @@ export default {
           this.$store.dispatch("customers_yukle_all_act", data);
           this.$store.dispatch("customers_yukle_act", data);
           this.$store.dispatch("loadingEndAct");
-
         });
       }
     },

@@ -250,7 +250,7 @@ export default {
     if (this.getMobilWidth < 600) {
       this.isDesktop = false;
     }
-    var userName = this.$store.getters.__getUsername;
+    var userName = this.$store.getters.__getUsername.toLowerCase();
     this.usrName = userName;
 
     if (userName == "ozlem") {
@@ -258,7 +258,7 @@ export default {
     } else if (userName == "gizem") {
       this.backColor = "#EF9A9A";
     } else if (userName == "hakan") {
-      this.backColor = "green";
+      this.backColor = "#a2c4c9";
     }
     this.selectedColumns = this.columns;
     serviceRapor.getYuklemeYilListesi().then((yil_list) => {

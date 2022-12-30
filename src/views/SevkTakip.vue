@@ -25,6 +25,10 @@
           v-model:selection="select_takip"
           @row-select="takipSec($event)"
           :loading="datatableLoading"
+          :resizableColumns="true" 
+          columnResizeMode="fit" 
+          showGridlines 
+          responsiveLayout="scroll"
         >
           <Column
             field="sira"

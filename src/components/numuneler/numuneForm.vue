@@ -683,10 +683,7 @@ export default {
       service.numunetahsilatGuncelleme(data).then((res) => {
         if (res) {
           alert("Başarı Şekilde Guncelle Yapıldı!");
-          socket.siparis.emit(
-            "numunetahsilat_kayitdegisim_event",
-            data.siparisno
-          );
+          socket.siparis.emit("numunetahsilat_kayitdegisim_event");
           this.default_data();
         }
       });
@@ -717,10 +714,7 @@ export default {
       service.numunetahsilatKaydetme(data).then((res) => {
         if (res) {
           alert("Başarı Şekilde Kayıt İşlemi Yapıldı!");
-          socket.siparis.emit(
-            "numunetahsilat_kayitdegisim_event",
-            data.siparisno
-          );
+          socket.siparis.emit("numunetahsilat_kayitdegisim_event",);
           this.default_data();
         }
       });
@@ -1001,6 +995,7 @@ export default {
             detail: "Yeni Numune Kaydı Yapıldı",
             life: 5000,
           });
+          socket.siparis.emit('numunetahsilat_kayitdegisim_event');
           socket.siparis.emit(
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklikList
@@ -1046,6 +1041,8 @@ export default {
             life: 1000,
           });
           //socket.siparis.emit('teklif_guncelleme_event',veri.kullaniciAdi);
+          socket.siparis.emit('numunetahsilat_kayitdegisim_event');
+
           socket.siparis.emit(
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklikList

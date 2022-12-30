@@ -19,11 +19,12 @@
               <DataTable
                 class="p-datatable-responsive"
                 :value="temsilciOzetList"
-                :loading="temsilciLoading"
+                :loading="datatableLoading"
                 dataKey="id"
                 selectionMode="single"
                 v-model:selection="selectOzetList"
                 @row-select="selectOzetListSec"
+
               >
                 <Column field="adi" header="Adi">
                   <template #body="slotProps">
@@ -62,7 +63,7 @@
               <DataTable
                 class="p-datatable-responsive"
                 :value="hatirlatmaList"
-                :loading="hatirlatmaLoading"
+                :loading="datatableLoading"
               >
                 <Column field="tarih" header="Tarih">
                   <template #body="slotProps">
@@ -132,7 +133,7 @@
               <DataTable
                 class="p-datatable-responsive"
                 :value="musteriOzetList"
-                :loading="musteriOzetLoading"
+                :loading="datatableLoading"
                 :scrollable="true"
                 scrollHeight="408px"
               >
@@ -213,7 +214,7 @@
 import teklifService from "../service/TeklifService";
 import TeklifGirisForm from "../components/teklifler/TeklifGirisForm";
 import KullaniciTeklifListe from "../components/teklifler/KullaniciTeklifListe";
-// import socket from "@/service/SocketService";
+import socket from "@/service/SocketService";
 import TumTeklifler from "../components/teklifler/TumTeklifler";
 import EskiTeklifler from "../components/teklifler/EskiTeklifler";
 import "@fullcalendar/core/vdom"; // solves problem with Vite
@@ -270,7 +271,6 @@ export default {
     this.$store.dispatch("loadingBeginAct");
 
     teklifService.getTakvimList().then((data) => {
-      console.log("hatirlatmaList", data.hatirlatmaList);
 
       const takvimData = [];
       for (var i in data.takvimList) {
@@ -302,34 +302,7 @@ export default {
       this.$store.dispatch("loadingEndAct");
     });
 
-    // let username = this.$store.getters.__getUsername;
-    // socket.siparis.on("teklif_sil_emit", () => {
-    //   this.baslangicIslemler();
-    // });
-    // socket.siparis.on("teklif_yeni_emit", (value) => {
-    //   if (username == value) {
-    //     this.baslangicIslemler();
-    //   } else {
-    //     this.baslangicIslemler();
-
-    //     this.$toast.add({
-    //       severity: "success",
-    //       summary: "Uyarı Ekranı",
-    //       detail: `${value} Yeni Teklif Girişi Yaptı`,
-    //       life: 5000,
-    //     });
-    //   }
-    // });
-
-    // socket.siparis.on("teklif_guncelleme_emit", (value) => {
-    //   if (username == value) {
-    //     this.baslangicIslemler();
-    //   } else {
-    //     this.baslangicIslemler();
-
-    //     //this.$toast.add({severity:'success', summary: 'Bilgi Ekranı', detail:`value Teklif Güncellemesi Yaptı`,  life: 5000});
-    //   }
-    // });
+    
   },
   methods: {
     takvimClick() {},
@@ -386,7 +359,43 @@ export default {
       });
     },
   },
-  mounted() {},
+  mounted() {
+    socket.siparis.on('teklif_degisim_emit', () => {
+      this.$store.dispatch('datatableLoadingBeginAct');
+      teklifService.getTakvimList().then((data) => {
+
+        const takvimData = [];
+        for (var i in data.takvimList) {
+          if (data.takvimList[i].hatirlatmaDurum == "True") {
+            takvimData.push(data.takvimList[i]);
+          }
+        }
+
+        for (let key in takvimData) {
+          takvimData[key].classNames = ["eventColumn"];
+        }
+        setTimeout(() => {
+          for (let item in data.hatirlatmaList) {
+            const date = data.hatirlatmaList[item].tarih.split("-");
+            const timaDate = date[2] + "-" + date[1] + "-" + date[0];
+
+            this.calendarOptions.events.push({
+              title: data.hatirlatmaList[item].musteriAdi,
+              date: timaDate,
+            });
+          }
+        }, 500);
+
+        this.takvimList = takvimData;
+        this.temsilciOzetList = data.temsilciOzetList;
+        this.hatirlatmaList = data.hatirlatmaList;
+        this.musteriOzetList = data.musteriOzetList;
+        this.tabloToplariYenile();
+        this.$store.dispatch('datatableLoadingEndAct');
+
+      });
+    })
+  },
 };
 </script>
 <style scoped>

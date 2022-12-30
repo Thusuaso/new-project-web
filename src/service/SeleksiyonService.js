@@ -106,7 +106,6 @@ const SeleksiyonService = {
       .then((res) => res.data);
   },
   getSeleksiyonExcelList(data_list) {
-    console.log("getSeleksiyonExcelList", data_list);
     return axios
       .post("/siparisler/dosyalar/seleksiyonExcelCikti", data_list)
       .then((res) => res.data);
@@ -160,6 +159,9 @@ const SeleksiyonService = {
   },
   getIsfControl(evrakAdi) {
     return axios.get("/islemler/tedarikci/isfControl/" + evrakAdi).then(res=>res.data)
+  },
+  getProductCrateControl(data) {
+    return axios.post("/islemler/seleksiyon/productCrateControl",data).then(res=>res.data)
   }
 };
 

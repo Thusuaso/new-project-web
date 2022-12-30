@@ -1559,7 +1559,7 @@ export default {
               detail: "Yeni Teklif Kaydı Yapıldı",
               life: 5000,
             });
-            //socket.siparis.emit('teklif_yeni_event',veri.kullaniciAdi);
+            socket.siparis.emit('teklif_degisim_event');
             socket.siparis.emit(
               "anaSayfaDegisiklikEvent",
               data.anaSayfaDegisiklikList
@@ -1616,7 +1616,7 @@ export default {
               detail: "Teklif Bilgileri Değiştirildi.",
               life: 1000,
             });
-            //socket.siparis.emit('teklif_guncelleme_event',veri.kullaniciAdi);
+
             socket.siparis.emit(
               "anaSayfaDegisiklikEvent",
               data.anaSayfaDegisiklikList
@@ -1649,7 +1649,7 @@ export default {
             detail: "Teklif Bilgileri Silindi.",
             life: 1000,
           });
-          socket.emit("teklif_sil_event");
+          socket.siparis.emit('teklif_degisim_event');
           this.emitter.emit('teklif_yenileme', true)
         }
       });

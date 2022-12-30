@@ -6,6 +6,10 @@
           :value="stok_top_ayrinti_list"
           :scrollable="true"
           scrollHeight="450px"
+          :resizableColumns="true" 
+          columnResizeMode="fit" 
+          showGridlines 
+          responsiveLayout="scroll"
         >
           <Column
             field="sira"

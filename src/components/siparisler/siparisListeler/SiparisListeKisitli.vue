@@ -78,11 +78,12 @@
           <template #body="slotProps">
             <span class="p-column-title">Kime</span>
             <div
+
               v-if="
                 slotProps.data.temsilci == user ||
                 slotProps.data.operasyon == user
               "
-              :style="{ backgroundColor: arkaPlanRengi }"
+              :style="{ 'backgroundColor': arkaPlanRengi }"
             >
               {{ slotProps.data.musteriAdi }}
             </div>
@@ -400,6 +401,7 @@ export default {
       "getMobilWidth",
       "datatableLoading",
     ]),
+    
   },
   mounted() {},
   created() {

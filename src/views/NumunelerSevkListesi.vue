@@ -34,6 +34,7 @@
           selectionMode="single"
           dataKey="id"
           @filter="isNumuneList"
+          :loading="datatableLoading"
         >
           <template #header>
             <div class="columns is-multiline">
@@ -182,7 +183,14 @@
 import service from "../service/NumuneService";
 import numuneForm from "../components/numuneler/numuneForm";
 import { FilterMatchMode } from "primevue/api";
+import socket from "../service/SocketService";
+import { mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters([
+      'datatableLoading'
+    ])
+  },
   data() {
     return {
       numune_listesi: null,
@@ -272,6 +280,24 @@ export default {
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
   },
+  mounted() {
+    socket.siparis.on('numunetahsilat_kayitdegisim_emit', () => {
+      this.$store.dispatch('datatableLoadingBeginAct');
+      service.getNumuneYilListesi().then((data) => {
+        this.yil_listesi = data.yil_listesi2;
+
+        this.select_yil = this.yil_listesi[0];
+
+        service.getNumuneAnaListesi(this.select_yil.yil).then((data) => {
+          this.numune_listesi = data.numune_list;
+
+          this.genel_toplam(this.numune_listesi);
+          this.$store.dispatch('datatableLoadingEndAct');
+
+        });
+      });
+    })
+  }
 };
 </script>
 <style scoped>

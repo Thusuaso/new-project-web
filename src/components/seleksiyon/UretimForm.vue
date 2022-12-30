@@ -602,29 +602,38 @@ export default {
   },
   methods: {
     isYinedeKaydet() {
-      const item = this.seleksiyon_siparisdetay.find(
-        (x) => x.tanim === this.siparis_detay
-      );
-      // this.isDisplay2 = false
-      // setTimeout(() => {
-      //   const item = this.seleksiyon_siparisdetay.find(x => x.tanim === this.siparis_detay)
+      this.isDisplay2 = false
+        const item = this.seleksiyon_siparisdetay.find(x => x.tanim === this.siparis_detay)
 
-      //   //ürün kartı bilgisini göndermek için
 
-      //   if (item) {
+        //ürün kartı bilgisini göndermek için
+        const item2 = this.seleksiyon_siparisdetay.find(
+          (x) => x.tanim === this.siparis_detay.tanim
+        );
+        this.detail.tanim = this.siparis_detay.tanim;
+        this.detail.urunkartid = item2.urunkart_id;
+        const urunKart = this.getUrunKartMenuList.find(x=>x.id == item2.urunkart_id)
+        this.detail.kategoriadi = urunKart.kategoriAdi
+        this.detail.ebat = urunKart.ebat
+        this.detail.urunadi = urunKart.urunAdi
+        this.detail.kenarislem = urunKart.yuzeyIslem
 
-      //     this.urunkart_change_event(item.urunkart_id)
-      //     this.tedarikci = item.tedarikci
-      //     this.urunbirim = item.urunbirimid
-      //   }
 
-      // }, 1000);
+        if (item) {
+
+
+          this.urunkart_change_event(item.urunkart_id)
+          this.tedarikci = item.tedarikci
+          this.urunbirim = item.urunbirimid
+          
+        }
+
     },
     isEslesmiyor() {
       this.isDisplay2 = false;
     },
     miktar_input_event(event) {
-      if (event) this.detail.miktar = event.replace(",", ".");
+      this.detail.miktar = event.target.value.replace(",", ".");
       if (this.urunbirim == "M2") {
         this.detail.sqm_miktar = this.detail.miktar;
       }
@@ -633,6 +642,10 @@ export default {
       if (event) this.detail.sqm_miktar = event.replace(",", ".");
     },
     m2_hesaplama() {
+
+
+
+
       if (this.urunbirim == "M2") {
         if (this.en == "ANT" && this.boy == "PAT") {
           this.detail.miktar = this.detail.kutuadet * 0.74338688;
@@ -943,37 +956,82 @@ export default {
         });
 
       } else {
-        this.kayit_kontrol();
-        this.isGuncelle = false;
-        if (this.detail) {
-          if (this.detail.kayit_tur == 1) {
-            if (this.kayit_kontrol()) {
+        const data = {
+          'siparisno': this.detail.siparisaciklama,
+          'urunkartid': this.detail.urunkartid,
+          'kasaadet': this.kasaadet,
+          'miktar': this.detail.miktar
+        }
+        service.getProductCrateControl(data).then(data => {
+          if (data.status) {
+            if (confirm('Üretim fazlası mevcut. Yine de kaydetmek istermisiniz?')) {
               this.kayit_kontrol();
+              this.isGuncelle = false;
+              if (this.detail) {
+                if (this.detail.kayit_tur == 1) {
+                  if (this.kayit_kontrol()) {
+                    this.kayit_kontrol();
 
-              this.coklu_kayit();
-              this.$toast.add({
-                severity: "success",
-                summary: "Üretim Kasa Kaydet",
-                detail: "Kasa Kaydetme Başarılı",
-                life: 3000,
-              });
+                    this.coklu_kayit();
+                    this.$toast.add({
+                      severity: "success",
+                      summary: "Üretim Kasa Kaydet",
+                      detail: "Kasa Kaydetme Başarılı",
+                      life: 3000,
+                    });
 
-              //kasa sayısı alınacak toplama göre hareket edilecek
+                    //kasa sayısı alınacak toplama göre hareket edilecek
+                  }
+                } else {
+                  if (this.kayit_kontrol()) {
+                    this.kayit_kontrol();
+                    this.coklu_kayit();
+                    this.$toast.add({
+                      severity: "success",
+                      summary: "Üretim Kasa Kaydet",
+                      detail: "Kasa Kaydetme Başarılı",
+                      life: 3000,
+                    });
+
+                  }
+                }
+              }
             }
           } else {
-            if (this.kayit_kontrol()) {
-              this.kayit_kontrol();
-              this.coklu_kayit();
-              this.$toast.add({
-                severity: "success",
-                summary: "Üretim Kasa Kaydet",
-                detail: "Kasa Kaydetme Başarılı",
-                life: 3000,
-              });
+            this.kayit_kontrol();
+            this.isGuncelle = false;
+            if (this.detail) {
+              if (this.detail.kayit_tur == 1) {
+                if (this.kayit_kontrol()) {
+                  this.kayit_kontrol();
 
+                  this.coklu_kayit();
+                  this.$toast.add({
+                    severity: "success",
+                    summary: "Üretim Kasa Kaydet",
+                    detail: "Kasa Kaydetme Başarılı",
+                    life: 3000,
+                  });
+
+                  //kasa sayısı alınacak toplama göre hareket edilecek
+                }
+              } else {
+                if (this.kayit_kontrol()) {
+                  this.kayit_kontrol();
+                  this.coklu_kayit();
+                  this.$toast.add({
+                    severity: "success",
+                    summary: "Üretim Kasa Kaydet",
+                    detail: "Kasa Kaydetme Başarılı",
+                    life: 3000,
+                  });
+
+                }
+              }
             }
           }
-        }
+        })
+        
       }
     },
     btn_vazgec_click() {
@@ -1048,9 +1106,10 @@ export default {
         const item = this.seleksiyon_siparisdetay.find(
           (x) => x.tanim === this.siparis_detay.tanim
         );
-        this.detail.tanim = this.siparis_detay.tanim;
-        this.detail.urunkartid = item.urunkart_id;
+        console.log("siparisDetayDegisim",item)
+
         //ürün kartı bilgisini göndermek için
+
         if (item.urunkart_id == this.detail.urunkartid) {
           if (item) {
             this.urunkart_change_event(item.urunkart_id);
@@ -1070,8 +1129,12 @@ export default {
             }
           }
         } else {
+          
+
           if (this.kayitstatu == true) {
             if (item) {
+              this.urunkart_change_event(item.urunkart_id);
+
               this.tedarikci = this.seleksiyon_tedarikcilist.find(
                 (x) => x.name == item.tedarikci
               );
@@ -1085,7 +1148,13 @@ export default {
               } else if (item.urunbirimid == 3) {
                 this.urunbirim = "Mt";
               }
-            }
+
+              this.isYinedeKaydet()
+            } 
+          } else {
+            
+            this.isDisplay2 = true
+
           }
         }
         if (this.kasano == "") {
@@ -1103,7 +1172,7 @@ export default {
         this.detail.kasano = value.kasano;
       });
     },
-    siparisSecim(event) {
+    siparisSecim() {
       const kontrol = this.seleksiyon_siparislist.find(
         (x) => x.name == this.siparis.name
       );

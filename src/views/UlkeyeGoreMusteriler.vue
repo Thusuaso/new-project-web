@@ -52,6 +52,8 @@
       header="Ülkeye Göre Müşteri Ayrıntı"
       maximizable
       position="top"
+      :breakpoints="{'960px': '75vw', '640px': '100vw'}" 
+      :style="{width: '100vw'}"
     >
       <div class="columns">
         <div class="column is-6">
@@ -62,6 +64,10 @@
             :value="ulkeye_gore_musteriler_ayrinti_sip"
             scrollable
             scrollHeight="450px"
+            :resizableColumns="true" 
+            columnResizeMode="fit" 
+            showGridlines 
+            responsiveLayout="scroll"
           >
             <Column
               field="siparisTarihi"
@@ -95,6 +101,10 @@
             :value="ulkeye_gore_musteriler_ayrinti_yuk"
             scrollable
             scrollHeight="450px"
+            :resizableColumns="true" 
+            columnResizeMode="fit" 
+            showGridlines 
+            responsiveLayout="scroll"
           >
             <Column
               field="siparisTarihi"

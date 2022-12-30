@@ -149,7 +149,6 @@ export default {
       this.$store.dispatch("tedarikci_model_sifirla_act");
     },
     kaydet_click() {
-      this.$store.dispatch("loadingBeginAct");
       if (this.thtedarikci.tedarikciadi.length <= 0) {
         alert("Tedarikçi adı giriniz...");
         return;
@@ -159,14 +158,11 @@ export default {
 
       service.tedarikciKaydet(this.thtedarikci).then((response) => {
         if (response.status) {
-          this.tedarikci_tablo_yukle();
+          socket.siparis.emit('tedarikci_degisim_event');
           this.vazgec_click();
-          socket.siparis.emit("tedarikciListesiEvent", response.result);
-          this.$store.dispatch("loadingEndAct");
         } else {
           alert("Şu an veri kaydedilemedi.");
           this.is_kaydet = false;
-          this.$store.dispatch("loadingEndAct");
         }
       });
     },
@@ -180,9 +176,9 @@ export default {
       this.is_degistir = true;
       service.tedarikciGuncelle(this.thtedarikci).then((response) => {
         if (response) {
-          this.tedarikci_tablo_yukle();
+          socket.siparis.emit('tedarikci_degisim_event');
+
           this.vazgec_click();
-          socket.siparis.emit("tedarikciListesiEvent", response.result);
         } else {
           alert("Tedarikçi değiştirilemedi tekrar deneyiniz!");
           this.is_degistir = false;
@@ -193,10 +189,9 @@ export default {
       this.is_sil = true;
       service.tedarikciSil(this.thtedarikci.id).then((response) => {
         if (response.status) {
-          this.tedarikci_tablo_yukle();
+          socket.siparis.emit('tedarikci_degisim_event')
           this.vazgec_click();
           alert("Tedarikçi silindi.");
-          socket.siparis.emit("tedarikciListesiEvent", response.result);
         } else {
           alert("Tedarikçi kaydı silinemiyor kontrol ediniz!");
           this.is_sil = false;
@@ -213,5 +208,15 @@ export default {
       this.is_vazgec = false;
     },
   },
+  mounted() {
+    socket.siparis.on('tedarikci_list_emit', () => {
+      this.$store.dispatch('datatableLoadingBeginAct')
+      service.getTedarikciListeYukle().then((data) => {
+        this.$store.dispatch("tedarikci_liste_yukle_act", data);
+        this.$store.dispatch('datatableLoadingEndAct')
+
+      });
+    })
+  }
 };
 </script>

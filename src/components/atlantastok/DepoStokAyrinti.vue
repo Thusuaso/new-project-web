@@ -9,6 +9,10 @@
               :value="stok_list"
               :scrollable="true"
               scrollHeight="450px"
+              :resizableColumns="true" 
+              columnResizeMode="fit"
+              showGridlines
+              responsiveLayout="scroll"
             >
               <template #header>
                 <div
