@@ -31,6 +31,7 @@ const actions = {
   gelen_siparis_mekmar_load({ commit }) {
     store.dispatch("loadingBeginAct");
     raporService.getDashboardSatislarTamami().then((data) => {
+      console.log("getDashboardSatislarTamami",data.gelenSiparisYearAll[0].gelenSiparisYil)
       commit("gelen_siparis_mut", data.gelenSiparisMekmar[0]);
       commit("gelen_siparis_year_mut", data.gelenSiparisYearMekmar[0]);
       commit("gelen_siparis_yuklenen_mut", data.gelenSiparisMekmarYuklenen[0]);

@@ -25,7 +25,11 @@
       <Column field="email" header="Mail"></Column>
       <Column field="phone" header="Telefon"></Column>
       <Column field="adress" header="Adres"></Column>
-      <Column field="satisci" header="Satışçı"></Column>
+      <Column field="satisci" header="Satışçı">
+        <template #body="slotProps">
+          {{ slotProps.data.satisci.toUpperCase() }}
+        </template>
+      </Column>
     </DataTable>
 
     <Dialog
@@ -112,6 +116,7 @@
               id="satisci"
               type="text"
               v-model="fuarMusteriAyrinti.satisci"
+              @input="fuarMusteriAyrinti.satisci = fuarMusteriAyrinti.satisci.toUpperCase()"
             />
             <label for="satisci">Satışçı</label>
           </span>
@@ -217,6 +222,7 @@
               id="satisci"
               type="text"
               v-model="newFuarMusteri.orderer"
+              @input="newFuarMusteri.orderer = newFuarMusteri.orderer.toUpperCase()"
             />
             <label for="satisci">Satışçı</label>
           </span>

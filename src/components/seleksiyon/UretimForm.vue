@@ -938,9 +938,21 @@ export default {
                 );
 
                 this.dataSifirla();
+                this.$toast.add({
+                  severity: "success",
+                  summary: "Üretim Kasa Kaydet",
+                  detail: "Kasa Kaydetme Başarılı",
+                  life: 3000,
+                });
               });
           } else {
             this.dataSifirla();
+            this.$toast.add({
+              severity: "success",
+              summary: "Üretim Kasa Kaydet",
+              detail: "Kasa Kaydetme Başarılı",
+              life: 3000,
+            });
           }
         }
       });
@@ -1006,12 +1018,7 @@ export default {
                   this.kayit_kontrol();
 
                   this.coklu_kayit();
-                  this.$toast.add({
-                    severity: "success",
-                    summary: "Üretim Kasa Kaydet",
-                    detail: "Kasa Kaydetme Başarılı",
-                    life: 3000,
-                  });
+                  
 
                   //kasa sayısı alınacak toplama göre hareket edilecek
                 }
@@ -1019,12 +1026,7 @@ export default {
                 if (this.kayit_kontrol()) {
                   this.kayit_kontrol();
                   this.coklu_kayit();
-                  this.$toast.add({
-                    severity: "success",
-                    summary: "Üretim Kasa Kaydet",
-                    detail: "Kasa Kaydetme Başarılı",
-                    life: 3000,
-                  });
+                  
 
                 }
               }

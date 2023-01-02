@@ -50,13 +50,14 @@
           label="İşlem Yap"
         />
       </div>
-      <div class="column is-2">
+      <div class="column is-1">
         <Button
           class="p-button-secondary"
           @click="excel_cikti_click"
           label="Excell"
         />
       </div>
+
     </div>
     <div class="columns is-centered">
       <div class="column is-12">
@@ -422,6 +423,9 @@
         </div>
       </Dialog>
     </div>
+    <Dialog v-model:visible="statistics_form" :modal="true">
+
+    </Dialog>
     <UrunKartMenu @urunKartSelect="urunkart_change_event($event)" />
   </section>
 </template>
@@ -438,6 +442,8 @@ export default {
   },
   data() {
     return {
+      mines: [],
+      statistics_form:false,
       yeniUrunKartID: 0,
       kasaNo: 0,
       is_uretim_form: false,
@@ -504,6 +510,9 @@ export default {
     });
   },
   methods: {
+    statistics() {
+      this.statistics_form = true
+    },
     isSevkiyatList(event) {
       this.tablo_toplam_guncelle(event.filteredValue);
     },
@@ -707,6 +716,15 @@ export default {
       }
     },
   },
+  mounted() {
+
+
+    
+
+
+    
+    
+  }
 };
 </script>
 <style scoped>

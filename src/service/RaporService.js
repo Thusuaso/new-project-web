@@ -686,6 +686,9 @@ const raporService = {
 
         return axios.get('/raporlar/listeler/sevkiyatRaporAllAll').then(res => res.data)
   },
+        getMineList() {
+    return axios.get("listeler/ocakList").then(res=>res.data)
+  }
   
 };
 

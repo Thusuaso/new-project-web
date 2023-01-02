@@ -24,6 +24,7 @@ const SevkiyatService = {
       .put("sevkiyat/islemler/sevkiyatKayit", data)
       .then((res) => res.data);
   },
+  
 };
 
 export default SevkiyatService;

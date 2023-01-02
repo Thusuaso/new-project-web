@@ -81,9 +81,13 @@
                         class="column"
                         style="font-weight: bold"
                         id="ortalama"
+                        v-if="gelenSiparisYear.gelenSiparisYil != 0"
                       >
                         {{ gelenSiparisYear.gelenSiparisYil }}
                         {{ gelenSiparisYear.gelenSiparisAy }}
+                      </div>
+                      <div class="column" style="font-weight: bold" id="ortalama" v-else>
+                        0
                       </div>
                       <div class="column" style="text-align: center">
                         <h5 style="font-weight: bold">FOB</h5>
@@ -415,22 +419,22 @@
                   <thead>
                     <tr>
                       <th scope="col"></th>
-                      <th scope="col">2021</th>
                       <th scope="col">2022</th>
+                      <th scope="col">2021</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <th scope="row">Yüklenen</th>
                       <td>
-                        {{
-                          formatDecimal(
+                        ${{
+                           formatDecimal(
                             gelenSiparislerGrafikDataMekmar.gecenYilYukTop
                           )
                         }}
                       </td>
                       <td>
-                        {{
+                        ${{
                           formatDecimal(
                             gelenSiparislerGrafikDataMekmar.buYilYukTop
                           )
@@ -440,14 +444,14 @@
                     <tr>
                       <th scope="row">Gelen Sipariş</th>
                       <td>
-                        {{
+                        ${{
                           formatDecimal(
                             gelenSiparislerGrafikDataMekmar.gecenYilSipTop
                           )
                         }}
                       </td>
                       <td>
-                        {{
+                        ${{
                           formatDecimal(
                             gelenSiparislerGrafikDataMekmar.buYilSipTop
                           )

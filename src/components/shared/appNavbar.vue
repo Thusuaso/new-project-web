@@ -123,12 +123,10 @@
                         <router-link to="/raporlar/uretimRaporu">
                             <el-menu-item index="10-10-1"> Üretim Raporu </el-menu-item>
                         </router-link>
-                        <router-link to="/raporlar/sevkiyatRaporuMekmer">
+                        <!-- <router-link to="/raporlar/sevkiyatRaporuMekmer">
                             <el-menu-item index="10-10-2"> Sevkiyat Raporu </el-menu-item>
-                        </router-link>
-                        <router-link to="/raporlar/sevkiyatRaporuAll">
-                            <el-menu-item index="10-10-3"> Sevkiyat Raporu Hepsi </el-menu-item>
-                        </router-link>
+                        </router-link> -->
+                        
                         <router-link to="/raporlar/stokRaporu">
                             <el-menu-item index="10-10-4"> Stok Raporu </el-menu-item>
                         </router-link>
@@ -150,8 +148,11 @@
                         <router-link to="/raporlar/yuklemeRapor">
                             <el-menu-item index="10-11-3"> Yükleme Raporu </el-menu-item>
                         </router-link>
-                        <router-link to="/raporlar/sevkiyatRaporuMekmar">
+                        <!-- <router-link to="/raporlar/sevkiyatRaporuMekmar">
                             <el-menu-item index="10-11-4"> Sevkiyat Raporu </el-menu-item>
+                        </router-link> -->
+                        <router-link to="/raporlar/sevkiyatRaporuAll">
+                            <el-menu-item index="10-10-4"> Sevkiyat Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/siparisOzetRapor">
                             <el-menu-item index="10-11-5"> Sipariş Özet Raporu </el-menu-item>
@@ -210,8 +211,7 @@
                     v-if="$store.getters.__isAuthentication">
                     <strong><i class="pi pi-sign-out"></i></strong>
                 </a>
-                <Button type="button" :label="isNotification" style="width:25px;height:25px;margin-top:22px;margin-left:15px;"
-                    @click="toggle" v-if="isNotification > 0" />
+                
                 <OverlayPanel ref="op" style="background-color:#FFD373;">
                     <div class="main-container" v-for="item in notificationData" :key="item" v-show="notificationData.length > 0">
                         <div class="cards">
@@ -224,7 +224,7 @@
                                 <p class="card__link" style="margin-bottom:5px;">{{ item.hatirlatmaTarihi }} <i
                                         class="fas fa-arrow-right"></i></p>
                                 </p>
-                                <Button @click="isRowSelected(item.musteriadi)" label="Show" id="isBorderButton">
+                                <Button @click="isRowSelected(item)" label="Show" id="isBorderButton">
         
                                 </Button>
         
@@ -273,6 +273,7 @@
                         </div>
                     </div>
                 </OverlayPanel>
+                <Button type="button" class="notificationButton"  :label="isNotification" @click="toggle" />
             </el-menu>
         </div>
         
@@ -282,7 +283,7 @@
             <section>
                 <div class="columns">
                     <div class="column is-12">
-                        <CustomersDetay :select_satisci="select_satisci" />
+                        <CustomersDetay :select_satisci="select_satisci" :satisciDurum="satisciDurum" :select_musteri_id="select_musteri_id "/>
                     </div>
                 </div>
             </section>
@@ -312,6 +313,7 @@ export default {
   },
   data() {
       return {
+      satisciDurum:"Musteri",
       teklifId:0,
       isOthers: true,
       is_: true,
@@ -377,9 +379,9 @@ export default {
             this.is_tekliform = true
         },
         isRowSelected(event) {
-            this.select_satisci = event
-            service.getCustomersDetayListe(event).then(data => {
-                
+            this.select_satisci = event.musteriadi
+            this.select_musteri_id = event.id
+            service.getCustomersDetayListe(event.musteriadi).then(data => {
                 this.$store.dispatch('musteri_ayrinti_yukle_act', data.musteriDetay)
                 this.$store.dispatch('musteri_teklifler_ayrinti_yukle_act', data.tekliflermusteriDetay)
                 this.is_satisform = true
@@ -459,6 +461,27 @@ export default {
 };
 </script>
 <style scoped>
+.notificationButton{
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    margin-top:20px;
+    margin-left:20px;
+    background-color: #0e0e0e;
+    border-radius:5px;
+}
+.notificationButton:hover {
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 20px;
+    background-color: black;
+    transition:all 2s 0s linear;
+    transform:scale(1.1);
+    
+}
+
 .main-container {
   padding: 30px;
   transform:scale(0.8);

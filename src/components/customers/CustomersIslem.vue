@@ -239,12 +239,11 @@ export default {
         this.date_hatirlatma
       );
 
-      const users = this.$store.getters.__getUsername;
+      const users = this.$store.getters.__getUserId;
       data.temsilci = users;
 
       service.satisciIcerikKaydetme(data).then((res) => {
         if (res.status) {
-          socket.siparis.emit("numunetahsilat_kayitdegisim_event", data.id);
           this.is_kaydet = false;
           this.is_degistir = true;
           this.is_sil = true;
