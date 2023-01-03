@@ -11,5 +11,11 @@ module.exports = defineConfig({
                 vue: path.resolve(`./node_modules/vue`)
             }
         }
-    }
+    },
+    devServer: {
+        //proxy: 'http://localhost:5000/'
+        proxy:'https://doktor-socket.mekmar.com/'
+        
+    } 
+  
 })

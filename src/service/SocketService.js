@@ -1,4 +1,4 @@
-import {io} from "socket.io-client";
+import { io } from "socket.io-client";
 const socket = {
   //siparis: io('http://localhost:5001',{ origins: '*:*'}),
 

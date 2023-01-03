@@ -266,14 +266,14 @@
                                 <p class="card__link" style="margin-bottom:5px;">{{ item.hatirlatmaTarihi }} <i
                                         class="fas fa-arrow-right"></i></p>
                                 </p>
-                                <Button @click="isTeklifHatirlatmaSelected(item.id)" label="Show" id="isBorderButton">
+                                <Button @click="isBgpHatirlatmaSelected(item.id)" label="Show" id="isBorderButton">
         
                                 </Button>
                             </div>
                         </div>
                     </div>
                 </OverlayPanel>
-                <Button type="button" class="notificationButton"  :label="isNotification" @click="toggle" />
+                <Button type="button" class="notificationButton" v-if="isNotification > 0" :label="isNotification" @click="toggle" />
             </el-menu>
         </div>
         
@@ -293,6 +293,9 @@
         <Dialog v-model:visible="is_tekliform" style="z-index:99;" header="Teklif Listesi" :modal="true" position="top">
             <TeklifGirisForm :yeniKayit="teklifYeniKayit" :teklifId="teklifId"></TeklifGirisForm>
         </Dialog>
+        <Dialog v-model:visible="is_bgpform" style="z-index:99;" header="Bgp Listesi" :modal="true" position="top">
+            <BgpNetworkDetailForm ></BgpNetworkDetailForm>
+        </Dialog>
     </div>
 </template>
 
@@ -302,11 +305,14 @@ import service from "../../service/Customers";
 import CustomersDetay from "../../components/customers/CustomersDetay";
 import teklifService from "../../service/TeklifService";
 import TeklifGirisForm from "../../components/teklifler/TeklifGirisForm";
-
+import socket from "@/service/SocketService";
+import bgpService from "@/service/BgpProjectService";
+import BgpNetworkDetailForm from "@/components/bgpproject/bgpNetworkDetailForm"
 export default {
     components: {
         CustomersDetay,
-        TeklifGirisForm
+        TeklifGirisForm,
+        BgpNetworkDetailForm
     },
   computed: {
       ...mapGetters(["__getUserId","bgpHatirlatmaList"]),
@@ -324,7 +330,8 @@ export default {
       hatirlatmaTrueDatas: [],
       is_satisform: false,
       select_satisci: "",
-      is_tekliform: false,
+          is_tekliform: false,
+          is_bgpform:false,
       teklifYeniKayit: false,
     };
   },
@@ -340,7 +347,7 @@ export default {
     } else {
       this.isOthers = false;
     }
-    service.getCustomersHatirlatmaListe(this.__getUserId).then((data) => {
+      service.getCustomersHatirlatmaListe(this.__getUserId).then((data) => {
       this.isNotification = data.length;
         this.notificationData = data;
         this.takvimDataList();
@@ -371,9 +378,16 @@ export default {
             service.getBgpProjectsHatirlatma(users).then(data => {
                 this.$store.dispatch('bgp_projects_hatirlatma_list_load', data.result)
                 this.isNotification += data.result.length
+                
             })
         }
         ,
+        isBgpHatirlatmaSelected(id) {
+            bgpService.getBgpProjectDetailForm(id).then((data) => {
+                this.$store.dispatch("bgp_project_ayrinti_form_load", data[0]);
+                this.is_bgpform = true;
+            });
+        },
         isTeklifHatirlatmaSelected(event) {
             this.teklifId = event
             this.is_tekliform = true
@@ -457,7 +471,17 @@ export default {
 
       this.$router.push("/login");
     },
-  },
+    },
+    mounted() {
+        socket.siparis.on('bildirimler_update_emit', () => {
+            service.getCustomersHatirlatmaListe(this.__getUserId).then((data) => {
+                this.isNotification = data.length;
+                this.notificationData = data;
+                this.takvimDataList();
+                this.bgpProjectHatirlatmaList(this.__getUserId)
+            });
+        })
+  }
 };
 </script>
 <style scoped>

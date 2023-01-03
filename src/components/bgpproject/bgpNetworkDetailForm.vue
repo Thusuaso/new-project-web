@@ -195,6 +195,7 @@ import { mapGetters } from "vuex";
 import bgpService from "@/service/BgpProjectService";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import socket from "@/service/SocketService";
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -221,7 +222,6 @@ export default {
     };
   },
   created() {
-    console.log("bgpProjectAyrintiForm", this.bgpProjectAyrintiForm)
 
   },
   methods: {
@@ -256,6 +256,8 @@ export default {
                 data.result
               );
               this.emitter.emit("ayrinti_form_closed", false);
+              socket.siparis.emit('bildirimler_update_event')
+
             } else {
               this.$toast.add({
                 severity: "error",
@@ -271,6 +273,8 @@ export default {
           });
       }
     },
+
+
     sil_click() {
       bgpService
         .setBgpProjectDetailDelete(
@@ -287,6 +291,8 @@ export default {
             });
             this.$store.dispatch("bgp_projects_list_ayrinti_load", data.result);
             this.emitter.emit("ayrinti_form_closed", false);
+            socket.siparis.emit('bildirimler_update_event')
+
           } else {
             this.$toast.add({
               severity: "error",

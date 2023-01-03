@@ -257,9 +257,10 @@ export default {
           this.$store.dispatch("customers_yukle_all_act", res.result);
           this.$store.dispatch("musteri_ayrinti_yukle_act", res.result2);
           this.emitter.emit("isSearch", true);
+          socket.siparis.emit('bildirimler_update_event')
+          
         }
       });
-      this.emitter.emit("notificationUpdate", true);
     },
     degistir_click() {
       if (!this.date) {
@@ -292,9 +293,10 @@ export default {
           this.$store.dispatch("musteri_ayrinti_yukle_act", res.result2);
           this.$store.dispatch("customers_yukle_all_act", res.result);
           this.emitter.emit("isSearch", true);
+          socket.siparis.emit('bildirimler_update_event')
+
         }
       });
-      this.emitter.emit("notificationUpdate", true);
     },
     sil_click() {
       if (!this.date) {
@@ -324,9 +326,10 @@ export default {
           this.$store.dispatch("musteri_ayrinti_yukle_act", res.result2);
           this.$store.dispatch("customers_yukle_all_act", res.result);
           this.emitter.emit("isSearch", true);
+          socket.siparis.emit('bildirimler_update_event')
+
         }
       });
-      this.emitter.emit("notificationUpdate", true);
     },
   },
 };

@@ -52,7 +52,6 @@ import mitt from 'mitt'
 const app = createApp(App)
 
 
-
 app.component("Dialog", Dialog);
 app.component("Button", Button);
 app.component("InputText", InputText);

@@ -189,6 +189,7 @@ import bgpService from "@/service/BgpProjectService";
 import { mapGetters } from "vuex";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import socket from "@/service/SocketService"
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -303,6 +304,8 @@ export default {
             });
             this.$store.dispatch("bgp_projects_list_ayrinti_load", data.result);
             this.datas_reset();
+            socket.siparis.emit('bildirimler_update_event')
+
           } else {
             this.$toast.add({
               severity: "error",
@@ -312,7 +315,7 @@ export default {
             });
           }
         });
-        this.emitter.emit("notificationUpdate", true);
+
       }
       
     },
