@@ -26,29 +26,27 @@
       <div class="columns">
         <div class="column is-12">
           <DataTable
-            :value="musteri_listesi"
+            v-model:value="musteri_listesi"
             v-model:filters="filters"
-            filterDisplay="row"
+            filterDisplay="menu"
             selectionMode="single"
-            dataKey="id"
             v-model:selection="select_musteri"
             @row-select="musteri_secim_event($event)"
-            :scrollable="true" scrollHeight="650px"
+            :scrollable="true" 
+            scrollHeight="650px"
           >
             <Column
               field="id"
               header="ID"
               headerStyle="width:55px"
-              :showFilterMenu="false"
             >
               <template #body="slotProps">
                 {{ slotProps.data.id }}
               </template>
-              <template #filter="{ filterModel, filterCallback }">
+              <template #filter="{ filterModel }">
                 <InputText
                   type="text"
                   v-model="filterModel.value"
-                  @input="filterCallback()"
                   class="p-column-filter"
                   placeholder="Search by Id"
                 />
@@ -58,30 +56,27 @@
             <Column
               field="musteriadi"
               header="Müşteri Adı"
-              :showFilterMenu="false"
             >
               <template #body="slotProps">
                 {{ slotProps.data.musteriadi }}
               </template>
-              <template #filter="{ filterModel, filterCallback }">
+              <template #filter="{ filterModel }">
                 <InputText
                   type="text"
                   v-model="filterModel.value"
-                  @input="filterCallback()"
                   class="p-column-filter"
                   placeholder="Search by Customer"
                 />
               </template>
             </Column>
-            <Column field="unvan" header="Firma Adi" :showFilterMenu="false">
+            <Column field="unvan" header="Firma Adi">
               <template #body="slotProps">
                 {{ slotProps.data.unvan }}
               </template>
-              <template #filter="{ filterModel, filterCallback }">
+              <template #filter="{ filterModel }">
                 <InputText
                   type="text"
                   v-model="filterModel.value"
-                  @input="filterCallback()"
                   class="p-column-filter"
                   placeholder="Search by Title"
                 />
@@ -91,7 +86,6 @@
               field="adres"
               header="Adres"
               headerStyle="width:400px;"
-              :showFilterMenu="false"
             >
               <template #body="slotProps">
                 {{ slotProps.data.adres }}
@@ -101,30 +95,27 @@
               field="marketing"
               header="Marketing"
               headerStyle="width:100px;"
-              :showFilterMenu="false"
             >
               <template #body="slotProps">
                 {{ slotProps.data.marketing }}
               </template>
-              <template #filter="{ filterModel, filterCallback }">
+              <template #filter="{ filterModel }">
                 <InputText
                   type="text"
                   v-model="filterModel.value"
-                  @input="filterCallback()"
                   class="p-column-filter"
                   placeholder="Search by Marketing"
                 />
               </template>
             </Column>
-            <Column field="ulkeadi" header="Ülke Adı" :showFilterMenu="false">
+            <Column field="ulkeadi" header="Ülke Adı" >
               <template #body="slotProps">
                 {{ slotProps.data.ulkeadi }}
               </template>
-              <template #filter="{ filterModel, filterCallback }">
+              <template #filter="{ filterModel }">
                 <InputText
                   type="text"
                   v-model="filterModel.value"
-                  @input="filterCallback()"
                   class="p-column-filter"
                   placeholder="Search by Country"
                 />
@@ -146,16 +137,14 @@
               field="temsilci"
               header="Temsilci"
               headerStyle="width:100px;"
-              :showFilterMenu="false"
             >
               <template #body="slotProps">
                 {{ slotProps.data.temsilci }}
               </template>
-              <template #filter="{ filterModel, filterCallback }">
+              <template #filter="{ filterModel }">
                 <InputText
                   type="text"
                   v-model="filterModel.value"
-                  @input="filterCallback()"
                   class="p-column-filter"
                   placeholder="Search by Represantative"
                 />
@@ -165,16 +154,14 @@
               field="satisci"
               header="Satışçı"
               headerStyle="width:100px;"
-              :showFilterMenu="false"
             >
               <template #body="slotProps">
                 {{ slotProps.data.satisci }}
               </template>
-              <template #filter="{ filterModel, filterCallback }">
+              <template #filter="{ filterModel }">
                 <InputText
                   type="text"
                   v-model="filterModel.value"
-                  @input="filterCallback()"
                   class="p-column-filter"
                   placeholder="Search by Sales Represantative"
                 />

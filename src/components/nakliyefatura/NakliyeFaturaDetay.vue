@@ -1,81 +1,51 @@
 <template>
-  <div class="columns">
-    <div class="column is-12" :style="{ width: '350px', height: '500px' }">
-      <div class="p-field p-col-12 p-md-12">
-        <label for="firstname" class="p-col-fixed" style="width: 100px"
-          >Fatura No</label
-        >
-        <div class="p-col">
-          <InputText
-            v-model="nakliyeAyrinti.faturaNo"
-            id="firstname"
-            type="text"
-            disabled="true"
-          />
-        </div>
-      </div>
-      <div class="p-field p-col-12 p-md-12">
-        <label for="firstname" class="p-col-fixed" style="width: 100px"
-          >Kur</label
-        >
-        <div class="p-col">
-          <InputText
-            v-model="nakliyeAyrinti.kur"
-            id="firstname"
-            type="text"
-            @input="isInputKur"
-          />
-        </div>
-      </div>
-      <div class="p-field p-col-12 p-md-12">
-        <label for="lastname" class="p-col-fixed" style="width: 100px"
-          >Tutar- USD</label
-        >
-        <div class="p-col">
-          <InputText
-            v-model="nakliyeAyrinti.Tutar_dolar"
-            id="lastname"
-            type="text"
-            @input="isInputDolar"
-          />
-        </div>
-      </div>
-      <div class="p-field p-col-12 p-md-12">
-        <div class="columns">
-          <div class="column is-3">
-            <OverlayPanel
-              ref="op"
-              style="margin-left: -570px; margin-top: -130px"
-            >
-              <div>Silmek istediğinize emin misiniz?</div>
-              <div class="columns">
-                <div class="column">
-                  <Button @click="is_yes" label="Evet"></Button>
-                </div>
-                <div class="column">
-                  <Button @click="is_no" label="Hayır"></Button>
-                </div>
-              </div>
-            </OverlayPanel>
-            <Button
-              class="button is-danger"
-              @click="is_delete_document"
-              icon="pi pi-check"
-              label="Sil"
-            ></Button>
-          </div>
-          <div class="column">
-            <Button
-              class="button is-warning"
-              @click="is_change_document"
-              icon="pi pi-check"
-              label="Değiştir"
-            ></Button>
+  <div class="container">
+    <div class="columns is-vcentered">
+      <div class="column is-12" :style="{ width: '350px', height: '400px' }">
+        <div class="p-field p-col-12 p-md-12">
+          <label for="firstname" class="p-col-fixed" style="width: 100px">Fatura No</label>
+          <div class="p-col">
+            <InputText v-model="nakliyeAyrinti.faturaNo" id="firstname" type="text" disabled="true" />
           </div>
         </div>
-      </div>
+        <div class="p-field p-col-12 p-md-12">
+          <label for="firstname" class="p-col-fixed" style="width: 100px">Kur</label>
+          <div class="p-col">
+            <InputText v-model="nakliyeAyrinti.kur" id="firstname" type="text" @input="isInputKur" />
+          </div>
+        </div>
+        <div class="p-field p-col-12 p-md-12">
+          <label for="lastname" class="p-col-fixed" style="width: 100px">Tutar- USD</label>
+          <div class="p-col">
+            <InputText v-model="nakliyeAyrinti.Tutar_dolar" id="lastname" type="text" @input="isInputDolar" />
+          </div>
+        </div>
+        <OverlayPanel ref="op" style="margin-left: -570px; margin-top: -130px">
+          <div>Silmek istediğinize emin misiniz?</div>
+          <div class="columns">
+            <div class="column">
+              <Button @click="is_yes" label="Evet"></Button>
+            </div>
+            <div class="column">
+              <Button @click="is_no" label="Hayır"></Button>
+            </div>
+          </div>
+        </OverlayPanel>
+        <br />
+          <div class="columns">
+            <div class="column">
+    
+              <Button class="button is-danger" @click="is_delete_document" icon="pi pi-check" label="Sil"></Button>
+            </div>
+            <div class="column">
+    
+              <Button class="button is-warning" @click="is_change_document" icon="pi pi-check" label="Değiştir"></Button>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
+  
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -191,4 +161,11 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.container{
+  width:100%;
+  height:auto;
+  text-align:center;
+  padding-top:25px;
+}
+</style>

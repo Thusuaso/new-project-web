@@ -57,6 +57,9 @@
           dataKey="id"
           :rows="40"
           :paginator="true"
+          :resizableColumns="true" 
+          columnResizeMode="fit" 
+          showGridlines
         >
           <Column
             field="id"

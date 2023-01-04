@@ -12,7 +12,7 @@
         responsiveLayout="scroll"
         class="p-datatable-responsive"
         v-model:selection="selectedSiparis"
-        selectionMode="multiple"
+        selectionMode="single"
         @row-select="siparisSecim($event)"
         v-model:filters="filters"
         filterDisplay="menu"

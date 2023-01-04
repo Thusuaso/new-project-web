@@ -296,7 +296,7 @@ export default {
     const ad = username;
 
     const d = new Date();
-    const year = d.getFullYear(); // 2021
+    const year = d.getFullYear() - 1; // 2021
     store.dispatch("loadingBeginAct");
     service.getKonteynerAnaListe(year).then((data) => {
       if (ad == "Ozlem" || ad == "Hakan") {
@@ -321,7 +321,7 @@ export default {
       this.$store.dispatch('datatableLoadingBeginAct')
 
       const d = new Date();
-      const year = d.getFullYear(); // 2021
+      const year = d.getFullYear() - 1; // 2021
       service.getKonteynerAnaListe(year).then((data) => {
         store.dispatch("finansAnaListeYukleAct", data);
         this.$store.dispatch('datatableLoadingEndAct')

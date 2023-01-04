@@ -81,14 +81,11 @@
                         class="column"
                         style="font-weight: bold"
                         id="ortalama"
-                        v-if="gelenSiparisYear.gelenSiparisYil != 0"
                       >
                         {{ gelenSiparisYear.gelenSiparisYil }}
                         {{ gelenSiparisYear.gelenSiparisAy }}
                       </div>
-                      <div class="column" style="font-weight: bold" id="ortalama" v-else>
-                        0
-                      </div>
+
                       <div class="column" style="text-align: center">
                         <h5 style="font-weight: bold">FOB</h5>
                       </div>

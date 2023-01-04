@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="columns">
-      <div class="columun" style="padding-right: 5px">
+      <div class="column" style="padding-right: 5px">
         <!----2020 için sipariş özeti--->
 
         <DataTable
@@ -11,6 +11,7 @@
           :scrollable="true"
           scrollHeight="380px"
           @row-select="sip_onceki_yil_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -55,7 +56,7 @@
         </DataTable>
       </div>
 
-      <div class="columun" style="padding-right: 5px">
+      <div class="column" style="padding-right: 5px">
         <!----2021 için sipariş özeti--->
 
         <DataTable
@@ -65,6 +66,7 @@
           :scrollable="true"
           scrollHeight="380px"
           @row-select="sip_gecen_yil_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -109,7 +111,7 @@
         </DataTable>
       </div>
 
-      <div class="columun" style="padding-right: 5px">
+      <div class="column" style="padding-right: 5px">
         <!----2022 için sipariş özeti--->
 
         <DataTable
@@ -119,6 +121,7 @@
           :scrollable="true"
           scrollHeight="380px"
           @row-select="sip_bu_yil_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -175,7 +178,7 @@
         </DataTable>
       </div>
 
-      <div class="columun" style="padding-right: 5px">
+      <div class="column" style="padding-right: 5px">
         <DataTable
           v-model:value="siparis_kullanici_gecen"
           selectionMode="single"
@@ -184,6 +187,7 @@
           scrollHeight="380px"
           :loading="loading"
           @row-select="sip_kullanici_gecen_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -223,7 +227,7 @@
         </DataTable>
       </div>
 
-      <div class="columun">
+      <div class="column">
         <DataTable
           selectionMode="single"
           v-model:value="siparis_kullanici"
@@ -232,6 +236,7 @@
           scrollHeight="380px"
           :loading="loading"
           @row-select="sip_kullanici_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -271,7 +276,8 @@
         </DataTable>
       </div>
     </div>
-    <div class="columns">
+ 
+    <div class="column">
       <div class="column is-6 count">
         <span class="count">Fark : {{ formatPrice(siparis_fark) }}</span> &#160;
         &#160; &#160;
@@ -281,7 +287,7 @@
       </div>
     </div>
     <div class="columns">
-      <div class="columun" style="width: 340px; padding-right: 5px">
+      <div class="column" >
         <DataTable
           v-model:value="sevk_list"
           selectionMode="single"
@@ -290,6 +296,7 @@
           scrollHeight="380px"
           :loading="loading"
           @row-select="sev_onceki_yil_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -333,7 +340,7 @@
           </Column>
         </DataTable>
       </div>
-      <div class="columun" style="width: 340px; padding-right: 5px">
+      <div class="column">
         <DataTable
           v-model:value="sevk_list"
           selectionMode="single"
@@ -342,6 +349,7 @@
           scrollHeight="380px"
           :loading="loading"
           @row-select="sev_gecen_yil_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -386,7 +394,7 @@
         </DataTable>
       </div>
 
-      <div class="columun" style="width: 340px; padding-right: 5px">
+      <div class="column" >
         <DataTable
           selectionMode="single"
           v-model:value="sevk_list"
@@ -395,6 +403,7 @@
           scrollHeight="380px"
           :loading="loading"
           @row-select="sev_bu_yil_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -450,7 +459,7 @@
           </Column>
         </DataTable>
       </div>
-      <div class="columun" style="width: 340px; padding-right: 5px">
+      <div class="column" >
         <DataTable
           v-model:value="sevkiyat_kullanici_gecen"
           selectionMode="single"
@@ -459,6 +468,7 @@
           scrollHeight="380px"
           :loading="loading"
           @row-select="sev_kullanici_gecen_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -503,7 +513,7 @@
         </DataTable>
       </div>
 
-      <div class="columun" style="width: 340px">
+      <div class="column" >
         <DataTable
           v-model:value="sevkiyat_kullanici"
           selectionMode="single"
@@ -512,6 +522,7 @@
           scrollHeight="380px"
           :loading="loading"
           @row-select="sev_kullanici_sec($event)"
+          :resizableColumns="true" columnResizeMode="fit" showGridlines
         >
           <template #header>
             <div class="columns is-multiline">
@@ -566,6 +577,7 @@
         >
       </div>
     </div>
+
     <div class=columns>
       <div class="column">
           <ceyreklikSatislar></ceyreklikSatislar>

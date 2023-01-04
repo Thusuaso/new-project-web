@@ -98,14 +98,23 @@
                     <router-link to="/musteriler/musteriListesi">
                         <el-menu-item index="8-1"> Müşteri Listesi </el-menu-item>
                     </router-link>
+                    <router-link to="/musteriler/teklifMusterileri">
+                        <el-menu-item index="8-2"> Teklif Müşteri Listesi </el-menu-item>
+                    </router-link>
+                    <router-link to="/musteriler/bgpMusterileri">
+                        <el-menu-item index="8-3"> Bgp Müşteri Listesi </el-menu-item>
+                    </router-link>
+                    <router-link to="/musteriler/fuarMusterileri">
+                        <el-menu-item index="8-4"> Fuar Müşteri Listesi </el-menu-item>
+                    </router-link>
                     <router-link to="/musteriler/musteriSiparisListesi">
-                        <el-menu-item index="8-2"> Müşteri Sipariş Listesi </el-menu-item>
+                        <el-menu-item index="8-5"> Müşteri Sipariş Listesi </el-menu-item>
                     </router-link>
                     <router-link to="/musteriler/ulkeyeGoreMusteriler">
-                        <el-menu-item index="8-3"> Ülkeye Göre Müşteriler </el-menu-item>
+                        <el-menu-item index="8-6"> Ülkeye Göre Müşteriler </el-menu-item>
                     </router-link>
                     <router-link to="/musteriler/seleksiyonaGoreMusteriler">
-                        <el-menu-item index="8-4"> Seleksiyon Müşterileri </el-menu-item>
+                        <el-menu-item index="8-7"> Seleksiyon Müşterileri </el-menu-item>
                     </router-link>
                 </el-sub-menu>
                 <el-sub-menu index="9" v-if="isOthers" v-show="is_h">

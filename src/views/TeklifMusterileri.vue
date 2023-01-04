@@ -245,6 +245,8 @@ export default {
   },
 
   created() {
+    this.userId = this.$store.getters.__getUserId;
+
     service.getTeklifMusteriler().then((data) => {
       if (this.userId == 10 || this.userId == 47 || this.userId == 13) {
         this.$store.dispatch("teklif_musteri_load_act", data)
@@ -260,7 +262,6 @@ export default {
     this.kullaniciService.getKullaniciList().then((data) => {
       this.kullaniciList = data;
     });
-    this.userId = this.$store.getters.__getUserId;
   },
   methods: {
     copyToCustomers() {

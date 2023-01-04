@@ -41,7 +41,7 @@
                   <div class="column">
                     <span class="p-float-label">
                       <InputNumber class="p-inputtext-sm" id="detayAlis_3" @input="numune.Miktar = $event.value"
-                        v-model="numune.Miktar" :disabled="disPesinat" mode="currency" currency="USD" locale="jp-JP"
+                        v-model="numune.Miktar" :disabled="disPesinat"
                         inputStyle="text-align:center;" style="width:100%;height:40px;" />
 
                       <label for="miktar">Miktar</label>
@@ -130,10 +130,10 @@
                   </div>
                   <div class="column">
                     <h3>Kurye Detay</h3>
-
+                    <br/>
                     <div class="columns">
                       <div class="column is-2">
-                        <span> Alış : </span>
+                        <span> Alış: </span>
                       </div>
                       <div class="column is-3">
 
@@ -145,7 +145,7 @@
                       </div>
                       <div class="column is-3">
                         <span class="p-float-label">
-                          <InputNumber id="TL_Alis" v-model="numune.TL_Alis" mode="currency" :disabled="dis_Alis" currency="USD" />
+                          <InputNumber id="TL_Alis" v-model="numune.TL_Alis" mode="currency" :disabled="dis_Alis" currency="TRY" />
                           <label for="TL_Alis">₺</label>
                         </span>
                       </div>
@@ -160,7 +160,7 @@
 
                     <div class="columns">
                       <div class="column is-2">
-                        <span> Satış : </span>
+                        <span> Satış: </span>
                       </div>
                       <div class="column is-3">
                         <span class="p-float-label">
@@ -171,7 +171,7 @@
                       <div class="column is-3">
 
                         <span class="p-float-label">
-                          <InputNumber id="Euro_Alis" v-model="numune.TL_Satis" mode="currency" :disabled="dis_Satis" currency="USD" />
+                          <InputNumber id="Euro_Alis" v-model="numune.TL_Satis" mode="currency" :disabled="dis_Satis" currency="TRY" />
                           <label for="Euro_Alis">₺</label>
                         </span>
                       </div>

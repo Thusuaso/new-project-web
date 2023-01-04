@@ -236,6 +236,39 @@ const routes = [
     },
   },
   {
+    path: "/musteriler/teklifMusterileri",
+    component: () => import("@/views/TeklifMusterileri"),
+    beforeEnter(to, from, next) {
+      if (store.getters.__isAuthentication) {
+        next();
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
+    path: "/musteriler/bgpMusterileri",
+    component: () => import("@/views/BgpMusterileri"),
+    beforeEnter(to, from, next) {
+      if (store.getters.__isAuthentication) {
+        next();
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
+    path: "/musteriler/fuarMusterileri",
+    component: () => import("@/views/FuarMusterileri"),
+    beforeEnter(to, from, next) {
+      if (store.getters.__isAuthentication) {
+        next();
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
     path: "/musteriler/musteriSiparisListesi",
     component: () => import("@/views/MusteriSiparisListesi"),
     beforeEnter(to, from, next) {

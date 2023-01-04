@@ -1540,11 +1540,12 @@ export default {
       const year = now.getFullYear();
       this.is_hepsi = false;
 
-      this.select_yil = this.yil_listesi.find((x) => x.yil == year);
+      this.select_yil = this.yil_listesi.find((x) => x.yil == '2022');
+      console.log("select_yil",this.select_yil)
       service.getMaliyetAyListesi(this.select_yil.yil).then((ay_list) => {
         this.ay_listesi = ay_list;
 
-        this.select_ay = ay_list.find((x) => x.ay == now.getMonth());
+        this.select_ay = ay_list.find((x) => x.ay == "12");
 
         this.maliyet_listesi_yukle();
       });
@@ -1629,7 +1630,7 @@ export default {
     maliyet_listesi_yukle() {
       this.select_faturalama = { fatura: "Hepsi" };
       this.$store.dispatch("datatableLoadingBeginAct");
-
+      console.log("maliyet_listesi_yukle",this.select_ay)
       service
         .getMaliyetRapor(this.select_yil.yil, this.select_ay.ay)
         .then((data) => {

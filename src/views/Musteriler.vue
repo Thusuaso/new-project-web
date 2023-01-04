@@ -1,34 +1,17 @@
 <template>
-  <TabView>
-    <TabPanel header="Satış Müşterileri">
       <MusteriListesi></MusteriListesi>
-    </TabPanel>
-    <TabPanel header="Teklif Müşterileri">
-      <TeklifMusterileri></TeklifMusterileri>
-    </TabPanel>
-    <TabPanel header="Fuar ve Ziyaret Müşterileri">
-      <FuarMusterileri></FuarMusterileri>
-    </TabPanel>
-    <TabPanel header="Bgp Müşterileri"> 
-      <BgpMusterileri></BgpMusterileri>
-    </TabPanel>
-  </TabView>
+    
 </template>
 <script>
 import { mapGetters } from "vuex";
 import service from "../service/MusteriIslemService";
 import MusteriListesi from "../components/musteriler/MusteriListesi";
-import TeklifMusterileri from "../components/musteriler/TeklifMusterileri";
-import FuarMusterileri from "../components/musteriler/FuarMusterileri";
-import BgpMusterileri from "../components/musteriler/BgpMusterileri";
 import socket from "../service/SocketService";
 import { FilterMatchMode } from "primevue/api";
 export default {
   components: {
     MusteriListesi,
-    TeklifMusterileri,
-    FuarMusterileri,
-    BgpMusterileri
+
 
   },
   computed: {
