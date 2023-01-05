@@ -35,6 +35,8 @@
                   field="teklifSayisi"
                   header="Teklif"
                   bodyStyle="text-align:center;"
+                  footerStyle="text-align:center;"
+
                 >
                   <template #body="slotProps">
                     {{ slotProps.data.teklifSayisi }}
@@ -47,6 +49,7 @@
                   field="proformaSayisi"
                   header="PI"
                   bodyStyle="text-align:center;"
+                  footerStyle="text-align:center;"
                 >
                   <template #body="slotProps">
                     {{ slotProps.data.proformaSayisi }}
@@ -65,12 +68,18 @@
                 :value="hatirlatmaList"
                 :loading="datatableLoading"
               >
-                <Column field="tarih" header="Tarih">
+                <Column field="tarih" header="Tarih" bodyStyle="text-align:center;">
                   <template #body="slotProps">
                     {{ slotProps.data.tarih }}
                   </template>
                 </Column>
-                <Column field="musteriAdi" header="Müşteri">
+                <Column 
+                field="musteriAdi" 
+                header="Müşteri"
+                footerStyle="text-align:center;"
+                bodyStyle="text-align:center;"
+                
+                >
                   <template #body="slotProps">
                     {{ slotProps.data.musteriAdi }}
                   </template>
@@ -78,7 +87,7 @@
                     {{ toplam_hatirlatma_sayisi }}
                   </template>
                 </Column>
-                <Column field="ulkeAdi" header="Ülke">
+                <Column field="ulkeAdi" header="Ülke" bodyStyle="text-align:center;">
                   <template #body="slotProps">
                     {{ slotProps.data.ulkeAdi }}
                   </template>
@@ -137,12 +146,12 @@
                 :scrollable="true"
                 scrollHeight="408px"
               >
-                <Column field="musteriAdi" header="Müşteri">
+                <Column field="musteriAdi" header="Müşteri" bodyStyle="text-align:center;">
                   <template #body="slotProps">
                     {{ slotProps.data.musteriAdi }}
                   </template>
                 </Column>
-                <Column field="ulkeAdi" header="Ülke">
+                <Column field="ulkeAdi" header="Ülke" bodyStyle="text-align:center;">
                   <template #body="slotProps">
                     {{ slotProps.data.ulkeAdi }}
                   </template>
@@ -152,6 +161,7 @@
                   header="T"
                   headerStyle="width:50px"
                   bodyStyle="text-align:center"
+                  footerStyle="text-align:center;"
                 >
                   <template #body="slotProps">
                     {{ slotProps.data.teklifSayisi }}

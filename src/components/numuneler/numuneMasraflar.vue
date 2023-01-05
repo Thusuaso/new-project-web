@@ -7,6 +7,10 @@
           :scrollable="true"
           scrollHeight="450px"
           dataKey="id"
+          :resizableColumns="true"
+          columnResizeMode="fit" 
+          showGridlines 
+          responsiveLayout="scroll"
         >
           <Column
             field="orderno"

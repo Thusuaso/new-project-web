@@ -1,5 +1,6 @@
 <template>
   <section>
+    <br/>
     <div class="columns is-multiline">
       <div class="column is-12">
         <span class="p-float-label">

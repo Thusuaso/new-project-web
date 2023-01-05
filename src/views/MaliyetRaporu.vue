@@ -1431,12 +1431,11 @@
           :modal="true"
           maximizable
           position="top"
+          :breakpoints="{'960px': '75vw', '640px': '100vw'}" 
+          :style="{width: '100%'}"
         >
-          <div class="columns" style="background-color: white">
-            <div class="column is-12" style="background-color: white">
               <MaliyetAyrinti />
-            </div>
-          </div>
+
         </Dialog>
       </div>
     </div>

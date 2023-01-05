@@ -18,6 +18,7 @@
             selectionMode="single"
             v-model:selection="select_maliyet"
             @row-select="ocak_listesi_detay($event)"
+            
           >
             <Column
               field="ocakAdi"
@@ -82,15 +83,11 @@
           position="top"
           :modal="true"
           maximizable
+          :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '100%'}"
         >
-          <div class="columns" style="height: 900px; background-color: white">
-            <div
-              class="column is-12"
-              style="height: 900px; background-color: white"
-            >
+
               <SeleksiyonOcakDetay />
-            </div>
-          </div>
+
         </Dialog>
       </div>
     </div>

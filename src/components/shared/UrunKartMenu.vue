@@ -170,6 +170,8 @@
 import { mapGetters } from "vuex";
 import socket from "@/service/SocketService";
 import { FilterMatchMode } from "primevue/api";
+import urunKartService from "@/service/UrunKartService";
+
 export default {
   data() {
     return {
@@ -235,8 +237,15 @@ export default {
       this.$store.dispatch("kartGuncellemeAct", data);
 
     });
+    
   },
-  mounted() { },
+  mounted() { 
+    socket.siparis.on("urunkart_silme_emit", () => {
+      urunKartService.getUrunKartMenuList().then((data) => {
+        this.$store.dispatch("urunKartMenuAct", data);
+      });
+    })
+  },
   computed: {
     ...mapGetters(["getUrunKartMenuList"]),
   },

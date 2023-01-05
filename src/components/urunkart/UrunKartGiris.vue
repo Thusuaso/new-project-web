@@ -424,9 +424,6 @@ export default {
     },
   },
   mounted() {
-    socket.siparis.on("urun_kart_silme_emit", (data) => {
-      this.$store.dispatch("urunKartMenuAct", data);
-    });
     this.username = this.$store.getters.__getUsername.toUpperCase();
     this.emitter.on("seleksiyonKasaKontrol", (data) => {
       console.log("seleksiyonKasaKontrol",data)

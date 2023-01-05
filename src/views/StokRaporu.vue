@@ -211,16 +211,12 @@
       :modal="true"
       header="Stok Raporu Ayrıntı"
       maximizable
+      :breakpoints="{'960px': '75vw', '640px': '100vw'}" 
+      :style="{width: '100%'}"
     >
-      <section>
-        <div class="container">
-          <div class="columns">
-            <div class="column is-12">
+
               <StokAyrintiListesi />
-            </div>
-          </div>
-        </div>
-      </section>
+
     </Dialog>
 
     <Dialog

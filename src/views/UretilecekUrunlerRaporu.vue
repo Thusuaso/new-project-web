@@ -229,6 +229,8 @@
     header="Üretilecek Ürün Ayrıntı"
     position="top"
     maximizable
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" 
+    :style="{width: '100%'}"
   >
     <div class="columns">
       <div class="column is-12">

@@ -1,10 +1,10 @@
 <template>
   <div class="columns">
-    <div class="column">
+    <div class="column is-4">
       <Card>
         <template #content>
           <div class="columns">
-            <div class="column">
+            <div class="column is-6">
               <Dropdown
                 v-model="select_yil"
                 @change="yil_degisim_event"
@@ -28,7 +28,7 @@
                 </template>
               </Dropdown>
             </div>
-            <div class="column">
+            <div class="column is-6">
               <RadioButton
                 name="name"
                 value="musteri"
@@ -44,12 +44,11 @@
               />
               PO
             </div>
-            <div class="column"></div>
           </div>
         </template>
       </Card>
     </div>
-    <div class="column">
+    <div class="column is-4">
       <Card>
         <template #content>
           <div class="columns">
@@ -111,7 +110,7 @@
         </template>
       </Card>
     </div>
-    <div class="column">
+    <div class="column is-2">
       <Card>
         <template #content>
           <div class="columns">
@@ -137,7 +136,7 @@
         </template>
       </Card>
     </div>
-    <div class="column">
+    <div class="column is-2">
       <Card>
         <template #content>
           <div class="columns">

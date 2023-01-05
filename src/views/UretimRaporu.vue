@@ -68,11 +68,10 @@
             <template #body="slotProps">
               {{ slotProps.data.tarih }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Date"
               />
@@ -87,11 +86,10 @@
             <template #body="slotProps">
               {{ slotProps.data.kimden }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Representative"
               />
@@ -107,11 +105,10 @@
             <template #body="slotProps">
               {{ slotProps.data.urunKartID }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Product Id"
               />
@@ -127,11 +124,10 @@
             <template #body="slotProps">
               {{ slotProps.data.kategori }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Category"
               />
@@ -146,11 +142,10 @@
             <template #body="slotProps">
               {{ slotProps.data.kasano }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Crate No"
               />
@@ -165,11 +160,10 @@
             <template #body="slotProps">
               {{ slotProps.data.urunadi }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Product"
               />
@@ -184,11 +178,10 @@
             <template #body="slotProps">
               {{ slotProps.data.ocakadi }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Quarry"
               />
@@ -203,11 +196,10 @@
             <template #body="slotProps">
               {{ slotProps.data.yuzeyadi }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Surface"
               />
@@ -222,11 +214,10 @@
             <template #body="slotProps">
               {{ slotProps.data.en }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Width"
               />
@@ -241,11 +232,10 @@
             <template #body="slotProps">
               {{ slotProps.data.boy }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Height"
               />
@@ -260,11 +250,10 @@
             <template #body="slotProps">
               {{ slotProps.data.kenar }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Edge"
               />
@@ -303,11 +292,10 @@
             <template #body="slotProps">
               {{ slotProps.data.birimadi }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Unit"
               />
@@ -322,11 +310,10 @@
             <template #body="slotProps">
               {{ slotProps.data.siparisno }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by PO"
               />
@@ -343,11 +330,10 @@
                 {{ slotProps.data.aciklama }}
               </div>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Description"
               />

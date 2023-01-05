@@ -201,7 +201,7 @@ import UrunKartGiris from "../components/urunkart/UrunKartGiris";
 import urunKartService from "../service/UrunKartService";
 import socket from "../service/SocketService";
 import { mapGetters } from "vuex";
-import store from "@/store";
+// import store from "@/store";
 import { FilterMatchMode } from "primevue/api";
 export default {
   data() {
@@ -266,8 +266,8 @@ export default {
             .setUrunKartSil(this.urunKartId, this.username)
             .then((data) => {
               if (data.status) {
-                socket.siparis.emit('urunKartiSilmeEvent', data.urunKartTable)
-                store.dispatch("urunKartMenuAct", data.urunKartTable);
+                socket.siparis.emit('urunKartiSilmeEvent')
+                
                 socket.siparis.emit(
                   "anaSayfaDegisiklikEvent",
                   data.anaSayfaDegisiklik
@@ -315,7 +315,7 @@ export default {
       this.filters = _filter;
     });
     socket.siparis.on("urunkart_silme_emit", (data) => {
-      this.$store.dispatch("kartSilmeAct", data);
+      this.$store.dispatch("urunKartMenuAct", data);
     });
   },
 };

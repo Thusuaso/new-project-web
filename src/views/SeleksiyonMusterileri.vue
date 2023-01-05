@@ -79,7 +79,7 @@
 
         
     </div>
-    <Dialog v-model:visible="is_form">
+    <Dialog v-model:visible="is_form" :modal="true" >
         <div class="testbox">
                 <div class="colums">
                     <div class="item">
