@@ -530,16 +530,17 @@
   </div>
   <div class="columns">
     <div class="column">
-      <Card v-if="urunListesi.length > 0">
+      <Card >
         <template #header>
           <div class="columns">
-            <div class="column is-9">
+            <div class="column is-9" >
               <DataTable
                 class="p-datatable-responsive"
                 :value="urunListesi"
                 selectionMode="single"
                 v-model:selection="selectUrun"
                 @row-select="teklifUrunSec"
+                v-if="urunListesi.length > 0"
               >
                 <Column
                   field="tarih"
