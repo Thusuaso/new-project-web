@@ -2,14 +2,14 @@
   <section>
     <div class="columns">
       <div class="column is-12">
-        <b-field label-position="on-border" :label="label">
-          <b-input
+        <span label-position="on-border" :label="label">
+          <input
             :disabled="disAktif"
-            v-model="text_value"
+            v-model="text_value2"
             @input="value_change_event($event)"
             custom-class="has-text-centered"
           />
-        </b-field>
+        </span>
       </div>
     </div>
   </section>
@@ -18,6 +18,15 @@
 export default {
   props: ["label", "text_value", "disAktif"],
 
+  data() {
+    return {
+      text_value2: 0,
+
+    }
+  },
+  created() {
+    this.text_value2 = this.text_value
+  },
   methods: {
     value_change_event(event) {
       let value = event;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="columns is-mobile is-gapless">
+    <!-- <div class="columns is-mobile is-gapless">
       <div class="column">
         <RadioButton
           id="rapor3"
@@ -30,11 +30,12 @@
         />
         <label for="rapor2" class="p-radiobutton-label">Hepsi</label>
       </div>
-    </div>
+    </div> -->
     <Card>
       <template #header>
         <div class="columns">
           <div class="column">
+
             <div id="dashboardUstSol">
               <div style="display: block">
                 <div class="columns" id="rapors">
@@ -261,7 +262,7 @@
                   </div>
                 </div>
 
-                <div class="columns" id="rapors">
+                <!-- <div class="columns" id="rapors">
                   <div class="column is-6">
                     <div class="columns">
                       <div
@@ -329,9 +330,9 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
-                <div class="columns" id="rapors">
+                <!-- <div class="columns" id="rapors">
                   <div class="column is-6">
                     <div class="columns">
                       <div
@@ -401,7 +402,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -573,9 +574,7 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("gelen_siparis_mekmar_load");
-    this.$store.dispatch("gelen_siparis_grafik_load");
-    this.$store.dispatch("gelen_siparis_grafik_mekmar_data_load");
+
     
   },
 
@@ -767,6 +766,7 @@ table {
 #dashboardUstSol {
   width: 90%;
   margin-left: 35px;
+  margin-top:90px;
 }
 
 #dashboardUstSag {

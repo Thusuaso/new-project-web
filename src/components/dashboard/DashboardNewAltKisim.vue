@@ -116,7 +116,7 @@
         <Card>
           <template #header>
             <h2 style="text-align: center">
-              R16: {{ year }} 'de Yapılan Sevkiyatın Üreticilere Göre Dağılımı
+              R16: {{ year }} 'de Yapılan Sevkiyatın Üreticilere Göre Dağılımı (Mekmar)
             </h2>
           </template>
           <template #content>

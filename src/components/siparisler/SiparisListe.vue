@@ -156,7 +156,6 @@
       maximizable
       position="top"
       style="width: 100%;"
-      :closable="false"
     >
       <siparis-giris-form
         :dtSiparisNo="dtSiparisNo"

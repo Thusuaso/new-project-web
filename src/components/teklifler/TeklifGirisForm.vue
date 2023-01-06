@@ -675,10 +675,10 @@
                 />
               </div>
               <div class="p-col-4">
-                <label forHtml="input">Tutar : </label>
+                <label forHtml="input">Tutar ($) : </label>
               </div>
               <div class="p-col-8">
-                <currency-input type="text" v-model="teklif.proformaTutar" />
+                <currency-input type="text" v-model="teklif.proformaTutar" @input="teklif.proformaTutar = $event.target.value.replace(',','.')"/>
               </div>
               <div class="p-col-4">
                 <label forHtml="input">Not : </label>

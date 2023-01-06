@@ -28,11 +28,9 @@ const actions = {
   tahmini_degisiklik_load({ commit }, data) {
     commit("tahmini_degisiklik_mut", data);
   },
-  gelen_siparis_mekmar_load({ commit }) {
-    store.dispatch("loadingBeginAct");
-    raporService.getDashboardSatislarTamami().then((data) => {
-      console.log("getDashboardSatislarTamami",data)
-      commit("gelen_siparis_mut", data.gelenSiparisMekmar[0]);
+  gelen_siparis_mekmar_load({ commit },data) {
+    console.log("gelen_siparis_mekmar_load",data)
+    commit("gelen_siparis_mut", data.gelenSiparisMekmar[0]);
       commit("gelen_siparis_year_mut", data.gelenSiparisYearMekmar[0]);
       commit("gelen_siparis_yuklenen_mut", data.gelenSiparisMekmarYuklenen[0]);
       commit(
@@ -49,7 +47,6 @@ const actions = {
         "gelen_siparis_efes_year_yuklenen_mut",
         data.gelenSiparisYillikEfesYuklenen[0]
       );
-    });
   },
   gelen_siparis_satisci_load({ commit }) {
     const localUser = store.getters.__getUsername;
@@ -78,21 +75,18 @@ const actions = {
       );
     });
   },
-  gelen_siparis_grafik_load({ commit }) {
-    raporService.getDashboardSatislarGrafik().then((data) => {
+  gelen_siparis_grafik_load({ commit },data) {
       commit("gelen_siparis_grafik_mut", data.grafikMekmar);
-    });
+
+    
   },
   gelen_siparis_grafik_hepsi_load({ commit }) {
     raporService.getDashboardSatislarGrafik().then((data) => {
       commit("gelen_siparis_grafik_hepsi_mut", data.grafikHepsi);
     });
   },
-  gelen_siparis_grafik_mekmar_data_load({ commit }) {
-    raporService.getDashboardGrafikData().then((data) => {
+  gelen_siparis_grafik_mekmar_data_load({ commit },data) {
       commit("gelen_siparis_grafik_mekmar_data_mut", data);
-      store.dispatch("loadingEndAct");
-    });
   },
   dashboard_sub_data_load({ commit }) {
     raporService.getDashboardSubData().then((data) => {

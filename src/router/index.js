@@ -5,6 +5,7 @@ import urunKartService from "../service/UrunKartService";
 import depoService from "../service/DepoService";
 import tedarikciService from "../service/TedarikciService";
 import siparisService from "../service/SiparisService";
+import raporService from "@/service/RaporService";
 const routes = [
   {
     path: "/login",
@@ -29,11 +30,24 @@ const routes = [
 
         service.getTemsilciList().then((data) => {
           store.dispatch("customers_temsilci_yukle_act", data);
+          
+        });
+        raporService.getDashboardGrafikData().then((data) => {
+          store.dispatch("gelen_siparis_grafik_mekmar_data_load",data);
+        });
+        raporService.getDashboardSatislarTamami().then((data) => {
+          store.dispatch("gelen_siparis_mekmar_load",data);
+        });
+        raporService.getDashboardSatislarGrafik().then((data) => {
+          store.dispatch("gelen_siparis_grafik_load", data);
           store.dispatch("loadingEndAct");
           store.dispatch("setServisAdresAct");
-        });
-        store.dispatch("setServisAdresAct");
-        next();
+          next();
+          
+
+          });
+        
+        
       } else {
         next("/login");
       }

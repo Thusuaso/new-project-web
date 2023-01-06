@@ -30,7 +30,7 @@
               /> -->
             </div>
             <div class="column">
-              <span class="p-float-label">
+              <!-- <span class="p-float-label">
                 <InputNumber
                   id="alisFiyati"
                   class="p-inputtext-sm"
@@ -46,14 +46,14 @@
                   }"
                 />
                 <label for="alisFiyati">Alış Fiyatı ($)</label>
-              </span>
-              <!-- <MoneyInput @money_input_text_change="siparis.alisFiyati = $event" :text_value="siparis.alisFiyati"
-                :disAktif="dis_urun_giris" label="Alış Fiyatı ($)" v-model="alis_Fiyati" /> -->
+              </span> -->
+              <MoneyInput @money_input_text_change="siparis.alisFiyati = $event" :text_value="siparis.alisFiyati"
+                :disAktif="dis_urun_giris" label="Alış Fiyatı ($)" v-model="alis_Fiyati" />
             </div>
           </div>
           <div class="columns is-gapless">
             <div class="column">
-              <span class="p-float-label">
+              <!-- <span class="p-float-label">
                 <InputNumber
                   id="alisFiyatiTl"
                   class="p-inputtext-sm"
@@ -65,16 +65,16 @@
                   :disabled="dis_urun_giris"
                 />
                 <label for="alisFiyatiTl">Alış Fiyatı (TL)</label>
-              </span>
-              <!-- <MoneyInput @money_input_text_change="siparis.alisFiyati_TL = $event" :text_value="siparis.alisFiyati_TL"
-                :disAktif="dis_urun_giris" label="Alış Fiyatı (TL)" /> -->
+              </span> -->
+              <MoneyInput @money_input_text_change="siparis.alisFiyati_TL = $event" :text_value="siparis.alisFiyati_TL"
+                :disAktif="dis_urun_giris" :label="'Alış Fiyatı (TL)'" />
             </div>
             <div class="column">
-              <span class="p-float-label">
+              <!-- <span class="p-float-label">
                 <InputNumber
                   id="satisFiyati"
                   class="p-inputtext-sm"
-                  @input="siparis.satisFiyati = $event.value"
+                  @input="is_satis"
                   showButtons
                   v-model="satisFiyati"
                   mode="currency"
@@ -86,9 +86,9 @@
                   }"
                 />
                 <label for="satisFiyati">Satış Fiyati ($)</label>
-              </span>
-              <!-- <MoneyInput @money_input_text_change="siparis.satisFiyati = $event" :text_value="siparis.satisFiyati"
-                :disAktif="dis_urun_giris" label="Satış Fiyati ($)" /> -->
+              </span> -->
+              <MoneyInput @money_input_text_change="siparis.satisFiyati = $event" :text_value="siparis.satisFiyati"
+                :disAktif="dis_urun_giris" :label="'Satış Fiyati ($)'" />
             </div>
           </div>
           <div class="columns" v-if="!yeniSiparis">
@@ -483,6 +483,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapGetters } from "vuex";
 import socket from "../../../service/SocketService";
+import MoneyInput from "@/components/shared/moneyInput2"
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -512,8 +513,13 @@ export default {
     urunKartBilgi: UrunKartBilgi,
     //inputCurrency : CurrencyInput,
     iscilik: Iscilik,
+    MoneyInput
   },
   methods: {
+    is_satis(event) {
+      this.siparis.satisFiyati = event.value
+      this.satisFiyati = this.siparis.satisFiyati.replace('.',',')
+    },
     formatDecimal(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
