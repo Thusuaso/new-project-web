@@ -518,7 +518,7 @@
                   id="detayTutar_4"
                   @input="currencyDegisim('detayTutar_4', $event)"
                   v-model="profData.detayTutar_4"
-                  :disAktif="diger_4"
+                  :disabled="diger_4"
                   mode="currency"
                   currency="USD"
                   locale="jp-JP"
@@ -633,6 +633,10 @@ export default {
     if (this.profData.depo) {
       this.diger_4 = true;
       this.dis_takipEt = true;
+      
+    }
+    if (this.$store.getters.__getUsername == 'Gizem') {
+      this.dis_takipEt = false
     }
     if (this.profData.sigorta_id) {
       this.sigorta_tutar = false;
