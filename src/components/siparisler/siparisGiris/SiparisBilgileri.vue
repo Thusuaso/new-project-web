@@ -106,16 +106,13 @@
                 position="top"
                 header="Sipariş Ekstra Gider Girişi"
                 :modal="true"
+                :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
               >
-                <div
-                  class="p-cardialog-content"
-                  style="height: 500px; background-color: #f4f4f4"
-                >
+
                   <iscilik
                     :siparisNo="siparisNo"
                     :urunKartId="siparis.urunKartId"
                   />
-                </div>
               </Dialog>
             </div>
           </div>

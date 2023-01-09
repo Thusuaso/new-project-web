@@ -237,7 +237,7 @@
     </div>
     <div class="column">
       <custom-file-input baslik="ISF Form Yükle " style="margin: 20px; height: 50px; width: 150px"
-        @sunucuDosyaYolla="faturaDosyaGonder($event)" />
+        @sunucuDosyaYolla="faturaDosyaGonder($event)" :isISFForm="isISFForm" />
       <!-- <FileUpload
         v-model="file"
         mode="basic"
@@ -267,6 +267,7 @@ export default {
   },
   data() {
     return {
+      isISFForm:true,
       file: null,
       urunList: null,
       tedarikciler: null,
@@ -622,7 +623,6 @@ export default {
     },
     siparisTarihiDegisim() {
       this.teslimTarihi = this.localService.getDateString(this.teslimTarihi);
-
       this.teslimTurDegisim();
     },
     aramaTeslimTur(event) {
@@ -908,6 +908,12 @@ export default {
     },
 
     teslimTurDegisim() {
+
+      if (this.teslimTarihi == null || this.tedarikci == null || this.faturaTur1.length == 0 || this.teslimTur.length == 0) {
+        this.isISFForm = true
+      } else {
+        this.isISFForm = false  
+      }
       const result = [];
 
       for (let key in this.teslimTurList) {

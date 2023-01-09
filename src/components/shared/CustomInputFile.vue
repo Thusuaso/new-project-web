@@ -1,7 +1,7 @@
 <template>
   <div class="upload-btn-wrapper">
     <button class="btn">{{ baslik }}</button>
-    <input type="file" ref="file" name="myfile" @input="dosyaGonder($event)" />
+    <input type="file" ref="file" name="myfile" @input="dosyaGonder($event)" :disabled="isISFForm" />
   </div>
 </template>
 <script>
@@ -14,7 +14,7 @@ export default {
       this.$emit("sunucuDosyaYolla", file);
     },
   },
-  props: ["baslik"],
+  props: ["baslik",'isISFForm'],
 };
 </script>
 <style scoped>

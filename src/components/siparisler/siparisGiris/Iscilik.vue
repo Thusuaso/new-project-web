@@ -1,5 +1,5 @@
 <template>
-  <div class="fluid">
+  <!-- <div class="fluid">
     <div class="p-grid">
       <div class="p-col-12 p-md-4">
         <div class="p-col-12 p-md-12">
@@ -150,20 +150,109 @@
         </DataTable>
       </div>
     </div>
+  </div> -->
+  <div class="columns">
+    <div class="column">
+      <Calendar :disabled="dis_form" v-model="tarih" :showIcon="true" dateFormat="dd/mm/yy" @date-select="tarihDegisim" />
+    </div>
+    <div class="column">
+      <AutoComplete :disabled="dis_form" v-model="gider" :suggestions="filterGiderList" field="giderTur" :dropdown="true"
+        placeholder="Gider Seç" @complete="aramaGider" @item-select="giderTurDegisim">
+        <template #items="slotProps">
+          <div class="p-clearfix p-autocomplete-brand-item">
+            <div>{{ slotProps.giderTur }}</div>
+          </div>
+        </template>
+      </AutoComplete>
+    </div>
+    <div class="column">
+      <AutoComplete :disabled="dis_form" v-model="tedarikci" :suggestions="filterTedarikciList" field="firmaAdi"
+        :dropdown="true" placeholder="Tedarikçi Seç" @complete="aramaTedarikci" @item-select="tedarikciDegisim">
+        <template #items="slotProps">
+          <div class="p-clearfix p-autocomplete-brand-item">
+            <div>{{ slotProps.firmaAdi }}</div>
+          </div>
+        </template>
+      </AutoComplete>
+    </div>
   </div>
+  <div class="columns">
+    <div class="column">
+      <Textarea :autoResize="true" rows="5" cols="30" :disabled="dis_form" v-model="giderModel.aciklama" />
+    </div>
+    <div class="column">
+      <!-- <input-currency :value="giderModel.tutar" :disAktif="dis_form" @input="giderModel.tutar = $event" /> -->
+      <MoneyInput @money_input_text_change="giderModel.tutar = $event" :text_value="giderModel.tutar"
+        :disAktif="dis_form" :label="''" />
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <Button label="Yeni" class="p-button-rounded" icon="pi pi-file-o" iconPos="left" :disabled="dis_yeni"
+        @click="btn_yeni_click" />
+    </div>
+    <div class="column">
+      <Button label="İptal" class="p-button-rounded p-button-danger" icon="pi pi-times" iconPos="left" :disabled="dis_iptal"
+        @click="btn_iptal_click" />
+    </div>
+    <div class="column">
+      <Button label="Kaydet" class="p-button-rounded p-button-success" icon="pi pi-plus" iconPos="left" :disabled="dis_kaydet"
+        @click="btn_kaydet_click" />
+    </div>
+    <div class="column">
+      <Button label="Sil" class="p-button-rounded" style="background-color: yellow; color: black" icon="pi pi-times-circle"
+        iconPos="left" :disabled="dis_sil" @click="btn_sil_click" />
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <DataTable :value="giderListesi" class="p-datatable-responsive" :selection="selectGider" selectionMode="single"
+        :paginator="false" @row-select="giderSecim" dataKey="id">
+        <Column field="tarih" header="Tarih" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.tarih }}
+          </template>
+        </Column>
+        <Column field="tedarikciAdi" header="Tedarikci" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.tedarikciAdi }}
+          </template>
+        </Column>
+        <Column field="aciklama" header="Açıklama">
+          <template #body="slotProps">
+            {{ slotProps.data.aciklama }}
+          </template>
+        </Column>
+        <Column field="tutar" header="Tutar" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ formatDecimal(slotProps.data.tutar) }}
+          </template>
+          <template #footer>
+            {{ formatDecimal(giderToplam) }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+
+  </div>
+
 </template>
 <script>
 import tedarikciService from "../../../service/TedarikciService";
-import CurrencyInput from "../../../components/shared/CurrencyInput";
+// import CurrencyInput from "../../../components/shared/CurrencyInput";
 import siparisService from "../../../service/SiparisService";
 import LocalService from "../../../service/LocalService";
 import socket from "../../../service/SocketService";
+import MoneyInput from "@/components/shared/moneyInput2"
 export default {
   components: {
-    inputCurrency: CurrencyInput,
+    // inputCurrency: CurrencyInput,
+    MoneyInput
   },
   data() {
     return {
+
+
       tarih: null,
       gider: null,
       giderList: null,
@@ -180,7 +269,10 @@ export default {
       dis_sil: true,
       dis_form: true,
       dataGiderModel: null,
-      giderModel: null,
+      giderModel: {
+        'aciklama': "",
+        'tutar':0
+      }
     };
   },
   props: ["siparisNo", "urunKartId"],
@@ -306,9 +398,22 @@ export default {
 
   created() {
     this.localService = new LocalService();
+    siparisService.getGiderModel().then((data) => {
+      console.log("getGiderModel", data)
+      this.dataGiderModel = data;
+      this.giderModel = { ...this.dataGiderModel };
+    });
+    tedarikciService.getTedarikciMenuList().then((data) => {
+      this.tedarikciList = data;
+    });
+
+    this.giderListYukle();
+
+    siparisService.getGiderList().then((data) => (this.giderList = data));
   },
   mounted() {
     siparisService.getGiderModel().then((data) => {
+      console.log("getGiderModel",data)
       this.dataGiderModel = data;
       this.giderModel = { ...this.dataGiderModel };
     });
