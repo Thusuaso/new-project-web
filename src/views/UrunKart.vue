@@ -1,7 +1,7 @@
 <template>
-  <div class="p-fluid" v-if="isMobile > 576">
+  <div class="p-fluid">
     <div class="p-grid p-justify-center">
-      <div class="p-lg-1" v-if="isVisible">
+      <div class="p-lg-1" >
         <Button
           label="Yeni Kart"
           iconPos="left"
@@ -11,16 +11,7 @@
           :disabled="disYeni"
         />
       </div>
-      <div class="p-lg-1" v-if="isVisible">
-        <Button
-          label="Sil"
-          iconPos="left"
-          icon="fas fa-info-circle"
-          class="customButton"
-          :disabled="disSil"
-          @click="urunKartSil"
-        />
-      </div>
+      
     </div>
     <div class="columns" >
       <div class="column is-12">
@@ -36,6 +27,7 @@
           filterDisplay="menu"
           :scrollable="true" 
           scrollHeight="700px"
+          :loading="datatableLoading"
         >
           <Column
             field="id"
@@ -224,23 +216,22 @@ export default {
       urunKartVisible: false,
       kartKayitDurum: true,
       urunKartId: 0,
-      isVisible: false,
-      disSil: true,
+      
       isSeleksiyonControl: null,
       controlSeleksiyon: false,
       username: "",
     };
   },
   computed: {
-    ...mapGetters(["getUrunKartMenuList"]),
+    ...mapGetters(["getUrunKartMenuList","datatableLoading"]),
   },
   methods: {
     urunKartSecim() {},
     urunKartDetayAc(event) {
+
       const user = this.$store.getters.__getUsername;
       if (user == "Semih" || user == "Gizem") {
         this.urunKartVisible = true;
-        this.isVisible = true;
         this.disSil = false;
       }
       if (event.data) {
@@ -251,38 +242,14 @@ export default {
       urunKartService.getSeleksiyonKasaKontrol(this.urunKartId).then((data) => {
         this.emitter.emit("seleksiyonKasaKontrol", data);
       });
+
     },
     yeniKartAc() {
       this.kartKayitDurum = true;
       this.urunKartVisible = true;
     },
 
-    urunKartSil() {
-      urunKartService.getSeleksiyonKasaKontrol(this.urunKartId).then((data) => {
-        if (data) {
-          alert("Bu ürün kartına ait kasa mevcut..");
-        } else {
-          urunKartService
-            .setUrunKartSil(this.urunKartId, this.username)
-            .then((data) => {
-              if (data.status) {
-                socket.siparis.emit('urunKartiSilmeEvent')
-                
-                socket.siparis.emit(
-                  "anaSayfaDegisiklikEvent",
-                  data.anaSayfaDegisiklik
-                );
-                this.$toast.add({
-                  severity: "error",
-                  summary: "Uyarı Ekranı",
-                  detail: "Urun Kartı Silindi",
-                  life: 5000,
-                });
-              }
-            });
-        }
-      });
-    },
+    
   },
   components: {
     UrunKartGiris,
@@ -292,14 +259,11 @@ export default {
     this.disYeni = true;
     this.disDetay = true;
     this.username = this.$store.getters.__getUsername;
-
     if (
       this.username == "Semih" ||
-      this.username == "Gizem" ||
-      this.username == "Ozlem"
+      this.username == "Gizem"
     ) {
       this.disYeni = false;
-      this.isVisible = true;
     }
 
     socket.siparis.on("urunkart_yeni_emit", (data) => {
@@ -314,10 +278,17 @@ export default {
       this.filters = null;
       this.filters = _filter;
     });
-    socket.siparis.on("urunkart_silme_emit", (data) => {
-      this.$store.dispatch("urunKartMenuAct", data);
+    socket.siparis.on("urunkart_silme_emit", () => {
+      urunKartService.getUrunKartMenuList().then((data) => {
+        this.$store.dispatch("urunKartMenuAct", data);
+      });
     });
   },
+  mounted() {
+    this.emitter.on('silme_dialog_disabled', (data) => {
+      this.urunKartVisible = data
+    })
+  }
 };
 </script>
 <style scoped>
@@ -325,10 +296,7 @@ export default {
   height: 40px;
 }
 
-.customButton {
-  background-color: #65b9a4;
-  border: none;
-}
+
 
 #icDuzenleme {
   margin-left: -7px;

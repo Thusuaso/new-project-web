@@ -90,8 +90,6 @@
               field="kenar"
               :dropdown="true"
               @complete="aramaKenar($event)"
-              @item-select="kenarDegisim"
-              @item-unselect="kenarUnSelect"
               @input="isChangeKenar"
               :class="{ 'p-invalid': v$.kenar.$invalid && submitted }"
             />
@@ -102,9 +100,14 @@
       </div>
       <div class="columns">
         <div class="column">
-          <Button label="KAYDET" @click="urunKartKayitIslemi" />
+          <Button label="KAYDET" @click="urunKartKayitIslemi" :disabled="disKaydet"/>
+        </div>
+        <div class="column" v-if="isVisible">
+            <Button label="Sil" class="p-button-danger" :disabled="disSil"
+              @click="urunKartSil" />
         </div>
       </div>
+
       <div class="columns">
         <div class="column is-12">
           <DataTable
@@ -184,8 +187,21 @@ export default {
       yuzeyIslem: { required },
     };
   },
+  created() {
+    this.username = this.$store.getters.__getUsername;
+    if (
+      this.username == "Semih" ||
+      this.username == "Gizem"
+    ) {
+      this.isVisible = true;
+
+    }
+  },
   data() {
     return {
+      disKaydet:true,
+      isVisible:false,
+      disSil: true,
       submitted: false,
       kontrolText: "Bu ürün kartına ait kasa bulunmaktadır!",
       kategori: null,
@@ -226,6 +242,43 @@ export default {
     },
   },
   methods: {
+    urunKartSil() {
+      if (confirm('Gerçekten Silmek İstediğinize Emin misiniz?')) {
+        this.$store.dispatch('datatableLoadingBeginAct')
+        urunKartService.getSeleksiyonKasaKontrol(this.urunKartId).then((data) => {
+          if (data) {
+            alert("Bu ürün kartına ait kasa mevcut..");
+          } else {
+            urunKartService
+              .setUrunKartSil(this.urunKartId, this.username)
+              .then((data) => {
+                if (data.status) {
+                  socket.siparis.emit('urunKartiSilmeEvent')
+
+                  socket.siparis.emit(
+                    "anaSayfaDegisiklikEvent",
+                    data.anaSayfaDegisiklik
+                  );
+                  this.$toast.add({
+                    severity: "error",
+                    summary: "Uyarı Ekranı",
+                    detail: "Urun Kartı Silindi",
+                    life: 5000,
+                  });
+                  setTimeout(() => {
+                    this.$store.dispatch('datatableLoadingEndAct')
+
+                  }, 1000);
+                }
+                  this.emitter.emit('silme_dialog_disabled',false)
+              });
+          }
+        });
+
+
+      }
+      
+    },
     formatDecimal(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -312,12 +365,7 @@ export default {
         this.filterKenarList = result;
       }, 250);
     },
-    kenarDegisim(event) {
-      console.log("Kenar Değişim : ", event.value);
-    },
-    kenarUnSelect(event) {
-      console.log("Kenar item-unselect event", event);
-    },
+   
     aramaYuzeyIslem(event) {
       setTimeout(() => {
         let result;
@@ -367,6 +415,7 @@ export default {
     },
     yeniKayitIslem() {
       this.urunKart.username = this.username;
+      this.$store.dispatch('datatableLoadingBeginAct')
       urunKartService.setUrunKaydet(this.urunKart).then((data) => {
         if (data.kayitDurum) {
           this.$toast.add({
@@ -380,6 +429,8 @@ export default {
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklik
           );
+          this.$store.dispatch('datatableLoadingEndAct')
+
         } else {
           let mesaj =
             "Sunucu Kayıt İşlemini Yapamadı . Sunucudan dönen hata : " +
@@ -390,11 +441,15 @@ export default {
             detail: mesaj,
             life: 5000,
           });
+          this.$store.dispatch('datatableLoadingEndAct')
+
         }
       });
     },
     guncellemeIslem() {
       this.urunKart.username = this.username;
+      this.$store.dispatch('datatableLoadingBeginAct')
+
       urunKartService.setUrunGuncelle(this.urunKart).then((data) => {
         if (data.kayitDurum) {
           this.$toast.add({
@@ -408,6 +463,8 @@ export default {
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklik
           );
+          this.$store.dispatch('datatableLoadingEndAct')
+
         } else {
           let mesaj =
             "Sunucu Güncelleme İşlemini Yapamadı . Sunucudan dönen hata : " +
@@ -418,15 +475,16 @@ export default {
             detail: mesaj,
             life: 5000,
           });
-          console.log("Hata Mesajı: ", data.hataMesaj);
+          this.$store.dispatch('datatableLoadingEndAct')
+
         }
       });
     },
   },
   mounted() {
+    
     this.username = this.$store.getters.__getUsername.toUpperCase();
     this.emitter.on("seleksiyonKasaKontrol", (data) => {
-      console.log("seleksiyonKasaKontrol",data)
       this.seleksiyonKasaKontrol = data;
     });
     if (!this.yeniKayit) {
@@ -465,6 +523,9 @@ export default {
         this.yuzeyIslem = this.yuzeyIslemList.find(
           (x) => x.id == this.urunKart.yuzeyId
         );
+        this.disSil = false
+        this.disKaydet = false
+
       });
     } else {
       urunKartService.getUrunKartModel().then((data) => {
@@ -486,6 +547,9 @@ export default {
           if (_boy == null) this.boyList.push(item);
           if (_kenar == null) this.kenarList.push(item);
         }
+        this.disSil = false
+        this.disKaydet = false
+
       });
     }
   },

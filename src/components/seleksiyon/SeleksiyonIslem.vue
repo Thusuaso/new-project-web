@@ -202,7 +202,7 @@
         </div>
       </section>
     </Dialog>
-    <Dialog v-model:visible="topluKasaForm" position="top" maximizable>
+    <Dialog v-model:visible="topluKasaForm" position="top" maximizable :modal="true">
       <AutoComplete
         v-model="selectedPo"
         :dropdown="true"
@@ -211,9 +211,10 @@
         placeholder="Select a Order"
         field="siparisNo"
         @item-select="isSelectedPo"
+        style="margin-left:5px;"
       />
-      <Dropdown v-model="selectedProduct" :options="productList" optionLabel="product_full_name" placeholder="Select a Product" />
-      <Button @click="setCrateAll" label="Değiştir" class="p-button-primary" />
+      <Dropdown v-model="selectedProduct" :options="productList" optionLabel="product_full_name" placeholder="Select a Product" style="margin-left:5px;" />
+      <Button @click="setCrateAll" label="Değiştir" class="p-button-primary" :disabled="crateAllDisabled" style="margin-left:5px" />
       <DataTable
         ref="dt"
         :value="seleksiyon_uretimlist"
@@ -226,6 +227,7 @@
         responsiveLayout="scroll"
         v-model:filters="filterTopuKasa"
         filterDisplay="row"
+        style="margin-top:15px;"
       >
         <Column
           selectionMode="multiple"
@@ -379,6 +381,7 @@ export default {
   },
   data() {
     return {
+      crateAllDisabled:true,
       productList:[],
       selectedProduct:null,
       selectedPo: null,
@@ -397,7 +400,7 @@ export default {
           matchMode: FilterMatchMode.STARTS_WITH,
         },
       },
-      selectedProducts: null,
+      selectedProducts: [],
       topluKasaForm: false,
       seleksiyonData: null,
       etiketlerVeikKutu: [
@@ -530,6 +533,11 @@ export default {
     });
   },
   methods: {
+    // is_selected_product() {
+    //   if (this.selectedProduct && this.selectedPo && this.selectedProducts) {
+    //     this.crateAllDisabled = false
+    //   }
+    // },
     isSelectedPo() {
       service.getPoProductList(this.selectedPo.siparisNo).then(data => {
         this.productList = data.productList
@@ -537,7 +545,12 @@ export default {
     },
     
     getAllCrateDialog() {
+      this.selectedProduct = null
+      this.selectedPo = null
+      this.selectedProducts = []
       this.topluKasaForm = true
+      this.crateAllDisabled = true
+      
       raporService.getAllOrders().then((data) => {
         this.orders = data;
       });
@@ -559,7 +572,7 @@ export default {
       }, 250);
     },
     setCrateAll() {
-      if (this.selectedPo == null || this.selectedProducts == null) {
+      if (this.selectedPo == null || this.selectedProducts.length<0) {
         alert("Lütfen po ve kasaları seçiniz!")
         return;
       }
@@ -722,6 +735,30 @@ export default {
       this.ozetlist_topla()
     })
   },
+  watch: {
+    selectedProduct() {
+      if (this.selectedProduct && this.selectedPo && this.selectedProducts.length >0) {
+        this.crateAllDisabled = false
+      } else {
+        this.crateAllDisabled = true
+      }
+    },
+    selectedPo() {
+      if (this.selectedProduct && this.selectedPo && this.selectedProducts.length >0) {
+        this.crateAllDisabled = false
+      } else {
+        this.crateAllDisabled = true
+      }
+    },
+    selectedProducts() {
+      console.log("selectedProducts",this.selectedProducts)
+      if (this.selectedProduct && this.selectedPo && this.selectedProducts.length >0) {
+        this.crateAllDisabled = false
+      } else {
+        this.crateAllDisabled = true
+      }
+    }
+  }
 };
 </script>
 
