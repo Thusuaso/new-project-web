@@ -162,6 +162,9 @@ const SeleksiyonService = {
   },
   getProductCrateControl(data) {
     return axios.post("/islemler/seleksiyon/productCrateControl",data).then(res=>res.data)
+  },
+  getPoProductList(po) {
+    return axios.get(`/islemler/seleksiyon/seleksiyonProductList/${po}`).then(res=>res.data)
   }
 };
 

@@ -146,6 +146,8 @@
             header="Miktar"
             headerStyle="width:3%;"
             bodyStyle="text-align:center"
+            footerStyle="text-align:center"
+
           >
             <template #body="slotProps">
               {{ slotProps.data.miktar + " / " + slotProps.data.birim }}

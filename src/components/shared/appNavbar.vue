@@ -161,7 +161,7 @@
                             <el-menu-item index="10-11-4"> Sevkiyat Raporu </el-menu-item>
                         </router-link> -->
                         <router-link to="/raporlar/sevkiyatRaporuAll">
-                            <el-menu-item index="10-10-4"> Sevkiyat Raporu </el-menu-item>
+                            <el-menu-item index="10-11-4"> Sevkiyat Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/siparisOzetRapor">
                             <el-menu-item index="10-11-5"> Sipariş Özet Raporu </el-menu-item>

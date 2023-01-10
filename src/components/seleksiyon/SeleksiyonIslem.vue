@@ -210,7 +210,9 @@
         @complete="poChangeEvent($event)"
         placeholder="Select a Order"
         field="siparisNo"
+        @item-select="isSelectedPo"
       />
+      <Dropdown v-model="selectedProduct" :options="productList" optionLabel="product_full_name" placeholder="Select a Product" />
       <Button @click="setCrateAll" label="Değiştir" class="p-button-primary" />
       <DataTable
         ref="dt"
@@ -377,6 +379,8 @@ export default {
   },
   data() {
     return {
+      productList:[],
+      selectedProduct:null,
       selectedPo: null,
       orders:[],
       filteredOrders:[],
@@ -526,6 +530,12 @@ export default {
     });
   },
   methods: {
+    isSelectedPo() {
+      service.getPoProductList(this.selectedPo.siparisNo).then(data => {
+        this.productList = data.productList
+      })
+    },
+    
     getAllCrateDialog() {
       this.topluKasaForm = true
       raporService.getAllOrders().then((data) => {
@@ -556,7 +566,8 @@ export default {
       if (confirm("Kasaları gerçekten atamak istediğinize emin misiniz?")) {
         const data = {
           'po': this.selectedPo.siparisNo,
-          'products': this.selectedProducts
+          'products': this.selectedProducts,
+          'product_id': this.selectedProduct.product_id
         }
         service.setCrate(data).then(data => {
           if (data.status) {
@@ -691,6 +702,7 @@ export default {
       this.toplam_yil = 0;
       this.toplam_m_mek = 0;
       for (let key in this.seleksiyon_uretimozetlist) {
+
         const item = this.seleksiyon_uretimozetlist[key];
 
         this.toplam_gun += item.gun;
@@ -705,7 +717,11 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() {
+    this.emitter.on('kaydet_emit', () => {
+      this.ozetlist_topla()
+    })
+  },
 };
 </script>
 

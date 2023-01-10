@@ -735,11 +735,16 @@ export default {
                   detail: "Kasa Silme Başarılı",
                   life: 3000,
                 });
+                this.emitter.emit('kaydet_emit')
+
                 this.$store.dispatch("datatableLoadingEndAct");
+
               });
           } else {
             this.dataSifirla();
             this.$emit("seleksiyon_form_kapat");
+            this.emitter.emit('kaydet_emit')
+
             this.$store.dispatch("datatableLoadingEndAct");
           }
         }
@@ -782,14 +787,14 @@ export default {
 
                       this.dataSifirla();
                       this.$store.dispatch("seleksiyonGuncelleClickActions");
-
+                      this.emitter.emit('kaydet_emit')
                       this.$emit("seleksiyon_form_kapat");
 
                     });
                 } else {
                   this.dataSifirla();
                   this.$store.dispatch("seleksiyonGuncelleClickActions");
-
+                  this.emitter.emit('kaydet_emit')
                   this.$emit("seleksiyon_form_kapat");
 
                 }
@@ -808,6 +813,7 @@ export default {
                 detail: "Kayıt Güncelleme Hatalı",
                 life: 3000,
               });
+              this.emitter.emit('kaydet_emit')
 
             }
           });
@@ -944,6 +950,7 @@ export default {
                   detail: "Kasa Kaydetme Başarılı",
                   life: 3000,
                 });
+                this.emitter.emit('kaydet_emit')
               });
           } else {
             this.dataSifirla();
@@ -953,6 +960,8 @@ export default {
               detail: "Kasa Kaydetme Başarılı",
               life: 3000,
             });
+            this.emitter.emit('kaydet_emit')
+
           }
         }
       });

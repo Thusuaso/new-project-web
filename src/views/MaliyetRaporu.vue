@@ -735,7 +735,7 @@
                 {{ formatTL(toplam_try_profit) }}
               </template>
             </Column>
-            <Column field="kar_zarar_tl_yuzdesi" header="Kar Zarar TL(%)">
+            <Column field="kar_zarar_tl_yuzdesi" header="Kar Zarar(%)">
               <template #body="slotProps">
                 % {{ slotProps.data.kar_zarar_tl_yuzdesi }}
               </template>
@@ -1410,7 +1410,7 @@
                 </div>
               </template>
             </Column>
-            <Column field="kar_zarar_tl_yuzdesi" header="Kar Zarar TL(%)">
+            <Column field="kar_zarar_tl_yuzdesi" header="Kar Zarar(%)">
               <template #body="slotProps">
                 % {{ slotProps.data.kar_zarar_tl_yuzdesi }}
               </template>
