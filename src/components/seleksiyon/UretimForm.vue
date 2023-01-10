@@ -1038,8 +1038,11 @@ export default {
       this.$store.dispatch("seleksiyonVazgecClickActions");
     },
     btn_yeni_click() {
+
       this.dataSifirla().then(() => {
         this.$store.dispatch("seleksiyonYeniClickActions");
+        this.tarih = new Date();
+
       });
 
       //this.seleksiyonKasaNo()
