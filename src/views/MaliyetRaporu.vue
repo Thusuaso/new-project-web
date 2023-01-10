@@ -739,6 +739,9 @@
               <template #body="slotProps">
                 % {{ slotProps.data.kar_zarar_tl_yuzdesi }}
               </template>
+              <template #footer>
+                % {{ toplam_kar_zarar_orani }}
+              </template>
             </Column>
             <Column
               field="dosya_kapanma_date"
@@ -1411,6 +1414,9 @@
               <template #body="slotProps">
                 % {{ slotProps.data.kar_zarar_tl_yuzdesi }}
               </template>
+              <template #footer>
+                % {{ toplam_kar_zarar_orani }}
+              </template>
             </Column>
 
             <Column
@@ -1452,6 +1458,7 @@ export default {
   },
   data() {
     return {
+      selected_quarter:null,
       maliyet_listesi_excel: [],
       is_quarter_dropdown: true,
       quarter_year: [
@@ -1524,6 +1531,9 @@ export default {
       quarterMaliyet: null,
       quarter_maliyet_form: false,
       is_general_form: false,
+      toplam_bedel_sum: 0,
+      toplam_masraf_sum: 0,
+      toplam_kar_zarar_orani:0
     };
   },
   computed: {
@@ -1557,6 +1567,7 @@ export default {
         this.quarterMaliyet = this.maliyet_listesi.filter(
           (x) => x.yukleme_month >= 1 && x.yukleme_month <= 3
         );
+        this.toplam_kar_zar_orani(this.quarterMaliyet)
         this.tablo_toplam_guncelle(this.quarterMaliyet);
         this.maliyet_listesi_excel = this.quarterMaliyet;
 
@@ -1565,6 +1576,8 @@ export default {
         this.quarterMaliyet = this.maliyet_listesi.filter(
           (x) => x.yukleme_month >= 4 && x.yukleme_month <= 6
         );
+        this.toplam_kar_zar_orani(this.quarterMaliyet)
+
         this.tablo_toplam_guncelle(this.quarterMaliyet);
         this.maliyet_listesi_excel = this.quarterMaliyet;
 
@@ -1573,6 +1586,8 @@ export default {
         this.quarterMaliyet = this.maliyet_listesi.filter(
           (x) => x.yukleme_month >= 7 && x.yukleme_month <= 9
         );
+        this.toplam_kar_zar_orani(this.quarterMaliyet)
+
         this.tablo_toplam_guncelle(this.quarterMaliyet);
         this.maliyet_listesi_excel = this.quarterMaliyet;
 
@@ -1581,6 +1596,8 @@ export default {
         this.quarterMaliyet = this.maliyet_listesi.filter(
           (x) => x.yukleme_month >= 10 && x.yukleme_month <= 12
         );
+        this.toplam_kar_zar_orani(this.quarterMaliyet)
+
         this.tablo_toplam_guncelle(this.quarterMaliyet);
         this.maliyet_listesi_excel = this.quarterMaliyet;
 
@@ -1588,6 +1605,8 @@ export default {
       } else if (event == "Hepsi") {
         this.quarterMaliyet = this.maliyet_listesi;
         this.tablo_toplam_guncelle(this.quarterMaliyet);
+        this.toplam_kar_zar_orani(this.quarterMaliyet)
+
         this.maliyet_listesi_excel = this.quarterMaliyet;
 
         this.quarter_maliyet_form = true;
@@ -1598,6 +1617,8 @@ export default {
 
       this.tablo_toplam_guncelle(event.filteredValue);
       this.maliyet_listesi_excel = event.filteredValue;
+      this.toplam_kar_zar_orani(event.filteredValue)
+
 
       return 1;
     },
@@ -1625,7 +1646,16 @@ export default {
           }
         });
     },
-
+    toplam_kar_zar_orani(data) {
+      this.toplam_bedel_sum = 0
+      this.toplam_masraf_sum = 0
+      for (let i of data) {
+        this.toplam_bedel_sum += i.toplam_bedel
+        this.toplam_masraf_sum += i.masraf_toplam
+      }
+      let toplam_kar_zarar = (this.toplam_bedel_sum - this.toplam_masraf_sum)
+      this.toplam_kar_zarar_orani = ((toplam_kar_zarar / this.toplam_bedel_sum) * 100).toFixed(2)
+    },
     maliyet_listesi_yukle() {
       this.select_faturalama = { fatura: "Hepsi" };
       this.$store.dispatch("datatableLoadingBeginAct");
@@ -1633,6 +1663,7 @@ export default {
       service
         .getMaliyetRapor(this.select_yil.yil, this.select_ay.ay)
         .then((data) => {
+          this.toplam_kar_zar_orani(data)
           this.maliyet_listesi = [...data];
           this.local_maliyet_data = [...data];
           this.maliyet_listesi_excel = data;
@@ -1648,6 +1679,7 @@ export default {
 
       if (!this.maliyet_yil_listesi) {
         service.getMaliyetRaporYil(event).then((data) => {
+          this.toplam_kar_zar_orani(data)
           this.maliyet_listesi = data;
           this.maliyet_listesi_excel = data;
           this.tablo_toplam_guncelle(data);
@@ -1699,6 +1731,7 @@ export default {
         this.filteredFaturalama = this.maliyet_listesi.filter(
           (x) => x.faturatur == "Mekmar"
         );
+        this.toplam_kar_zar_orani(this.filteredFaturalama)
         this.maliyet_listesi_excel = this.filteredFaturalama;
         this.local_maliyet_data = this.filteredFaturalama;
         this.tablo_toplam_guncelle(this.filteredFaturalama);
@@ -1708,6 +1741,8 @@ export default {
         this.filteredFaturalama = this.maliyet_listesi.filter(
           (x) => x.faturatur == "Mekmer"
         );
+        this.toplam_kar_zar_orani(this.filteredFaturalama)
+
         this.maliyet_listesi_excel = this.filteredFaturalama;
         this.local_maliyet_data = this.filteredFaturalama;
         this.tablo_toplam_guncelle(this.filteredFaturalama);
@@ -1717,6 +1752,8 @@ export default {
         this.filteredFaturalama = this.maliyet_listesi.filter(
           (x) => x.faturatur == "Efes"
         );
+        this.toplam_kar_zar_orani(this.filteredFaturalama)
+
         this.maliyet_listesi_excel = this.filteredFaturalama;
         this.local_maliyet_data = this.filteredFaturalama;
         this.tablo_toplam_guncelle(this.filteredFaturalama);
