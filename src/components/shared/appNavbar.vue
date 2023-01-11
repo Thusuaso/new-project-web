@@ -182,15 +182,23 @@
                         <el-menu-item index="11-2"> Finans Listesi </el-menu-item>
                     </router-link>
                 </el-sub-menu>
-                <el-sub-menu index="12" v-if="is_h">
-                    <template #title>Teklifler</template>
-                    <router-link to="/teklifListesi">
-                        <el-menu-item index="12-1"> Teklif Listesi </el-menu-item>
-                    </router-link>
+                <!-- <el-sub-menu index="12" v-if="is_h">
                     <router-link to="/teklif/musteriListesi">
-                        <el-menu-item index="12-2"> Müşteri Listesi </el-menu-item>
-                    </router-link>
-                </el-sub-menu>
+                                            <el-menu-item index="12-2"> Müşteri Listesi </el-menu-item>
+                                        </router-link>
+                    </el-sub-menu> -->
+
+                        <el-menu-item index="12" style="margin-top:8px;"> 
+
+                            <router-link  to="/teklifListesi" v-if="is_h">
+                                Teklif Listesi
+                            </router-link>
+
+                        </el-menu-item>
+                    
+                    
+                    
+                
                 <el-sub-menu index="13" v-if="is_" v-show="is_h">
                     <template #title>Mekmar USA</template>
                     <router-link to="/panel/mekmarusa/depoUrunList">

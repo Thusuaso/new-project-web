@@ -845,6 +845,8 @@ export default {
         { id: 4, name: "Fuar" },
         { id: 5, name: "Email" },
         { id: 6, name: "BGP Network" },
+        { id: 7, name: "Ziyaret" },
+
       ],
       selectTeklifYeri: null,
       teklifYeriList: [

@@ -19,7 +19,7 @@
         :loading="datatableLoading"
         @filter="siparisFilterDegisim"
         :paginator="true"
-         :rows="15"
+         :rows="1099"
          :globalFilterFields="['musteriAdi', 'siparisNo', 'urunAdi', 'en', 'boy', 'kenar','tedarikciAdi']"
       >
       <template #header>

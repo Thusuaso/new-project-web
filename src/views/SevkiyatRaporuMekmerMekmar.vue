@@ -292,11 +292,10 @@
             <template #body="slotProps">
               {{ slotProps.data.birimadi }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by Unit"
               />
@@ -306,11 +305,10 @@
             <template #body="slotProps">
               {{ slotProps.data.siparisno }}
             </template>
-            <template #filter="{ filterModel, filterCallback }">
+            <template #filter="{ filterModel }">
               <InputText
                 type="text"
                 v-model="filterModel.value"
-                @input="filterCallback()"
                 class="p-column-filter"
                 placeholder="Search by PO"
               />
@@ -467,6 +465,7 @@ export default {
       tutar_toplam: 0,
       select_yil: { yil: "2022" },
       yil_listesi: [
+        { yil: "2023" },
         { yil: "2022" },
         { yil: "2021" },
         { yil: "2020" },
@@ -566,9 +565,9 @@ export default {
     allThisYearFirstLoad() {
       this.isAll = false;
       this.localService = new LocalService();
-      this.select_yil = "2022";
+      this.select_yil =  { yil: "2023" }
       this.$store.dispatch("loadingBeginAct");
-      service.getSevkiyatRaporHepsiAll(this.select_yil).then((data) => {
+      service.getSevkiyatRaporHepsiAll(this.select_yil.yil).then((data) => {
         this.$store.dispatch("stok_rapor_list_load_act", data);
         this.ilk_tarih = false;
         this.son_tarih = false;
