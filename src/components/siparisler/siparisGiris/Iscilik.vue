@@ -1,156 +1,5 @@
 <template>
-  <!-- <div class="fluid">
-    <div class="p-grid">
-      <div class="p-col-12 p-md-4">
-        <div class="p-col-12 p-md-12">
-          <Calendar
-            :disabled="dis_form"
-            v-model="tarih"
-            :showIcon="true"
-            dateFormat="dd/mm/yy"
-            @date-select="tarihDegisim"
-          />
-        </div>
-        <div class="p-col-12 p-md-12">
-          <AutoComplete
-            :disabled="dis_form"
-            v-model="gider"
-            :suggestions="filterGiderList"
-            field="giderTur"
-            :dropdown="true"
-            placeholder="Gider Seç"
-            @complete="aramaGider"
-            @item-select="giderTurDegisim"
-          >
-            <template #items="slotProps">
-              <div class="p-clearfix p-autocomplete-brand-item">
-                <div>{{ slotProps.giderTur }}</div>
-              </div>
-            </template>
-          </AutoComplete>
-        </div>
-        <div class="p-col-12 p-md-12">
-          <AutoComplete
-            :disabled="dis_form"
-            v-model="tedarikci"
-            :suggestions="filterTedarikciList"
-            field="firmaAdi"
-            :dropdown="true"
-            placeholder="Tedarikçi Seç"
-            @complete="aramaTedarikci"
-            @item-select="tedarikciDegisim"
-          >
-            <template #items="slotProps">
-              <div class="p-clearfix p-autocomplete-brand-item">
-                <div>{{ slotProps.firmaAdi }}</div>
-              </div>
-            </template>
-          </AutoComplete>
-        </div>
-      </div>
-      <div class="p-col-12 p-md-8">
-        <Textarea
-          :autoResize="true"
-          rows="5"
-          cols="30"
-          :disabled="dis_form"
-          v-model="giderModel.aciklama"
-        />
-        <div class="p-col-4 p-offset-8">
-          <input-currency
-            :value="giderModel.tutar"
-            :disAktif="dis_form"
-            @input="giderModel.tutar = $event"
-          />
-        </div>
-      </div>
-    </div>
 
-    <div class="p-grid p-offset-2">
-      <div class="p-col-2">
-        <Button
-          label="Yeni"
-          class="p-button-rounded"
-          icon="pi pi-file-o"
-          iconPos="left"
-          :disabled="dis_yeni"
-          @click="btn_yeni_click"
-        />
-      </div>
-      <div class="p-col-2">
-        <Button
-          label="İptal"
-          class="p-button-rounded p-button-danger"
-          icon="pi pi-times"
-          iconPos="left"
-          :disabled="dis_iptal"
-          @click="btn_iptal_click"
-        />
-      </div>
-      <div class="p-col-2">
-        <Button
-          label="Kaydet"
-          class="p-button-rounded p-button-success"
-          icon="pi pi-plus"
-          iconPos="left"
-          :disabled="dis_kaydet"
-          @click="btn_kaydet_click"
-        />
-      </div>
-      <div class="p-col-2">
-        <Button
-          label="Sil"
-          class="p-button-rounded"
-          style="background-color: yellow; color: black"
-          icon="pi pi-times-circle"
-          iconPos="left"
-          :disabled="dis_sil"
-          @click="btn_sil_click"
-        />
-      </div>
-    </div>
-    <div class="p-grid">
-      <div class="p-col-12 p-md-12">
-        <DataTable
-          :value="giderListesi"
-          class="p-datatable-responsive"
-          :selection="selectGider"
-          selectionMode="single"
-          :paginator="false"
-          @row-select="giderSecim"
-          dataKey="id"
-        >
-          <Column field="tarih" header="Tarih" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ slotProps.data.tarih }}
-            </template>
-          </Column>
-          <Column
-            field="tedarikciAdi"
-            header="Tedarikci"
-            bodyStyle="text-align:center;"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.tedarikciAdi }}
-            </template>
-          </Column>
-          <Column field="aciklama" header="Açıklama">
-            <template #body="slotProps">
-              {{ slotProps.data.aciklama }}
-            </template>
-          </Column>
-          <Column field="tutar" header="Tutar" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ formatDecimal(slotProps.data.tutar) }}
-            </template>
-            <template #footer>
-              {{ formatDecimal(giderToplam) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-    </div>
-  </div> -->
   <div class="columns">
     <div class="column">
       <Calendar :disabled="dis_form" v-model="tarih" :showIcon="true" dateFormat="dd/mm/yy" @date-select="tarihDegisim" />
@@ -338,6 +187,7 @@ export default {
       if (this.giderModel.id == null) {
         this.giderModel.siparisNo = this.siparisNo;
         this.giderModel.urunKartId = this.urunKartId;
+        this.giderModel.username = this.$store.getters.__getUsername
         //data verisi geliyor true false
         siparisService.setIscilikKaydet(this.giderModel).then(() => {
           this.giderListYukle();
@@ -351,6 +201,9 @@ export default {
       }
     },
     btn_sil_click() {
+      this.giderModel.siparisNo = this.siparisNo;
+      this.giderModel.urunKartId = this.urunKartId;
+      this.giderModel.username = this.$store.getters.__getUsername
       this.$store.dispatch("iscilik_delete_act", this.giderModel.tutar);
       siparisService.setIscilikSil(this.giderModel).then(() => {
         this.giderListYukle();
@@ -363,7 +216,8 @@ export default {
         .getIscilikList(this.siparisNo, this.urunKartId)
         .then((data) => {
           this.giderListesi = data;
-
+          console.log("giderListesi", this.giderListesi)
+          console.log("giderToplam",this.giderToplam)
           for (let key in this.giderListesi) {
             this.giderToplam += this.giderListesi[key].tutar;
           }
@@ -421,7 +275,6 @@ export default {
       this.tedarikciList = data;
     });
 
-    this.giderListYukle();
 
     siparisService.getGiderList().then((data) => (this.giderList = data));
   },

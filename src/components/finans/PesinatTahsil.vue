@@ -57,31 +57,7 @@
     </div>
     <div class="columns">
       <div class="column is-10">
-        <!-- <b-table
-          :data="pesinat_islem_listesi"
-          v-model:selected="select_pesinat"
-          :loading="loading_pesinat"
-          @select="tahsilat_select_event($event)"
-        >
-          <template slot-scope="props">
-            <b-table-column field="musteri_adi" label="Müşteri Adı">
-              {{ props.row.musteri_adi }}
-            </b-table-column>
-            <b-table-column field="siparis_no" label="Sipariş No">
-              {{ props.row.siparis_no }}
-            </b-table-column>
-            <b-table-column field="tutar" label="Tutar" centered>
-              {{ formatPrice(props.row.tutar) }}
-            </b-table-column>
-          </template>
-          <template slot="footer">
-            <th></th>
-            <th></th>
-            <th>
-              {{ pesinat_islem_liste_toplam }}
-            </th>
-          </template>
-        </b-table> -->
+        
         <DataTable
           :value="pesinat_islem_listesi"
           @row-select="tahsilat_select_event($event)"

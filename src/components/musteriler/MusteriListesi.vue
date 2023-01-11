@@ -34,6 +34,7 @@
             @row-select="musteri_secim_event($event)"
             :scrollable="true" 
             scrollHeight="650px"
+            :loading="datatableLoading"
           >
             <Column
               field="id"
@@ -226,7 +227,7 @@ export default {
     MusteriDetay,
   },
   computed: {
-    ...mapGetters(["musteri_listesi", "servis_adres"]),
+    ...mapGetters(["musteri_listesi", "servis_adres","datatableLoading"]),
   },
   created() {
     const users = this.$store.getters.__getUsername;
@@ -271,7 +272,7 @@ export default {
       }
     },
     musteri_tablo_yukle(users) {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("datatableLoadingBeginAct");
       service.getMusteriListesi().then((data) => {
         this.musteri_data = data;
         if (users == "Semih" || users == "Gizem" || users == "Fatih") {
@@ -281,7 +282,7 @@ export default {
           this.$store.dispatch("musteri_listesi_yukle_act", result);
         }
 
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("datatableLoadingEndAct");
       });
     },
     yeni_musteri_click() {
@@ -307,6 +308,8 @@ export default {
     },
     excel_cikti_al_click() {
       const data = this.musteri_data;
+      this.$store.dispatch("datatableLoadingBeginAct");
+
       service.getMusteriExcelListesi(data).then((response) => {
         if (response.status) {
           const link = document.createElement("a");
@@ -318,6 +321,8 @@ export default {
           document.body.appendChild(link);
           link.click();
           this.is_excel = false;
+          this.$store.dispatch("datatableLoadingEndAct");
+
         }
       });
     },
@@ -326,6 +331,9 @@ export default {
     this.emitter.on("followingStatus", (data) => {
       this.is_musteri_form = data;
     });
+    this.emitter.on("customer_form_close", () => {
+      this.is_musteri_form = false
+    })
   },
 };
 </script>

@@ -138,6 +138,7 @@
                 v-model="select_satisci"
                 :suggestions="filter_satisci_list"
                 @complete="satisci_complete_event($event)"
+                @item-select="satisci_selected($event)"
                 field="kullanici_adi"
                 :class="{
                   'p-invalid': v$.select_satisci.$invalid && submitted,
@@ -428,7 +429,10 @@ export default {
             .indexOf(event.query.toString().toLowerCase()) >= 0
         );
       });
-      this.musteri_model.satisci = this.filter_satisci_list[0].id;
+      
+    },
+    satisci_selected(event) {
+       this.musteri_model.satisci = event.value.id
     },
     musteri_kaydet_click() {
       this.submitted = true;
@@ -506,6 +510,8 @@ export default {
           });
 
           socket.siparis.emit("musteri_kayitdegisim_event");
+          this.emitter.emit('customer_form_close')
+
         } else {
           this.$toast.add({
             severity: "error",
@@ -525,6 +531,7 @@ export default {
         if (response.status) {
           alert("Musteri kaydı yapıldı.");
           socket.siparis.emit("musteri_kayitdegisim_event");
+          this.emitter.emit('customer_form_close')
         } else {
           alert("Müşteri kaydı yapılamadı kontrol ediniz.");
           this.is_kaydet = false;
@@ -537,6 +544,7 @@ export default {
         if (response.status) {
           alert("Müşteri Kaydı Silindi.");
           socket.siparis.emit("musteri_kayitdegisim_event");
+          this.emitter.emit('customer_form_close')
         } else {
           alert("Müşteri kaydı silinemedi kontrol ediniz.");
           this.is_sil = false;
