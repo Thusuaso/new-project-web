@@ -4,7 +4,7 @@
       <div class="column is-3"></div>
       <div class="column is-3"></div>
       <div class="column is-1">
-        <orbit-spinner :animation-duration="1200" :size="100" color="#ff1d5e" />
+        <looping-rhombuses-spinner :animation-duration="1200" :size="100" color="#ff1d5e" />
       </div>
       <div class="column is-3"></div>
       <div class="column is-3"></div>
@@ -28,7 +28,7 @@
 <script>
 import appNavbar from "@/components/shared/appNavbar.vue";
 import { mapGetters } from "vuex";
-import { OrbitSpinner } from "epic-spinners";
+import { LoopingRhombusesSpinner } from "epic-spinners";
 export default {
   data() {
     return {
@@ -40,7 +40,7 @@ export default {
   },
   components: {
     appNavbar,
-    orbitSpinner: OrbitSpinner,
+    loopingRhombusesSpinner: LoopingRhombusesSpinner,
   },
   created() { },
   methods: {},

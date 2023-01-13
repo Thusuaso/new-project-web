@@ -407,11 +407,17 @@ const routes = [
     },
   },
   {
-    path: "//maliyet/maliyetRaporu",
+    path: "/maliyet/maliyetRaporu",
     component: () => import("@/views/MaliyetRaporu"),
     beforeEnter(to, from, next) {
       if (store.getters.__isAuthentication) {
-        next();
+        if (store.getters.__getUserId == 10 || store.getters.__getUserId == 13 || store.getters.__getUserId == 47) {
+          next();
+
+        } else {
+          alert('Bu rapora erişiminiz bulunmamaktadır.')
+          next('/')
+        }
       } else {
         next("/login");
       }

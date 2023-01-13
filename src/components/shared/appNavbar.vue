@@ -148,7 +148,7 @@
                     </el-sub-menu>
                     <el-sub-menu index="10-11">
                         <template #title>Mekmar Raporları</template>
-                        <router-link to="/maliyet/maliyetRaporu">
+                        <router-link to="/maliyet/maliyetRaporu" v-if="is_m_g">
                             <el-menu-item index="10-11-1"> Ayo Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/yeniYuklemeRaporlari">
@@ -347,9 +347,10 @@ export default {
       hatirlatmaTrueDatas: [],
       is_satisform: false,
       select_satisci: "",
-          is_tekliform: false,
-          is_bgpform:false,
+      is_tekliform: false,
+      is_bgpform:false,
       teklifYeniKayit: false,
+      is_m_g: false
     };
   },
   created() {
@@ -363,6 +364,9 @@ export default {
       this.is_h == false;
     } else {
       this.isOthers = false;
+      }
+      if (this.__getUserId == 10 || this.__getUserId == 13 || this.__getUserId == 47) {
+          this.is_m_g = true
     }
       service.getCustomersHatirlatmaListe(this.__getUserId).then((data) => {
       this.isNotification = data.length;
