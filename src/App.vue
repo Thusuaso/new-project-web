@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="columns is-centered" v-if="loading" style="margin-top: 280px">
-      <div class="column is-3"></div>
-      <div class="column is-3"></div>
-      <div class="column is-1">
+
+      <div class="container">
+        <div class="element">
         <looping-rhombuses-spinner :animation-duration="1200" :size="100" color="#ff1d5e" />
+
+        </div>
       </div>
-      <div class="column is-3"></div>
-      <div class="column is-3"></div>
+
     </div>
     <appNavbar v-if="__isAuthentication" v-show="!loading" >
     </appNavbar>
@@ -48,7 +49,17 @@ export default {
 </script>
 <style>
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
-
+.container{
+  top: 47%;
+    left: 49%;
+    display: block;
+    position: absolute;
+    width: 750px;
+    height: 417px;
+}
+.element{
+  text-align:center;
+}
 .routerGeneral {
   width: 100%;
   height: 100%;
