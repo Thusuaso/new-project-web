@@ -635,7 +635,8 @@ export default {
       this.dis_takipEt = true;
       
     }
-    if (this.$store.getters.__getUsername == 'Gizem') {
+    console.log(this.$store.getters.__getUsername)
+    if (this.$store.getters.__getUsername == 'Gizem' || this.$store.getters.__getUsername == 'Semih') {
       this.dis_takipEt = false
     }
     if (this.profData.sigorta_id) {
@@ -1015,7 +1016,7 @@ export default {
       this.dis_takipEt = this.profData.depo;
       this.diger_4 = true;
 
-      if (year == "2022") {
+      if (year == "2023") {
         if (this.profData.depo == true) {
           for (let i = 0; i < this.siparisUrunler.length; i++) {
             if (this.siparisUrunler[i].urunbirimAdi == "M2")
@@ -1030,11 +1031,11 @@ export default {
           }
 
           if (top > 0 && topAdet > 0) {
-            top = top * 6;
+            top = top * 8;
             topAdet = topAdet * 50;
             this.profData.detayTutar_4 = top + topAdet;
           } else if (top > 0 && topAdet == 0) {
-            this.profData.detayTutar_4 = top * 6;
+            this.profData.detayTutar_4 = top * 8;
           } else if (top == 0 && topAdet > 0) {
             this.profData.detayTutar_4 = topAdet * 50;
           }
@@ -1046,7 +1047,7 @@ export default {
           this.profData.detayTutar_4 = 0;
           this.diger_4 = true;
         }
-      } else if (year == "2021") {
+      } else if (year == "2022") {
         if (this.profData.depo == true) {
           for (let i = 0; i < this.siparisUrunler.length; i++) {
             if (this.siparisUrunler[i].m2 != null)
@@ -1058,11 +1059,11 @@ export default {
           }
           //this.profData.detayTutar_4 = top*5.5
           if (top > 0 && topAdet > 0) {
-            top = top * 5.5;
+            top = top * 6;
             topAdet = topAdet * 50;
             this.profData.detayTutar_4 = top + topAdet;
           } else if (top > 0 && topAdet == 0) {
-            this.profData.detayTutar_4 = top * 5.5;
+            this.profData.detayTutar_4 = top * 6;
           } else if (top == 0 && topAdet > 0) {
             this.profData.detayTutar_4 = topAdet * 50;
           }
