@@ -213,35 +213,24 @@
             </div>
 
             <div class="p-col-2">
+
               <span class="p-float-label">
-                <currency-input
-                  id="kuryeSatis"
-                  :disabled="dis_finans"
-                  v-model="numune.kuryeSatis"
-                  @input="numune.kuryeSatis = $event"
-                />
+                <InputNumber id="kuryeSatis" v-model="numune.kuryeSatis" mode="currency" :disabled="dis_Alis" currency="USD" />
                 <label for="kuryeSatis">$</label>
               </span>
             </div>
             <div class="p-col-2">
+
               <span class="p-float-label">
-                <InputText
-                  id="TL_Satis"
-                  :disabled="dis_finans"
-                  v-model="numune.TL_Satis"
-                  @input="numune.TL_Satis = $event"
-                />
+                <InputNumber id="TL_Satis" v-model="numune.TL_Satis" mode="currency" :disabled="dis_Alis" currency="TRY" />
                 <label for="TL_Satis">₺</label>
               </span>
             </div>
             <div class="p-col-2">
+
               <span class="p-float-label">
-                <InputText
-                  :disabled="dis_finans"
-                  v-model="numune.Euro_Satis"
-                  @input="numune.Euro_Satis = $event"
-                />
-                <label for="€">€</label>
+                <InputNumber id="TL_Satis" v-model="numune.Euro_Satis" mode="currency" :disabled="dis_Alis" currency="EUR" />
+                <label for="TL_Satis">€</label>
               </span>
             </div>
             <div class="p-col-3">
@@ -501,17 +490,21 @@ import { required } from "@vuelidate/validators";
 import service from "../../service/NumuneService";
 import LocalService from "../../service/LocalService";
 import fileService from "../../service/FileService";
-import CurrencyInput from "../../components/shared/CurrencyInput2";
 import CustomInputFile from "../../components/shared/CustomInputFile";
 import socket from "../../service/SocketService";
 
 export default {
   data() {
     return {
+      numune: {
+        kuryeSatis: 0,
+        Tl_Satis: 0,
+        Euro_Satis:0
+      },
       isMobile: null,
       musteri: null,
       banka: null,
-      dis_finans: true,
+      dis_finans: false,
       odeme: null,
       date: new Date(),
       odemeTutari: 0,
@@ -578,7 +571,6 @@ export default {
     };
   },
   components: {
-    currencyInput: CurrencyInput,
     customFileInput: CustomInputFile,
   },
   props: {

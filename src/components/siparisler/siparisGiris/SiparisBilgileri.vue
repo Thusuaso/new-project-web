@@ -527,6 +527,10 @@ export default {
     },
     sec() {},
     miktar_input_event(event) {
+      
+
+
+
       if (event) {
         this.siparis.miktar = event.toString();
         this.siparis.miktar = this.siparis.miktar.replace(",", ".");
@@ -627,10 +631,16 @@ export default {
           }
         }
       } else {
+        console.log("event", event)
+        console.log("urunKartBilgisi", this.urunKartBilgisi)
+        console.log("kategoriAdi", this.kategoriAdi)
+        console.log("urunBirim", this.urunBirim)
+        console.log("siparis", this.siparis)
+        console.log("siparis", this.siparis)
         this.siparis.ozelMiktar = this.siparis.miktar;
 
         this.kategoriAdi = this.siparis.musteriAciklama.split("-")[0].trim();
-        if (this.urunBirim == "M2") {
+        if (this.urunBirim.birimAdi == "M2") {
           this.siparis.ozelMiktar = this.siparis.miktar;
           if (this.siparis.kenar == "") {
             this.urunKartBilgisi.kenar = this.urunKartBilgisi.kenar.replace(
@@ -660,7 +670,7 @@ export default {
                 0.001;
             }
           }
-        } else if (this.urunBirim.id == "Adet") {
+        } else if (this.urunBirim.birimAdi == "Adet") {
           if (this.siparis.en != "") {
             if (this.siparis.en == "ANT") {
               this.siparis.ozelMiktar =
@@ -746,7 +756,7 @@ export default {
                 0.001;
             }
           }
-        } else if (this.urunBirim.id == "Mt") {
+        } else if (this.urunBirim.birimAdi == "Mt") {
           if (this.siparis.en != "") {
             if (this.siparis.en == "ANT") {
               this.siparis.ozelMiktar = 0;
