@@ -1,6 +1,5 @@
 <template>
-  <section>
-    <div class="columns is-multiline">
+    <div class="columns">
       <div class="column is-12">
         <DataTable
           :value="siparis_ozet_ayrinti"
@@ -54,7 +53,6 @@
         <MusteriDetaySipListesi></MusteriDetaySipListesi>
       </Dialog>
     </div>
-  </section>
 </template>
 <script>
 import { mapGetters } from "vuex";

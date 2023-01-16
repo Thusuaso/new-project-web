@@ -193,13 +193,8 @@
       :style="{ width: '150vw', height:'150vw'}"
     >
       <section>
-        <div class="container">
-          <div class="columns">
-            <div class="column is-12">
+
               <UretimForm :kayitstatu="true" :kasano="0" />
-            </div>
-          </div>
-        </div>
       </section>
     </Dialog>
     <Dialog v-model:visible="topluKasaForm" position="top" maximizable :modal="true">

@@ -1046,19 +1046,14 @@
       maximizable
       position="top"
     >
-      <section>
-        <div class="container">
-          <div class="columns">
-            <div v-if="select_uretim" class="column is-12">
+
+            <div v-if="select_uretim" >
               <UretimForm
                 :kayitstatu="false"
                 :kasano="select_uretim.kasa_no"
                 @seleksiyon_form_kapat="is_uretimform = false"
               />
             </div>
-          </div>
-        </div>
-      </section>
     </Dialog>
 
     <Dialog
@@ -1068,9 +1063,7 @@
       maximizable
       position="top"
     >
-      <section>
-        <div class="container">
-          <div class="columns">
+
             <DataTable
               :value="filterProducts"
               v-model:filters="filters3"
@@ -1344,9 +1337,7 @@
                 </template>
               </Column>
             </DataTable>
-          </div>
-        </div>
-      </section>
+
     </Dialog>
   </section>
 </template>

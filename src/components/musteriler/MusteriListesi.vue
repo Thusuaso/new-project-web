@@ -207,11 +207,9 @@
         maximizable
         position="top"
       >
-        <div class="columns">
-          <div class="column is-12">
+
             <MusteriDetay :is_yeni="is_musteri_yeni" />
-          </div>
-        </div>
+
       </Dialog>
     </div>
   </section>

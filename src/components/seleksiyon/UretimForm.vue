@@ -468,6 +468,11 @@
       />
     </div>
   </div>
+
+  
+  
+  
+  
   <Dialog :visible="isDisplay">
     <template #header>
       <h3>Üretim Fazlası Dikkat !</h3>
@@ -1157,6 +1162,7 @@ export default {
           } else {
             
             this.isDisplay2 = true
+            
 
           }
         }
@@ -1274,6 +1280,7 @@ export default {
         ).name;
         this.kasaadet = 1;
         this.notlar = this.detail.aciklama;
+        
       });
     } else {
       if (this.kayitstatu) {
@@ -1287,7 +1294,9 @@ export default {
               x.siparisno == this.detail.siparisaciklama &&
               x.urunkart_id == this.detail.urunkartid
           ).tanim;
+          
         });
+        this.detail.tanim = ""
       }
     }
   },

@@ -264,15 +264,8 @@
       header="Musteri Sipariş Detay"
       maximizable
     >
-      <section>
-        <div class="container">
-          <div class="columns">
-            <div class="column is-12">
+
               <MusteriSiparisDetay />
-            </div>
-          </div>
-        </div>
-      </section>
     </Dialog>
 </template>
 <script>
