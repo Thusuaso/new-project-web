@@ -1641,21 +1641,24 @@ export default {
       }
     },
     teklifSilmeIslemi() {
-      this.$store.dispatch("teklif_form_load_act", false);
+      if (confirm('Gerçekten Silmek istiyor musunuz?')) {
+        this.$store.dispatch("teklif_form_load_act", false);
 
-      teklifService.teklifSilme(this.teklif.id).then((data) => {
-        if (data.status) {
-          this.dis_teklifgoster = false;
-          this.$toast.add({
-            severity: "success",
-            summary: "Bilgi Ekranı",
-            detail: "Teklif Bilgileri Silindi.",
-            life: 1000,
-          });
-          socket.siparis.emit('teklif_degisim_event');
-          this.emitter.emit('teklif_yenileme', true)
-        }
-      });
+        teklifService.teklifSilme(this.teklif.id).then((data) => {
+          if (data.status) {
+            this.dis_teklifgoster = false;
+            this.$toast.add({
+              severity: "success",
+              summary: "Bilgi Ekranı",
+              detail: "Teklif Bilgileri Silindi.",
+              life: 1000,
+            });
+            socket.siparis.emit('teklif_degisim_event');
+            this.emitter.emit('teklif_yenileme', true)
+          }
+        });
+      }
+      
     },
     yeniKayitBaslangicIslemler() {
       this.dis_takipEt = true;
