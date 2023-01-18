@@ -245,6 +245,7 @@ export default {
   },
 
   created() {
+
     this.$store.dispatch("loadingBeginAct");
 
     service.getNumuneYilListesi().then((data) => {
