@@ -181,8 +181,28 @@
               label="Excel"
               class="p-button-primary"
             />
+          <Button @click="add_price_form = true" class="p-button-info" label="Fiyat Gir" style="margin-left:10px;" />
+
           </div>
+             
         </DataTable>
+        <Dialog v-model:visible="add_price_form" header="Yeni Fiyat Gir" :modal="true">
+          <br/>
+          <div class="columns">
+            <div class="column">
+              <span class="p-float-label">
+                <InputNumber id="fiyat" v-model="addPrice.price" mode="currency" currency="USD"/>
+
+                <label for="fiyat">Fiyat</label>
+              </span>
+            </div>
+            <div class="column">
+              <Button class="p-button-success" @click="add_price" label="Ekle ve Güncelle" />
+
+            </div>
+
+          </div>
+        </Dialog>
       </div>
     </div>
   </section>
@@ -190,20 +210,43 @@
 <script>
 import { mapGetters } from "vuex";
 import service from "../../service/RaporService";
-
+import socket from "@/service/SocketService"
 export default {
   data() {
     return {
       miktar_toplami: 0,
+      add_price_form: false,
+      addPrice: {
+        price: 0,
+        productId:0
+      }
     };
   },
 
   computed: {
     ...mapGetters(["stok_top_ayrinti_list"]),
   },
-  props: ["urunid"],
+  props: ["urunid","price"],
 
   methods: {
+    add_price() {
+      this.addPrice.productId = this.urunid
+      service.setAddPrice(this.addPrice).then(data => {
+        if (data) {
+          this.$toast.add({ severity: 'success', summary: 'Fiyat Kaydetme', detail: 'Fiyat Kaydetme Başarılı', life: 2000 });
+          socket.siparis.emit('stock_list_event')
+          this.add_price_form = false
+          
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'Fiyat Kaydetme', detail: 'Fiyat Kaydetme Hata', life: 2000 });
+          socket.siparis.emit('stock_list_event')
+
+        }
+      })
+
+
+    },
+
     formatDecimal(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -239,10 +282,13 @@ export default {
     },
   },
   mounted() {
-    console.log("stok_top_ayrinti_list", this.stok_top_ayrinti_list);
     this.kasa_toplamı(this.stok_top_ayrinti_list);
+    this.addPrice.price = this.price
+
+    
   },
-  created() {},
+  created() {
+  },
 };
 </script>
 <style scoped>

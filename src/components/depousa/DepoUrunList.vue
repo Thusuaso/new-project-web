@@ -108,20 +108,14 @@
           maximizable
           position="top"
         >
-          <section class="section">
-            <div class="container">
-              <div class="columns">
-                <div class="column is-12">
+
                   <DepoUrunForm
                     :depostock="depostock"
                     :urunDetay="urunDetay"
                     :keyList="keyList"
                     :sliceFotoList="sliceFotoList"
                   />
-                </div>
-              </div>
-            </div>
-          </section>
+
         </Dialog>
       </div>
     </div>

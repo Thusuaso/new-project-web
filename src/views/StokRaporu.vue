@@ -40,6 +40,7 @@
       <div class="column is-3">
         <Button @click="excel_cikti_click" label="Excel" />
       </div>
+      
     </div>
     <div class="columns">
       <div class="column">
@@ -61,6 +62,7 @@
           :sortOrder="1"
           scrollable
           scrollHeight="520px"
+          :loading="datatableLoading"
         >
           <Column
             field="en"
@@ -201,6 +203,17 @@
               {{ formatDecimal(m2toplami) }}
             </template>
           </Column>
+          <Column field="price" header="Fiyat" bodyStyle="text-align:center">
+            <template #body="slotProps" >
+              <div v-if="slotProps.data.price != null" style="text-align:center;">
+                  ${{ slotProps.data.price }}
+
+              </div>
+              <div v-else style="text-align:center;">
+              $0
+              </div>
+            </template>
+          </Column>
         </DataTable>
       </div>
     </div>
@@ -215,7 +228,7 @@
       :style="{width: '100%'}"
     >
 
-              <StokAyrintiListesi />
+              <StokAyrintiListesi :urunid="urunId" :price = "productPrice"/>
 
     </Dialog>
 
@@ -309,6 +322,7 @@
         </div>
       </section>
     </Dialog>
+
   </section>
 </template>
 <script>
@@ -318,6 +332,7 @@ import service from "../service/RaporService";
 
 import StokAyrintiListesi from "../components/stokraporu/StokAyrintiListesi";
 import { FilterMatchMode } from "primevue/api";
+import socket from "@/service/SocketService"
 export default {
   components: {
     StokAyrintiListesi,
@@ -360,13 +375,29 @@ export default {
       ebats: [],
       filterEbats: [],
       listDurum: null,
+      urunId:0,
     };
   },
   computed: {
-    ...mapGetters(["stok_ana_list", "stok_ayrinti_list", "servis_adres"]),
+    ...mapGetters(["stok_ana_list", "stok_ayrinti_list", "servis_adres","datatableLoading"]),
   },
   mounted() {
     this.kasa_toplamı(this.uretimKasalar);
+    socket.siparis.on('stock_list_emit', () => {
+      this.$store.dispatch("datatableLoadingBeginAct");
+      service.StokRaporRaporApi().then((data) => {
+        store.dispatch("stok_ana_list_yukle_act", data);
+        store.dispatch("stok_ayrinti_list_yukle_act", data);
+        store.dispatch("loadingEndAct");
+      });
+      service.StokRaporAnaList().then((data) => {
+        this.uretimKasalar = data;
+        this.kasa_toplamı(data);
+        this.m2_toplami(data);
+        this.$store.dispatch("datatableLoadingEndAct");
+
+      });
+    })
   },
   created() {
     /*this.siparisler = this.stok_ana_list*/
@@ -444,6 +475,7 @@ export default {
       this.$store.dispatch("loadToplamGuncelleAct", this.kasa_toplami2);
     },
     depo_item_sec(event) {
+      console.log("depo_item_sec",event)
       this.select_depo = {
         boyut: event.data,
         listDurum: this.listDurum,
@@ -454,6 +486,8 @@ export default {
           boyut: event.data,
           listDurum: this.listDurum,
         };
+        this.urunId = event.data.urunKartId
+        this.productPrice = event.data.price
         service.getStokRaporAyrintiHepsi(this.select_depo).then((data) => {
           this.$store.dispatch(
             "stok_top_ayrinti_list_yukle_act",
@@ -467,6 +501,8 @@ export default {
           boyut: event.data,
           listDurum: this.listDurum,
         };
+        this.productPrice = event.data.price
+        this.urunId = event.data.urunKartId
         service.getStokRaporAyrintiHepsi(this.select_depo).then((data) => {
           this.$store.dispatch(
             "stok_top_ayrinti_list_yukle_act",
@@ -480,6 +516,8 @@ export default {
           boyut: event.data,
           listDurum: this.listDurum,
         };
+        this.productPrice = event.data.price
+        this.urunId = event.data.urunKartId
         service.getStokRaporAyrintiHepsi(this.select_depo).then((data) => {
           this.$store.dispatch(
             "stok_top_ayrinti_list_yukle_act",
@@ -488,11 +526,14 @@ export default {
           this.is_form = true;
         });
       } else if (this.FirmaAdi == "OnlyMekmer") {
+
         this.listDurum = 4;
         this.select_depo = {
           boyut: event.data,
           listDurum: this.listDurum,
         };
+        this.productPrice = event.data.price
+        this.urunId = event.data.urunKartId
         service.getStokRaporAyrintiHepsi(this.select_depo).then((data) => {
           this.$store.dispatch(
             "stok_top_ayrinti_list_yukle_act",

@@ -409,9 +409,7 @@
         </div>
       </Dialog>
     </div>
-    <Dialog v-model:visible="statistics_form" :modal="true">
 
-    </Dialog>
     <UrunKartMenu @urunKartSelect="urunkart_change_event($event)" />
   </section>
 </template>

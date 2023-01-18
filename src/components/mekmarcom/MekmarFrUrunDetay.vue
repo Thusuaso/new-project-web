@@ -100,7 +100,7 @@
                                     :value="urunDetay.kenarIslemList"
                                     dataKey="_id"
                                     selectionMode="simple"
-                                    :selection.sync="selectKenarIslem"
+                                    v-model:selection.sync="selectKenarIslem"
                                     @row-select="kenarIslemDegisim($event)"
                                  >
                                      <Column field="name" header="İşlem" bodyStyle="text-align:center">
@@ -151,7 +151,7 @@
                                     :value="urunDetay.ebatlar"
                                     dataKey="_id"
                                     selectionMode="simple"
-                                    :selection.sync="selectEbat"
+                                    v-model:selection="selectEbat"
                                     @row-select="ebatDegisim($event)"
                                  >
                                      <Column field="ebat" header="Ebat" bodyStyle="text-align:center">
@@ -247,15 +247,7 @@
                     <div class="column is-2">
                         <b-button type="is-success" expanded @click="isfotolist = true">Foto List Aç</b-button>
                         <Dialog v-model:visible="isfotolist" :modal="true" position="top">
-                            <section class="section">
-                                <div class="container">
-                                    <div class="columns">
-                                        <div class="column is-12">
                                             <UrunFotoList :urunid="urunDetay.urunid" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
                         </Dialog>
                     </div>
                 </div>

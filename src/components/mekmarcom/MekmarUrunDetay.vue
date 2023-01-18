@@ -313,7 +313,6 @@
       
       <br />
 
-      <div class="container" style="width:100%;">
         <div class="containerRestriction" style="text-align:center;margin-left:80px;">
           <Galleria :value="fotolist" :responsiveOptions="responsiveOptions" :numVisible="5" containerStyle="max-width: 640px"
             :circular="true" :autoPlay="true" :transitionInterval="2000" v-if="fotolist.length>0">
@@ -326,7 +325,6 @@
           </Galleria>
         </div>
         
-      </div>
       
       <br/>
       <div class="columns">
@@ -337,15 +335,8 @@
         <div class="column">
             <Button class="p-button-primary" label="Foto List Aç"  @click="isfotolist = true"></Button>
             <Dialog v-model:visible="isfotolist" :style="{ width : '1000px' }" :modal="true">
-              <section class="section">
-                <div class="container">
-                  <div class="columns">
-                    <div class="column is-12">
+
                       <UrunFotoList :urunid="urunDetay.urunid" />
-                    </div>
-                  </div>
-                </div>
-              </section>
             </Dialog>
         </div>
       </div>

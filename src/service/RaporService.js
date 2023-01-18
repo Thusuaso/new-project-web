@@ -688,6 +688,9 @@ const raporService = {
   },
         getMineList() {
     return axios.get("listeler/ocakList").then(res=>res.data)
+  },
+  setAddPrice(addPrice) {
+    return axios.post("raporlar/listeler/setAddPrice",addPrice).then(res=>res.data)
   }
   
 };

@@ -1036,7 +1036,11 @@ export default {
     },
     musteriDegisim() {
       this.teklif.musteriId = this.musteri.id;
-
+      let musteri = this.musteriList.find((x) => x.id == this.musteri.id);
+      this.teklif.company = musteri.company
+      this.teklif.email = musteri.email
+      this.teklif.phone = musteri.phone
+      this.teklif.adress = musteri.adress
       this.ulke = this.ulkeList.find((x) => x.id == this.musteri.ulkeId);
 
       if (!this.ulke) {

@@ -18,11 +18,7 @@
             maximizable
             position="top"
           >
-            <section>
-              <div
-                class="container"
-                style="height: 800px; background-color: white"
-              >
+
                 <div
                   class="columns"
                   style="height: 800px; background-color: white"
@@ -34,8 +30,6 @@
                     <MusteriOdemeler />
                   </div>
                 </div>
-              </div>
-            </section>
           </Dialog>
         </div>
         <div class="column is-6">

@@ -635,7 +635,6 @@ export default {
       this.dis_takipEt = true;
       
     }
-    console.log(this.$store.getters.__getUsername)
     if (this.$store.getters.__getUsername == 'Gizem' || this.$store.getters.__getUsername == 'Semih') {
       this.dis_takipEt = false
     }
@@ -650,6 +649,8 @@ export default {
     ) {
       this.dis_sigorta = false;
     }
+    console.log(this.profData)
+    
   },
   mounted() {
     // this.emitter.on("sipBilgileri", (data) => {
@@ -659,8 +660,10 @@ export default {
     //   }
     // });
 
-    // if (this.profData.vade.length > 0) {
+    // if (this.profData.vade != "") {
     //   this.vade = this.localService.getStringDate(this.profData.vade);
+    // } else {
+    //   this.vade = ""
     // }
     
   },
@@ -1138,6 +1141,11 @@ export default {
   watch: {
     profData() {
       this.dataLoad();
+      if (this.profData.vade != "") {
+        this.vade = this.localService.getStringDate(this.profData.vade);
+      } else {
+        this.vade = ""
+      }
     }
   }
 };
