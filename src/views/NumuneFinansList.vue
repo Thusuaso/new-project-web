@@ -197,7 +197,40 @@
             </template>
           </Column>
         </DataTable>
+
+        <table>
+          <tr>
+            <th>Dolar Kar</th>
+            <th>Euro Kar</th>
+            <th>TL Kar</th>
+
+          </tr>
+          <tr>
+            <td>
+              ${{ dolar_fark }}
+            </td>
+            <td>
+              €{{ euro_fark }}
+            </td>
+            <td>
+              ₺{{ tl_fark }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              %{{ dolar_yuzde }}
+            </td>
+            <td>
+              %{{ euro_yuzde }}
+            </td>
+            <td>
+              %{{ tl_yuzde }}
+            </td>
+          </tr>
+        </table>
+
       </div>
+      
       <Dialog
         v-model:visible="is_form"
         v-model:header="form_baslik"
@@ -241,6 +274,13 @@ export default {
       yil_listesi: null,
       select_yil: null,
       yil_baslik: "",
+      dolar_fark: 0,
+      euro_fark: 0,
+      tl_fark: 0,
+      dolar_yuzde: 0,
+      euro_yuzde: 0,
+      tl_yuzde:0
+      
     };
   },
 
@@ -304,6 +344,14 @@ export default {
         this.EuroAlis_Toplam += item.Euro_Alis;
         this.EuroSatis_Toplam += item.Euro_Satis;
       }
+      this.dolar_fark = Math.round(this.kuryeSatis_toplam - this.kuryeAlis_toplam)
+      this.euro_fark = Math.round(this.EuroSatis_Toplam - this.EuroAlis_Toplam)
+      this.tl_fark = Math.round(this.TLSatis_Toplam - this.TLAlis_Toplam)
+
+      this.dolar_yuzde = Math.round((this.dolar_fark / this.kuryeSatis_toplam) * 100) 
+      this.euro_yuzde = Math.round((this.euro_fark / this.EuroSatis_Toplam) * 100) 
+      this.tl_yuzde = Math.round((this.tl_fark / this.TLSatis_Toplam) * 100) 
+
     },
     formatPriceDolar(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
@@ -332,6 +380,23 @@ export default {
 </script>
 
 <style scoped>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
 .p-datatable {
   font-size: 12px;
 }
