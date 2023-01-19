@@ -348,9 +348,20 @@ export default {
       this.euro_fark = Math.round(this.EuroSatis_Toplam - this.EuroAlis_Toplam)
       this.tl_fark = Math.round(this.TLSatis_Toplam - this.TLAlis_Toplam)
 
-      this.dolar_yuzde = Math.round((this.dolar_fark / this.kuryeSatis_toplam) * 100) 
+      this.dolar_yuzde = Math.round((this.dolar_fark / this.kuryeSatis_toplam) * 100)
+      if (this.dolar_yuzde.toString() == 'NaN' || this.dolar_yuzde.toString() == '-Infinity' || this.dolar_yuzde.toString() == 'Infinity'){
+        this.dolar_yuzde = 0 
+      }
       this.euro_yuzde = Math.round((this.euro_fark / this.EuroSatis_Toplam) * 100) 
+      if (this.euro_yuzde.toString() == 'NaN' || this.euro_yuzde.toString() == '-Infinity' || this.euro_yuzde.toString() == 'Infinity') {
+        this.euro_yuzde = 0
+      }
+
       this.tl_yuzde = Math.round((this.tl_fark / this.TLSatis_Toplam) * 100) 
+      if (this.tl_yuzde.toString() == 'NaN' || this.tl_yuzde.toString() == '-Infinity' || this.tl_yuzde.toString() == 'Infinity') {
+        this.tl_yuzde = 0
+      }
+
 
     },
     formatPriceDolar(value) {

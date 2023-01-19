@@ -631,12 +631,7 @@ export default {
           }
         }
       } else {
-        console.log("event", event)
-        console.log("urunKartBilgisi", this.urunKartBilgisi)
-        console.log("kategoriAdi", this.kategoriAdi)
-        console.log("urunBirim", this.urunBirim)
-        console.log("siparis", this.siparis)
-        console.log("siparis", this.siparis)
+
         this.siparis.ozelMiktar = this.siparis.miktar;
 
         this.kategoriAdi = this.siparis.musteriAciklama.split("-")[0].trim();
@@ -1540,7 +1535,11 @@ export default {
     this.dataSatirTopla(this.siparisUrunler);
 
     this.emitter.on("urunKartSecim", (data) => {
-      this.aciklamaAdd(data);
+      console.log(this.$store.getters.__getUsername)
+      if (this.$store.getters.__getUsername == 'Semih') {
+        this.aciklamaAdd(data);
+
+      }
       this.urunKartBilgisi = data;
     });
   },
