@@ -590,15 +590,9 @@
       :modal="true"
       maximizable
     >
-      <section>
-        <div class="container">
-          <div class="columns">
-            <div class="column is-12">
+
               <OzetAyrinti />
-            </div>
-          </div>
-        </div>
-      </section>
+
     </Dialog>
   </section>
 </template>

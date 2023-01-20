@@ -96,7 +96,7 @@ const raporService = {
       .then((res) => res.data);
   },
   getKullaniciSiparisOzetAyrinti(ay) {
-    const username = store.getters.getUser;
+    const username = store.getters.__getUsername;
     return axios
       .get(`raporlar/siparisozet/kullaniciOzet/${username}/${ay}`)
       .then((res) => res.data);
