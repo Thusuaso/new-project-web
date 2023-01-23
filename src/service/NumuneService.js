@@ -83,6 +83,9 @@ const NumuneService = {
       .get("islemler/numune/numuneYilListesi")
       .then((res) => res.data);
   },
+  getNumuneBankayaGelenAyrinti(banka,yil) {
+    return axios.get(`islemler/numune/bankayagelen/${banka}/${yil}`).then(res=>res.data)
+  }
 };
 
 export default NumuneService;

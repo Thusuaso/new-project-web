@@ -21,7 +21,18 @@
               {{ slotProps.data.orderno }}
             </template>
           </Column>
-
+          <Column
+            field="numune_tarihi"
+            header="Numune Tarihi"
+            bodyStyle="text-align:center; "
+          >
+          </Column>
+          <Column
+            field="sevktarihi"
+            header="Sevk Tarihi"
+            bodyStyle="text-align:center; "
+          >
+          </Column>
           <Column
             field="kuryeAlis"
             header="USD-Alış"
@@ -84,6 +95,12 @@
             <template #body="slotProps">
               {{ slotProps.data.odeme }}
             </template>
+          </Column>
+          <Column
+            field="banka"
+            header="Banka Adı"
+            bodyStyle="text-align:center; "
+          >
           </Column>
           <template #footer> </template>
         </DataTable>

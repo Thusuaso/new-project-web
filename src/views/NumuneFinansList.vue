@@ -175,6 +175,9 @@
           :sortOrder="-1"
           :scrollable="true"
           scrollHeight="490px"
+          v-model:selection="selectedBankAccount"
+           selectionMode="single"
+           @row-select="bank_account_selected($event)"
         >
           <template #header>
             <div class="columns is-multiline">
@@ -228,7 +231,6 @@
             </td>
           </tr>
         </table>
-
       </div>
       
       <Dialog
@@ -241,6 +243,58 @@
         :style="{width: '85vw'}"
       >
         <numuneMasraflar :select_depo="select_depo" />
+      </Dialog>
+
+      <Dialog
+        v-model:visible="is_bank_ayrinti_form"
+        :modal="true"
+
+      >
+        <DataTable
+        
+          :value="banka_gelen_bedel_list"
+
+        >
+        <Column
+          field="numune_tarihi"
+          header="Numune Tarihi"
+          bodyStyle="text-align:center;"
+        
+        >
+        </Column>
+        <Column field="banka_adi" header="Banka" bodyStyle="text-align:center;"></Column>
+        <Column field="musteri_adi" header="Müşteri" bodyStyle="text-align:center;"></Column>
+        <Column field="numune_no" header="Numune No" bodyStyle="text-align:center;"></Column>
+        <Column field="bedel_dolar" header="Dolar ($)" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ formatPriceDolar(slotProps.data.bedel_dolar) }}
+          </template>
+          <template #footer>
+            {{ formatPriceDolar(dolar_sum) }}
+          </template>
+        
+        </Column>
+        <Column field="bedel_euro" header="Euro (€)" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ formatPriceEuro(slotProps.data.bedel_euro) }}
+          </template>
+          <template #footer>
+            {{ formatPriceEuro(euro_sum) }}
+          </template>
+        
+        </Column>
+        <Column field="bedel_tl" header="Tl (₺)" bodyStyle="text-align:center;">
+        <template #body="slotProps">
+          {{ formatPriceTL(slotProps.data.bedel_tl) }}
+        </template>
+          <template #footer>
+            {{ formatPriceTL(tl_sum) }}
+          </template>
+        </Column>
+
+
+
+        </DataTable>
       </Dialog>
     </div>
   </section>
@@ -255,6 +309,11 @@ export default {
   },
   data() {
     return {
+      dolar_sum: 0,
+      euro_sum: 0,
+      tl_sum:0,
+      is_bank_ayrinti_form:false,
+      selectedBankAccount:[],
       select_depo: 0,
       banka_toplami: 0,
       select: null,
@@ -279,7 +338,8 @@ export default {
       tl_fark: 0,
       dolar_yuzde: 0,
       euro_yuzde: 0,
-      tl_yuzde:0
+      tl_yuzde: 0,
+      banka_gelen_bedel_list:[],
       
     };
   },
@@ -303,6 +363,26 @@ export default {
   },
   mounted() {},
   methods: {
+    bank_account_detail_sum(data) {
+      this.dolar_sum= 0
+      this.euro_sum= 0
+      this.tl_sum= 0
+      for (let item of data) {
+        this.dolar_sum += item.bedel_dolar
+        this.euro_sum += item.bedel_euro
+        this.tl_sum += item.bedel_tl
+      }
+    },
+    bank_account_selected(event) {
+
+
+      service.getNumuneBankayaGelenAyrinti(event.data.banka, this.select_yil.yil).then(data => {
+        this.banka_gelen_bedel_list = data
+        this.bank_account_detail_sum(data)
+        this.is_bank_ayrinti_form = true
+      })
+
+    },
     isNumuneFinans(event) {
       this.genel_toplam(event.filteredValue);
     },

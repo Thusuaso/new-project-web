@@ -157,6 +157,22 @@
               {{ miktar_toplam }}
             </template>
           </Column>
+          <Column
+            field="gonderi_tipi"
+            header="Gönderi Tipi"
+            bodyStyle="text-align:center"
+            footerStyle="text-align:center"
+            headerStyle="width:3%;"
+          >
+          </Column>
+          <Column
+            field ="banka_secimi"
+            header="Banka Seçimi"
+            bodyStyle="text-align:center"
+            footerStyle="text-align:center"
+            headerStyle="width:3%;"
+          >
+          </Column>
         </DataTable>
       </div>
     </div>
