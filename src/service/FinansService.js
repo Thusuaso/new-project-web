@@ -122,6 +122,12 @@ const FinansService = {
   },
   setOdemelerAyrintiTablosu(data) {
     return axios.post("finans/listeler/odemelerDegisim",data)
+  },
+  getMayaNumunevSiparisOdemeleri(month,year) {
+    return axios.get(`finans/listeler/mayaNumuneSiparisOdemeleri/${month}/${year}`).then(res=>res.data)
+  },
+  getMayaNumunevSiparisOdemeleriYear(year) {
+    return axios.get(`finans/listeler/mayaNumuneSiparisOdemeleri/${year}`).then(res=>res.data)
   }
 };
 

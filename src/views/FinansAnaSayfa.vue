@@ -4,8 +4,8 @@
         <Checkbox @change="konteynerHepsiEvent" v-model="konteyner_list_hepsi" :binary="true" />
         Hepsi
       </div>
-      <div class="columns is-multiline">
-        <div class="column is-6">
+      <div class="columns">
+        <div class="column is-3">
           <Button
             class="p-button-primary"
             label="Tahsilat"
@@ -32,7 +32,7 @@
                 </div>
           </Dialog>
         </div>
-        <div class="column is-6">
+        <div class="column is-3">
           <Button
             style="background-color: #7aa998"
             @click="pesinat_event_click"
@@ -40,22 +40,11 @@
             class="p-button-primary"
           />
         </div>
+        <div class="column is-6">
+          <Button  @click="maya_gelen_bedeller" label="Maya Gelen Bedeller" class="p-button-warning" />
+        </div>
       </div>
-      <Dialog
-        v-model:visible="is_pesinat"
-        header="PEŞİNAT LİSTESİ"
-        :modal="true"
-        maximizable
-        position="top"
-      >
-        <section>
-          <div class="columns">
-            <div class="column is-12">
-              <PesinatTahsil />
-            </div>
-          </div>
-        </section>
-      </Dialog>
+      
       <div class="column is-3">
         <div class="columns is-multiline is-right">
           <div class="column is-3">
@@ -264,6 +253,97 @@
     <Dialog v-model:visible="isKonteyner" v-model:header="konteynerBaslik" :modal="true" maximizable position="top">
       <FinansAyrintiList />
     </Dialog>
+    <Dialog v-model:visible="is_pesinat" header="PEŞİNAT LİSTESİ" :modal="true" maximizable position="top">
+      <section>
+        <div class="columns">
+          <div class="column is-12">
+            <PesinatTahsil />
+          </div>
+        </div>
+      </section>
+    </Dialog>
+
+    <Dialog
+      v-model:visible="is_maya_gelen_bedeller_form"
+      header="Maya Numune ve Sipariş Gelen Bedeller"
+      :modal="true"
+      maximizable
+      position="top"
+    >
+    
+    <div class="columns">
+      <div class="column is-4">
+           <Dropdown v-model="selected_year_maya" :options="years" optionLabel="year" placeholder="Select a Year" @change="selectedYearMaya"/>
+
+      </div>
+      <div class="column is-4">
+            <Dropdown v-model="selected_month_maya" :options="months" optionLabel="month_name" placeholder="Select a Month" @change="selectedMonthMaya"/>
+
+      </div>
+    </div>
+
+
+    <DataTable :value="maya_gelen_bedeller_sip_list" responsiveLayout="scroll" v-if="maya_gelen_bedeller_sip_list.length>0">
+      <template #header>
+        <div class="table-header">
+          Gelen Sipariş Bedelleri
+        </div>
+      </template>
+      <Column field="tarih" header="Tarih"></Column>
+      <Column field="po" header="PO"></Column>
+      <Column field="tutar" header="Tutar($)">
+        <template #body="slotProps">
+          {{ formatPrice(slotProps.data.tutar) }}
+        </template>
+        <template #footer>
+          {{ formatPrice(sipTopBedel) }}
+        </template>
+      </Column>
+      <Column field="masraf" header="Masraf($)">
+        <template #body="slotProps">
+          {{ formatPrice(slotProps.data.masraf) }}
+        </template>
+        <template #footer>
+          {{ formatPrice(sipTopMasraf) }}
+        </template>
+      </Column>
+
+    </DataTable>
+    <br/>
+    <DataTable :value="maya_gelen_bedeller_num_list" responsiveLayout="scroll" v-if="maya_gelen_bedeller_num_list.length>0">
+
+      <template #header>
+        <div class="table-header">
+          Gelen Numune Bedelleri
+        </div>
+      </template>
+      <Column field="tarih" header="Gelen Bedel Tarihi"></Column>
+      <Column field="numuneTarihi" header="Gönderilme Tarihi"></Column>
+      <Column field="numuneYuklemeTarihi" header="Teslim Tarihi"></Column>
+
+      <Column field="banka" header="Banka"></Column>
+      <Column field="musteriAdi" header="Müşteri Adı"></Column>
+      <Column field="po" header="PO"></Column>
+      <Column field="tutar" header="Tutar($)">
+        <template #body="slotProps">
+          {{ formatPrice(slotProps.data.tutar) }}
+        </template>
+        <template #footer>
+          {{ formatPrice(numuneTopBedel) }}
+        </template>
+      </Column>
+      <Column field="masraf" header="Masraf($)">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.masraf) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(numuneTopMasraf) }}
+          </template>
+      </Column>
+    
+    </DataTable>
+
+    </Dialog>
 
 </template>
 <script>
@@ -340,6 +420,37 @@ export default {
   },
   data() {
     return {
+      sipTopBedel: 0,
+      sipTopMasraf:0,
+      numuneTopMasraf:0,
+      numuneTopBedel:0,
+      months: [
+        { 'month': 0, 'month_name': 'Hepsi' },
+        { 'month': 1, 'month_name': 'Ocak' },
+        { 'month': 2, 'month_name': 'Şubat' },
+        { 'month': 3, 'month_name': 'Mart' },
+        { 'month': 4, 'month_name': 'Nisan' },
+        { 'month': 5, 'month_name': 'Mayıs' },
+        { 'month': 6, 'month_name': 'Haziran' },
+        { 'month': 7, 'month_name': 'Temmuz' },
+        { 'month': 8, 'month_name': 'Ağustos' },
+        { 'month': 9, 'month_name': 'Eylül' },
+        { 'month': 10, 'month_name': 'Ekim' },
+        { 'month': 11, 'month_name': 'Kasım' },
+        { 'month': 12, 'month_name': 'Aralık' },
+
+      ],
+      selected_month_maya: {},
+      years: [
+        {'year':2023},
+        { 'year': 2022 },
+        { 'year': 2021 },
+        { 'year': 2020 },
+        { 'year': 2019 },
+
+      ],
+      selected_year_maya: { "year": 2023 },
+      is_maya_gelen_bedeller_form:false,
       isMobile: "",
       filters: {
         musteriadi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -377,10 +488,69 @@ export default {
       "depo_ana_list",
       "servis_adres",
       "finans_toplam_eski_pesinat",
-      'datatableLoading'
+      'datatableLoading',
+      "maya_gelen_bedeller_sip_list",
+      "maya_gelen_bedeller_num_list"
     ]),
   },
   methods: {
+    sipToplamaİslemi(data) {
+      this.sipTopBedel= 0
+      this.sipTopMasraf = 0
+      for (let item of data) {
+        this.sipTopBedel += item.tutar
+        this.sipTopMasraf += item.masraf
+      }
+    },
+    numuneToplamaİslemi(data) {
+      this.numuneTopBedel = 0
+      this.numuneTopMasraf = 0
+      for (let item of data) {
+        this.numuneTopBedel += item.tutar
+        this.numuneTopMasraf += item.masraf
+      }
+    },
+    selectedYearMaya() {
+      this.selected_month_maya = { 'month': 0, 'month_name': 'Hepsi' }
+
+      service.getMayaNumunevSiparisOdemeleriYear(this.selected_year_maya.year).then(data => {
+        this.$store.dispatch('mayaGelenBedellerSipAct', data.siparis)
+        this.$store.dispatch('mayaGelenBedellerNumAct', data.numune)
+        this.numuneToplamaİslemi(data.numune)
+        this.sipToplamaİslemi(data.siparis)
+
+      })
+    },
+    selectedMonthMaya() {
+      if (this.selected_month_maya.month == 0) {
+        this.selectedYearMaya()
+      } else {
+        service.getMayaNumunevSiparisOdemeleri(this.selected_month_maya.month, this.selected_year_maya.year).then(data => {
+          this.$store.dispatch('mayaGelenBedellerSipAct', data.siparis)
+          this.$store.dispatch('mayaGelenBedellerNumAct', data.numune)
+          this.numuneToplamaİslemi(data.numune)
+          this.sipToplamaİslemi(data.siparis)
+
+
+
+        })
+      }
+      
+    },
+    maya_gelen_bedeller() {
+      this.selected_month_maya = { 'month': 0, 'month_name': 'Hepsi' }
+      service.getMayaNumunevSiparisOdemeleriYear(this.selected_year_maya.year).then(data => {
+        this.$store.dispatch('mayaGelenBedellerSipAct', data.siparis)
+        this.$store.dispatch('mayaGelenBedellerNumAct', data.numune)
+        this.numuneToplamaİslemi(data.numune)
+        this.sipToplamaİslemi(data.siparis)
+
+
+        this.is_maya_gelen_bedeller_form = true;
+
+      })
+      
+    },
     atlanta_depo() {
       const d = new Date();
       const year = d.getFullYear(); // 2021

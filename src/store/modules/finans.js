@@ -17,7 +17,10 @@ const state = {
   finans_ayrinti_odeme_toplam: 0,
   finans_odeme_secim_list: null,
   finans_odeme_secim_toplam: 0,
-  finans_po_list:[]
+  finans_po_list: [],
+  maya_gelen_bedeller_sip_list: [],
+  maya_gelen_bedeller_num_list:[]
+  
 };
 
 const actions = {
@@ -38,6 +41,12 @@ const actions = {
   },
   finansPoListLoadAct({ commit }, data) {
     commit("finansPoListLoadMut",data)
+  },
+  mayaGelenBedellerSipAct({ commit }, data) {
+    commit("mayaGelenBedellerSipMut",data)
+  },
+  mayaGelenBedellerNumAct({ commit }, data) {
+    commit("mayaGelenBedellerNumMut",data)
   }
 };
 
@@ -176,6 +185,12 @@ const mutations = {
   },
   finansPoListLoadMut(state, data) {
     state.finans_po_list = data
+  },
+  mayaGelenBedellerSipMut(state,data) {
+    state.maya_gelen_bedeller_sip_list = data
+  },
+  mayaGelenBedellerNumMut(state, data) {
+    state.maya_gelen_bedeller_num_list = data
   }
 };
 
@@ -237,6 +252,12 @@ const getters = {
   },
   finans_po_list(state) {
     return state.finans_po_list
+  },
+  maya_gelen_bedeller_sip_list(state) {
+    return state.maya_gelen_bedeller_sip_list
+  },
+  maya_gelen_bedeller_num_list(state) {
+    return state.maya_gelen_bedeller_num_list
   }
 };
 
