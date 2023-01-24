@@ -1,4 +1,5 @@
 <template>
+
   <div class="columns">
     <div class="column">
       <Card style="height: 250px">
@@ -1345,7 +1346,6 @@ export default {
       }
 
       this.urun = this.dtUrun;
-      console.log("dtUrun",this.dtUrun)
       this.dis_urunSil = true;
       this.resetProduct();
       //  }
@@ -1517,6 +1517,7 @@ export default {
     },
     teklifKayitIslemi() {
       this.submitted = true;
+      
       if (this.v$.$invalid) {
         this.$toast.add({
           severity: "error",
@@ -1558,6 +1559,8 @@ export default {
         };
 
         this.dis_teklifkaydet = true;
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
         teklifService.setTeklifKayit(veri).then((data) => {
           if (data.status) {
             this.$toast.add({
@@ -1578,6 +1581,10 @@ export default {
             this.dis_fotoGonder = false;
             this.dis_teklifkaydet = false;
             this.urunLoading = false;
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
+            this.emitter.emit('dialog_close', false)
+
             return;
           } else {
             this.$toast.add({
@@ -1587,6 +1594,10 @@ export default {
               life: 5000,
             });
             this.dis_teklifkaydet = false;
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
+            
+
           }
 
           this.urunLoading = false;
@@ -1614,6 +1625,8 @@ export default {
           kategoriadd: this.kategoriadd,
           hatirlatmaDurumu: false,
         };
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
 
         teklifService.setTeklifGuncelleme(veri).then((data) => {
           if (data.status) {
@@ -1629,6 +1642,9 @@ export default {
               data.anaSayfaDegisiklikList
             );
             this.dis_teklifkaydet = false;
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
+
           } else {
             this.$toast.add({
               severity: "error",
@@ -1637,16 +1653,22 @@ export default {
               life: 5000,
             });
             this.dis_teklifkaydet = false;
+
           }
 
           this.urunLoading = false;
-          this.emitter.emit('teklif_kaydet',true)
+          this.emitter.emit('teklif_kaydet', true)
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
+
         });
       }
     },
     teklifSilmeIslemi() {
       if (confirm('Gerçekten Silmek istiyor musunuz?')) {
         this.$store.dispatch("teklif_form_load_act", false);
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
 
         teklifService.teklifSilme(this.teklif.id).then((data) => {
           if (data.status) {
@@ -1659,6 +1681,11 @@ export default {
             });
             socket.siparis.emit('teklif_degisim_event');
             this.emitter.emit('teklif_yenileme', true)
+            this.emitter.emit('dialog_close',false)
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
+
+
           }
         });
       }

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="container" style="padding: 45px">
       <div class="columns">
         <div class="column">
           <b-field label="Bgp Proje Adı" label-position="on-border">
@@ -29,7 +28,6 @@
         label="Kaydet"
         :disabled="is_save_disabled"
       ></Button>
-    </div>
   </div>
 </template>
 <script>

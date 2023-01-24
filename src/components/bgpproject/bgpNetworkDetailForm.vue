@@ -241,34 +241,38 @@ export default {
         this.bgpProjectAyrintiForm.hatirlatmaTarihi = this.dateFormatChange(
           this.date_hatirlatma
         );
+        this.$store.dispatch("fullscreenLoadingAct", true);
         bgpService
           .setBgpProjectDetailChange(this.bgpProjectAyrintiForm)
           .then((data) => {
             if (data.status) {
-              this.$toast.add({
-                severity: "success",
-                summary: "Detay Güncelleme Bilgi",
-                detail: "Güncelleme Başarılı",
-                life: 3500,
-              });
+              
               this.$store.dispatch(
                 "bgp_projects_list_ayrinti_load",
                 data.result
               );
               this.emitter.emit("ayrinti_form_closed", false);
               socket.siparis.emit('bildirimler_update_event')
+              this.$store.dispatch("fullscreenLoadingAct", false);
+              this.$toast.add({
+                severity: "success",
+                summary: "Detay Güncelleme Bilgi",
+                detail: "Güncelleme Başarılı",
+                life: 3500,
+              });
 
             } else {
+              this.$store.dispatch("fullscreenLoadingAct", false);
+              this.$store.dispatch(
+                "bgp_projects_list_ayrinti_load",
+                data.result
+              );
               this.$toast.add({
                 severity: "error",
                 summary: "Detay Güncelleme Bilgi",
                 detail: "Güncelleme Hatayla Sonuçlandı",
                 life: 3500,
               });
-              this.$store.dispatch(
-                "bgp_projects_list_ayrinti_load",
-                data.result
-              );
             }
           });
       }
@@ -276,6 +280,8 @@ export default {
 
 
     sil_click() {
+      this.$store.dispatch("fullscreenLoadingAct", true);
+
       bgpService
         .setBgpProjectDetailDelete(
           this.bgpProjectAyrintiForm.id,
@@ -283,24 +289,30 @@ export default {
         )
         .then((data) => {
           if (data.status) {
+            
+            this.$store.dispatch("bgp_projects_list_ayrinti_load", data.result);
+            this.emitter.emit("ayrinti_form_closed", false);
+            socket.siparis.emit('bildirimler_update_event')
+            this.$store.dispatch("fullscreenLoadingAct", false);
             this.$toast.add({
               severity: "success",
               summary: "Detay Silme Bilgi",
               detail: "Silme Başarılı",
               life: 3500,
             });
-            this.$store.dispatch("bgp_projects_list_ayrinti_load", data.result);
-            this.emitter.emit("ayrinti_form_closed", false);
-            socket.siparis.emit('bildirimler_update_event')
+
 
           } else {
+            
+            this.$store.dispatch("fullscreenLoadingAct", false);
+
+            this.$store.dispatch("bgp_projects_list_ayrinti_load", data.result);
             this.$toast.add({
               severity: "error",
               summary: "Detay Silme Bilgi",
               detail: "Silme Hatayla Sonuçlandı",
               life: 3500,
             });
-            this.$store.dispatch("bgp_projects_list_ayrinti_load", data.result);
           }
         });
     },

@@ -284,6 +284,8 @@ export default {
     },
 
     numuneSec(event) {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       this.select_numune = event.data.numuneNo;
       this.siparisFormBaslik =
         event.data.musteriadi + " - " + this.select_numune;

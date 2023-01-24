@@ -228,6 +228,7 @@ export default {
   methods: {
     urunKartSecim() {},
     urunKartDetayAc(event) {
+      this.$store.dispatch('fullscreenLoadingAct', true)
 
       const user = this.$store.getters.__getUsername;
       if (user == "Semih" || user == "Gizem") {
@@ -241,6 +242,7 @@ export default {
 
       urunKartService.getSeleksiyonKasaKontrol(this.urunKartId).then((data) => {
         this.emitter.emit("seleksiyonKasaKontrol", data);
+
       });
 
     },

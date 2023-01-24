@@ -298,6 +298,11 @@ export default {
     this.tumTeklifList2 = this.tumtekliflist;
     this.isMobile = window.innerWidth;
   },
+  mounted() {
+    this.emitter.on('dialog_close', (data) => {
+      this.is_teklif_form = data
+    })
+  }
 };
 </script>
 <style scoped>

@@ -600,7 +600,6 @@ export default {
       this.dis_urunlistesi = true;
 
       service.getNumune(this.select_numune).then((data) => {
-        console.log("getNumune", data);
         this.numune = data.numune;
 
         this.banka = this.numune.bankaAdi;
@@ -650,7 +649,9 @@ export default {
               }
             });
 
+
         this.teklifListeleriYukle();
+
       });
     }
   },
@@ -978,9 +979,12 @@ export default {
 
         kullaniciAdi: this.$store.getters.__getUsername,
       };
+      this.$store.dispatch('fullscreenLoadingAct', true)
 
       service.setNumuneKayit(veri).then((data) => {
         if (data.status) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "success",
             summary: "Bilgi Ekranı",
@@ -998,6 +1002,8 @@ export default {
           this.urunLoading = false;
           return;
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "error",
             summary: "Uyarı Ekranı",
@@ -1023,9 +1029,12 @@ export default {
         guncellenenMusteri: this.guncellenenMusteri,
         kategoriadd: this.kategoriadd,
       };
+      this.$store.dispatch('fullscreenLoadingAct', true)
 
       service.setNumuneGuncelleme(veri).then((data) => {
         if (data.status) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "success",
             summary: "Bilgi Ekranı",
@@ -1040,6 +1049,8 @@ export default {
             data.anaSayfaDegisiklikList
           );
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "error",
             summary: "Uyarı Ekranı",
@@ -1264,6 +1275,8 @@ export default {
 
         this.urunLoading = false;
         this.dis_urunlistesi = false;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
   },

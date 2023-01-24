@@ -493,8 +493,11 @@ export default {
       }
 
       this.is_kaydet = true;
+      this.$store.dispatch('fullscreenLoadingAct', true)
       service.musteriGuncelle(this.musteri_model).then((response) => {
         if (response.status) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "success",
             summary: "Müşteri Güncelleme",
@@ -504,8 +507,11 @@ export default {
 
           socket.siparis.emit("musteri_kayitdegisim_event");
           this.emitter.emit('customer_form_close')
+          
 
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "error",
             summary: "Müşteri Güncelleme",
@@ -520,27 +526,40 @@ export default {
     musteri_kayit_islemi() {
       const data = { ...this.musteri_model };
       this.is_kaydet = true;
+      this.$store.dispatch('fullscreenLoadingAct',true)
       service.musteriKaydet(data).then((response) => {
         if (response.status) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           alert("Musteri kaydı yapıldı.");
           socket.siparis.emit("musteri_kayitdegisim_event");
           this.emitter.emit('customer_form_close')
+
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
           alert("Müşteri kaydı yapılamadı kontrol ediniz.");
           this.is_kaydet = false;
+
         }
       });
     },
     musteri_sil_click() {
       this.is_sil = true;
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       service.musteriSilme(this.musteri_model.id).then((response) => {
         if (response.status) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
           alert("Müşteri Kaydı Silindi.");
           socket.siparis.emit("musteri_kayitdegisim_event");
           this.emitter.emit('customer_form_close')
+
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           alert("Müşteri kaydı silinemedi kontrol ediniz.");
           this.is_sil = false;
+
         }
       });
     },

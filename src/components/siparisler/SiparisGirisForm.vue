@@ -691,8 +691,12 @@ export default {
         siparisUrunler: this.siparisUrunler,
       };
       this.kayitDurum = true;
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       siparisService.setSiparisKaydet(siparisVeri).then((data) => {
         if (data.status == true) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "success",
             summary: "Bilgi Ekranı",
@@ -706,8 +710,11 @@ export default {
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklikList
           );
+
           return;
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "error",
             summary: "Bilgi Ekranı",
@@ -715,6 +722,7 @@ export default {
             life: 5000,
           });
           this.kayitDurum = false;
+
         }
       });
     },
@@ -730,9 +738,12 @@ export default {
         urunlerDegisenler: this.urunler_degisenler,
         urunlerSilinenler: this.urunler_silinenler,
       };
+      this.$store.dispatch('fullscreenLoadingAct', true)
 
       siparisService.setSiparisGuncelle(siparisVeri).then((data) => {
         if (data.status == true) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "success",
             summary: "Bilgi Ekranı",
@@ -750,7 +761,10 @@ export default {
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklikList
           );
+
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "error",
             summary: "Bilgi Ekranı",
@@ -961,6 +975,8 @@ export default {
             });
 
           this.siparisUrunLoading = false;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
       } else {
         siparisService.getSiparisModel().then((data) => {

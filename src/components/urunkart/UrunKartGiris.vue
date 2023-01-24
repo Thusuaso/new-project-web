@@ -244,11 +244,16 @@ export default {
   methods: {
     urunKartSil() {
       if (confirm('Gerçekten Silmek İstediğinize Emin misiniz?')) {
-        this.$store.dispatch('datatableLoadingBeginAct')
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
         urunKartService.getSeleksiyonKasaKontrol(this.urunKartId).then((data) => {
           if (data) {
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
             alert("Bu ürün kartına ait kasa mevcut..");
           } else {
+            this.$store.dispatch('fullscreenLoadingAct', true)
+
             urunKartService
               .setUrunKartSil(this.urunKartId, this.username)
               .then((data) => {
@@ -259,16 +264,15 @@ export default {
                     "anaSayfaDegisiklikEvent",
                     data.anaSayfaDegisiklik
                   );
+                  this.$store.dispatch('fullscreenLoadingAct', false)
+
                   this.$toast.add({
                     severity: "error",
                     summary: "Uyarı Ekranı",
                     detail: "Urun Kartı Silindi",
                     life: 5000,
                   });
-                  setTimeout(() => {
-                    this.$store.dispatch('datatableLoadingEndAct')
 
-                  }, 1000);
                 }
                   this.emitter.emit('silme_dialog_disabled',false)
               });
@@ -415,9 +419,12 @@ export default {
     },
     yeniKayitIslem() {
       this.urunKart.username = this.username;
-      this.$store.dispatch('datatableLoadingBeginAct')
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       urunKartService.setUrunKaydet(this.urunKart).then((data) => {
         if (data.kayitDurum) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "success",
             summary: "Bilgi Ekranı",
@@ -435,23 +442,28 @@ export default {
           let mesaj =
             "Sunucu Kayıt İşlemini Yapamadı . Sunucudan dönen hata : " +
             data.hataMesaj;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "error",
             summary: "Uyarı Ekranı",
             detail: mesaj,
             life: 5000,
           });
-          this.$store.dispatch('datatableLoadingEndAct')
+          
 
         }
       });
     },
     guncellemeIslem() {
       this.urunKart.username = this.username;
-      this.$store.dispatch('datatableLoadingBeginAct')
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
 
       urunKartService.setUrunGuncelle(this.urunKart).then((data) => {
         if (data.kayitDurum) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "success",
             summary: "Bilgi Ekranı",
@@ -463,19 +475,20 @@ export default {
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklik
           );
-          this.$store.dispatch('datatableLoadingEndAct')
+          
 
         } else {
           let mesaj =
             "Sunucu Güncelleme İşlemini Yapamadı . Sunucudan dönen hata : " +
             data.hataMesaj;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "error",
             summary: "Uyarı Ekranı",
             detail: mesaj,
             life: 5000,
           });
-          this.$store.dispatch('datatableLoadingEndAct')
 
         }
       });
@@ -525,6 +538,8 @@ export default {
         );
         this.disSil = false
         this.disKaydet = false
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
 
       });
     } else {

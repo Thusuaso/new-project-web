@@ -1,6 +1,7 @@
 const state = {
   loading: false,
   datatableLoading: false,
+  fullscreenLoading:null,
 };
 
 const actions = {
@@ -16,6 +17,9 @@ const actions = {
   datatableLoadingEndAct({ commit }) {
     commit("datatableLoadingEndMut");
   },
+  fullscreenLoadingAct({ commit }, data) {
+    commit("fullscreenLoadingMut",data)
+  }
 };
 
 const mutations = {
@@ -31,7 +35,9 @@ const mutations = {
   datatableLoadingEndMut(state) {
     state.datatableLoading = false;
   },
-
+  fullscreenLoadingMut(state,data) {
+    state.fullscreenLoading = data
+  }
 };
 
 const getters = {
@@ -40,6 +46,9 @@ const getters = {
   },
   datatableLoading(state) {
     return state.datatableLoading
+  },
+  fullscreenLoading(state) {
+    return state.fullscreenLoading
   }
 };
 

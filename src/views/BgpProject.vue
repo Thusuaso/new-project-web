@@ -177,7 +177,7 @@ export default {
     if (this.username == 19 || this.username == 44 || this.username == 47) {
       this.$store.dispatch("bgp_projects_username_kontrol_load", false);
     }
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct", true);
 
     bgpService.getBgpProjectList(this.username).then((data) => {
       this.$store.dispatch("bgp_projects_list_load", data.result);
@@ -189,7 +189,7 @@ export default {
         "bgp_projects_statistics_chart_load",
         data.chartData
       );
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct", false);
     });
 
     bgpService.getBgpProjectCountryList().then((data) => {
@@ -361,9 +361,11 @@ export default {
 
 
       this.$store.dispatch('bgp_project_ulke_load', ulkeAdi)
+      this.$store.dispatch("fullscreenLoadingAct", true);
       bgpService.getBgpProjectDetail(projectName).then(data => {
         this.$store.dispatch('bgp_projects_list_ayrinti_load', data)
         this.bgp_project_ayrinti_form = true
+        this.$store.dispatch("fullscreenLoadingAct", false);
       })
 
     },

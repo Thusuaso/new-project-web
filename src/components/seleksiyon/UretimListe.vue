@@ -1635,6 +1635,8 @@ export default {
       });
     },
     uretimSec(event) {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       this.select_uretim = event.data;
 
       this.$store.dispatch("seleksiyonSelectItemActions");

@@ -190,7 +190,7 @@
     <kullanici-teklif-liste :kullaniciAdi="selectKullaniciAdi" />
   </Dialog>
   <Dialog
-    v-model:visible.sync="teklifFormvisible"
+    v-model:visible="teklifFormvisible"
     v-model:header="teklifFormBaslik"
     :modal="true"
     maximizable
@@ -370,6 +370,9 @@ export default {
     },
   },
   mounted() {
+    this.emitter.on('dialog_close', (data) => {
+      this.teklifFormvisible = data
+    })
     socket.siparis.on('teklif_degisim_emit', () => {
       this.$store.dispatch('datatableLoadingBeginAct');
       teklifService.getTakvimList().then((data) => {

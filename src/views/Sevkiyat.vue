@@ -273,6 +273,7 @@ import LocalService from "../service/LocalService";
 import store from "@/store";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import { ref } from 'vue'
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -518,6 +519,7 @@ export default {
               kasalistesi: this.sevk_kasa_listesi,
               sevkEden: this.user,
             };
+            this.$store.dispatch('fullscreenLoadingAct', true)
 
             service.siparisKayitIslem(sevk_data).then((data) => {
               if (data.status) {
@@ -543,6 +545,10 @@ export default {
                 this.giden = 0;
                 this.siparis_miktar = 0;
                 this.kalan = 0;
+                this.$store.dispatch('fullscreenLoadingAct', true)
+
+
+
               }
             });
           }
@@ -559,6 +565,7 @@ export default {
             kasalistesi: this.sevk_kasa_listesi,
             sevkEden: this.user,
           };
+          this.$store.dispatch('fullscreenLoadingAct', true)
 
           service.siparisKayitIslem(sevk_data).then((data) => {
             if (data.status) {
@@ -584,6 +591,9 @@ export default {
               this.giden = 0;
               this.siparis_miktar = 0;
               this.kalan = 0;
+              this.$store.dispatch('fullscreenLoadingAct', false)
+
+
             }
           });
         }

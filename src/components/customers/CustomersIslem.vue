@@ -241,23 +241,26 @@ export default {
 
       const users = this.$store.getters.__getUserId;
       data.temsilci = users;
+      this.$store.dispatch('fullscreenLoadingAct', true)
 
       service.satisciIcerikKaydetme(data).then((res) => {
         if (res.status) {
           this.is_kaydet = false;
           this.is_degistir = true;
           this.is_sil = true;
+
+          
+          this.$store.dispatch("customers_yukle_all_act", res.result);
+          this.emitter.emit("isSearch", true);
+          socket.siparis.emit('bildirimler_update_event')
+          this.$store.dispatch('fullscreenLoadingAct', false)
           this.$toast.add({
             severity: "success",
             summary: "Kayıt Bildirimi",
             detail: "Başarıyla Kaydedildi",
             life: 3000,
           });
-          this.$store.dispatch("customers_yukle_act", res.result);
-          this.$store.dispatch("customers_yukle_all_act", res.result);
-          this.$store.dispatch("musteri_ayrinti_yukle_act", res.result2);
-          this.emitter.emit("isSearch", true);
-          socket.siparis.emit('bildirimler_update_event')
+
           
         }
       });
@@ -276,6 +279,8 @@ export default {
       );
       const users = this.$store.getters.__getUsername;
       data.temsilci = users;
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       service.satisciIcerikGuncelleme(data).then((res) => {
         if (res) {
           socket.siparis.emit("numunetahsilat_kayitdegisim_event", data.id);
@@ -283,17 +288,18 @@ export default {
           this.is_kaydet = false;
           this.is_degistir = true;
           this.is_sil = true;
+          
+          this.$store.dispatch("musteri_ayrinti_yukle_act", res.result2);
+          this.emitter.emit("isSearch", true);
+          socket.siparis.emit('bildirimler_update_event')
+          this.$store.dispatch('fullscreenLoadingAct', false)
           this.$toast.add({
             severity: "success",
             summary: "Kayıt Bildirimi",
             detail: "Başarıyla Değiştirildi",
             life: 3000,
           });
-          this.$store.dispatch("customers_yukle_act", res.result);
-          this.$store.dispatch("musteri_ayrinti_yukle_act", res.result2);
-          this.$store.dispatch("customers_yukle_all_act", res.result);
-          this.emitter.emit("isSearch", true);
-          socket.siparis.emit('bildirimler_update_event')
+
 
         }
       });
@@ -306,6 +312,8 @@ export default {
       this.is_sil = true;
       this.emitter.emit("hatirlatmaKaydet", false);
       const id = this.musteri.id;
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       service.satisciIcerikSilme(id).then((res) => {
         if (res) {
           socket.siparis.emit(
@@ -316,17 +324,18 @@ export default {
           this.is_kaydet = false;
           this.is_degistir = true;
           this.is_sil = true;
+          
+          this.$store.dispatch("musteri_ayrinti_yukle_act", res.result2);
+          this.emitter.emit("isSearch", true);
+          socket.siparis.emit('bildirimler_update_event')
+          this.$store.dispatch('fullscreenLoadingAct', false)
           this.$toast.add({
             severity: "success",
             summary: "Kayıt Bildirimi",
             detail: "Başarıyla Silindi",
             life: 3000,
           });
-          this.$store.dispatch("customers_yukle_act", res.result);
-          this.$store.dispatch("musteri_ayrinti_yukle_act", res.result2);
-          this.$store.dispatch("customers_yukle_all_act", res.result);
-          this.emitter.emit("isSearch", true);
-          socket.siparis.emit('bildirimler_update_event')
+
 
         }
       });

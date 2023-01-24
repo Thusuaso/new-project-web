@@ -1,5 +1,7 @@
 <template>
   <div>
+    <div v-loading.fullscreen.lock="fullscreenLoading">
+    </div>
     <div class="columns is-centered" v-if="loading" style="margin-top: 280px">
 
       <div class="container">
@@ -30,6 +32,7 @@
 import appNavbar from "@/components/shared/appNavbar.vue";
 import { mapGetters } from "vuex";
 import { LoopingRhombusesSpinner } from "epic-spinners";
+import { ref } from "vue";
 export default {
   data() {
     return {
@@ -37,13 +40,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["__isAuthentication", "loading"]),
+    ...mapGetters(["__isAuthentication", "loading","fullscreenLoading"]),
   },
   components: {
     appNavbar,
     loopingRhombusesSpinner: LoopingRhombusesSpinner,
   },
-  created() { },
+  created() { 
+    const data = ref(false)
+    this.$store.dispatch('fullscreenLoadingAct', data)
+
+  },
   methods: {},
 };
 </script>

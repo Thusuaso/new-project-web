@@ -1,5 +1,5 @@
 <template>
-
+  
   <UrunKartMenu
     :is_seleksiyon="true"
     @urunKartSelect="urunkart_change_event($event)"
@@ -719,8 +719,7 @@ export default {
     },
     btn_sil_click() {
       this.$store.dispatch("seleksiyonSilClickActions");
-      this.$store.dispatch("loadingBeginAct");
-      this.$store.dispatch("datatableLoadingBeginAct");
+      this.$store.dispatch('fullscreenLoadingAct', true)
 
       service.uretimSil(this.detail.kasano).then((status) => {
         this.$store.dispatch('loadUretimList', status.data2)
@@ -734,6 +733,8 @@ export default {
                 console.log(siparis_data)
                 this.dataSifirla();
                 this.$emit("seleksiyon_form_kapat");
+                this.$store.dispatch('fullscreenLoadingAct', false)
+
                 this.$toast.add({
                   severity: "error",
                   summary: "Üretim Kasa Silme",
@@ -742,7 +743,7 @@ export default {
                 });
                 this.emitter.emit('kaydet_emit')
 
-                this.$store.dispatch("datatableLoadingEndAct");
+
 
               });
           } else {
@@ -750,10 +751,10 @@ export default {
             this.$emit("seleksiyon_form_kapat");
             this.emitter.emit('kaydet_emit')
 
-            this.$store.dispatch("datatableLoadingEndAct");
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
           }
         }
-        this.$store.dispatch("loadingEndAct");
       });
     },
     btn_guncelle_click() {
@@ -770,6 +771,8 @@ export default {
 
         this.isGuncelle = true;
         if (this.kayit_kontrol()) {
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
           service.uretimGuncelle(this.detail).then((status) => {
             this.$store.dispatch('loadUretimList', status.data2)
 
@@ -794,6 +797,8 @@ export default {
                       this.$store.dispatch("seleksiyonGuncelleClickActions");
                       this.emitter.emit('kaydet_emit')
                       this.$emit("seleksiyon_form_kapat");
+                      this.$store.dispatch('fullscreenLoadingAct', false)
+
 
                     });
                 } else {
@@ -801,6 +806,8 @@ export default {
                   this.$store.dispatch("seleksiyonGuncelleClickActions");
                   this.emitter.emit('kaydet_emit')
                   this.$emit("seleksiyon_form_kapat");
+                  this.$store.dispatch('fullscreenLoadingAct', false)
+
 
                 }
 
@@ -812,6 +819,8 @@ export default {
                 life: 3000,
               });
             } else {
+              this.$store.dispatch('fullscreenLoadingAct', false)
+
               this.$toast.add({
                 severity: "error",
                 summary: "Kayıt Güncelleme",
@@ -819,6 +828,7 @@ export default {
                 life: 3000,
               });
               this.emitter.emit('kaydet_emit')
+
 
             }
           });
@@ -939,6 +949,7 @@ export default {
           this.$store.dispatch("seleksiyonKaydetClickActions");
           socket.siparis.emit("seleksiyon_coklukayit_event", data.kasa_list);
           this.$store.dispatch('loadUretimList', data.data2)
+
           if (this.kayit_tur.name == "Sipariş") {
             siparisService
               .getSiparisUrun(this.siparis)
@@ -956,6 +967,8 @@ export default {
                   life: 3000,
                 });
                 this.emitter.emit('kaydet_emit')
+                this.$store.dispatch('fullscreenLoadingAct', false)
+
               });
           } else {
             this.dataSifirla();
@@ -966,6 +979,8 @@ export default {
               life: 3000,
             });
             this.emitter.emit('kaydet_emit')
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
 
           }
         }
@@ -988,6 +1003,8 @@ export default {
           'kasaadet': this.kasaadet,
           'miktar': this.detail.miktar
         }
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
         service.getProductCrateControl(data).then(data => {
           if (data.status) {
             if (confirm('Üretim fazlası mevcut. Yine de kaydetmek istermisiniz?')) {
@@ -1280,6 +1297,8 @@ export default {
         ).name;
         this.kasaadet = 1;
         this.notlar = this.detail.aciklama;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         
       });
     } else {

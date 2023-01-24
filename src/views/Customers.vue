@@ -158,23 +158,25 @@ export default {
 
   methods: {
     allDataLoad(users, usersId) {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       if (users == "Semih") {
         service.getCustomersListAll().then((data) => {
           this.$store.dispatch("customers_yukle_all_act", data);
           this.$store.dispatch("customers_yukle_act", data);
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct", false);
 
         });
       } else {
         service.getCustomersListe(usersId).then((data) => {
           this.$store.dispatch("customers_yukle_all_act", data);
           this.$store.dispatch("customers_yukle_act", data);
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct", false);
         });
       }
     },
     musteri_sec(event, oncelik) {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       this.oncelik = oncelik;
       this.select_musteri = event.musteriadi;
       this.select_musteri_id = event.id;
@@ -188,7 +190,8 @@ export default {
           "musteri_teklifler_ayrinti_yukle_act",
           data.tekliflermusteriDetay
         );
-        console.log("tekliflermusteriDetay", data.tekliflermusteriDetay)
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
 
         this.is_satisform = true;
 

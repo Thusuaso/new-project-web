@@ -185,6 +185,8 @@ export default {
       link.click();
     },
     bgpProjectDosyaGonder(event) {
+      this.$store.dispatch("fullscreenLoadingAct", true);
+
       fileService.bgpProjectGonder(event, this.projectId).then((data) => {
         if (data.Status) {
           const bgpProject = {
@@ -194,6 +196,8 @@ export default {
 
           bgpService.setBgpProjectFileData(bgpProject).then((veri) => {
             if (veri) {
+              this.$store.dispatch("fullscreenLoadingAct", false);
+
               this.$toast.add({
                 severity: "success",
                 summary: "Dosya Yükleme",
@@ -201,6 +205,8 @@ export default {
                 life: 3500,
               });
             } else {
+              this.$store.dispatch("fullscreenLoadingAct", false);
+
               this.$toast.add({
                 severity: "error",
                 summary: "Dosya Yükleme",
@@ -210,6 +216,8 @@ export default {
             }
           });
         } else {
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
           this.$toast.add({
             severity: "error",
             summary: "Dosya Yükleme",
@@ -229,35 +237,47 @@ export default {
         this.bgpProjectAyrinti.hatirlatmaAciklama = "";
         this.bgpProjectAyrinti.hatirlatmaTarihi = "";
       } else {
+        this.$store.dispatch("fullscreenLoadingAct", true);
+
         bgpService.getBgpProjectDetailForm(event.data.id).then((data) => {
           this.$store.dispatch("bgp_project_ayrinti_form_load", data[0]);
           this.is_form_datas = true;
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
         });
       }
     },
     deleteProject() {
       if (confirm("Silmek istiyor musunuz?")) {
+        this.$store.dispatch("fullscreenLoadingAct", true);
+
         bgpService
           .setBgpProjecDelete(this.username, this.projectName)
           .then((data) => {
             if (data.status) {
+              
+              this.$store.dispatch("bgp_projects_list_load", data.result);
+              this.emitter.emit("project_delete_form", false);
+              this.emitter.emit("notificationUpdate", true);
+              this.$store.dispatch("fullscreenLoadingAct", false);
               this.$toast.add({
                 severity: "success",
                 summary: "Project Delete",
                 detail: "Proje Başarıyla Silindi",
                 life: 3500,
               });
-              this.$store.dispatch("bgp_projects_list_load", data.result);
-              this.emitter.emit("project_delete_form", false);
-              this.emitter.emit("notificationUpdate", true);
+
             } else {
+              
+              this.$store.dispatch("fullscreenLoadingAct", false);
+
+              this.$store.dispatch("bgp_projects_list_load", data.result);
               this.$toast.add({
                 severity: "error",
                 summary: "Project Delete",
                 detail: "Proje Silme Başarısız",
                 life: 3500,
               });
-              this.$store.dispatch("bgp_projects_list_load", data.result);
             }
           });
       }
