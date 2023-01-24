@@ -285,6 +285,8 @@ export default {
   },
   methods: {
     teklifSec() {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       const teklif = this.selectTeklif;
       for (let key in this.teklifListesi) {
         if (this.teklifListesi[key].id == teklif.id) {
@@ -297,6 +299,8 @@ export default {
       this.teklifFormvisible = true;
     },
     teklifSecBlist() {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       const teklif = this.selectTeklifBlist;
       for (let key in this.teklifListesiBlist) {
         if (this.teklifListesiBlist[key].id == teklif.id) {
@@ -347,7 +351,6 @@ export default {
       }
     },
     teklifFilterEvent(event) {
-      console.log("teklifFilterEvent",event)
       this.toplam_teklif_sayisi = event.filteredValue.length;
     },
     teklifBlistFilterEvent(event) {

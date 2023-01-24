@@ -812,6 +812,8 @@ export default {
                 }
 
               });
+              this.$store.dispatch('fullscreenLoadingAct', false)
+
               this.$toast.add({
                 severity: "success",
                 summary: "Kayıt Güncelleme",

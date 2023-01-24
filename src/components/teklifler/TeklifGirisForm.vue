@@ -1454,7 +1454,10 @@ export default {
         }
 
         this.urunLoading = false;
-        this.dis_urunlistesi = false;
+        this.dis_urunlistesi = false; 
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
+
       });
     },
     yuklemeTipKontrol() {
