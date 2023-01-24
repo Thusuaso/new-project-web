@@ -113,7 +113,7 @@
             </span>
           </div>
           <div class="column is-2">
-            <Button type="is-success" @click="sevkiyatIslemi" label="Sevk Et" />
+            <Button type="is-success" @click="sevkiyatIslemi" label="Sevk Et" :disabled="is_sevk_disabled"/>
           </div>
         </div>
       </div>
@@ -286,6 +286,7 @@ export default {
   },
   data() {
     return {
+      is_sevk_disabled:false,
       submitted: false,
       filterSiparisListe: null,
       selectedSipKalem: null,
@@ -475,6 +476,7 @@ export default {
       }
     },
     sevkiyatIslemi() {
+      this.is_sevk_disabled = true;
       this.submitted = true;
       if (this.v$.$invalid) {
         this.$toast.add({
