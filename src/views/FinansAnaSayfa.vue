@@ -280,6 +280,9 @@
             <Dropdown v-model="selected_month_maya" :options="months" optionLabel="month_name" placeholder="Select a Month" @change="selectedMonthMaya"/>
 
       </div>
+      <div class="column is-4">
+          <Button class="p-button-primary" @click="cikti_al2" label="EXCELL" />
+      </div>
     </div>
 
 
@@ -420,6 +423,7 @@ export default {
   },
   data() {
     return {
+      excell_list:[],
       sipTopBedel: 0,
       sipTopMasraf:0,
       numuneTopMasraf:0,
@@ -494,6 +498,21 @@ export default {
     ]),
   },
   methods: {
+    cikti_al2() {
+      service
+        .getMayaListExcellCikti(this.excell_list)
+        .then((res) => {
+          if (res.status) {
+            const link = document.createElement("a");
+            link.href =
+              this.servis_adres + "finans/listeler/mayaNumuneSiparisOdemeleriCikti";
+            //link.href = 'localhost:5000/finans/listeler/depoAyrintiExcellListe'
+            link.setAttribute("download", "maya_numune_sip_odemeler.xlsx");
+            document.body.appendChild(link);
+            link.click();
+          }
+        });
+    },
     sipToplamaİslemi(data) {
       this.sipTopBedel= 0
       this.sipTopMasraf = 0
@@ -518,6 +537,7 @@ export default {
         this.$store.dispatch('mayaGelenBedellerNumAct', data.numune)
         this.numuneToplamaİslemi(data.numune)
         this.sipToplamaİslemi(data.siparis)
+        this.excell_list = data
 
       })
     },
@@ -530,6 +550,8 @@ export default {
           this.$store.dispatch('mayaGelenBedellerNumAct', data.numune)
           this.numuneToplamaİslemi(data.numune)
           this.sipToplamaİslemi(data.siparis)
+          this.excell_list = data
+
 
 
 
@@ -547,6 +569,8 @@ export default {
 
 
         this.is_maya_gelen_bedeller_form = true;
+        this.excell_list = data
+
 
       })
       

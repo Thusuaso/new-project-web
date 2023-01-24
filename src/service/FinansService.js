@@ -128,6 +128,9 @@ const FinansService = {
   },
   getMayaNumunevSiparisOdemeleriYear(year) {
     return axios.get(`finans/listeler/mayaNumuneSiparisOdemeleri/${year}`).then(res=>res.data)
+  },
+  getMayaListExcellCikti(data) {
+    return axios.post('finans/listeler/mayaNumuneSiparisOdemeleriCikti',data).then(res=>res.data)
   }
 };
 
