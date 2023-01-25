@@ -256,11 +256,13 @@
 
         >
         <Column
-          field="numune_tarihi"
-          header="Numune Tarihi"
+          field="bankaya_gelen_tarih"
+          header="Bankaya Geldiği Tarih"
           bodyStyle="text-align:center;"
         
         >
+        </Column>
+        <Column field="numune_tarihi" header="Numune Tarihi" bodyStyle="text-align:center;">
         </Column>
         <Column field="banka_adi" header="Banka" bodyStyle="text-align:center;"></Column>
         <Column field="musteri_adi" header="Müşteri" bodyStyle="text-align:center;"></Column>

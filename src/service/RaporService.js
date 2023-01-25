@@ -691,8 +691,32 @@ const raporService = {
   },
   setAddPrice(addPrice) {
     return axios.post("raporlar/listeler/setAddPrice",addPrice).then(res=>res.data)
+  },
+  /**************************Stok Listesi Fiyatlı*****************************/
+  stokRaporAnaListMekmerMekmoz() {
+    return axios
+      .get("/raporlar/listeler/stokRaporuMekmerMekmoz")
+      .then((res) => res.data);
+  },
+  stokRaporAnaListDis() {
+    return axios
+      .get("/raporlar/listeler/stokRaporuDis")
+      .then((res) => res.data);
+  },
+  stokRaporAnaListDisMekmardaOlanlar() {
+    return axios.get("/raporlar/listeler/stokRaporuDisMekmardaOlanlar").then(res =>res.data)
+  },
+
+
+  stokRaporAnaListMekmerMekmozAyrinti(urunId) {
+    return axios.get(`raporlar/listeler/stokRaporuMekmerMekmozAyrinti/${urunId}`).then(res=>res.data)
+  },
+  stokRaporAnaListDisAyrinti(urunId) {
+    return axios.get(`raporlar/listeler/stokRaporuDisAyrinti/${urunId}`).then(res=>res.data)
+  },
+  stokRaporAnaListDisMekmardaOlanAyrinti(urunId) {
+    return axios.get(`/raporlar/listeler/stokRaporuDisMekmardaOlanAyrinti/${urunId}`).then(res=>res.data)
   }
-  
 };
 
 export default raporService;

@@ -374,6 +374,17 @@ const routes = [
     },
   },
   {
+    path: "/raporlar/stokRaporuFiyatli",
+    component: () => import("@/views/StokRaporuFiyatli"),
+    beforeEnter(to, from, next) {
+      if (store.getters.__isAuthentication) {
+        next();
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
     path: "/raporlar/ocakListesi",
     component: () => import("@/views/SeleksiyonOcakListesi"),
     beforeEnter(to, from, next) {

@@ -137,13 +137,16 @@
                         </router-link> -->
                         
                         <router-link to="/raporlar/stokRaporu">
-                            <el-menu-item index="10-10-4"> Stok Raporu </el-menu-item>
+                            <el-menu-item index="10-10-2"> Stok Raporu </el-menu-item>
+                        </router-link>
+                        <router-link to="/raporlar/stokRaporuFiyatli">
+                            <el-menu-item index="10-10-3"> Stok Raporu Fiyatlı</el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/ocakListesi">
-                            <el-menu-item index="10-10-5"> Ocak Listesi Raporu </el-menu-item>
+                            <el-menu-item index="10-10-4"> Ocak Listesi Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/uretilecekUrunler">
-                            <el-menu-item index="10-10-6"> Üretilecek Ürünler </el-menu-item>
+                            <el-menu-item index="10-10-5"> Üretilecek Ürünler </el-menu-item>
                         </router-link>
                     </el-sub-menu>
                     <el-sub-menu index="10-11">
