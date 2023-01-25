@@ -716,6 +716,9 @@ const raporService = {
   },
   stokRaporAnaListDisMekmardaOlanAyrinti(urunId) {
     return axios.get(`/raporlar/listeler/stokRaporuDisMekmardaOlanAyrinti/${urunId}`).then(res=>res.data)
+  },
+  stockFiyatliExcellCikti(data) {
+    return axios.post('/raporlar/listeler/stokRaporuFiyatli',data).then(res=>res.data)
   }
 };
 
