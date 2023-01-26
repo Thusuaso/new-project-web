@@ -9,13 +9,10 @@
       selectionMode="single"
       v-model:selection="select_fuar_musteri"
       @row-select="fuar_musteri_secim_event($event)"
-      :scrollable="true"
-      scrollHeight="400px"
-      :resizableColumns="true" 
-      columnResizeMode="expand" 
-      showGridlines
+
+      :resizableColumns="true" columnResizeMode="expand" showGridlines responsiveLayout="scroll"
     >
-      <Column field="customer" header="Müşteri Adı">
+      <Column field="customer" header="Müşteri Adı" :showFilterMenu="false">
         <template #filter="{ filterModel, filterCallback }">
           <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
             placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
@@ -25,9 +22,20 @@
       <Column field="email" header="Mail"></Column>
       <Column field="phone" header="Telefon"></Column>
       <Column field="adress" header="Adres"></Column>
-      <Column field="satisci" header="Satışçı">
+      <Column field="country" header="Ülke" :showFilterMenu="false">
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+            placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
+        </template>
+      </Column>
+
+      <Column field="satisci" header="Satışçı" :showFilterMenu="false">
         <template #body="slotProps">
           {{ slotProps.data.satisci.toUpperCase() }}
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+            placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
         </template>
       </Column>
     </DataTable>
@@ -267,7 +275,9 @@ export default {
   data() {
     return {
       filters: {
-        customer:{ value: null, matchMode: FilterMatchMode.STARTS_WITH}
+        customer: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        satisci: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        country: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
       },
       fuarCustForm: false,
       fuarList: [],

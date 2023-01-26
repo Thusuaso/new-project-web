@@ -10,6 +10,7 @@
       selectionMode="single"
       v-model:selection="select_teklif_musteri"
       @row-select="teklif_musteri_secim_event($event)"
+      columnResizeMode="expand" showGridlines 
 
     >
       <Column field="customer" header="Müşteri Adı" :showFilterMenu="false">
@@ -28,7 +29,12 @@
       <Column field="email" header="Mail"></Column>
       <Column field="phone" header="Telefon"></Column>
       <Column field="adress" header="Adres"></Column>
-      <Column field="countryName" header="Ülke"></Column>
+      <Column field="countryName" header="Ülke" :showFilterMenu="false">
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+            placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" style="width:50px;" />
+        </template>
+      </Column>
       <Column field="username" header="Satışçı" :showFilterMenu="false">
 
         <template #filter="{ filterModel, filterCallback }">
@@ -225,7 +231,7 @@ export default {
       filters: {
         customer: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         username: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-
+        countryName: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
       },
       select_teklif_musteri: null,
       teklifMusteriForm: false,

@@ -481,6 +481,7 @@ import { required } from "@vuelidate/validators";
 import { mapGetters } from "vuex";
 import socket from "../../../service/SocketService";
 import MoneyInput from "@/components/shared/moneyInput2"
+import tedarikciService from "../../../service/TedarikciService";
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -1173,7 +1174,7 @@ export default {
           ) {
             this.urunIslemleri();
             this.siparisUrunler.push({ ...this.siparis });
-            // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+            this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
             if (!this.yeniSiparis) this.yeni_urun_islem();
             this.dataSatirTopla(this.siparisUrunler);
             this.form_btn_reset();
@@ -1209,7 +1210,7 @@ export default {
     btn_degistir_click() {
       this.urunIslemleri();
       let index = this.indexBul(this.siparis.id, this.siparisUrunler);
-
+      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
       this.siparisUrunler[index] = this.siparis;
       if (!this.yeniSiparis) this.degisen_urun_islem();
       this.dataSatirTopla(this.siparisUrunler);
@@ -1226,7 +1227,7 @@ export default {
     },
     btn_sil_click() {
       let index = this.indexBul(this.siparis.id, this.siparisUrunler);
-      // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
       if (!this.yeniSiparis) this.silinen_urun_islem();
       this.siparisUrunler.splice(index, 1);
       this.dataSatirTopla(this.siparisUrunler);
@@ -1239,30 +1240,29 @@ export default {
       });
       this.$emit("siparisUrunDegisim");
     },
-    // isfDelete(tedarikciId, siparisNo) {
-    //   console.log(tedarikciId, siparisNo);
-    //   if (tedarikciId != "" && siparisNo != "") {
-    //     this.tedarikciService
-    //       .getDeleteFormControl(tedarikciId, siparisNo)
-    //       .then((status) => {
-    //         if (status) {
-    //           this.tedarikciService
-    //             .getDeleteForm(tedarikciId, siparisNo)
-    //             .then((data) => {
-    //               if (data.status) {
-    //                 this.$toast.add({
-    //                   severity: "error",
-    //                   summary: "Iç Sipariş Form",
-    //                   detail:
-    //                     "Iç sipariş form silindi. Lütfen tekrar yükleyiniz.",
-    //                   life: 3000,
-    //                 });
-    //               }
-    //             });
-    //         }
-    //       });
-    //   }
-    // },
+    isfDelete(tedarikciId, siparisNo) {
+      if (tedarikciId != "" && siparisNo != "") {
+        tedarikciService
+          .getDeleteFormControl(tedarikciId, siparisNo)
+          .then((status) => {
+            if (status) {
+              tedarikciService
+                .getDeleteForm(tedarikciId, siparisNo)
+                .then((data) => {
+                  if (data.status) {
+                    this.$toast.add({
+                      severity: "error",
+                      summary: "Iç Sipariş Form",
+                      detail:
+                        "Iç sipariş form silindi. Lütfen tekrar yükleyiniz.",
+                      life: 3000,
+                    });
+                  }
+                });
+            }
+          });
+      }
+    },
     siparisUrunSec(event) {
       this.dis_yeni = true;
       this.dis_degistir = false;
@@ -1535,7 +1535,6 @@ export default {
     this.dataSatirTopla(this.siparisUrunler);
 
     this.emitter.on("urunKartSecim", (data) => {
-      console.log(this.$store.getters.__getUsername)
       if (this.$store.getters.__getUsername == 'Semih') {
         this.aciklamaAdd(data);
 

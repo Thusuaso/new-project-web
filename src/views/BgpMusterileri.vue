@@ -4,16 +4,14 @@
     <DataTable
       :value="bgpMusteri"
       v-if="bgpMusteri.length > 0"
-      responsiveLayout="scroll"
       v-model:filters="filters"
       filterDisplay="row"
       selectionMode="single"
       v-model:selection="select_bgp_musteri"
       @row-select="bgp_musteri_secim_event($event)"
-      :scrollable="true" 
-      scrollHeight="400px"
+       columnResizeMode="expand" showGridlines
     >
-      <Column field="customer" header="Müşteri Adı">
+      <Column field="customer" header="Müşteri Adı" :showFilterMenu="false">
         <template #filter="{ filterModel, filterCallback }">
           <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
             placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
@@ -23,7 +21,18 @@
       <Column field="email" header="Mail"></Column>
       <Column field="phone" header="Telefon"></Column>
       <Column field="adress" header="Adres"></Column>
-      <Column field="country" header="Ülke"></Column>
+      <Column field="country" header="Ülke" :showFilterMenu="false">
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+            placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
+        </template>
+      </Column>
+      <Column field="satisci" header="Satışçı" :showFilterMenu="false">
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+            placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
+        </template>
+      </Column>
     </DataTable>
 
     <Dialog
@@ -225,7 +234,9 @@ export default {
   data() {
     return {
       filters: {
-        customer:{ value: null, matchMode: FilterMatchMode.STARTS_WITH}
+        customer: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        country: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        satisci: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
       },
       bgpCustForm: false,
       bgpList: [],
