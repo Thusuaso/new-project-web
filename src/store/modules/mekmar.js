@@ -14,6 +14,7 @@ const state = {
   pickfotolist: null,
   onerilernUrunlerList: null,
   fotolist: null,
+  galleriPhotosList:[]
 };
 
 const actions = {
@@ -23,6 +24,9 @@ const actions = {
   loadUrunList({ commit }, data) {
     commit("loadUrunListMut", data);
   },
+  load_mekmar_galleria_photos_act({ commit }, data) {
+    commit('load_mekmar_galleria_photos_mut',data)
+  }
 };
 
 const mutations = {
@@ -55,6 +59,9 @@ const mutations = {
   loadUrunListMut(state, data) {
     state.urunList = data;
   },
+  load_mekmar_galleria_photos_mut(state, data) {
+    state.galleriPhotosList = data
+  }
 };
 const getters = {
   urunDetay(state) {
@@ -101,6 +108,9 @@ const getters = {
   },
   ebatListNormal(state) {
     return state.ebatListNormal
+  },
+  galleriPhotosList(state) {
+    return state.galleriPhotosList
   }
 };
 

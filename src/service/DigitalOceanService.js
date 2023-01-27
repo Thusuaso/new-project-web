@@ -9,8 +9,23 @@ const s3 = new AWS.S3({
 });
 
 const digitalOceanService = {
+  galleriaFotoGonder(file) {
+    let filename = file.name;
+    const params = {
+      Bucket: "mekmar-image",
+      Key: "mekmar-galleria/" + filename,
+      Body: file,
+      ACL: "public-read",
+      ContentType: "image/" + filename.split(".")[1],
+      CacheControl: "public,max-age=1,s-max-age=500,must-revalidate",
+    };
+
+    s3.upload(params, (err, data) => {
+      if (err) console.log("AWS HATA : ", err);
+      else console.log("OK : ", data);
+    });
+  },
   fotoGonder(file) {
-    console.log("fotoGonder",file)
     let filename = file.name;
     const params = {
       Bucket: "mekmar-image",

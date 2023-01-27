@@ -66,36 +66,50 @@
       maximizable
       :modal="true"
       position="top"
+      
     >
-      <DataTable :value="bgpProjectStatisticsDetail" responsiveLayout="scroll">
+      <DataTable :value="bgpProjectStatisticsDetail" responsiveLayout="scroll" v-model:filters="filters" filterDisplay="row">
         <Column
           field="projectName"
           header="Proje Adı"
-          :sortable="true"
-        ></Column>
-        <Column field="firmaAdi" header="Firma Adı" :sortable="true"></Column>
-        <Column field="baslik" header="Başlık" :sortable="true"></Column>
-        <Column field="aciklama" header="Açıklama" :sortable="true"></Column>
-        <Column field="temsilci" header="Temsilci" :sortable="true"></Column>
-        <Column field="wrongNumber" header="W.N" :sortable="true">
+          :showFilterMenu="false"
+        > <template #filter="{filterModel,filterCallback}">
+          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+            :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+        </template></Column>
+        <Column field="firmaAdi" header="Firma Adı" :showFilterMenu="false">
+          <template #filter="{filterModel,filterCallback}">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+          </template>
+        </Column>
+        <Column field="baslik" header="Başlık" ></Column>
+        <Column field="aciklama" header="Açıklama" ></Column>
+        <Column field="temsilciAdi" header="Temsilci" :showFilterMenu="false">
+          <template #filter="{filterModel,filterCallback}">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+          </template>
+        </Column>
+        <Column field="wrongNumber" header="Yanlış Numara" :sortable="true">
           <template #body="slotProps">
             <div v-if="slotProps.data.wrongNumber">✓</div>
             <div v-else>X</div>
           </template>
         </Column>
-        <Column field="notResponse" header="N.R" :sortable="true">
+        <Column field="notResponse" header="Cevap Yok" :sortable="true">
           <template #body="slotProps">
             <div v-if="slotProps.data.notResponse">✓</div>
             <div v-else>X</div>
           </template>
         </Column>
-        <Column field="notInterested" header="N.I" :sortable="true">
+        <Column field="notInterested" header="İlgilenmiyor" :sortable="true">
           <template #body="slotProps">
             <div v-if="slotProps.data.notInterested">✓</div>
             <div v-else>X</div>
           </template>
         </Column>
-        <Column field="interested" header="I" :sortable="true">
+        <Column field="interested" header="İlgili" :sortable="true">
           <template #body="slotProps">
             <div v-if="slotProps.data.interested">✓</div>
             <div v-else>X</div>
@@ -109,6 +123,7 @@
 <script>
 import { mapGetters } from "vuex";
 import bgpService from "@/service/BgpProjectService";
+import { FilterMatchMode } from 'primevue/api';
 export default {
   computed: {
     ...mapGetters([
@@ -122,6 +137,11 @@ export default {
       isSelectedDetail: null,
       statistics_detail: false,
       ulkeAdi: "",
+      filters: {
+        firmaAdi: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        temsilciAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        projectName: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+      },
     };
   },
   methods: {

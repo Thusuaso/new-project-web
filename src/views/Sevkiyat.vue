@@ -49,16 +49,18 @@
           </div>
           <div class="column is-2">
             <Checkbox
-              @input="normalSevkIslem($event)"
+              @input="normalSevkIslem"
               v-model="normal_sevk"
               :binary="true"
+              :disabled="normal_sevk_form"
             />Normal Sevk
           </div>
           <div class="column is-2">
             <Checkbox
-              @input="hizliSevkIslem($event)"
+              @input="hizliSevkIslem"
               v-model="hizli_sevk"
               :binary="true"
+              :disabled="hizli_sevk_form"
             />Hızlı Sevk
           </div>
         </div>
@@ -273,7 +275,6 @@ import LocalService from "../service/LocalService";
 import store from "@/store";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { ref } from 'vue'
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -287,6 +288,8 @@ export default {
   },
   data() {
     return {
+      hizli_sevk: false,
+      normal_sevk:false,
       is_sevk_disabled:false,
       submitted: false,
       filterSiparisListe: null,
@@ -318,8 +321,8 @@ export default {
       musteri_id: null,
       takip: true,
       faturano: "",
-      normal_sevk: true,
-      hizli_sevk: false,
+      normal_sevk_form: false,
+      hizli_sevk_form: false,
       teslimturu: "",
       navlunSatis: 0,
       isSelectedHepsi: "",
@@ -599,13 +602,15 @@ export default {
         }
       }
     },
+    normalSevkIslem() {
+      this.hizli_sevk_form = !this.hizli_sevk_form;
+      
+    },
+    hizliSevkIslem() {
+      this.normal_sevk_form = !this.normal_sevk_form;
+    },
   },
-  normalSevkIslem(event) {
-    if (event) this.hizli_sevk = false;
-  },
-  hizliSevkIslem(event) {
-    if (event) this.normal_sevk = false;
-  },
+  
 };
 </script>
 <style scoped>

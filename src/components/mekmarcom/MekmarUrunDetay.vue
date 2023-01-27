@@ -355,6 +355,15 @@
         </div>
       </div>
     </TabPanel>
+    <TabPanel header="Uygulama Fotoğrafı Ekle">
+      <div class="columns">
+        <div class="column">
+          <Galleria :urunId="urunId">
+
+          </Galleria>
+        </div>
+      </div>
+    </TabPanel>
   </TabView>
         <br/>
         <div class="columns is-centered">
@@ -374,13 +383,15 @@ import spaceService from "../../service/SpaceService";
 import digitalOceanService from "../../service/DigitalOceanService";
 import OnerilenUrun from "../../components/mekmarcom/OnerilenUrun";
 import service from "../../service/MekmarPanelService";
+import Galleria from "./Galleria";
 
 export default {
   components: {
     UrunFotoList,
     OnerilenUrun,
+    Galleria
   },
-  props: ["yeniurun", "kategoriList"],
+  props: ["yeniurun", "kategoriList","urunId"],
   computed: {
     ...mapGetters([
       "urunDetay",

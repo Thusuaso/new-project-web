@@ -100,7 +100,7 @@ const MekmarService = {
     return axios
       .put("panel/mekmarcom/urunsira/dataIslem", urunList)
       .then((res) => res.data);
-  },
+  }
 };
 
 export default MekmarService;

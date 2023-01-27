@@ -719,6 +719,16 @@ const raporService = {
   },
   stockFiyatliExcellCikti(data) {
     return axios.post('/raporlar/listeler/stokRaporuFiyatli',data).then(res=>res.data)
+  },
+  
+  galleriaAddProduct(data) {
+    return axios.post("panel/mekmarcom/galleria/add",data).then(res=>res.data)
+  },
+  getMekmarComGalleriPhotos(product_id) {
+    return axios.get(`/panel/mekmarcom/galleri/getPhotos/${product_id}`)
+  },
+  setMekmarComGalleriDeletePhotos(id) {
+    return axios.get(`/panel/mekmarcom/galeri/deletePhotos/${id}`)
   }
 };
 

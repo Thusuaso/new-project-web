@@ -94,6 +94,7 @@
     <MekmarUrunDetay
       :yeniurun="yeniUrun"
       :kategoriList="kategoriList"
+      :urunId="urunId"
       @urunFotoGuncelleme="kategoriDegisim"
       @urunBilgiGuncelleme="urunListeYenile"
     />
@@ -128,6 +129,7 @@ export default {
       isUrunDetay: false,
       urunDetayBaslik: "",
       yeniUrun: false,
+      urunId:0,
     };
   },
   computed: {
@@ -156,6 +158,7 @@ export default {
     urunSecim(event) {
       this.$store.dispatch("setUrunBaslik", `ID : ${event.data.urunid}`);
       this.keyList = [];
+      this.urunId = event.data.urunid
       service.getProductDetailData(event.data.urunid).then((data) => {
         this.$store.dispatch("loadUrun", data);
         this.yeniUrun = false;
