@@ -78,9 +78,12 @@ const raporService = {
       .get("raporlar/siparis/ulkeBazindaSevkiyat")
       .then((res) => res.data);
   },
-  getUlkeBazindaSevkiyatAyrinti(ulkeId) {
+  getUlkeBazindaSevkiyatYears() {
+    return axios.get("raporlar/siparis/ulkeBazindaSevkiyatYears").then(res=>res.data)
+  },
+  getUlkeBazindaSevkiyatAyrinti(ulkeId,year) {
     return axios
-      .get("raporlar/siparis/ulkeBazindaSevkiyatAyrinti/" + ulkeId)
+      .get("raporlar/siparis/ulkeBazindaSevkiyatAyrinti/" + ulkeId + '/' + year)
       .then((res) => res.data);
   },
   getUlkeBazindaSevkiyatYear(year) {

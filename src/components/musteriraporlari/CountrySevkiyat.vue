@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Dropdown v-model="selectedYear" :options="years" optionLabel="year" placeholder="Select a Year" @change="is_selected_year_n"/>
+
     <DataTable
       :value="countrySevkiyat"
       responsiveLayout="scroll"
@@ -9,6 +11,7 @@
       selectionMode="single"
       @row-select="countrySevkiyatSelect($event)"
       class="p-datatable-sm"
+      sortField="toplamsevkiyat" :sortOrder="-1"
     >
       <Column
         field="ulkeid"
@@ -29,6 +32,7 @@
         header="Toplam Sevkiyat"
         :sortable="true"
         bodyStyle="textAlign:center"
+
       >
         <template #body="slotProps">
           {{ formatPrice(slotProps.data.toplamsevkiyat) }}
@@ -156,6 +160,9 @@ import { FilterMatchMode } from "primevue/api";
 export default {
   data() {
     return {
+      selectedYear:null,
+      years: [],
+      
       selectedCountry: null,
       data: null,
       onceki_yil: 0,
@@ -183,10 +190,17 @@ export default {
     };
   },
   created() {
+    service.getUlkeBazindaSevkiyatYears().then(data => {
+      for (let item of data) {
+        this.years.push({'year':item.year})
+      }
+      this.selectedYear = this.years[0]
+    })
     service.getUlkeBazindaSevkiyat().then((data) => {
       this.countrySevkiyat = data;
       this.sevkiyatToplam(data);
     });
+      
     var tarih = new Date();
     this.onceki_yil = tarih.getFullYear() - 2;
     this.gecen_yil = tarih.getFullYear() - 1;
@@ -196,6 +210,12 @@ export default {
     ...mapGetters(["servis_adres"]),
   },
   methods: {
+    is_selected_year_n() {
+      service.getUlkeBazindaSevkiyatYear(this.selectedYear.year).then((data) => {
+        this.countrySevkiyat = data;
+        this.sevkiyatToplam(data);
+      });
+    },
     sevkiyatAyrintiToplam(event) {
       this.fobToplam = 0;
       this.navlunToplam = 0;
@@ -215,7 +235,7 @@ export default {
       }
     },
     countrySevkiyatSelect(event) {
-      service.getUlkeBazindaSevkiyatAyrinti(event.data.ulkeid).then((data) => {
+      service.getUlkeBazindaSevkiyatAyrinti(event.data.ulkeid,this.selectedYear.year).then((data) => {
         this.countrySevkiyatAyrinti = data;
         this.sevkiyatAyrintiToplam(data);
         this.countrySevkiyatAyrintiHeader = event.data.ulkeadi;
