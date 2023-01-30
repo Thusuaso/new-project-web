@@ -701,6 +701,10 @@ const routes = [
       }
     },
   },
+  {
+    path: "/steps",
+    component :() =>import("@/components/depousa/YeniDepoUrun")
+  }
 ]
 
 const router = createRouter({

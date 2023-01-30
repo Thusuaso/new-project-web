@@ -70,6 +70,19 @@ const MekmarPanelService = {
       .put("panel/mekmarcom/fotolar/SiraKayitDegisim", fotodata)
       .then((res) => res.data);
   },
+  getUsaProductList() {
+    return axios.get('panel/mekmarusa/usaProductList').then(res=>res.data)
+  },
+  setUsaProductSave(data) {
+    return axios.post('panel/mekmarusa/usaProductSave',data).then(res=>res.data)
+  },
+  setUsaProductUpdate(data) {
+    return axios.put('panel/mekmarusa/usaProductSave',data).then(res=>res.data)
+  },
+  addUsaPhotos(fotoList) {
+    return axios.post('panel/mekmarusa/usaAddPhotos',fotoList).then(res=>res.data)
+  }
+
 };
 
 export default MekmarPanelService;

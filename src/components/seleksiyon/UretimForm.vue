@@ -30,6 +30,7 @@
                     class="siparisBilgileri"
                     v-model="siparis"
                     :suggestions="filterSiparisList"
+                    @complete="siparisListFiltered($event)"
                     @item-select="siparisSecim"
                     optionLabel="name"
                     :disabled="slk_form"
@@ -569,15 +570,12 @@ export default {
       "select_seleksiyon_kart",
       "getLoadStatus",
     ]),
-    filterSiparisList() {
-      return this.seleksiyon_siparislist.filter((option) => {
-        return option.name.toString().toLowerCase().indexOf(this.siparis) >= 0;
-      });
-    },
+
   },
   props: ["kasano", "kayitstatu"],
   data() {
     return {
+      filterSiparisList:[],
       submitted: false,
       isDisplay2: false,
       isDisplay: false,
@@ -608,8 +606,12 @@ export default {
   methods: {
     isYinedeKaydet() {
       this.isDisplay2 = false
-        const item = this.seleksiyon_siparisdetay.find(x => x.tanim === this.siparis_detay)
+      console.log("seleksiyon_siparisdetay", this.seleksiyon_siparisdetay)
+      console.log("siparis_detay", this.siparis_detay)
 
+      
+      const item = this.seleksiyon_siparisdetay.find(x => x.tanim === this.siparis_detay.tanim)
+        
 
         //ürün kartı bilgisini göndermek için
         const item2 = this.seleksiyon_siparisdetay.find(
@@ -622,7 +624,6 @@ export default {
         this.detail.ebat = urunKart.ebat
         this.detail.urunadi = urunKart.urunAdi
         this.detail.kenarislem = urunKart.yuzeyIslem
-
 
         if (item) {
 
@@ -1128,18 +1129,37 @@ export default {
       }
       this.filterOcakList = result;
     },
+
+    siparisListFiltered(event) {
+      let result;
+
+      if (event.query.length == 0) {
+        result = this.seleksiyon_siparislist;
+
+      }
+
+      else {
+        result = this.seleksiyon_siparislist.filter((x) => {
+          return x.name.toLowerCase().startsWith(event.query.toLowerCase());
+        });
+      }
+      this.filterSiparisList = result;
+    },
+
+
+
     siparisDetayDegisim() {
       setTimeout(() => {
         const item = this.seleksiyon_siparisdetay.find(
           (x) => x.tanim === this.siparis_detay.tanim
         );
-        console.log("siparisDetayDegisim",item)
 
         //ürün kartı bilgisini göndermek için
 
         if (item.urunkart_id == this.detail.urunkartid) {
           if (item) {
             this.urunkart_change_event(item.urunkart_id);
+
             this.tedarikci = this.seleksiyon_tedarikcilist.find(
               (x) => x.name == item.tedarikci
             );
@@ -1168,6 +1188,7 @@ export default {
               this.detail.tedarikciid = this.seleksiyon_tedarikcilist.find(
                 (x) => x.name == item.tedarikci
               ).id;
+
               if (item.urunbirimid == 1) {
                 this.urunbirim = "M2";
               } else if (item.urunbirimid == 2) {

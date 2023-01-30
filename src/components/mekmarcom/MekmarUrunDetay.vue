@@ -358,9 +358,9 @@
     <TabPanel header="Uygulama Fotoğrafı Ekle">
       <div class="columns">
         <div class="column">
-          <Galleria :urunId="urunId">
+          <GalleriaList :urunId="urunId">
 
-          </Galleria>
+          </GalleriaList>
         </div>
       </div>
     </TabPanel>
@@ -383,13 +383,13 @@ import spaceService from "../../service/SpaceService";
 import digitalOceanService from "../../service/DigitalOceanService";
 import OnerilenUrun from "../../components/mekmarcom/OnerilenUrun";
 import service from "../../service/MekmarPanelService";
-import Galleria from "./Galleria";
+import GalleriaList from "./GalleriaList";
 
 export default {
   components: {
     UrunFotoList,
     OnerilenUrun,
-    Galleria
+    GalleriaList
   },
   props: ["yeniurun", "kategoriList","urunId"],
   computed: {

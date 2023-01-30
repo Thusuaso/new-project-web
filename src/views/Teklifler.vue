@@ -296,7 +296,7 @@ export default {
         for (let item in data.hatirlatmaList) {
           const date = data.hatirlatmaList[item].tarih.split("-");
           const timaDate = date[2] + "-" + date[1] + "-" + date[0];
-
+          this.calendarOptions.events = []
           this.calendarOptions.events.push({
             title: data.hatirlatmaList[item].musteriAdi,
             date: timaDate,
@@ -391,7 +391,7 @@ export default {
           for (let item in data.hatirlatmaList) {
             const date = data.hatirlatmaList[item].tarih.split("-");
             const timaDate = date[2] + "-" + date[1] + "-" + date[0];
-
+            this.calendarOptions.events = []
             this.calendarOptions.events.push({
               title: data.hatirlatmaList[item].musteriAdi,
               date: timaDate,

@@ -167,19 +167,13 @@
   </TabView>
 
   <Dialog v-model:visible="isfotolist" :modal="true" position="top">
-    <section class="section">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-12">
+
             <DepoUrunFotoList
               @fotoDegisim="fotoDegisimEvent($event)"
               :urunid="urunDetay.urunid"
               :depoPickFotoList="sliceFotoList"
             />
-          </div>
-        </div>
-      </div>
-    </section>
+
   </Dialog>
 </template>
 <script>

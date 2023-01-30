@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div v-for="item in kullanimList" :key="item.id" class="field">
-      <Checkbox :value="item.durum" @input="durumDegisim(item, $event)" />
+    <div v-for="item in kullanimList" :key="item" class="field">
+      <Checkbox v-model="item.durum" @change="durumDegisim(item, $event)" :binary="true"/>
       {{ item.kullanimAdi }}
     </div>
     <div class="columns is-centered">
@@ -31,6 +31,7 @@ export default {
   props: ["urunid"],
   created() {
     depoKullanimService.getKullanimList(this.urunid).then((data) => {
+      console.log("getKullanimList",data)
       this.kullanimList = data;
     });
   },
@@ -67,12 +68,15 @@ export default {
         eklenenler: this.eklenenler,
         silinenler: this.silinenler,
       };
-
+      this.$store.dispatch('fullscreenLoadingAct',true)
       depoKullanimService.dataKayitIslem(data).then((status) => {
         if (status) {
           this.eklenenler = [];
           this.silinenler = [];
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
           alert("Kullanım Alanları Eklendi.");
+          
         }
       });
     },

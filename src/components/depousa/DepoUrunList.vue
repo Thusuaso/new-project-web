@@ -6,6 +6,11 @@
       </div>
     </div>
     <div class="columns">
+      <div class="column">
+        <Button class="p-button-primary" @click="new_usa_product_form = true" label="Yeni Ürün" />
+      </div>
+    </div>
+    <div class="columns">
       <div class="column is-12">
         <DataTable
           class="p-datatable-responsive p-datatable-cars"
@@ -119,6 +124,10 @@
         </Dialog>
       </div>
     </div>
+
+    <Dialog v-model:visible="new_usa_product_form" header="Usa Yeni Ürün Ekle" :modal="true" maximizable :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '95vw'}">
+      <YeniDepoUrun></YeniDepoUrun>
+    </Dialog>
   </section>
 </template>
 <script>
@@ -126,9 +135,11 @@ import { mapGetters } from "vuex";
 import DepoUrunForm from "./DepoUrunForm";
 import depoService from "../../service/DepoService";
 import { FilterMatchMode } from "primevue/api";
+import YeniDepoUrun from "./YeniDepoUrun";
 export default {
   components: {
     DepoUrunForm,
+    YeniDepoUrun
   },
   computed: {
     ...mapGetters(["getDepoUrunListesi"]),
@@ -136,6 +147,7 @@ export default {
   props: ["title", "depostock"],
   data() {
     return {
+      new_usa_product_form:false,
       filters: {
         skuno: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         urunadi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
