@@ -735,6 +735,28 @@ const raporService = {
   },
   getOrderContainerAmount(sipNo) {
     return axios.get(`/ayo/getOrderContainerAmount/${sipNo}`)
+  },
+  /*Mekmar Raporları */
+  getMekmarUlkeyeGore(year) {
+    return axios.get(`/raporlar/mekmarraporlari/ulke/${year}`).then(res=>res.data)
+  },
+  getMekmarUlkeyeGoreAyrinti(ulke_id, year) {
+    return axios.get(`raporlar/mekmarraporlari/ulke/ayrinti/${ulke_id}/${year}`).then(res=>res.data)
+  },
+
+  getMekmarMusteriyeGore(year) {
+    return axios.get(`/raporlar/mekmarraporlari/musteri/${year}`).then(res=>res.data)
+  },
+  getMekmarMusteriyeGoreAyrinti(musteri_id, year) {
+    return axios.get(`raporlar/mekmarraporlari/musteri/ayrinti/${musteri_id}/${year}`).then(res=>res.data)
+  },
+
+
+  getMekmarTedarikciyeGore(year) {
+    return axios.get(`/raporlar/mekmarraporlari/tedarikci/${year}`).then(res=>res.data)
+  },
+  getMekmarTedarikciyeGoreAyrinti(tedarikci_id,year) {
+    return axios.get(`/raporlar/mekmarraporlari/tedarikci/ayrinti/${tedarikci_id}/${year}`).then(res=>res.data)
   }
 };
 

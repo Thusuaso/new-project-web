@@ -706,6 +706,7 @@ const routes = [
     component: () => import("@/views/MekmarRaporlari"),
     beforeEnter(to, from, next) {
       if (store.getters.__isAuthentication) {
+
         next();
       } else {
         next("/login");
