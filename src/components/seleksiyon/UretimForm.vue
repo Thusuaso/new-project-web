@@ -606,8 +606,7 @@ export default {
   methods: {
     isYinedeKaydet() {
       this.isDisplay2 = false
-      console.log("seleksiyon_siparisdetay", this.seleksiyon_siparisdetay)
-      console.log("siparis_detay", this.siparis_detay)
+
 
       
       const item = this.seleksiyon_siparisdetay.find(x => x.tanim === this.siparis_detay.tanim)
@@ -1149,12 +1148,12 @@ export default {
 
 
     siparisDetayDegisim() {
-      setTimeout(() => {
+      console.log("seleksiyon_siparisdetay",this.seleksiyon_siparisdetay)
         const item = this.seleksiyon_siparisdetay.find(
           (x) => x.tanim === this.siparis_detay.tanim
         );
-
         //ürün kartı bilgisini göndermek için
+
 
         if (item.urunkart_id == this.detail.urunkartid) {
           if (item) {
@@ -1167,13 +1166,11 @@ export default {
               (x) => x.name == item.tedarikci
             ).id;
 
-            if (item.urunbirimid == 1) {
-              this.urunbirim = "M2";
-            } else if (item.urunbirimid == 2) {
-              this.urunbirim = "Adet";
-            } else if (item.urunbirimid == 3) {
-              this.urunbirim = "Mt";
-            }
+            
+            this.urunbirim = this.seleksiyon_urunbirimlist.find(
+              (x) => x.id == item.urunbirimid
+            ).name;
+            
           }
         } else {
           
@@ -1188,14 +1185,8 @@ export default {
               this.detail.tedarikciid = this.seleksiyon_tedarikcilist.find(
                 (x) => x.name == item.tedarikci
               ).id;
-
-              if (item.urunbirimid == 1) {
-                this.urunbirim = "M2";
-              } else if (item.urunbirimid == 2) {
-                this.urunbirim = "Adet";
-              } else if (item.urunbirimid == 3) {
-                this.urunbirim = "Mt";
-              }
+              
+              
 
               this.isYinedeKaydet()
             } 
@@ -1214,7 +1205,6 @@ export default {
           }
         }
         
-      }, 1000);
     },
     kasaNoAuto() {
       service.getDisFirmaKasaNo().then((value) => {
@@ -1331,6 +1321,7 @@ export default {
         service.getUrunDetayModel().then((data) => {
           this.detail = data;
           this.detail.miktar = null
+          console.log("seleksiyon_siparisdetaylist",this.seleksiyon_siparisdetaylist)
           this.detail.tanim = this.seleksiyon_siparisdetaylist.find(
             (x) =>
               x.siparisno == this.detail.siparisaciklama &&

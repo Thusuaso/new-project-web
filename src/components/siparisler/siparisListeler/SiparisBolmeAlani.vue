@@ -13,7 +13,7 @@
                       </div>
                       <div class="column is-12">
                           <span class="p-float-label">
-                              <InputText id="pesinat" v-model="siparislerBilgisi.siparis.pesinat" @input="isChangePayment" :disabled.sync="isPesinat"></InputText>
+                              <InputText id="pesinat" v-model="siparislerBilgisi.siparis.pesinat" @input="isChangePayment" :disabled="isPesinat"></InputText>
                               <label for="pesinat"><b>Giden Sipariş Peşinatı</b></label>
                           </span>
                       </div>

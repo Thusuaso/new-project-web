@@ -702,9 +702,17 @@ const routes = [
     },
   },
   {
-    path: "/steps",
-    component :() =>import("@/components/depousa/YeniDepoUrun")
+    path: "/raporlar/mekmarRaporlari",
+    component: () => import("@/views/MekmarRaporlari"),
+    beforeEnter(to, from, next) {
+      if (store.getters.__isAuthentication) {
+        next();
+      } else {
+        next("/login");
+      }
+    },
   }
+  
 ]
 
 const router = createRouter({

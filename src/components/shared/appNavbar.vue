@@ -172,6 +172,9 @@
                         <router-link to="/raporlar/mekusMasraflari">
                             <el-menu-item index="10-11-6"> Mekus Masrafları </el-menu-item>
                         </router-link>
+                        <router-link to="/raporlar/mekmarRaporlari">
+                            <el-menu-item index="10-11-7"> Mekmar Raporları </el-menu-item>
+                        </router-link>
                     </el-sub-menu>
                 </el-sub-menu>
         

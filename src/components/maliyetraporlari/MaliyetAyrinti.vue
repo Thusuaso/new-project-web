@@ -4,8 +4,9 @@
     @change="isAlisFiyatiControlChange"
     :binary="true"
   />
-  Alış Fiyatı <span v-if="alisFiyatiDurum">Var</span>
-
+  Alış Fiyatı <span v-if="alisFiyatiDurum" >Var</span>
+  <InputText type="text" v-model="container.amount"  style="margin-right:10px;margin-left:10px;width:50px;text-align:center;"/>
+  <Button class="p-button-success" label="Konteynır Kayıt" @click="containerSave"/>
   <section>
     <div class="column is-12">
       <DataTable :value="masraf_list" :loading="loading">
@@ -476,9 +477,20 @@ export default {
       this.profit_try = this.toplam_try - this.profit_try;
       this.loading = false;
     });
+    service.getOrderContainerAmount(this.siparisno).then(data => {
+      console.log(data)
+      this.container.amount = data.data[0].container_amount
+    })
+
+
   },
+  
   data() {
     return {
+      container: {
+        amount: 0,
+        siparisNo:""
+      },
       alisFiyatiDurum:false,
       siparisno: null,
       masraf_list: null,
@@ -496,6 +508,15 @@ export default {
     };
   },
   methods: {
+    containerSave() {
+      this.container.siparisNo = this.siparisno
+      operasyon.setContainerAmount(this.container).then(data => {
+        if (data) {
+          this.$toast.add({severity:'success',summary:'Konteynır Kayıt',detail:'Konteynır Kayıt Başarılı',life:3000})
+        }
+      })
+
+    },
     isAlisFiyatiControlChange() {
       const data = {
         'siparisno': this.siparisno,

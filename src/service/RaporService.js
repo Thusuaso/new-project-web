@@ -732,6 +732,9 @@ const raporService = {
   },
   setMekmarComGalleriDeletePhotos(id) {
     return axios.get(`/panel/mekmarcom/galeri/deletePhotos/${id}`)
+  },
+  getOrderContainerAmount(sipNo) {
+    return axios.get(`/ayo/getOrderContainerAmount/${sipNo}`)
   }
 };
 

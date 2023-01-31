@@ -218,6 +218,9 @@ const OperasyonService = {
   getMekmerDisFaturaModel() {
     return axios.get("/mekmer/disFaturaModel").then((res) => res.data);
   },
+  setContainerAmount(data) {
+    return axios.post("/operasyon/containeramount",data).then(res=>res.data)
+  }
 };
 
 export default OperasyonService;

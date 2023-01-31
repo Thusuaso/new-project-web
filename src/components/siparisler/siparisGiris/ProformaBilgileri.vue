@@ -702,8 +702,8 @@ export default {
     KayitIslemi() {
       this.evrak.id = 2;
       this.evrak.siparisno = this.siparisNo; //this.evrak verileri koydum
-      (this.evrak.kullaniciAdi = this.$store.getters.__getUsername),
-        this.yeniTeklifKayit();
+      this.evrak.kullaniciAdi = this.$store.getters.__getUsername;
+      this.yeniTeklifKayit();
     },
     yeniTeklifKayit() {
       const veri = {
