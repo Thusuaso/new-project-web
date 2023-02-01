@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="columns" style="height: 950px; background-color: White">
+    <div class="columns" style="background-color: White">
       <div class="column is-5" style="margin-top: 35px">
         <div class="columns">
           <div class="column">
@@ -50,9 +50,8 @@
 
       <div
         class="column is-6"
-        style="margin-top: 35px; font-size: 15px; font-weight: bold"
+        style=" font-size: 15px; font-weight: bold"
       >
-        <div class="container">
           <DataTable
             :value="SiparisEvrakList1"
             :scrollable="true"
@@ -172,7 +171,11 @@
           >
             <EvrakOzelIscilikForm />
           </Dialog>
-        </div>
+
+
+
+
+
       </div>
     </div>
   </section>
@@ -511,7 +514,7 @@ export default {
             }
           }
 
-
+          this.$store.dispatch('fullscreenLoadingAct',true)
           fileService
             .faturaDosyaGonder(file, this.evrakID, this.SiparisTur.siparisno)
             .then((data) => {
@@ -520,6 +523,8 @@ export default {
             });
           this.KayitIslemi();
         }
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         alert('Evraklar Başarıyla Yüklendi.')
       } else {
         alert("Sipariş Seçiniz..");
@@ -731,10 +736,10 @@ export default {
       this.odeme = this.SiparisTur.odeme;
       this.navlunAlis = this.formatPrice(this.SiparisTur.navlunAlis);
       this.navlunSatis = this.formatPrice(this.SiparisTur.navlunSatis);
-      this.table_loading = true;
+      this.$store.dispatch('fullscreenLoadingAct',true)
       service.getEvrakFaturaList(this.SiparisTur.siparisno).then((data) => {
         this.$store.dispatch("loadEvrakForm1", data.color_listesi);
-        this.table_loading = false;
+        this.$store.dispatch('fullscreenLoadingAct', false)
       });
     },
     aramaSiparisTur(event) {

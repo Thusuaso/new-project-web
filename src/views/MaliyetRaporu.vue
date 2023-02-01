@@ -1662,6 +1662,7 @@ export default {
       service
         .getMaliyetRapor(this.select_yil.yil, this.select_ay.ay)
         .then((data) => {
+          
           this.toplam_kar_zar_orani(data)
           this.maliyet_listesi = [...data];
           this.local_maliyet_data = [...data];
@@ -1709,6 +1710,7 @@ export default {
       this.isFilteredFaturalama = false;
       service.getMaliyetAyListesi(this.select_yil.yil).then((data) => {
         this.ay_listesi = data;
+        this.select_ay = data.find(x=>x.id == this.select_ay.id)
         this.maliyet_listesi_yukle();
       });
     },

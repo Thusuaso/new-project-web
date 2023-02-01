@@ -1092,7 +1092,10 @@ export default {
       );
       this.detail.tedarikciid = item.id;
       if (item.id == 1 || item.id == 123) {
-        this.seleksiyonKasaNo();
+        if (this.kasano == "") {
+            this.seleksiyonKasaNo();
+
+        }
       } else {
         if (this.kayitstatu) {
           this.kasaNoAuto();
@@ -1128,7 +1131,6 @@ export default {
       }
       this.filterOcakList = result;
     },
-
     siparisListFiltered(event) {
       let result;
 
@@ -1144,20 +1146,18 @@ export default {
       }
       this.filterSiparisList = result;
     },
-
-
-
     siparisDetayDegisim() {
-      console.log("seleksiyon_siparisdetay",this.seleksiyon_siparisdetay)
+
         const item = this.seleksiyon_siparisdetay.find(
           (x) => x.tanim === this.siparis_detay.tanim
-        );
+      );
+
         //ürün kartı bilgisini göndermek için
 
-
+        this.urunkart_change_event(item.urunkart_id);
         if (item.urunkart_id == this.detail.urunkartid) {
           if (item) {
-            this.urunkart_change_event(item.urunkart_id);
+            
 
             this.tedarikci = this.seleksiyon_tedarikcilist.find(
               (x) => x.name == item.tedarikci
@@ -1170,6 +1170,7 @@ export default {
             this.urunbirim = this.seleksiyon_urunbirimlist.find(
               (x) => x.id == item.urunbirimid
             ).name;
+            this.tedarikciSecim()
             
           }
         } else {
@@ -1185,6 +1186,7 @@ export default {
               this.detail.tedarikciid = this.seleksiyon_tedarikcilist.find(
                 (x) => x.name == item.tedarikci
               ).id;
+              
               
               
 
@@ -1321,18 +1323,16 @@ export default {
         service.getUrunDetayModel().then((data) => {
           this.detail = data;
           this.detail.miktar = null
-          console.log("seleksiyon_siparisdetaylist",this.seleksiyon_siparisdetaylist)
-          this.detail.tanim = this.seleksiyon_siparisdetaylist.find(
-            (x) =>
-              x.siparisno == this.detail.siparisaciklama &&
-              x.urunkart_id == this.detail.urunkartid
-          ).tanim;
+
           
         });
         this.detail.tanim = ""
       }
     }
   },
+  watch: {
+    
+  }
 };
 </script>
 

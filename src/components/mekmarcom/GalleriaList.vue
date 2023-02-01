@@ -1,6 +1,16 @@
 <template>
     <div>
-        <FileUpload mode="basic" @select="fotoGonder($event)" v-model="file" :maxFileSize="5000000" :multiple="true" />
+        <div class="columns">
+            <div class="column is-2">
+        <Dropdown v-model="selectedProject" :options="projects" optionLabel="project" placeholder="Select a Project" @change="project_change_seleted"/>
+
+            </div>
+            <div class="column">
+        <FileUpload mode="basic" @select="fotoGonder($event)" v-model="file" :maxFileSize="5000000" :multiple="true" :disabled="image_upload_form"/>
+
+            </div>
+        </div>
+
 
         <div class="columns is-centered" v-if="galleriPhotosList.length>0">
             <div class="column is-6">
@@ -43,11 +53,22 @@ export default {
         return {
             fileControl: false,
             selectedProduct: null,
-            delete_photos_button_form:true,  
+            delete_photos_button_form: true,
+            selectedProject: [],
+            projects: [
+                { id:1,'project': 'Kuwait'},
+                { id: 2, 'project': 'Dubai' },
+                { id: 3, 'project': 'Singapore' },
+
+            ],
+            image_upload_form:true
         }
     },
     props: ['urunId'],
     methods: {
+        project_change_seleted() {
+            this.image_upload_form = false
+        },
         deletePhotos() {
             if (confirm('Silmek istediğinize emin misiniz?')) {
                 raporService.setMekmarComGalleriDeletePhotos(this.selectedProduct.id).then(data => {
@@ -77,7 +98,7 @@ export default {
             if (!this.fileControl) {
                 for (let key in event.files) {
 
-                    fotoList.push({ 'fileName': event.files[key].name, 'link': 'https://mekmar-image.fra1.cdn.digitaloceanspaces.com/mekmar-galleria/' + event.files[key].name, 'productId': this.urunId });
+                    fotoList.push({ 'fileName': event.files[key].name, 'link': 'https://mekmar-image.fra1.cdn.digitaloceanspaces.com/mekmar-galleria/' + event.files[key].name, 'productId': this.urunId, 'projectId': this.selectedProject.id });
 
                 }
             }

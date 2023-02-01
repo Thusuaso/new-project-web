@@ -417,6 +417,8 @@ export default {
     },
 
     konteynerDosyaGonder(event) {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       fileService
         .nakliyeDosyaGonder(
           event,
@@ -427,6 +429,8 @@ export default {
           console.log("nakliyeDosyaGonder", data);
           service.setKonteynerFaturaKayit(this.nakliye_data2).then((veri) => {
             if (veri.Status) {
+              this.$store.dispatch('fullscreenLoadingAct', false)
+
               alert("Kayıt İşlemi Yapıldı.");
               this.dis_numuneDosyaAc = false;
               this.numuneLink = `https://file-service.mekmar.com/file/download/customer/${
@@ -493,7 +497,7 @@ export default {
         fatura_tur_list: this.selectFaturaTur,
         tarih: this.localService.getDateString(this.tarih),
       };
-
+      this.$store.dispatch('fullscreenLoadingAct', true)
       service.konteynerKaydet(nakliye_data).then((status) => {
         service.getKonteynerUrunModel(this.faturaNo).then((data) => {
           const nakliye_data2 = {
@@ -523,7 +527,12 @@ export default {
           this.kur = 0;
           this.Tutar_dolar = 0;
           this.tarih = new Date();
+          this.$store.dispatch('fullscreenLoadingAct', false)
+          alert("Kayıt İşlemi Başarıyla Gerçekleşti.");
+
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           alert("Ops! Kayıt İşlemi Yapılamadı, Lütfen Tekrar Deneyiniz.");
         }
       });

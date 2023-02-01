@@ -456,6 +456,8 @@ export default {
     },
 
     nakliyeDosyaGonder(event) {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       fileService
         .nakliyeDosyaGonder(
           event,
@@ -467,6 +469,8 @@ export default {
 
           service.setNakliyeFaturaKayit(this.siparisToplu).then((veri) => {
             if (veri.Status) {
+              this.$store.dispatch('fullscreenLoadingAct', false)
+
               alert("Kayıt İşlemi Yapıldı.");
               this.dis_numuneDosyaAc = false;
               this.numuneLink = `https://file-service.mekmar.com/file/download/customer/${
@@ -518,7 +522,7 @@ export default {
 
         tarih: this.localService.getDateString(this.tarih),
       };
-
+      this.$store.dispatch('fullscreenLoadingAct',true)
       service.nakliyeKaydet(this.siparisToplu).then((status) => {
         service.getNakliyeUrunModel(this.faturaNo).then((data) => {
           const nakliye_data2 = {
@@ -537,6 +541,7 @@ export default {
         });
 
         if (status.status) {
+          this.$store.dispatch('fullscreenLoadingAct', false)
           alert("Başarılı! Şimdi Evrağı Yükleyiniz.");
           this.dis_numuneDosyayukle = false;
           this.kaydetVisible = true;
@@ -549,6 +554,7 @@ export default {
           this.Tutar_dolar = 0;
           this.tarih = new Date();
         } else {
+          this.$store.dispatch('fullscreenLoadingAct', false)
           alert("Ops! Kayıt İşlemi Yapılamadı, Lütfen Tekrar Deneyiniz.");
         }
       });
