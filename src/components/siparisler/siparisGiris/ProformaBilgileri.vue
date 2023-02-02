@@ -60,6 +60,12 @@
             />
             <label for="vade">Vade Tarihi</label>
           </span>
+          <br/>
+          <span class="p-float-label">
+            <Calendar id="tahminieta" ref="tahminiEtaCalendar" v-model="tahmini_eta" :showIcon="true" dateFormat="dd/mm/yy"
+              @date-select="tahminiEtaDegisim" class="inputs" />
+            <label for="tahminieta">Tahmini Eta</label>
+          </span>
           <br />
 
           <span class="p-float-label">
@@ -598,6 +604,7 @@ export default {
       dis_sigorta: true,
       filterUlkeList: null,
       vade: null,
+      tahmini_eta:null,
       esProfData: null,
       detayMekmarNot_4: "Mekus Masrafı",
       detay4_aciklama: true,
@@ -919,6 +926,11 @@ export default {
 
       this.kayitKontrol();
     },
+    tahminiEtaDegisim() {
+      this.profData.tahmini_eta = this.localService.getDateString(this.tahmini_eta);
+
+      this.kayitKontrol();
+    },
     ulkeDegisim() {
       this.profData.ulkeId = this.ulke.id;
       this.kayitKontrol();
@@ -935,6 +947,11 @@ export default {
       if (this.esProfData.faturaKesimTurId != this.profData.faturaKesimTurId)
         index = index + 1;
       if (this.esProfData.vade != this.profData.vade) index = index + 1;
+
+      if (this.esProfData.tahmini_eta != this.profData.tahmini_eta) index = index + 1;
+
+
+
       if (this.esProfData.odemeAciklama != this.profData.odemeAciklama)
         index = index + 1;
       if (this.esProfData.konteynerAyrinti != this.profData.konteynerAyrinti)
@@ -1145,6 +1162,12 @@ export default {
         this.vade = this.localService.getStringDate(this.profData.vade);
       } else {
         this.vade = ""
+      }
+
+      if (this.profData.tahmini_eta != "") {
+        this.tahmini_eta = this.localService.getStringDate(this.profData.tahmini_eta);
+      } else {
+        this.tahmini_eta = ""
       }
     }
   }

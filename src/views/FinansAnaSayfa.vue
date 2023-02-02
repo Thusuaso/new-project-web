@@ -250,7 +250,7 @@
 
     </div>
 
-    <Dialog v-model:visible="isKonteyner" v-model:header="konteynerBaslik" :modal="true" maximizable position="top">
+    <Dialog v-model:visible="isKonteyner" v-model:header="konteynerBaslik" :modal="true" maximizable position="top" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '95vw'}">
       <FinansAyrintiList />
     </Dialog>
     <Dialog v-model:visible="is_pesinat" header="PEŞİNAT LİSTESİ" :modal="true" maximizable position="top">

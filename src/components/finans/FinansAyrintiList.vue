@@ -1,252 +1,165 @@
 <template>
-  <section>
-    <div class="columns is-multiline">
-      <div class="column is-12">
-        <div class="columns"></div>
-      </div>
-      <div class="columns is-multiline">
-        <div class="column is-7">
-          <div class="columns is-multiline">
-            <div class="column is-12">
-              <DataTable
-                :value="finans_ayrinti_list"
-                :scrollable="true"
-                scrollHeight="420px"
-                dataKey="id"
-                selectionMode="single"
-                v-model:selection="select_ayrinti"
-                @row-select="select_ayrinti_sec($event)"
-                v-model:filters="filters"
-                filterDisplay="menu"
-                @filter="isFinansAyrintiFilter"
-              >
-                <template #header>
-                  <div class="columns is-multiline">
-                    <div class="column is-12">
-                      <span style="font-size: 15px">
-                        Sipariş Ayrıntı Tablosu
-                      </span>
-                    </div>
-                  </div>
-                </template>
-                <Column
-                  field="siparisno"
-                  headerStyle="width:20px"
-                  bodyStyle="text-align:left;"
-                >
-                  <template #body="slotProps">
-                    <div class="isMobile">
-                      {{ slotProps.data.siparisno }}
-                    </div>
-                  </template>
-                  <template #filter="{ filterModel, filterCallback }">
-                    <InputText
-                      type="text"
-                      v-model="filterModel.value"
-                      @input="filterCallback()"
-                      class="p-column-filter"
-                      :placeholder="`Search by name - `"
-                      v-tooltip.top.focus="'Hit enter key to filter'"
-                    />
-                  </template>
-                </Column>
-                <Column
-                  field="yuklemetarihi"
-                  headerStyle="width:20px"
-                  header="Yükleme Tarihi"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    <div class="isMobile">
-                      {{ slotProps.data.yuklemetarihi }}
-                    </div>
-                  </template>
-                </Column>
-                <Column
-                  field="tip"
-                  header="Status"
-                  headerStyle="width:20px"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    <div
-                      :class="
-                        slotProps.data.tip == 'Üretim' ? 'genel_status' : ''
-                      "
-                    >
-                      <div class="isMobile">
-                        {{ slotProps.data.tip }}
-                      </div>
-                    </div>
-                  </template>
-                </Column>
-                <Column
-                  field="siparis_total"
-                  header="Sipariş Total"
-                  headerStyle="background-color:#7aa998;width:20px;"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    <div class="isMobile">
-                      {{ formatPrice(slotProps.data.siparis_total) }}
-                    </div>
-                  </template>
-                  <template #footer>
-                    <div class="isMobile">
-                      {{ formatPrice(finans_ayrinti_siparis_total) }}
-                    </div>
-                  </template>
-                </Column>
 
-                <Column
-                  field="odenen_tutar"
-                  header="Ödenen Tutar"
-                  headerStyle="background-color:#7aa998;width:20px;"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    <div class="isMobile">
-                      {{ formatPrice(slotProps.data.odenen_tutar) }}
-                    </div>
-                  </template>
-                  <template #footer>
-                    <div class="isMobile">
-                      {{ formatPrice(finans_ayrinti_siparis_odenen_tutar) }}
-                    </div>
-                  </template>
-                </Column>
-                <Column
-                  field="kalan"
-                  header="Kalan"
-                  headerStyle="background-color:#cc6666;width:20px;"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    <div
-                      :class="
-                        slotProps.data.kalan > 0
-                          ? 'kalan_borc'
-                          : '' || slotProps.data.kalan < 0
-                          ? 'odeme_kalan'
-                          : ''
-                      "
-                    >
-                      <div class="isMobile">
-                        {{ formatPrice(slotProps.data.kalan) }}
-                      </div>
-                    </div>
-                  </template>
-
-                  <template #footer>
-                    <div class="isMobile">
-                      {{ formatPrice(finans_ayrinti_kalan_toplam) }}
-                    </div>
-                  </template>
-                </Column>
-                <Column
-                  field="vade"
-                  header="Vade"
-                  headerStyle="width:20px"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    <div class="isMobile">
-                      {{ slotProps.data.vade }}
-                    </div>
-                  </template>
-                </Column>
-              </DataTable>
+    <div class="columns">
+      <div class="column">
+        <DataTable :value="finans_ayrinti_list" :scrollable="true" scrollHeight="420px" dataKey="id" selectionMode="single"
+          v-model:selection="select_ayrinti" @row-select="select_ayrinti_sec($event)" v-model:filters="filters"
+          filterDisplay="menu" @filter="isFinansAyrintiFilter">
+          <template #header>
+            <div class="columns is-multiline">
+              <div class="column is-12">
+                <span style="font-size: 15px">
+                  Sipariş Ayrıntı Tablosu
+                </span>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="column is-4">
-          <div class="columns is-multiline">
-            <div class="column is-12">
-              <DataTable
-                :value="finans_ayrinti_odeme_list"
-                :scrollable="true"
-                scrollHeight="420px"
-                dataKey="id"
-                selectionMode="single"
-                v-model:selection="select_odeme"
-                @row-select="odemeSecim($event)"
-              >
-                <template #header>
-                  <div class="columns is-multiline">
-                    <div class="column is-12">
-                      <span style="font-size: 15px"> Gelen Ödemeler </span>
-                    </div>
-                  </div>
-                </template>
-                <Column
-                  field="id"
-                  header="#"
-                  headerStyle="width:8%"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.id }}
-                  </template>
-                </Column>
-                <Column
-                  field="tarih"
-                  header="Ödeme Tarihi"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.tarih }}
-                  </template>
-                </Column>
-                <Column
-                  field="tutar"
-                  header="Tutar"
-                  headerStyle="background-color:#7aa998"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    {{ formatPrice(slotProps.data.tutar) }}
-                  </template>
-                  <template #footer>
-                    {{ formatPrice(finans_ayrinti_odeme_toplam) }}
-                  </template>
-                </Column>
-              </DataTable>
-            </div>
-          </div>
-        </div>
-        <div class="column is-1">
-          <RadioButton v-model="excel_cikti" value="ayrinti_listesi" /> Ayrıntı
-
-          <RadioButton v-model="excel_cikti" value="odeme_listesi" />Ödeme
-
-          <Button
-            @click="excel_cikti_click"
-            label="Excel"
-            class="p-button-success"
-          />
-        </div>
+          </template>
+          <Column field="siparisno" headerStyle="width:35px" bodyStyle="text-align:left;width:25px;">
+            <template #body="slotProps">
+              <div class="isMobile">
+                {{ slotProps.data.siparisno }}
+              </div>
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+          <Column field="yuklemetarihi" headerStyle="width:20px" header="Yükleme Tarihi" bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              <div class="isMobile">
+                {{ slotProps.data.yuklemetarihi }}
+              </div>
+            </template>
+          </Column>
+          <Column field="tip" header="Status" headerStyle="width:20px" bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              <div :class="
+                                slotProps.data.tip == 'Üretim' ? 'genel_status' : ''
+                              ">
+                <div class="isMobile">
+                  {{ slotProps.data.tip }}
+                </div>
+              </div>
+            </template>
+          </Column>
+          <Column field="siparis_total" header="Sipariş Total" headerStyle="background-color:#7aa998;width:20px;"
+            bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              <div class="isMobile">
+                {{ formatPrice(slotProps.data.siparis_total) }}
+              </div>
+            </template>
+            <template #footer>
+              <div class="isMobile">
+                {{ formatPrice(finans_ayrinti_siparis_total) }}
+              </div>
+            </template>
+          </Column>
+        
+          <Column field="odenen_tutar" header="Ödenen Tutar" headerStyle="background-color:#7aa998;width:20px;"
+            bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              <div class="isMobile">
+                {{ formatPrice(slotProps.data.odenen_tutar) }}
+              </div>
+            </template>
+            <template #footer>
+              <div class="isMobile">
+                {{ formatPrice(finans_ayrinti_siparis_odenen_tutar) }}
+              </div>
+            </template>
+          </Column>
+          <Column field="kalan" header="Kalan" headerStyle="background-color:#cc6666;width:20px;"
+            bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              <div :class="
+                                slotProps.data.kalan > 0
+                                  ? 'kalan_borc'
+                                  : '' || slotProps.data.kalan < 0
+                                  ? 'odeme_kalan'
+                                  : ''
+                              ">
+                <div class="isMobile">
+                  {{ formatPrice(slotProps.data.kalan) }}
+                </div>
+              </div>
+            </template>
+        
+            <template #footer>
+              <div class="isMobile">
+                {{ formatPrice(finans_ayrinti_kalan_toplam) }}
+              </div>
+            </template>
+          </Column>
+          <Column field="vade" header="Vade" headerStyle="width:20px" bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              <div class="isMobile">
+                {{ slotProps.data.vade }}
+              </div>
+            </template>
+          </Column>
+        
+          <Column field="tahmini_eta" header="Eta" headerStyle="width:20px" bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              <div class="isMobile">
+                {{ slotProps.data.tahmini_eta }}
+              </div>
+            </template>
+          </Column>
+        
+        </DataTable>
       </div>
-
-      <Dialog
-        v-model:visible="is_ödeme_ayrinti_form"
-        maximizable
-        :modal="true"
-        position="top"
-      >
-        <FinansAyrintiMusteriOdeme />
-      </Dialog>
-
-      <Dialog
-        v-model:visible="is_tahsilat_form"
-        v-model:header="tahsilat_form_baslik"
-        maximizable
-        :modal="true"
-      >
-        <Tahsilat />
-      </Dialog>
+      <div class="column is-4">
+        <DataTable :value="finans_ayrinti_odeme_list" :scrollable="true" scrollHeight="420px" dataKey="id"
+          selectionMode="single" v-model:selection="select_odeme" @row-select="odemeSecim($event)">
+          <template #header>
+            <div class="columns is-multiline">
+              <div class="column is-12">
+                <span style="font-size: 15px"> Gelen Ödemeler </span>
+              </div>
+            </div>
+          </template>
+          <Column field="id" header="#" headerStyle="width:8%" bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              {{ slotProps.data.id }}
+            </template>
+          </Column>
+          <Column field="tarih" header="Ödeme Tarihi" bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              {{ slotProps.data.tarih }}
+            </template>
+          </Column>
+          <Column field="tutar" header="Tutar" headerStyle="background-color:#7aa998" bodyStyle="text-align:center;">
+            <template #body="slotProps">
+              {{ formatPrice(slotProps.data.tutar) }}
+            </template>
+            <template #footer>
+              {{ formatPrice(finans_ayrinti_odeme_toplam) }}
+            </template>
+          </Column>
+        </DataTable>
+      </div>
+      <div class="column is-2">
+        <RadioButton v-model="excel_cikti" value="ayrinti_listesi" /> Ayrıntı
+        
+        <RadioButton v-model="excel_cikti" value="odeme_listesi" />Ödeme
+        
+        <Button @click="excel_cikti_click" label="Excel" class="p-button-success" />
+      </div>
     </div>
-  </section>
+
+
+
+
+
+  <Dialog v-model:visible="is_ödeme_ayrinti_form" maximizable :modal="true" position="top">
+    <FinansAyrintiMusteriOdeme />
+  </Dialog>
+  
+  <Dialog v-model:visible="is_tahsilat_form" v-model:header="tahsilat_form_baslik" maximizable :modal="true">
+    <Tahsilat />
+  </Dialog>
 </template>
 <script>
 import { mapGetters } from "vuex";
