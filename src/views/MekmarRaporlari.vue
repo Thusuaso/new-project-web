@@ -18,7 +18,7 @@
                 
                 >
                     <template #header>
-                        Ülkeye Göre 
+                        Ülkeye Göre ({{ toplam_ulke_sayisi }})
                     </template>
                     <Column field="ulke_adi" header="Ülke" :showFilterMenu="false">
                         <template #filter="{filterModel,filterCallback}">
@@ -49,7 +49,7 @@
                 @row-select="musteriye_gore_selected($event)"
                 >
                     <template #header>
-                        Müşteriye Göre
+                        Müşteriye Göre ({{ toplam_musteri_sayisi }})
                     </template>
                     <Column field="ulke_adi" header="Ülke" :showFilterMenu="false">
                         <template #filter="{filterModel,filterCallback}">
@@ -88,7 +88,7 @@
                 @row-select="tedarikciye_gore_selected($event)"
                 >
                     <template #header>
-                        Tedarikçiye Göre
+                        Tedarikçiye Göre ({{ toplam_tedarikci_sayisi }})
                     </template>
                     <Column field="firma_adi" header="Tedarikçi Adı" :showFilterMenu="false">
                         <template #filter="{filterModel,filterCallback}">
@@ -347,7 +347,9 @@ export default {
             tedarikciye_gore_top_ayrinti: {
                 alis_toplami:0
             },
-
+            toplam_ulke_sayisi:0,
+            toplam_tedarikci_sayisi:0,
+            toplam_musteri_sayisi:0
             
         }
     },
@@ -357,22 +359,26 @@ export default {
         })
         raporService.getMekmarUlkeyeGore(this.selectedYear.year).then(data => {
             this.ulkeyeGoreList = data
+            console.log(data)
+            this.toplam_ulke_sayisi = data.length
             this.toplam_ulke(data)
 
         })
         raporService.getMekmarMusteriyeGore(this.selectedYear.year).then(data => {
             this.musteriyeGoreList = data
+            this.toplam_musteri_sayisi = data.length
             this.toplam_musteri(data)
 
         })
         raporService.getMekmarTedarikciyeGore(this.selectedYear.year).then(data => {
             this.tedarikciyeGoreList = data
+            this.toplam_tedarikci_sayisi = data.length
             this.toplam_tedarikci(data)
         })
+
     },
     methods: {
         tedarikciye_gore_selected(event) {
-            console.log("tedarikciye_gore_selected", event.data.tedarikci_id)
             this.tedarikci_baslik = event.data.firma_adi
             raporService.getMekmarTedarikciyeGoreAyrinti(event.data.tedarikci_id, this.selectedYear.year).then(data => {
                 this.tedarikciye_gore_ayrinti_list = data
@@ -461,16 +467,23 @@ export default {
             this.toplam_ulke(event.filteredValue)
         },
         ulkeye_gore_year(event) {
+            this.toplam_ulke_sayisi= 0
+            this.toplam_tedarikci_sayisi= 0
+            this.toplam_musteri_sayisi= 0
             raporService.getMekmarUlkeyeGore(event.value.year).then(data => {
                 this.ulkeyeGoreList = data
+                this.toplam_ulke_sayisi = data.length
                 this.toplam_ulke(data)
             })
             raporService.getMekmarMusteriyeGore(event.value.year).then(data => {
                 this.musteriyeGoreList = data
+                this.toplam_musteri_sayisi = data.length
                 this.toplam_musteri(data)
             })
             raporService.getMekmarTedarikciyeGore(event.value.year).then(data => {
                 this.tedarikciyeGoreList = data
+                this.toplam_tedarikci_sayisi = data.length
+
                 this.toplam_tedarikci(data)
             })
         },

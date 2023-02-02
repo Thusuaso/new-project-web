@@ -347,6 +347,15 @@ const raporService = {
       .get(`/raporlar/listeler/yukleme/${yil}/${ay}`)
       .then((res) => res.data);
   },
+
+  getYuklemeRaporYear(yil) {
+    return axios
+      .get(`/raporlar/listeler/yuklemeYear/${yil}`)
+      .then((res) => res.data);
+  },
+
+
+
   getAtlantaYuklemeRapor(yil, ay) {
     return axios
       .get(`/raporlar/listeler/atlantayukleme/${yil}/${ay}`)

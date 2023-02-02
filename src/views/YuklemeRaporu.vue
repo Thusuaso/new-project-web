@@ -22,6 +22,7 @@
                 :options="ay_listesi"
                 optionLabel="ay_str"
                 placeholder="Select a Month"
+                :disabled="ay_form"
               >
                 <template #value="slotProps">
                   {{ slotProps.value }}
@@ -45,6 +46,8 @@
               PO
             </div>
           </div>
+          <Checkbox v-model="all_load_mekmar_form" :binary="true" @change="all_load_mekmar_yukleme()"/> Hepsi
+
         </template>
       </Card>
     </div>
@@ -178,7 +181,7 @@
         <template #header>
           <div class="columns is-multiline">
             <div class="column is-12">
-              <span style="font-size: 15px">Aylık Toplam Yükleme </span>
+              <span style="font-size: 15px">{{ tablo_baslik }} </span>
             </div>
           </div>
         </template>
@@ -354,6 +357,7 @@ export default {
   components: {},
   data() {
     return {
+      all_load_mekmar_form:false,
       yil_listesi: null,
       ay_listesi: null,
       select_yil: 0,
@@ -387,6 +391,8 @@ export default {
       pdfrapor: null,
       ay_baslik: "",
       yil_baslik: "",
+      tablo_baslik: "Aylık Toplam Yükleme",
+      ay_form:false
     };
   },
 
@@ -420,6 +426,25 @@ export default {
     });
   },
   methods: {
+    all_load_mekmar_yukleme() {
+      if (this.all_load_mekmar_form) {
+        this.$store.dispatch('fullscreenLoadingAct',true)
+        service.getYuklemeRaporYear(this.select_yil).then(data => {
+          this.aylik_liste = data;
+          this.toplam_ay(data);
+          this.tablo_baslik = "Yıllık Toplam Yükleme"
+          this.ay_form = true
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
+        })
+      } else {
+
+        this.yukleme_listesi_yukle()
+        this.tablo_baslik = "Aylık Toplam Yükleme"
+        this.ay_form = false
+
+      }
+    },
     isSumYear(event) {
       this.fob_yil_top = 0;
       this.dtp_yil_top = 0;
@@ -722,6 +747,8 @@ export default {
       }
     },
     yil_degisim_event(event) {
+      this.all_load_mekmar_form = false
+      this.ay_form = false
       this.select_yil = this.yil_listesi.find(
         (x) => x.yil == event.value.yil
       ).yil;

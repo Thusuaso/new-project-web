@@ -23,7 +23,7 @@
           <Column field="marketing" header="Marketing"></Column>
           <Column field="ulkeAdi" header="Ülke"></Column>
 
-          <Column field="satisToplamiBuYil" header="2022">
+          <Column field="satisToplamiBuYil" header="2023">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.satisToplamiBuYil) }}
             </template>
@@ -31,7 +31,7 @@
               {{ formatPrice(uretimBuYilTop) }}
             </template>
           </Column>
-          <Column field="satisToplamiGecenYil" header="2021">
+          <Column field="satisToplamiGecenYil" header="2022">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.satisToplamiGecenYil) }}
             </template>
@@ -47,12 +47,20 @@
               {{ formatPrice(uretimOncekiYilTop) }}
             </template>
           </Column>
-          <Column field="satisToplamiOnDokuzYil" header="2019">
+          <Column field="satisToplamiOnDokuzYil" header="2020">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.satisToplamiOnDokuzYil) }}
             </template>
             <template #footer>
               {{ formatPrice(uretimOnDokuzYilTop) }}
+            </template>
+          </Column>
+          <Column field="satisToplamiOnSekizYil" header="2019">
+            <template #body="slotProps">
+              {{ formatPrice(slotProps.data.satisToplamiOnSekizYil) }}
+            </template>
+            <template #footer>
+              {{ formatPrice(uretimOnSekizYilTop) }}
             </template>
           </Column>
           <Column field="toplam" header="Toplam (Fob)">
@@ -299,6 +307,7 @@ export default {
       uretimGecenYilTop: 0,
       uretimOncekiYilTop: 0,
       uretimOnDokuzYilTop: 0,
+      uretimOnSekizYilTop:0,
       toplam: 0,
       toplamCfr: 0,
       imperialHomes: [],
@@ -371,6 +380,8 @@ export default {
       this.uretimGecenYilTop = 0;
       this.uretimOncekiYilTop = 0;
       this.uretimOnDokuzYilTop = 0;
+      this.uretimOnSekizYilTop = 0;
+
       this.toplam = 0;
       this.toplamCfr = 0;
       for (let i in liste) {
@@ -378,6 +389,7 @@ export default {
         this.uretimGecenYilTop += liste[i].satisToplamiGecenYil;
         this.uretimOncekiYilTop += liste[i].satisToplamiOncekiYil;
         this.uretimOnDokuzYilTop += liste[i].satisToplamiOnDokuzYil;
+        this.uretimOnSekizYilTop += liste[i].satisToplamiOnSekizYil
         this.toplam += liste[i].toplam;
         this.toplamCfr += liste[i].toplamCfr;
       }
