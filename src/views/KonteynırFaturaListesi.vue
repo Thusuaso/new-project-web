@@ -225,7 +225,7 @@ export default {
   methods: {
     FaturaSec(event) {
       service
-        .getKonteynerFormIslem(event.data.id, event.data.evrak_id)
+        .getKonteynerFormIslem(event.data.id, event.data.evrak_id, event.data.siparis_no)
         .then((data) => {
           this.$store.dispatch("konteyner_yukle_act", data);
 

@@ -153,7 +153,6 @@ export default {
         });
     },
     dataKayitIslem() {
-      console.log("dataKayitIslem", this.data);
       service.setKonteynerFaturaGuncelle(this.data).then((data) => {
         if (data.Status) {
           this.$toast.add({

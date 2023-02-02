@@ -178,9 +178,9 @@ const OperasyonService = {
       .get("kontroller/listeler/chatmailler/" + po)
       .then((res) => res.data);
   },
-  getKonteynerFormIslem(fatura_id, tur) {
+  getKonteynerFormIslem(fatura_id, tur,siparis_no) {
     return axios
-      .get(`operasyon/form/KonteynerForm/islem/${fatura_id}/${tur}`)
+      .get(`operasyon/form/KonteynerForm/islem/${fatura_id}/${tur}/${siparis_no}`)
       .then((res) => res.data);
   },
   getNakliyeFormIslem(firmaId, evrakAdi, siparisNo) {
