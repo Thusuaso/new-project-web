@@ -664,7 +664,6 @@ export default {
         }
         else {
           this.siparisGuncelleme();
-          socket.siparis.emit('siparis_event_list_emit')
 
         } 
       } else {

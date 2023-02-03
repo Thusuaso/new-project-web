@@ -306,6 +306,7 @@ export default {
       if (this.siparisTur == "bekleyen") siparisDurum = 1;
       if (this.siparisTur == "sevk") siparisDurum = 3;
       siparisService.getSiparisList(siparisDurum, year).then((data) => {
+        console.log("getSiparisList",data)
         this.siparisler = data;
         this.siparisHepsiEvent();
         this.toplamGuncelle(this.siparisler);

@@ -290,192 +290,217 @@
         <template #content>
           <div class="columns">
             <div class="column is-3">
-              <span class="p-float-label">
-                <MoneyInput @money_input_text_change="profData.navlunSatis = $event" :text_value="profData.navlunSatis"
-                  :disAktif="dis_urun_giris" label="Navlun Satış ($)" v-model="profData.navlunSatis" />
-
+              <span class="tag">
+                Navlun Satış ($)
               </span>
+              <input class="input" v-model="profData.navlunSatis"
+                @input="profData.navlunSatis = $event.target.value.replace(',','.')" @change="veriDegisim" />
             </div>
             <div class="column is-3">
               <span class="p-float-label">
+                <span class="tag">
+                  Navlun Firma
+                </span>
                 <InputText
                   id="navlunFirma"
-                  class="p-inputtext-sm"
+                  class="input"
                   v-model="profData.navlunFirma"
                   @change="veriDegisim"
                 />
-                <label for="navlunFirma">Navlun Firma</label>
               </span>
             </div>
             <div class="column is-3">
-              <span class="p-float-label">
-                <MoneyInput @money_input_text_change="profData.navlunAlis = $event" :text_value="profData.navlunAlis"
-                  :disAktif="dis_urun_giris" label="Navlun Alış ($)" v-model="profData.navlunAlis" />
+
+              <span class="tag">
+                Navlun Alış ($)
               </span>
+              <input class="input" v-model="profData.navlunAlis"
+                @input="profData.navlunAlis = $event.target.value.replace(',','.')" @change="veriDegisim" />
             </div>
             <div class="column is-3">
               <span class="p-float-label">
+                <span class="tag">
+                  Navlun Alış Not
+                </span>
                 <InputText
                   id="navlunMekmarNot"
-                  class="p-inputtext-sm"
+                  class="input"
                   v-model="profData.navlunMekmarNot"
                   @change="veriDegisim"
+                  
                 />
-                <label for="navlunMekmarNot">Navlun Alış Not</label>
               </span>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <span class="p-float-label">
-
-                <MoneyInput @money_input_text_change="profData.detayTutar_1 = $event" :text_value="profData.detayTutar_1"
-                  :disAktif="dis_urun_giris" label="Diğer-1 Satış ($)" v-model="profData.detayTutar_1" />
-
+              <span class="tag">
+                Diğer-1 Satış ($)
               </span>
+              <input class="input" v-model="profData.detayTutar_1"
+                @input="profData.detayTutar_1 = $event.target.value.replace(',','.')" @change="veriDegisim" />
+
+
+
             </div>
             <div class="column">
               <span class="p-float-label">
+                <span class="tag">
+                  Açıklama
+                </span>
                 <InputText
                   id="aciklama"
-                  class="p-inputtext-sm"
+                  class="input"
                   v-model="profData.detayAciklama_1"
                   @change="veriDegisim"
+                  
                 />
 
-                <label for="aciklama">Açıklama</label>
               </span>
             </div>
             <div class="column">
-              <span class="p-float-label">
-                <MoneyInput @money_input_text_change="profData.detayAlis_1 = $event" :text_value="profData.detayAlis_1"
-                  :disAktif="dis_urun_giris" label="Diğer-1 Alış ($)" v-model="profData.detayAlis_1" />
 
+              <span class="tag">
+                Diğer-1 Alış ($)
               </span>
+              <input class="input" v-model="profData.detayAlis_1"
+                @input="profData.detayAlis_1 = $event.target.value.replace(',','.')" @change="veriDegisim" />
             </div>
             <div class="column">
               <span class="p-float-label">
+                <span class="tag">
+                  Açıklama
+                </span>
                 <InputText
                   id="aciklama"
-                  class="p-inputtext-sm"
+                  class="input"
                   v-model="profData.detayMekmarNot_1"
                   @change="veriDegisim"
                 />
                 
 
-                <label for="aciklama">Açıklama</label>
               </span>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <span class="p-float-label">
-                <MoneyInput @money_input_text_change="profData.detayTutar_2 = $event" :text_value="profData.detayTutar_2"
-                  :disAktif="dis_urun_giris" label="Diğer-2 Satış ($)" v-model="profData.detayTutar_2" />
-
+              <span class="tag">
+                Diğer-2 Satış ($)
               </span>
+              <input class="input" v-model="profData.detayTutar_2"
+                @input="profData.detayTutar_2 = $event.target.value.replace(',','.')" @change="veriDegisim" />
             </div>
             <div class="column">
               <span class="p-float-label">
+                <span class="tag">
+                  Açıklama
+                </span>
                 <InputText
                   id="aciklama"
-                  class="p-inputtext-sm"
+                  class="input"
                   v-model="profData.detayAciklama_2"
                   @change="veriDegisim"
                 />
 
-                <label for="aciklama">Açıklama</label>
               </span>
             </div>
             <div class="column">
-              <span class="p-float-label">
 
-                <MoneyInput @money_input_text_change="profData.detayAlis_2 = $event" :text_value="profData.detayAlis_2"
-                  :disAktif="dis_urun_giris" label="Diğer-2 Alış ($)" v-model="profData.detayAlis_2" />
-
+              <span class="tag">
+              Diğer-2 Alış ($)
               </span>
+              <input class="input" v-model="profData.detayAlis_2"
+                @input="profData.detayAlis_2 = $event.target.value.replace(',','.')" @change="veriDegisim" />
             </div>
             <div class="column">
               <span class="p-float-label">
+                <span class="tag">
+                  Açıklama
+                </span>
                 <InputText
                   id="aciklama"
-                  class="p-inputtext-sm"
+                  class="input"
                   v-model="profData.detayMekmarNot_2"
                   @change="veriDegisim"
                 />
 
-                <label for="aciklama">Açıklama</label>
               </span>
             </div>
           </div>
           <div class="columns">
             <div class="column">
-              <span class="p-float-label">
 
-                <MoneyInput @money_input_text_change="profData.detayTutar_3 = $event" :text_value="profData.detayTutar_3"
-                  :disAktif="dis_urun_giris" label="Diğer-3 Satış ($)" v-model="profData.detayTutar_3" />
-
+              <span class="tag">
+                Diğer-3 Satış ($)
               </span>
+              <input class="input" v-model="profData.detayTutar_3"
+                @input="profData.detayTutar_3 = $event.target.value.replace(',','.')"  @change="veriDegisim"/>
             </div>
             <div class="column">
               <span class="p-float-label">
+                <span class="tag">
+                  Açıklama
+                </span>
                 <InputText
-                  class="p-inputtext-sm"
+                  class="input"
                   id="aciklama"
                   v-model="profData.detayAciklama_3"
                   @change="veriDegisim"
                 />
 
-                <label for="aciklama">Açıklama</label>
               </span>
             </div>
             <div class="column">
-              <span class="p-float-label">
 
-                <MoneyInput @money_input_text_change="profData.detayAlis_3 = $event" :text_value="profData.detayAlis_3"
-                  :disAktif="dis_urun_giris" label="Diğer-3 Alış ($)" v-model="profData.detayAlis_3" />
-
+              <span class="tag">
+                Diğer-3 Alış ($)
               </span>
+              <input class="input" v-model="profData.detayAlis_3"
+                @input="profData.detayAlis_3 = $event.target.value.replace(',','.')" @change="veriDegisim" />
             </div>
             <div class="column">
               <span class="p-float-label">
+                <span class="tag">
+                  Açıklama
+                </span>
                 <InputText
-                  class="p-inputtext-sm"
+                  class="input"
                   id="aciklama"
                   v-model="profData.detayMekmarNot_3"
                   @change="veriDegisim"
                 />
-                <label for="aciklama">Açıklama</label>
               </span>
             </div>
           </div>
           <div class="columns">
             <div class="column is-6">
-              <span class="p-float-label">
-                <MoneyInput @money_input_text_change="profData.detayTutar_4 = $event" :text_value="profData.detayTutar_4"
-                  :disAktif="dis_urun_giris" label="Mekus Masrafı" v-model="profData.detayTutar_4" />
 
+
+              <span class="tag">
+                Mekus Masrafı ($)
               </span>
+              <input class="input" v-model="profData.detayTutar_4"
+                @input="profData.detayTutar_4 =$event.target.value.replace(',','.')" @change="veriDegisim" />
             </div>
             
 
           </div>
           <div class=columns>
             <div class="column is-6">
-              <span class="p-float-label">
-
-
-                <MoneyInput @money_input_text_change="profData.sigorta_tutar_satis = $event" :text_value="profData.sigorta_tutar_satis"
-                  :disAktif="sigorta_tutar" label="Sigorta Satış" v-model="profData.sigorta_tutar_satis" />
+              <span class="tag">
+                Sigorta Satış ($)
               </span>
+              <input class="input" v-model="profData.sigorta_tutar_satis"
+                @input="profData.sigorta_tutar_satis = $event.target.value.replace(',','.')" @change="veriDegisim"/>
+
             </div>
             <div class="column is-6">
-              <span class="p-float-label">
 
-                <MoneyInput @money_input_text_change="profData.sigorta_tutar = $event" :text_value="profData.sigorta_tutar"
-                  :disAktif="sigorta_tutar" label="Sigorta Alış" v-model="profData.sigorta_tutar" />
-
-              </span>
+                <span class="tag">
+                  Sigorta Alış ($)
+                </span>
+                <input  class="input" v-model="profData.sigorta_tutar" @input="profData.sigorta_tutar = $event.target.value.replace(',','.')"/>
+                
             </div>
           </div>
         </template>
@@ -493,7 +518,6 @@ import CustomInputFile from "../../../components/shared/CustomInputFile";
 import fileService from "../../../service/FileService";
 import { required } from "@vuelidate/validators";
 import { mapGetters } from "vuex";
-import MoneyInput from "@/components/shared/moneyInput2"
 
 export default {
   computed: {
@@ -508,7 +532,6 @@ export default {
   },
   components: {
     customFileInput: CustomInputFile,
-    MoneyInput
     // CurrencyInput2: CurrencyInput2,
   },
 
@@ -600,7 +623,9 @@ export default {
     
   },
   methods: {
-
+    changeMasrafData(event) {
+      console.log(event.target.value)
+    },
     dataLoad() {
 
         this.teslimTur = this.teslimTurList.find(
