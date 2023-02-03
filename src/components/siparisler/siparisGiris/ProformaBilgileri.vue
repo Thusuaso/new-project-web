@@ -291,18 +291,9 @@
           <div class="columns">
             <div class="column is-3">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="navlunSatis"
-                  :disAktif="dis_urun_giris"
-                  @input="currencyDegisim('navlunSatis', $event)"
-                  v-model="profData.navlunSatis"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
+                <MoneyInput @money_input_text_change="profData.navlunSatis = $event" :text_value="profData.navlunSatis"
+                  :disAktif="dis_urun_giris" label="Navlun Satış ($)" v-model="profData.navlunSatis" />
 
-                <label for="navlunSatis">Navlun Satış</label>
               </span>
             </div>
             <div class="column is-3">
@@ -318,17 +309,8 @@
             </div>
             <div class="column is-3">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="navlunAlis"
-                  :disAktif="dis_urun_giris"
-                  v-model="profData.navlunAlis"
-                  @input="currencyDegisim('navlunAlis', $event)"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
-                <label for="navlunAlis">Navlun Alış</label>
+                <MoneyInput @money_input_text_change="profData.navlunAlis = $event" :text_value="profData.navlunAlis"
+                  :disAktif="dis_urun_giris" label="Navlun Alış ($)" v-model="profData.navlunAlis" />
               </span>
             </div>
             <div class="column is-3">
@@ -346,18 +328,10 @@
           <div class="columns">
             <div class="column">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="digerTutar1"
-                  @input="currencyDegisim('detayTutar_1', $event)"
-                  v-model="profData.detayTutar_1"
-                  :disAktif="dis_urun_giris"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
 
-                <label for="digerTutar1">Diğer-1 Satış</label>
+                <MoneyInput @money_input_text_change="profData.detayTutar_1 = $event" :text_value="profData.detayTutar_1"
+                  :disAktif="dis_urun_giris" label="Diğer-1 Satış ($)" v-model="profData.detayTutar_1" />
+
               </span>
             </div>
             <div class="column">
@@ -374,18 +348,9 @@
             </div>
             <div class="column">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="detayAlis_1"
-                  @input="currencyDegisim('detayAlis_1', $event)"
-                  v-model="profData.detayAlis_1"
-                  :disAktif="dis_urun_giris"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
+                <MoneyInput @money_input_text_change="profData.detayAlis_1 = $event" :text_value="profData.detayAlis_1"
+                  :disAktif="dis_urun_giris" label="Diğer-1 Alış ($)" v-model="profData.detayAlis_1" />
 
-                <label for="detayAlis_1">Diğer-1 Alış</label>
               </span>
             </div>
             <div class="column">
@@ -396,6 +361,7 @@
                   v-model="profData.detayMekmarNot_1"
                   @change="veriDegisim"
                 />
+                
 
                 <label for="aciklama">Açıklama</label>
               </span>
@@ -404,18 +370,9 @@
           <div class="columns">
             <div class="column">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="detayTutar_2"
-                  @input="currencyDegisim('detayTutar_2', $event)"
-                  v-model="profData.detayTutar_2"
-                  :disAktif="dis_urun_giris"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
+                <MoneyInput @money_input_text_change="profData.detayTutar_2 = $event" :text_value="profData.detayTutar_2"
+                  :disAktif="dis_urun_giris" label="Diğer-2 Satış ($)" v-model="profData.detayTutar_2" />
 
-                <label for="detayTutar_2">Diğer-2 Satış</label>
               </span>
             </div>
             <div class="column">
@@ -432,18 +389,10 @@
             </div>
             <div class="column">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="detayAlis_2"
-                  @input="currencyDegisim('detayAlis_2', $event)"
-                  v-model="profData.detayAlis_2"
-                  :disAktif="dis_urun_giris"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
 
-                <label for="detayAlis_2">Diğer-2 Alış</label>
+                <MoneyInput @money_input_text_change="profData.detayAlis_2 = $event" :text_value="profData.detayAlis_2"
+                  :disAktif="dis_urun_giris" label="Diğer-2 Alış ($)" v-model="profData.detayAlis_2" />
+
               </span>
             </div>
             <div class="column">
@@ -462,18 +411,10 @@
           <div class="columns">
             <div class="column">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="detayTutar_3"
-                  @input="currencyDegisim('detayTutar_3', $event)"
-                  v-model="profData.detayTutar_3"
-                  :disAktif="dis_urun_giris"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
 
-                <label for="detayTutar_3">Diğer-3 Satış</label>
+                <MoneyInput @money_input_text_change="profData.detayTutar_3 = $event" :text_value="profData.detayTutar_3"
+                  :disAktif="dis_urun_giris" label="Diğer-3 Satış ($)" v-model="profData.detayTutar_3" />
+
               </span>
             </div>
             <div class="column">
@@ -490,18 +431,10 @@
             </div>
             <div class="column">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="detayAlis_3"
-                  @input="currencyDegisim('detayAlis_3', $event)"
-                  v-model="profData.detayAlis_3"
-                  :disAktif="dis_urun_giris"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
 
-                <label for="detayAlis_3">Diğer-3 Alış</label>
+                <MoneyInput @money_input_text_change="profData.detayAlis_3 = $event" :text_value="profData.detayAlis_3"
+                  :disAktif="dis_urun_giris" label="Diğer-3 Alış ($)" v-model="profData.detayAlis_3" />
+
               </span>
             </div>
             <div class="column">
@@ -519,18 +452,9 @@
           <div class="columns">
             <div class="column is-6">
               <span class="p-float-label">
-                <InputNumber
-                  class="p-inputtext-sm"
-                  id="detayTutar_4"
-                  @input="currencyDegisim('detayTutar_4', $event)"
-                  v-model="profData.detayTutar_4"
-                  :disabled="diger_4"
-                  mode="currency"
-                  currency="USD"
-                  locale="jp-JP"
-                />
+                <MoneyInput @money_input_text_change="profData.detayTutar_4 = $event" :text_value="profData.detayTutar_4"
+                  :disAktif="dis_urun_giris" label="Mekus Masrafı" v-model="profData.detayTutar_4" />
 
-                <label for="detayTutar_4">Mekus Masrafı</label>
               </span>
             </div>
             
@@ -539,18 +463,18 @@
           <div class=columns>
             <div class="column is-6">
               <span class="p-float-label">
-                <InputNumber class="p-inputtext-sm" id="sigorta_tutar_satis" 
-                  v-model="profData.sigorta_tutar_satis" :disabled="sigorta_tutar" mode="currency" currency="USD" locale="jp-JP" />
-            
-                <label for="sigorta_tutar_satis">Sigorta Satış</label>
+
+
+                <MoneyInput @money_input_text_change="profData.sigorta_tutar_satis = $event" :text_value="profData.sigorta_tutar_satis"
+                  :disAktif="sigorta_tutar" label="Sigorta Satış" v-model="profData.sigorta_tutar_satis" />
               </span>
             </div>
             <div class="column is-6">
               <span class="p-float-label">
-                <InputNumber class="p-inputtext-sm" id="sigorta_tutar" @input="currencyDegisim('sigorta_tutar', $event)"
-                  v-model="profData.sigorta_tutar" :disabled="sigorta_tutar" mode="currency" currency="USD" locale="jp-JP" />
-            
-                <label for="sigorta_tutar">Sigorta Alış</label>
+
+                <MoneyInput @money_input_text_change="profData.sigorta_tutar = $event" :text_value="profData.sigorta_tutar"
+                  :disAktif="sigorta_tutar" label="Sigorta Alış" v-model="profData.sigorta_tutar" />
+
               </span>
             </div>
           </div>
@@ -569,6 +493,8 @@ import CustomInputFile from "../../../components/shared/CustomInputFile";
 import fileService from "../../../service/FileService";
 import { required } from "@vuelidate/validators";
 import { mapGetters } from "vuex";
+import MoneyInput from "@/components/shared/moneyInput2"
+
 export default {
   computed: {
     ...mapGetters([
@@ -582,7 +508,7 @@ export default {
   },
   components: {
     customFileInput: CustomInputFile,
-
+    MoneyInput
     // CurrencyInput2: CurrencyInput2,
   },
 
@@ -656,7 +582,6 @@ export default {
     ) {
       this.dis_sigorta = false;
     }
-    console.log(this.profData)
     
   },
   mounted() {
@@ -675,6 +600,7 @@ export default {
     
   },
   methods: {
+
     dataLoad() {
 
         this.teslimTur = this.teslimTurList.find(

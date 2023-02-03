@@ -64,7 +64,7 @@
         <Button
           :disabled="slk_enb_mekmer_dis"
           @click="btn_mekmer_dis_click"
-          label="Mekmar Dış"
+          label="Mekmer Dış"
           class="p-button-info p-button-sm"
           style="width: 100px"
         />
