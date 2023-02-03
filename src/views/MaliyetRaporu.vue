@@ -1547,11 +1547,11 @@ export default {
       this.yil_listesi = yil_list;
       const now = new Date();
       const year = now.getFullYear();
-      const month = now.getMonth() + 1
+      const month = now.getMonth()
       this.is_hepsi = false;
-
       this.select_yil = this.yil_listesi.find((x) => x.yil == year);
       service.getMaliyetAyListesi(this.select_yil.yil).then((ay_list) => {
+        console.log("ay_list",ay_list)
         this.ay_listesi = ay_list;
 
         this.select_ay = ay_list.find((x) => x.ay == month );
@@ -1659,6 +1659,7 @@ export default {
     maliyet_listesi_yukle() {
       this.select_faturalama = { fatura: "Hepsi" };
       this.$store.dispatch("datatableLoadingBeginAct");
+      console.log(this.select_ay)
       service
         .getMaliyetRapor(this.select_yil.yil, this.select_ay.ay)
         .then((data) => {
