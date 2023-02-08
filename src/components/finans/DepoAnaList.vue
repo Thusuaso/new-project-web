@@ -1,27 +1,17 @@
 <template>
-  <section>
-    <div class="columns is-multiline is-centered">
-        <DataTable
-          :value="depo_ana_list"
-          selectionMode="single"
-          v-model:selection="select_depo"
-          dataKey="id"
-          @row-select="depo_item_sec($event)"
-          :loading="datatableLoading"
-        >
+    <div class="grid">
+      <div class="col">
+        <DataTable :value="depo_ana_list" selectionMode="single" v-model:selection="select_depo" dataKey="id"
+          @row-select="depo_item_sec($event)" :loading="datatableLoading">
           <template #header>
-                <span style="font-size: 15px"> Atlanta SM Alacak Listesi </span>
+            <span style="font-size: 15px"> Atlanta SM Alacak Listesi </span>
           </template>
           <Column field="musteriadi" header="Müşteri">
             <template #body="slotProps">
               {{ slotProps.data.musteriadi }}
             </template>
           </Column>
-          <Column
-            field="ciro"
-            header="Satış Tutar"
-            bodyStyle="text-align:center;"
-          >
+          <Column field="ciro" header="Satış Tutar" bodyStyle="text-align:center;">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.ciro) }}
             </template>
@@ -29,12 +19,8 @@
               {{ formatPrice(depo_ana_toplam_ciro) }}
             </template>
           </Column>
-          <Column
-            field="odenen"
-            header="Ödenen"
-            headerStyle="background-color:#7aa998;color:black"
-            bodyStyle="text-align:center;"
-          >
+          <Column field="odenen" header="Ödenen" headerStyle="background-color:#7aa998;color:black"
+            bodyStyle="text-align:center;">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.odenen) }}
             </template>
@@ -42,11 +28,7 @@
               {{ formatPrice(depo_ana_toplam_odenen) }}
             </template>
           </Column>
-          <Column
-            field="bakiye"
-            header="Genel Bakiye"
-            bodyStyle="text-align:center; font-weight:bold;"
-          >
+          <Column field="bakiye" header="Genel Bakiye" bodyStyle="text-align:center; font-weight:bold;">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.bakiye) }}
             </template>
@@ -55,19 +37,12 @@
             </template>
           </Column>
         </DataTable>
-      <Dialog
-        v-model:visible="is_form"
-        v-model:header="form_baslik"
-        maximizable
-        :modal="true"
-        position="top"
-      >
-        <section>
-          <DepoAyrintiList />
-        </section>
-      </Dialog>
+      </div>
     </div>
-  </section>
+
+    <Dialog v-model:visible="is_form" v-model:header="form_baslik" maximizable :modal="true" position="top">
+        <DepoAyrintiList />
+    </Dialog>
 </template>
 <script>
 import { mapGetters } from "vuex";

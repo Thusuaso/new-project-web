@@ -153,7 +153,7 @@
         </div>
       </div>
     </div>
-    <div class="column is-4">
+    <div class="column is-4" style="margin-top:-11px;">
       <div class="columns">
         <div class="column">
           <Card>
@@ -206,7 +206,7 @@
           </Card>
         </div>
       </div>
-      <div class="columns">
+      <div class="columns" style="margin-top:-25px;">
         <div class="column">
           <Card>
             <template #content>
@@ -310,11 +310,11 @@
           </Card>
         </div>
       </div>
-      <div class="columns">
+      <div class="columns" style="margin-top:-25px;">
         <div class="column">
-          <Card>
+          <Card style="height:100px;">
             <template #content>
-              <div class="columns">
+              <div class="columns" style="margin-top:-35px;">
                 <div class="column">
                   <Checkbox
                     v-model="detail.kutu"
@@ -356,7 +356,7 @@
         </div>
       </div>
     </div>
-    <div class="column is-4">
+    <div class="column is-4" style="margin-top:-11px;">
       <Card>
         <template #content>
           <div class="columns">
@@ -427,7 +427,7 @@
       </Card>
     </div>
   </div>
-  <div class="columns">
+  <div class="columns" style="margin-top:-30px;">
     <div class="column">
       <Button
         class="p-button-primary"
@@ -1154,7 +1154,7 @@ export default {
 
         //ürün kartı bilgisini göndermek için
 
-        this.urunkart_change_event(item.urunkart_id);
+      this.urunkart_change_event(item.urunkart_id);
         if (item.urunkart_id == this.detail.urunkartid) {
           if (item) {
             
@@ -1165,6 +1165,14 @@ export default {
             this.detail.tedarikciid = this.seleksiyon_tedarikcilist.find(
               (x) => x.name == item.tedarikci
             ).id;
+            this.auto_ocak_selected(this.detail.urunadi, this.detail.tedarikciid)
+
+
+
+
+
+
+
 
             
             this.urunbirim = this.seleksiyon_urunbirimlist.find(
@@ -1186,6 +1194,8 @@ export default {
               this.detail.tedarikciid = this.seleksiyon_tedarikcilist.find(
                 (x) => x.name == item.tedarikci
               ).id;
+
+              this.auto_ocak_selected(this.detail.urunadi, this.detail.tedarikciid)
               
               
               
@@ -1273,13 +1283,36 @@ export default {
         this.en = urun_kart.en;
         this.boy = urun_kart.boy;
         this.detail.urunkartid = event;
+
+
+
+
+
+
       } else {
         this.detail.kategoriadi = "";
         this.detail.ebat = "";
         this.detail.urunadi = "";
         this.detail.kenarislem = "";
       }
+
+
+
     },
+    auto_ocak_selected(urun_adi, tedarikci_id) {
+      if (this.kayitstatu) {
+        if (tedarikci_id == 1 || tedarikci_id == 123) {
+          this.auto_ocak_list()
+
+        }
+
+      }
+    },
+    auto_ocak_list(ocak_id) {
+      this.ocak = this.seleksiyon_ocaklist.find(
+        (x) => x.id == ocak_id
+      );
+    }
   },
   created() {
     this.localService = new LocalService();

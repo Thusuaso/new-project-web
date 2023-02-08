@@ -18,75 +18,21 @@
                 :class="{ 'p-invalid': v$.tedarikci.$invalid && submitted }"
               >
               </AutoComplete>
-              <!-- <AutoComplete
-                :disabled="dis_urun_giris"
-                :dropdown="true"
-                placeholder="Tedarikçi"
-                @click="sec"
-                v-model="tedarikci"
-                :suggestions="filterTedarikciList"
-                @complete="aramaTedarikci($event)"
-                optionLabel="firmaAdi"
-              /> -->
-            </div>
+                          </div>
             <div class="column">
-              <!-- <span class="p-float-label">
-                <InputNumber
-                  id="alisFiyati"
-                  class="p-inputtext-sm"
-                  :disabled="dis_urun_giris"
-                  @input="siparis.alisFiyati = $event.value"
-                  showButtons
-                  v-model="alisFiyati"
-                  mode="currency"
-                  :maxFractionDigits="10"
-                  currency="USD"
-                  :class="{
-                    'p-invalid': v$.siparis.alisFiyati.$invalid && submitted,
-                  }"
-                />
-                <label for="alisFiyati">Alış Fiyatı ($)</label>
-              </span> -->
+              
               <MoneyInput @money_input_text_change="siparis.alisFiyati = $event" :text_value="siparis.alisFiyati"
                 :disAktif="dis_urun_giris" label="Alış Fiyatı ($)" v-model="alis_Fiyati" />
             </div>
           </div>
           <div class="columns is-gapless">
             <div class="column">
-              <!-- <span class="p-float-label">
-                <InputNumber
-                  id="alisFiyatiTl"
-                  class="p-inputtext-sm"
-                  @input="siparis.alisFiyati_TL = $event.value"
-                  v-model="alisFiyati_TL"
-                  showButtons
-                  mode="currency"
-                  currency="USD"
-                  :disabled="dis_urun_giris"
-                />
-                <label for="alisFiyatiTl">Alış Fiyatı (TL)</label>
-              </span> -->
+              
               <MoneyInput @money_input_text_change="siparis.alisFiyati_TL = $event" :text_value="siparis.alisFiyati_TL"
                 :disAktif="dis_urun_giris" :label="'Alış Fiyatı (TL)'" />
             </div>
             <div class="column">
-              <!-- <span class="p-float-label">
-                <InputNumber
-                  id="satisFiyati"
-                  class="p-inputtext-sm"
-                  @input="is_satis"
-                  showButtons
-                  v-model="satisFiyati"
-                  mode="currency"
-                  :maxFractionDigits="10"
-                  currency="USD"
-                  :disabled="dis_urun_giris"
-                  :class="{
-                    'p-invalid': v$.siparis.satisFiyati.$invalid && submitted,
-                  }"
-                />
-                <label for="satisFiyati">Satış Fiyati ($)</label>
-              </span> -->
+             
               <MoneyInput @money_input_text_change="siparis.satisFiyati = $event" :text_value="siparis.satisFiyati"
                 :disAktif="dis_urun_giris" :label="'Satış Fiyati ($)'" />
             </div>

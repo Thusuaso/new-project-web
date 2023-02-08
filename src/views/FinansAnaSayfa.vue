@@ -1,92 +1,47 @@
 <template>
-    <div class="columns is-multiline">
-      <div class="column is-3">
+
+    <div class="grid">
+      <div class="col">
         <Checkbox @change="konteynerHepsiEvent" v-model="konteyner_list_hepsi" :binary="true" />
         Hepsi
       </div>
-      <div class="columns">
-        <div class="column is-3">
-          <Button
-            class="p-button-primary"
-            label="Tahsilat"
-            @click="tahsilat_liste_ac_click"
-          />
-          <Dialog
-            v-model:visible="is_tahsilat"
-            header="TAHSİLAT LİSTESİ"
-            :modal="true"
-            maximizable
-            position="top"
-          >
-
-                <div
-                  class="columns"
-                  style="height: 800px; background-color: white"
-                >
-                  <div
-                    class="column is-12"
-                    style="height: 800px; background-color: white"
-                  >
-                    <MusteriOdemeler />
-                  </div>
-                </div>
-          </Dialog>
-        </div>
-        <div class="column is-3">
-          <Button
-            style="background-color: #7aa998"
-            @click="pesinat_event_click"
-            label="Peşinat"
-            class="p-button-primary"
-          />
-        </div>
-        <div class="column is-6">
-          <Button  @click="maya_gelen_bedeller" label="Maya Gelen Bedeller" class="p-button-warning" />
-        </div>
+      <div class="col">
+        <Button class="p-button-primary" label="Tahsilat" @click="tahsilat_liste_ac_click" />
       </div>
-      
-      <div class="column is-3">
-        <div class="columns is-multiline is-right">
-          <div class="column is-3">
+      <div class="col">
+        <Button style="background-color: #7aa998" @click="pesinat_event_click" label="Peşinat" class="p-button-primary" />
+      </div>
+      <div class="col">
+                  <Button @click="maya_gelen_bedeller" label="Maya Gelen Bedeller" class="p-button-warning" />
+      </div>
+      <div class="col-1">
+        <div class="grid">
+          <div class="col">
             <RadioButton v-model="excel_cikti" value="konteyner" /> Konteynır
           </div>
-          <div class="column is-2">
+        </div>
+        <div class="grid">
+          <div class="col">
             <RadioButton v-model="excel_cikti" value="depo" />Depo
           </div>
-          <div class="column is-2">
-            <Button
-              @click="excel_cikti_click"
-              style="background-color: #609377; color: white; margin-top: -10px"
-              label="Excel"
-              class="p-button-primary"
-            />
-          </div>
         </div>
+      </div>
+      <div class="col">
+        <Button @click="excel_cikti_click" style="background-color: #609377; color: white;" label="Excel"
+          class="p-button-primary" />
       </div>
     </div>
 
-    <div class="columns">
-      <div class="column is-9">
-        <DataTable
-          :value="
-            !konteyner_list_hepsi
-              ? konteyner_ana_list_filter
-              : konteyner_ana_list_all
-          "
-          sortField="genel_bakiye"
-          dataKey="id"
-          :sortOrder="-1"
-          :scrollable="true" 
-          scrollHeight="800px"
-          v-model:filters="filters"
-          filterDisplay="row"
-          @filter="siparisFilterDegisim($event)"
-          selectionMode="single"
-          v-model:selection="select_konteyner"
-          ref="finans_ana_liste"
-          @row-select="konteyner_item_select($event)"
-          :loading="datatableLoading"
-        >
+    <div class="grid">
+      <div class="col-8">
+        <DataTable :value="
+                    !konteyner_list_hepsi
+                      ? konteyner_ana_list_filter
+                      : konteyner_ana_list_all
+                  " sortField="genel_bakiye" dataKey="id" :sortOrder="-1" :scrollable="true" scrollHeight="800px"
+          v-model:filters="filters" filterDisplay="row" @filter="siparisFilterDegisim($event)" selectionMode="single"
+          v-model:selection="select_konteyner" ref="finans_ana_liste" @row-select="konteyner_item_select($event)"
+          :loading="datatableLoading">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -94,35 +49,22 @@
               </div>
             </div>
           </template>
-          <Column
-            field="musteriadi"
-            headerStyle="width:16.6%;"
-            :bodyStyle="{ fontSize: isMobile, paddingLeft: '20px' }"
-            :showFilterMenu="false"
-          >
+          <Column field="musteriadi" headerStyle="width:16.6%;" :bodyStyle="{ fontSize: isMobile, paddingLeft: '20px' }"
+            :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.musteriadi }}
             </template>
             <template #filter="{filterModel,filterCallback}">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
                 :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-
-          <Column
-            header="Açık Po Fatura Toplamı"
-            field="ciro"
-            headerStyle="width:16.6%;"
-            :bodyStyle="{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: isMobile,
-            }"
-          >
+        
+          <Column header="Açık Po Fatura Toplamı" field="ciro" headerStyle="width:16.6%;" :bodyStyle="{
+                      textAlign: 'center',
+                      color: 'black',
+                      fontSize: isMobile,
+                    }">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.kapanmayan_siparis) }}
             </template>
@@ -130,16 +72,11 @@
               {{ formatPrice(yeni_yukleme) }}
             </template>
           </Column>
-          <Column
-            header="Açık Po için Ödemeler"
-            field="odenen"
-            headerStyle="width:16.6%;"
-            :bodyStyle="{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: isMobile,
-            }"
-          >
+          <Column header="Açık Po için Ödemeler" field="odenen" headerStyle="width:16.6%;" :bodyStyle="{
+                      textAlign: 'center',
+                      color: 'black',
+                      fontSize: isMobile,
+                    }">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.kapanmayan_odenen) }}
             </template>
@@ -147,17 +84,11 @@
               {{ formatPrice(yeni_odenen) }}
             </template>
           </Column>
-          <Column
-            header="Açık Po için Kalan Alacak"
-            field="bakiye"
-            :sortable="true"
-            headerStyle="width:16.6%;"
-            :bodyStyle="{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: isMobile,
-            }"
-          >
+          <Column header="Açık Po için Kalan Alacak" field="bakiye" :sortable="true" headerStyle="width:16.6%;" :bodyStyle="{
+                      textAlign: 'center',
+                      color: 'black',
+                      fontSize: isMobile,
+                    }">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.kapanmayan_kalan) }}
             </template>
@@ -165,35 +96,28 @@
               {{ formatPrice(yuklemeden_alacak) }}
             </template>
           </Column>
-          <Column
-            header="Yüklenmemiş Order Peşinatı"
-            field="pesinat"
-            headerStyle="width:16.6%;font-size:8.5px;"
-            :bodyStyle="{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: isMobile,
-            }"
-          >
+          <Column header="Yüklenmemiş Order Peşinatı" field="pesinat" headerStyle="width:16.6%;font-size:8.5px;" :bodyStyle="{
+                      textAlign: 'center',
+                      color: 'black',
+                      fontSize: isMobile,
+                    }">
             <template #body="slotProps">
               <!--   <div :style="{'background-color' : slotProps.data.pesinat >10 || slotProps.data.pesinat <-8 ? '#7aa998'  : ''}">
-                                        {{formatPrice(slotProps.data.pesinat)}}
-                                    </div>
-                                 -->
-              <div
-                :class="
-                  slotProps.data.pesinat > 10 ||
-                  slotProps.data.eski_pesinat > 10 ||
-                  (slotProps.data.pesinat < -8 &&
-                    slotProps.data.genel_bakiye < -8)
-                    ? 'genel_bakiye_style'
-                    : ''
-                "
-              >
+                                                {{formatPrice(slotProps.data.pesinat)}}
+                                            </div>
+                                         -->
+              <div :class="
+                          slotProps.data.pesinat > 10 ||
+                          slotProps.data.eski_pesinat > 10 ||
+                          (slotProps.data.pesinat < -8 &&
+                            slotProps.data.genel_bakiye < -8)
+                            ? 'genel_bakiye_style'
+                            : ''
+                        ">
                 {{
-                  formatPrice(
-                    slotProps.data.pesinat + slotProps.data.eski_pesinat
-                  )
+                formatPrice(
+                slotProps.data.pesinat + slotProps.data.eski_pesinat
+                )
                 }}
               </div>
             </template>
@@ -201,35 +125,23 @@
               {{ formatPrice(yeni_pesinat) }}
             </template>
           </Column>
-          <Column
-            header="RİSK BAKİYE"
-            field="genel_bakiye"
-            :sortable="true"
-            headerStyle="width:16.6%;"
-            :bodyStyle="{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: isMobile,
-              fontWeight: 'bold',
-            }"
-          >
+          <Column header="RİSK BAKİYE" field="genel_bakiye" :sortable="true" headerStyle="width:16.6%;" :bodyStyle="{
+                      textAlign: 'center',
+                      color: 'black',
+                      fontSize: isMobile,
+                      fontWeight: 'bold',
+                    }">
             <template #body="slotProps">
               <!--
-                                    <div
-                                        :class="slotProps.data.genel_bakiye < -8 ? 'genel_bakiye_style' : 'genel_bakiye_style2'">
-                                        {{formatPrice(slotProps.data.genel_bakiye)}}
-                                    </div>
-                                -->
-              <div
-                v-if="slotProps.data.genel_bakiye < -8"
-                class="genel_bakiye_style"
-              >
+                                            <div
+                                                :class="slotProps.data.genel_bakiye < -8 ? 'genel_bakiye_style' : 'genel_bakiye_style2'">
+                                                {{formatPrice(slotProps.data.genel_bakiye)}}
+                                            </div>
+                                        -->
+              <div v-if="slotProps.data.genel_bakiye < -8" class="genel_bakiye_style">
                 {{ formatPrice(slotProps.data.genel_bakiye) }}
               </div>
-              <div
-                v-else-if="slotProps.data.genel_bakiye > 8"
-                class="genel_bakiye_style2"
-              >
+              <div v-else-if="slotProps.data.genel_bakiye > 8" class="genel_bakiye_style2">
                 {{ formatPrice(slotProps.data.genel_bakiye) }}
               </div>
               <div v-else class="genelClassRisk">
@@ -242,14 +154,19 @@
           </Column>
         </DataTable>
       </div>
-
-      <div class="column is-3">
-        <DepoAnaList />
-        <VadeliAlacaklar />
+      <div class="col-4">
+        <div class="grid">
+          <div class="col">
+            <DepoAnaList />
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col">
+            <VadeliAlacaklar />
+          </div>
+        </div>
       </div>
-
     </div>
-
     <Dialog v-model:visible="isKonteyner" v-model:header="konteynerBaslik" :modal="true" maximizable position="top" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '95vw'}">
       <FinansAyrintiList />
     </Dialog>
@@ -270,82 +187,99 @@
       maximizable
       position="top"
     >
-    
-    <div class="columns">
-      <div class="column is-4">
-           <Dropdown v-model="selected_year_maya" :options="years" optionLabel="year" placeholder="Select a Year" @change="selectedYearMaya"/>
+    <div class="grid">
+      <div class="col">
+        <Dropdown v-model="selected_year_maya" :options="years" optionLabel="year" placeholder="Select a Year"
+          @change="selectedYearMaya" />
 
       </div>
-      <div class="column is-4">
-            <Dropdown v-model="selected_month_maya" :options="months" optionLabel="month_name" placeholder="Select a Month" @change="selectedMonthMaya"/>
-
+      <div class="col">
+        <Dropdown v-model="selected_month_maya" :options="months" optionLabel="month_name" placeholder="Select a Month"
+          @change="selectedMonthMaya" />
       </div>
-      <div class="column is-4">
-          <Button class="p-button-primary" @click="cikti_al2" label="EXCELL" />
+      <div class="col">
+        <Button class="p-button-primary" @click="cikti_al2" label="EXCELL" />
       </div>
     </div>
 
 
-    <DataTable :value="maya_gelen_bedeller_sip_list" responsiveLayout="scroll" v-if="maya_gelen_bedeller_sip_list.length>0">
-      <template #header>
-        <div class="table-header">
-          Gelen Sipariş Bedelleri
-        </div>
-      </template>
-      <Column field="tarih" header="Tarih"></Column>
-      <Column field="po" header="PO"></Column>
-      <Column field="tutar" header="Tutar($)">
-        <template #body="slotProps">
-          {{ formatPrice(slotProps.data.tutar) }}
-        </template>
-        <template #footer>
-          {{ formatPrice(sipTopBedel) }}
-        </template>
-      </Column>
-      <Column field="masraf" header="Masraf($)">
-        <template #body="slotProps">
-          {{ formatPrice(slotProps.data.masraf) }}
-        </template>
-        <template #footer>
-          {{ formatPrice(sipTopMasraf) }}
-        </template>
-      </Column>
-
-    </DataTable>
-    <br/>
-    <DataTable :value="maya_gelen_bedeller_num_list" responsiveLayout="scroll" v-if="maya_gelen_bedeller_num_list.length>0">
-
-      <template #header>
-        <div class="table-header">
-          Gelen Numune Bedelleri
-        </div>
-      </template>
-      <Column field="tarih" header="Gelen Bedel Tarihi"></Column>
-      <Column field="numuneTarihi" header="Gönderilme Tarihi"></Column>
-      <Column field="numuneYuklemeTarihi" header="Teslim Tarihi"></Column>
-
-      <Column field="banka" header="Banka"></Column>
-      <Column field="musteriAdi" header="Müşteri Adı"></Column>
-      <Column field="po" header="PO"></Column>
-      <Column field="tutar" header="Tutar($)">
-        <template #body="slotProps">
-          {{ formatPrice(slotProps.data.tutar) }}
-        </template>
-        <template #footer>
-          {{ formatPrice(numuneTopBedel) }}
-        </template>
-      </Column>
-      <Column field="masraf" header="Masraf($)">
-          <template #body="slotProps">
-            {{ formatPrice(slotProps.data.masraf) }}
+    <div class="grid">
+      <div class="col" v-if="maya_gelen_bedeller_sip_list.length>0">
+        <DataTable :value="maya_gelen_bedeller_sip_list" responsiveLayout="scroll" >
+          <template #header>
+            <div class="table-header">
+              Gelen Sipariş Bedelleri
+            </div>
           </template>
-          <template #footer>
-            {{ formatPrice(numuneTopMasraf) }}
+          <Column field="tarih" header="Tarih"></Column>
+          <Column field="po" header="PO"></Column>
+          <Column field="tutar" header="Tutar($)">
+            <template #body="slotProps">
+              {{ formatPrice(slotProps.data.tutar) }}
+            </template>
+            <template #footer>
+              {{ formatPrice(sipTopBedel) }}
+            </template>
+          </Column>
+          <Column field="masraf" header="Masraf($)">
+            <template #body="slotProps">
+              {{ formatPrice(slotProps.data.masraf) }}
+            </template>
+            <template #footer>
+              {{ formatPrice(sipTopMasraf) }}
+            </template>
+          </Column>
+        
+        </DataTable>
+      </div>
+      <div class="col" v-if="maya_gelen_bedeller_num_list.length>0">
+        <DataTable :value="maya_gelen_bedeller_num_list" responsiveLayout="scroll" >
+        
+          <template #header>
+            <div class="table-header">
+              Gelen Numune Bedelleri
+            </div>
           </template>
-      </Column>
+          <Column field="tarih" header="Gelen Bedel Tarihi"></Column>
+          <Column field="numuneTarihi" header="Gönderilme Tarihi"></Column>
+          <Column field="numuneYuklemeTarihi" header="Teslim Tarihi"></Column>
+        
+          <Column field="banka" header="Banka"></Column>
+          <Column field="musteriAdi" header="Müşteri Adı"></Column>
+          <Column field="po" header="PO"></Column>
+          <Column field="tutar" header="Tutar($)">
+            <template #body="slotProps">
+              {{ formatPrice(slotProps.data.tutar) }}
+            </template>
+            <template #footer>
+              {{ formatPrice(numuneTopBedel) }}
+            </template>
+          </Column>
+          <Column field="masraf" header="Masraf($)">
+            <template #body="slotProps">
+              {{ formatPrice(slotProps.data.masraf) }}
+            </template>
+            <template #footer>
+              {{ formatPrice(numuneTopMasraf) }}
+            </template>
+          </Column>
+        
+        </DataTable>
+      </div >
+    </div>
+
+
     
-    </DataTable>
+    
 
+    </Dialog>
+    <Dialog v-model:visible="is_tahsilat" header="TAHSİLAT LİSTESİ" :modal="true" maximizable position="top">
+    
+      <div class="columns" style="height: 800px; background-color: white">
+        <div class="column is-12" style="height: 800px; background-color: white">
+          <MusteriOdemeler />
+        </div>
+      </div>
     </Dialog>
 
 </template>

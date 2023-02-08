@@ -1,34 +1,28 @@
 <template>
-  <div>
-      <div class="columns">
-        <div class="column">
-          <b-field label="Bgp Proje Adı" label-position="on-border">
-            <InputText
-              type="text"
-              v-model="bpgProjeAdi"
-              :class="{ 'p-invalid': v$.bpgProjeAdi.$invalid && submitted }"
-            ></InputText>
-          </b-field>
-        </div>
-        <div class="column">
-          <b-field label="ÜLKE" label-position="on-border">
-            <AutoComplete
-              v-model="bgpUlkeAdi"
-              :suggestions="filter_ulke_list"
-              @complete="ulke_complete_event($event)"
-              field="ulke_adi"
-              :class="{ 'p-invalid': v$.bgpUlkeAdi.$invalid && submitted }"
-            />
-          </b-field>
-        </div>
+  <br/>
+    <div class="grid">
+      <div class="col">
+        <span class="p-float-label">
+          <InputText id="projectName" type="text" v-model="bpgProjeAdi" :class="{ 'p-invalid': v$.bpgProjeAdi.$invalid && submitted }" />
+          <label for="projectName">Bgp Proje Adı</label>
+        </span>
       </div>
+      <div class="col">
+        <span class="p-float-label">
+          <AutoComplete id="ulke_adi" v-model="bgpUlkeAdi" :suggestions="filter_ulke_list" @complete="ulke_complete_event($event)"
+            field="ulke_adi" :class="{ 'p-invalid': v$.bgpUlkeAdi.$invalid && submitted }" />
+          <label for="ulke_adi">Ülke</label>
+        </span>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <Button @click="bgpProjeKayit" label="Kaydet" :disabled="is_save_disabled" />
+      </div>
+    </div>
 
-      <Button
-        @click="bgpProjeKayit"
-        label="Kaydet"
-        :disabled="is_save_disabled"
-      ></Button>
-  </div>
+
+      
 </template>
 <script>
 import bgpService from "@/service/BgpProjectService";

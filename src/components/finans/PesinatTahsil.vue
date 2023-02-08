@@ -1,69 +1,56 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <section>
-    <br />
-      <div class="columns">
-        <div class="column">
-          <Calendar icon="calendar-today" @date-select="kurSecim" v-model="tarih" :disabled="is_form" />
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <InputText id="siparis_no" v-model="pesinat_model.siparis_no" :disabled="true" />
-            <label for="siparis_no">Sipariş No</label>
-          </span>
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <InputText id="tutar" v-model="pesinat_model.tutar" :disabled="is_form" />
-            <label for="tutar">Tutar</label>
-          </span>
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <InputText id="kur" v-model="pesinat_model.kur" :disabled="is_form" />
-            <label for="kur">Kur</label>
-          </span>
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <InputText id="masraf" v-model="pesinat_model.masraf" :disabled="is_form" />
-            <label for="masraf">Masraf</label>
-          </span>
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <InputText id="not" type="text" v-model="pesinat_model.aciklama" />
-            <label for="not">Not</label>
-          </span>
-        </div>
-      </div>
-    <div class="columns is-multiline is-centered">
-      <div class="column is-2">
-        <Button
-          class="p-button-success"
-          :disabled="is_kaydet"
-          @click="kaydet_click_event"
-          label="Kaydet"
-        />
-      </div>
-      <div class="column is-2">
-        <Button
-          class="p-button-info"
-          :disabled="is_vazgec"
-          @click="vazgec_click_event"
-          label="Vazgeç"
-        />
-      </div>
+  <br/>
+  <div class="grid">
+    <div class="col" >
+      <Calendar icon="calendar-today" @date-select="kurSecim" v-model="tarih" :disabled="is_form" />
     </div>
-    <div class="columns">
-      <div class="column is-10">
-        
-        <DataTable
-          :value="pesinat_islem_listesi"
-          @row-select="tahsilat_select_event($event)"
-          v-model:selection="select_pesinat"
-          selectionMode="single"
-        >
+    <div class="col" >
+      <span class="p-float-label">
+        <InputText id="siparis_no" v-model="pesinat_model.siparis_no" :disabled="true" />
+        <label for="siparis_no">Sipariş No</label>
+      </span>
+
+    </div>
+    <div class="col" >
+      <span class="p-float-label">
+        <InputText id="tutar" v-model="pesinat_model.tutar" :disabled="is_form" />
+        <label for="tutar">Tutar</label>
+      </span>
+    </div>
+    <div class="col" >
+      <span class="p-float-label">
+        <InputText id="kur" v-model="pesinat_model.kur" :disabled="is_form" />
+        <label for="kur">Kur</label>
+      </span>
+    </div>
+    <div class="col" >
+        <span class="p-float-label">
+          <InputText id="masraf" v-model="pesinat_model.masraf" :disabled="is_form" />
+          <label for="masraf">Masraf</label>
+        </span>
+    </div>
+    <div class="col" >
+      <span class="p-float-label">
+        <InputText id="not" type="text" v-model="pesinat_model.aciklama" />
+        <label for="not">Not</label>
+      </span>
+    </div>
+  </div>
+  <br/>
+  <div class="grid">
+    <div class="col-6">
+      <Button class="p-button-success" :disabled="is_kaydet" @click="kaydet_click_event" label="Kaydet" />
+    </div>
+    <div class="col-6">
+      <Button class="p-button-info" :disabled="is_vazgec" @click="vazgec_click_event" label="Vazgeç" />
+    </div>
+  </div>
+  <br/>
+  <div class="grid">
+    <div class="col">
+        <DataTable :value="pesinat_islem_listesi" @row-select="tahsilat_select_event($event)" v-model:selection="select_pesinat"
+          selectionMode="single">
           <Column field="musteri_adi" header="Müşteri Adı"> </Column>
           <Column field="siparis_no" header="Sipariş No"> </Column>
           <Column field="tutar" header="Tutar">
@@ -75,9 +62,8 @@
             </template>
           </Column>
         </DataTable>
-      </div>
     </div>
-  </section>
+  </div>
 </template>
 <script>
 import { mapGetters } from "vuex";

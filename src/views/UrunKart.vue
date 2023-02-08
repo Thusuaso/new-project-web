@@ -1,179 +1,93 @@
 <template>
-  <div class="p-fluid">
-    <div class="p-grid p-justify-center">
-      <div class="p-lg-1" >
-        <Button
-          label="Yeni Kart"
-          iconPos="left"
-          icon="fas fa-notes-medical"
-          class="customButton"
-          @click="yeniKartAc"
-          :disabled="disYeni"
-        />
-      </div>
-      
-    </div>
-    <div class="columns" >
-      <div class="column is-12">
-        <DataTable
-          v-model:value="getUrunKartMenuList"
-          v-model:selection="selectUrunKart"
-          selectionMode="single"
-          dataKey="id"
-          :paginator="true" 
-          :rows="15"
-          v-model:filters="filters"
-          @row-select="urunKartDetayAc"
-          filterDisplay="menu"
-          :scrollable="true" 
-          scrollHeight="700px"
-          :loading="datatableLoading"
-        >
-          <Column
-            field="id"
-            header="No"
-            headerStyle="width: 100px;"
-            bodyStyle="text-align: center;"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.id }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Id"
-              />
-            </template>
-          </Column>
-          <Column
-            field="kategoriAdi"
-            header="Kategori"
-            headerStyle="width: 150px"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.kategoriAdi }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Category"
-              />
-            </template>
-          </Column>
-          <Column field="urunAdi" header="Ürün" >
-            <template #body="slotProps">
-              {{ slotProps.data.urunAdi }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by ProductName"
-              />
-            </template>
-          </Column>
-          <Column field="yuzey_1" header="Y1">
-            <template #body="slotProps">
-              {{ slotProps.data.yuzey_1 }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Surface 1"
-              />
-            </template>
-          </Column>
-          <Column field="yuzey_2" header="Y2" >
-            <template #body="slotProps">
-              {{ slotProps.data.yuzey_2 }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Surface 2"
-              />
-            </template>
-          </Column>
-          <Column field="yuzey_3" header="Y3">
-            <template #body="slotProps">
-              {{ slotProps.data.yuzey_3 }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Surface 3"
-              />
-            </template>
-          </Column>
-          <Column
-            field="en"
-            header="En"
-            bodyStyle="text-align: center"
-            headerStyle="width: 120px;"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.en }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Width"
-              />
-            </template>
-          </Column>
-          <Column
-            field="boy"
-            header="Boy"
-            bodyStyle="text-align: center"
-            headerStyle="width: 120px;"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.boy }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Height"
-              />
-            </template>
-          </Column>
-          <Column
-            field="kenar"
-            header="Kenar"
-            bodyStyle="text-align: center"
-            headerStyle="width: 120px;"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.kenar }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Edge"
-              />
-            </template>
-          </Column>
-        </DataTable>
-      </div>
+  <div class="grid">
+    <div class="col">
+      <Button label="Yeni Kart" iconPos="left" icon="fas fa-notes-medical" class="customButton" @click="yeniKartAc"
+        :disabled="disYeni" />
     </div>
   </div>
+  <div class="grid">
+    <div class=col>
+      <DataTable v-model:value="getUrunKartMenuList" v-model:selection="selectUrunKart" selectionMode="single" dataKey="id"
+        :paginator="true" :rows="15" v-model:filters="filters" @row-select="urunKartDetayAc" filterDisplay="menu"
+        :scrollable="true" scrollHeight="700px" :loading="datatableLoading">
+        <Column field="id" header="No" headerStyle="width: 100px;" bodyStyle="text-align: center;">
+          <template #body="slotProps">
+            {{ slotProps.data.id }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Id" />
+          </template>
+        </Column>
+        <Column field="kategoriAdi" header="Kategori" headerStyle="width: 150px">
+          <template #body="slotProps">
+            {{ slotProps.data.kategoriAdi }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Category" />
+          </template>
+        </Column>
+        <Column field="urunAdi" header="Ürün">
+          <template #body="slotProps">
+            {{ slotProps.data.urunAdi }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by ProductName" />
+          </template>
+        </Column>
+        <Column field="yuzey_1" header="Y1">
+          <template #body="slotProps">
+            {{ slotProps.data.yuzey_1 }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Surface 1" />
+          </template>
+        </Column>
+        <Column field="yuzey_2" header="Y2">
+          <template #body="slotProps">
+            {{ slotProps.data.yuzey_2 }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Surface 2" />
+          </template>
+        </Column>
+        <Column field="yuzey_3" header="Y3">
+          <template #body="slotProps">
+            {{ slotProps.data.yuzey_3 }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Surface 3" />
+          </template>
+        </Column>
+        <Column field="en" header="En" bodyStyle="text-align: center" headerStyle="width: 120px;">
+          <template #body="slotProps">
+            {{ slotProps.data.en }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Width" />
+          </template>
+        </Column>
+        <Column field="boy" header="Boy" bodyStyle="text-align: center" headerStyle="width: 120px;">
+          <template #body="slotProps">
+            {{ slotProps.data.boy }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Height" />
+          </template>
+        </Column>
+        <Column field="kenar" header="Kenar" bodyStyle="text-align: center" headerStyle="width: 120px;">
+          <template #body="slotProps">
+            {{ slotProps.data.kenar }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Edge" />
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
+
+
+
   <Dialog
     v-model:visible="urunKartVisible"
     header="Ürün Kart"

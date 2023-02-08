@@ -1,51 +1,39 @@
 <template>
-  <section>
-    <br />
-    <div class="columns is-multiline">
-      <div class="column is-4">
-        <span class="p-float-label">
-          <InputText
-            id="konteynerno"
-            type="text"
-            v-model="takip_form[0].konteynerno"
-          />
-          <label for="konteynerno">Konteynır No</label>
-        </span>
-      </div>
-      <div class="column is-4">
-        <span class="p-float-label">
-          <InputText id="line" type="text" v-model="takip_form[0].line" />
-          <label for="line">Hat</label>
-        </span>
-      </div>
-      <div class="column is-4">
-        <span class="p-float-label">
-          <Calendar id="line" type="text" v-model="eta" />
-          <label for="line">Eta</label>
-        </span>
-      </div>
-      <div class="column is-3">
-        <b-field label="Konşimento" horizontal>
-          <Checkbox v-model="takip_form[0].konsimento" :binary="true" />
-          {{ takip_form[0].konsimento ? "Gönderildi" : "Gönderilmedi" }}
-        </b-field>
-      </div>
-      <div class="column is-3">
-        <b-field label="" horizontal>
-          <Checkbox v-model="takip_form[0].takip" :binary="true" /> Takip
-        </b-field>
-      </div>
+  <br/>
+  <div class="grid">
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="konteynerno" type="text" v-model="takip_form[0].konteynerno" />
+        <label for="konteynerno">Konteynır No</label>
+      </span>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-3">
-        <Button
-          class="p-button-secondary"
-          @click="takipGuncelle"
-          label="Kaydet"
-        />
-      </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="line" type="text" v-model="takip_form[0].line" />
+        <label for="line">Hat</label>
+      </span>
     </div>
-  </section>
+    <div class="col">
+      <span class="p-float-label">
+        <Calendar id="line" type="text" v-model="eta" />
+        <label for="line">Eta</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <Checkbox id="konsimento" v-model="takip_form[0].konsimento" :binary="true" />
+        {{ takip_form[0].konsimento ? "Gönderildi" : "Gönderilmedi" }}
+      </span>
+    </div>
+    <div class="col">
+        <Checkbox v-model="takip_form[0].takip" :binary="true" /> Takip
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <Button class="p-button-secondary" @click="takipGuncelle" label="Kaydet" />
+    </div>
+  </div>
 </template>
 <script>
 import LocalService from "../../service/LocalService";

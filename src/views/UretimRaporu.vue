@@ -58,6 +58,7 @@
           dataKey="id"
           @filter="isUretimList"
           :loading="$store.getters.datatableLoading"
+          responsiveLayout="scroll"
         >
           <Column
             field="tarih"

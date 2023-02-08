@@ -1,100 +1,51 @@
 <template>
-  <section>
-    <div class="columns">
-      <div class="column is-4">
-        <span class="p-float-label">
-          <InputText
-            id="tedarikciadi"
-            type="text"
-            v-model="thtedarikci.tedarikciadi"
-            :disabled="is_form"
-          />
-          <label for="tedarikciadi">Tedarikci Adı</label>
-        </span>
-      </div>
-      <div class="column is-1">
-        <Button
-          :disabled="is_yeni"
-          @click="yeni_click"
-          class="p-button-secondary"
-          label="Yeni"
-        />
-      </div>
-      <div class="column is-1">
-        <Button
-          class="p-button-success"
-          :disabled="is_kaydet"
-          @click="kaydet_click"
-          label="Kaydet"
-        />
-      </div>
-      <div class="column is-1">
-        <Button
-          class="p-button-info"
-          :disabled="is_degistir"
-          @click="degistir_click"
-          label="Degistir"
-        />
-      </div>
-      <div class="column is-1">
-        <Button
-          class="p-button-delete"
-          :disabled="is_sil"
-          @click="sil_click"
-          label="Sil"
-        />
-      </div>
-      <div class="column is-1">
-        <Button
-          class="p-button-warning"
-          :disabled="is_vazgec"
-          @click="vazgec_click"
-          label="Vazgeç"
-        />
-      </div>
+  <br/>
+  <div class="grid">
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="tedarikciadi" type="text" v-model="thtedarikci.tedarikciadi" :disabled="is_form" />
+        <label for="tedarikciadi">Tedarikci Adı</label>
+      </span>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-5">
-        <DataTable
-          :value="tedarikci_liste"
-          :scrollable="true"
-          scrollHeight="430px"
-          v-model:filters="filters"
-          filterDisplay="menu"
-          :loading="datatableLoading"
-          dataKey="id"
-          selectionMode="single"
-          v-model:selection="select_tedarikci"
-          @row-select="tedarikci_secim($event)"
-        >
-          <Column field="tedarikciadi" header="Tedarikçi Adı">
-            <template #body="slotProps">
-              {{ slotProps.data.tedarikciadi }}
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                placeholder="Search by Supplier"
-              />
-            </template>
-          </Column>
-          <Column
-            field="siparis_sayisi"
-            header="Sipariş Sayısı"
-            headerStyle="width:150px;"
-            bodyStyle="text-align:center;"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.siparis_sayisi }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
+    <div class="col">
+      <Button :disabled="is_yeni" @click="yeni_click" class="p-button-secondary" label="Yeni" />
     </div>
-  </section>
+    <div class="col">
+      <Button class="p-button-success" :disabled="is_kaydet" @click="kaydet_click" label="Kaydet" />
+    </div>
+    <div class="col">
+      <Button class="p-button-info" :disabled="is_degistir" @click="degistir_click" label="Degistir" />
+    </div>
+    <div class="col">
+      <Button class="p-button-delete" :disabled="is_sil" @click="sil_click" label="Sil" />
+    </div>
+    <div class="col">
+      <Button class="p-button-warning" :disabled="is_vazgec" @click="vazgec_click" label="Vazgeç" />
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col"> 
+      <DataTable :value="tedarikci_liste" :scrollable="true" scrollHeight="430px" v-model:filters="filters"
+        filterDisplay="menu" :loading="datatableLoading" dataKey="id" selectionMode="single"
+        v-model:selection="select_tedarikci" @row-select="tedarikci_secim($event)">
+        <Column field="tedarikciadi" header="Tedarikçi Adı">
+          <template #body="slotProps">
+            {{ slotProps.data.tedarikciadi }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by Supplier" />
+          </template>
+        </Column>
+        <Column field="siparis_sayisi" header="Sipariş Sayısı" headerStyle="width:150px;" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.siparis_sayisi }}
+          </template>
+        </Column>
+      </DataTable>
+
+    </div>
+  </div>
 </template>
 <script>
 import { mapGetters } from "vuex";

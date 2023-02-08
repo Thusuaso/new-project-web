@@ -1,176 +1,124 @@
 <template>
   <br/>
-  <section>
-    <div class="columns">
-      <div class="column is-6">
-        <div class="columns is-multiline">
-          <div class="column is-6">
-            <span class="p-float-label">
-              <InputText
-                id="musteriadi"
-                type="text"
-                :disabled="true"
-                v-model="thmusteri.musteriadi"
-              />
-              <label for="musteriadi">Müşteri Adı</label>
-            </span>
-          </div>
-          <div class="column is-6">
-            <span class="p-float-label">
-              <InputText
-                id="siparisno"
-                type="text"
-                :disabled="true"
-                v-model="thmusteri.siparisno"
-              />
-              <label for="siparisno">Sipariş No</label>
-            </span>
-          </div>
-          <div class="column is-6">
-            <span class="p-float-label">
-              <Calendar
-                @date-select="kurSecim"
-                id="date"
-                type="text"
-                :disabled="is_form"
-                v-model="date"
-              />
-              <label for="date">Tarih</label>
-            </span>
-          </div>
-          <div class="column is-6">
-            <span class="p-float-label">
-              <InputText
-                id="bakiye"
-                type="text"
-                :disabled="true"
-                v-model="thmusteri.bakiye"
-              />
-              <label for="bakiye">Bakiye</label>
-            </span>
-          </div>
+  <div class="grid">
+    <div class="col">
+      <div class="grid">
+        <br/>
+        <div class="col-6">
+          <span class="p-float-label">
+            <InputText id="musteriadi" type="text" :disabled="true" v-model="thmusteri.musteriadi" />
+            <label for="musteriadi">Müşteri Adı</label>
+          </span>
+        </div>
+        <br />
 
-          <div class="column is-6">
-            <span class="p-float-label">
-              <InputText
-                id="bakiye"
-                type="text"
-                :disabled="is_form"
-                v-model="thmusteri.tutar"
-                @input="changeFormat"
-              />
-              <label for="bakiye">Bakiye</label>
-            </span>
-          </div>
-          <div class="column is-6">
-            <span class="p-float-label">
-              <InputText
-                id="masraf"
-                type="text"
-                :disabled="is_form"
-                v-model="thmusteri.masraf"
-                @input="changeFormat"
-              />
-              <label for="masraf">Masraf</label>
-            </span>
-          </div>
-          <div class="column is-6">
-            <span class="p-float-label">
-              <InputText
-                id="kur"
-                type="text"
-                :disabled="is_form"
-                v-model="thmusteri.kur"
-              />
-              <label for="kur">Kur</label>
-            </span>
-          </div>
-          <div class="column is-12">
-            <span class="p-float-label">
-              <InputText
-                id="not"
-                type="text"
-                :disabled="is_form"
-                v-model="thmusteri.aciklama"
-              />
-              <label for="not">Not</label>
-            </span>
-          </div>
 
-          <div class="column is-4">
-            <Button
-              :disabled="is_kaydet"
-              class="p-button-success"
-              @click="kaydet_click"
-              label="Kaydet"
-            />
-          </div>
-          <div class="column is-4">
-            <Button
-              :disabled="is_degistir"
-              @click="degistir_click"
-              class="p-button-info"
-              label="Değiştir"
-            />
-          </div>
-          <div class="column is-4">
-            <Button
-              :disabled="is_sil"
-              class="p-button-danger"
-              label="Sil"
-              @click="sil_click"
-            />
-          </div>
+        <div class="col-6" style="margin-top:10px;">
+          <span class="p-float-label">
+            <InputText id="siparisno" type="text" :disabled="true" v-model="thmusteri.siparisno" />
+            <label for="siparisno">Sipariş No</label>
+          </span>
+        </div>
+        <br />
+        <div class="col-6" style="margin-top:10px;">
+        <span class="p-float-label">
+          <Calendar @date-select="kurSecim" id="date" type="text" :disabled="is_form" v-model="date" />
+          <label for="date">Tarih</label>
+        </span>
+        </div>
+        <br />
+
+        <div class="col-6" style="margin-top:10px;">
+        <span class="p-float-label">
+          <InputText id="bakiye" type="text" :disabled="true" v-model="thmusteri.bakiye" />
+          <label for="bakiye">Bakiye</label>
+        </span>
+        </div>
+        <br />
+
+        <div class="col-6" style="margin-top:10px;">
+        <span class="p-float-label">
+          <InputText id="bakiye" type="text" :disabled="is_form" v-model="thmusteri.tutar" @input="changeFormat" />
+          <label for="bakiye">Bakiye</label>
+        </span>
+        </div>
+        <br />
+
+        <div class="col-6" style="margin-top:10px;">
+        <span class="p-float-label">
+          <InputText id="masraf" type="text" :disabled="is_form" v-model="thmusteri.masraf" @input="changeFormat" />
+          <label for="masraf">Masraf</label>
+        </span>
+        </div>
+        <br />
+
+        <div class="col-6" style="margin-top:10px;">
+        <span class="p-float-label">
+          <InputText id="kur" type="text" :disabled="is_form" v-model="thmusteri.kur" />
+          <label for="kur">Kur</label>
+        </span>
+        </div>
+        <br />
+
+        <div class="col-6" style="margin-top:10px;">
+          <span class="p-float-label">
+            <InputText id="not" type="text" :disabled="is_form" v-model="thmusteri.aciklama" />
+            <label for="not">Not</label>
+          </span>
         </div>
       </div>
-      <div class="column is-6">
-        <DataTable
-          :value="thmusteri_list"
-          selectionMode="single"
-          :selection="select_list"
-          @row-select="tahsilat_secim($event)"
-          :scrollable="true"
-          scrollHeight="600px"
-        >
-          <Column field="tarih" header="Tarih" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ slotProps.data.tarih }}
-            </template>
-          </Column>
-          <Column
-            field="siparisno"
-            header="Sipariş No"
-            bodyStyle="text-align:center;"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.siparisno }}
-            </template>
-          </Column>
-          <Column field="tutar" header="Tutar" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.tutar) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(thmusteri_list_toplam_tutar) }}
-            </template>
-          </Column>
-          <Column field="masraf" header="Masraf" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.masraf) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(thmusteri_list_toplam_masraf) }}
-            </template>
-          </Column>
-          <Column field="kur" header="Kur" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ slotProps.data.kur }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
     </div>
-  </section>
+    <div class="col">
+      <DataTable :value="thmusteri_list" selectionMode="single" :selection="select_list" @row-select="tahsilat_secim($event)"
+        :scrollable="true" scrollHeight="600px">
+        <Column field="tarih" header="Tarih" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.tarih }}
+          </template>
+        </Column>
+        <Column field="siparisno" header="Sipariş No" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.siparisno }}
+          </template>
+        </Column>
+        <Column field="tutar" header="Tutar" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.tutar) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(thmusteri_list_toplam_tutar) }}
+          </template>
+        </Column>
+        <Column field="masraf" header="Masraf" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.masraf) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(thmusteri_list_toplam_masraf) }}
+          </template>
+        </Column>
+        <Column field="kur" header="Kur" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.kur }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <Button :disabled="is_kaydet" class="p-button-success" @click="kaydet_click" label="Kaydet" />
+    </div>
+    <div class="col">
+      <Button :disabled="is_degistir" @click="degistir_click" class="p-button-info" label="Değiştir" />
+    </div>
+    <div class="col">
+      <Button :disabled="is_sil" class="p-button-danger" label="Sil" @click="sil_click" />
+    </div>
+  </div>
+
+
+
 </template>
 <script>
 import { mapGetters } from "vuex";

@@ -1,39 +1,44 @@
 <template>
-  <div>
+  <div class="grid">
+    <div class="col"> 
     <Button class="p-button-primary" @click="newCust" label="Yeni"></Button>
-    <DataTable
-      :value="bgpMusteri"
-      v-if="bgpMusteri.length > 0"
-      v-model:filters="filters"
-      filterDisplay="row"
-      selectionMode="single"
-      v-model:selection="select_bgp_musteri"
-      @row-select="bgp_musteri_secim_event($event)"
-       columnResizeMode="expand" showGridlines
-    >
-      <Column field="customer" header="Müşteri Adı" :showFilterMenu="false">
-        <template #filter="{ filterModel, filterCallback }">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="company" header="Şirket"></Column>
-      <Column field="email" header="Mail"></Column>
-      <Column field="phone" header="Telefon"></Column>
-      <Column field="adress" header="Adres"></Column>
-      <Column field="country" header="Ülke" :showFilterMenu="false">
-        <template #filter="{ filterModel, filterCallback }">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="satisci" header="Satışçı" :showFilterMenu="false">
-        <template #filter="{ filterModel, filterCallback }">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-    </DataTable>
+
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <DataTable :value="bgpMusteri" v-if="bgpMusteri.length > 0" v-model:filters="filters" filterDisplay="row"
+        selectionMode="single" v-model:selection="select_bgp_musteri" @row-select="bgp_musteri_secim_event($event)"
+        columnResizeMode="expand" showGridlines>
+        <Column field="customer" header="Müşteri Adı" :showFilterMenu="false">
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
+          </template>
+        </Column>
+        <Column field="company" header="Şirket"></Column>
+        <Column field="email" header="Mail"></Column>
+        <Column field="phone" header="Telefon"></Column>
+        <Column field="adress" header="Adres"></Column>
+        <Column field="country" header="Ülke" :showFilterMenu="false">
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
+          </template>
+        </Column>
+        <Column field="satisci" header="Satışçı" :showFilterMenu="false">
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by -" v-tooltip.top.focus="'Filter as you type'" />
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
+
+
+
+   
 
     <Dialog
       v-model:visible="bgpCustForm"
@@ -43,93 +48,62 @@
       :style="{ width: '60vw' }"
     >
       <br />
-      <div class="columns">
-        <div class="column is-4">
-          <span class="p-float-label">
-            <InputText
-              id="musteri"
-              type="text"
-              v-model="bgpMusteriAyrinti.customer"
-            />
-            <label for="musteri">Müşteri Adı</label>
-          </span>
-        </div>
-        <div class="column is-4">
-          <span class="p-float-label">
-            <InputText
-              id="company"
-              type="text"
-              v-model="bgpMusteriAyrinti.company"
-            />
-            <label for="company">Şirket</label>
-          </span>
-        </div>
-        <div class="column is-4">
-          <span class="p-float-label">
-              <AutoComplete
-              id="ulkeAdi"
-                v-model="select_ulke"
-                :suggestions="filter_ulke_list"
-                @complete="ulke_complete_event($event)"
-                field="ulkeAdi"
-              />
-            <label for="ulkeAdi">Ülke</label>
+    <div class="grid">
+      <div class="col-6" style="margin-top:15px;">
+        <span class="p-float-label">
+          <InputText id="musteri" type="text" v-model="bgpMusteriAyrinti.customer" />
+          <label for="musteri">Müşteri Adı</label>
+        </span>
+      </div>
+      <div class="col-6" style="margin-top:15px;">
+        <span class="p-float-label">
+          <InputText id="company" type="text" v-model="bgpMusteriAyrinti.company" />
+          <label for="company">Şirket</label>
+        </span>
+      </div>
+      <div class="col-6" style="margin-top:15px;">
+        <span class="p-float-label">
+          <AutoComplete id="ulkeAdi" v-model="select_ulke" :suggestions="filter_ulke_list"
+            @complete="ulke_complete_event($event)" field="ulkeAdi" />
+          <label for="ulkeAdi">Ülke</label>
+        
+        </span>
+      </div>
+      <div class="col-6" style="margin-top:15px;">
+        <span class="p-float-label">
+          <InputText id="email" type="text" v-model="bgpMusteriAyrinti.email" />
+          <label for="email">Email</label>
+        </span>
+      </div>
+      <div class="col-6" style="margin-top:15px;">
+        <span class="p-float-label">
+          <InputText id="phone" type="text" v-model="bgpMusteriAyrinti.phone" />
+          <label for="phone">Telefon</label>
+        </span>
+      </div>
+      <div class="col-6" style="margin-top:15px;">
+        <span class="p-float-label">
+          <InputText id="satisci" type="text" v-model="bgpMusteriAyrinti.satisci" />
+          <label for="satisci">Satışçı</label>
+        </span>
+      </div>
+      <div class="col-6" style="margin-top:15px;"> 
+        <span class="p-float-label">
+          <Textarea id="address" type="text" rows="5" cols="30" v-model="bgpMusteriAyrinti.adress" />
+          <label for="address">Adres</label>
+        </span>
+      </div>
+      
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <Button class="p-button-info" @click="update" label="Güncelle"></Button>
+      </div>
+      <div class="col-6">
+            <Button class="p-button-danger" @click="deleteMust(bgpMusteriAyrinti.id)" label="Sil"></Button>
 
-          </span>
-        </div>
       </div>
-      <div class="columns">
-        <div class="column is-4">
-          <span class="p-float-label">
-            <InputText
-              id="email"
-              type="text"
-              v-model="bgpMusteriAyrinti.email"
-            />
-            <label for="email">Email</label>
-          </span>
-        </div>
-        <div class="column is-4">
-          <span class="p-float-label">
-            <InputText
-              id="phone"
-              type="text"
-              v-model="bgpMusteriAyrinti.phone"
-            />
-            <label for="phone">Telefon</label>
-          </span>
-        </div>
-        <div class="column is-4">
-          <span class="p-float-label">
-            <Textarea
-              id="address"
-              type="text"
-              rows="5"
-              cols="30"
-              v-model="bgpMusteriAyrinti.adress"
-            />
-            <label for="address">Adres</label>
-          </span>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-          <span class="p-float-label">
-            <InputText
-              id="satisci"
-              type="text"
-              v-model="bgpMusteriAyrinti.satisci"
-            />
-            <label for="satisci">Satışçı</label>
-          </span>
-        </div>
-      </div>
-      <Button class="p-button-info" @click="update" label="Güncelle"></Button>
-      <Button
-        class="p-button-danger"
-        @click="deleteMust(bgpMusteriAyrinti.id)"
-        label="Sil"
-      ></Button>
+    </div>
     </Dialog>
 
     <Dialog
@@ -141,81 +115,62 @@
     >
       <br />
 
-      <div class="columns">
-        <div class="column is-4">
+      <div class="grid">
+        <div class="col-6" style="margin-top:15px">
           <span class="p-float-label">
-            <InputText
-              id="musteri"
-              type="text"
-              v-model="newBgpMusteri.customer"
-            />
+            <InputText id="musteri" type="text" v-model="newBgpMusteri.customer" />
             <label for="musteri">Müşteri Adı</label>
           </span>
         </div>
-        <div class="column is-4">
+        <div class="col-6" style="margin-top:15px">
           <span class="p-float-label">
-            <InputText
-              id="company"
-              type="text"
-              v-model="newBgpMusteri.company"
-            />
+            <InputText id="company" type="text" v-model="newBgpMusteri.company" />
             <label for="company">Şirket</label>
           </span>
+
         </div>
-        <div class="column is-4">
+        <div class="col-6" style="margin-top:15px">
           <span class="p-float-label">
-            <AutoComplete
-              id="ulke"
-              v-model="select_ulke"
-              :suggestions="filter_ulke_list"
-              @complete="ulke_complete_event($event)"
-              field="ulkeAdi"
-            />
+            <AutoComplete id="ulke" v-model="select_ulke" :suggestions="filter_ulke_list" @complete="ulke_complete_event($event)"
+              field="ulkeAdi" />
             <label for="ulke">Ülke</label>
           </span>
+        
         </div>
-      </div>
-      <div class="columns">
-        <div class="column is-4">
+        <div class="col-6" style="margin-top:15px">
           <span class="p-float-label">
             <InputText id="email" type="text" v-model="newBgpMusteri.email" />
             <label for="email">Email</label>
           </span>
+        
         </div>
-        <div class="column is-4">
+        <div class="col-6" style="margin-top:15px">
           <span class="p-float-label">
             <InputText id="phone" type="text" v-model="newBgpMusteri.phone" />
             <label for="phone">Telefon</label>
           </span>
-        </div>
-        <div class="column is-4">
+        
+        </div> 
+        <div class="col-6" style="margin-top:15px">
           <span class="p-float-label">
-            <Textarea
-              id="address"
-              type="text"
-              rows="5"
-              cols="30"
-              v-model="newBgpMusteri.adress"
-            />
-            <label for="address">Adres</label>
-          </span>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-          <span class="p-float-label">
-            <InputText
-              id="satisci"
-              type="text"
-              v-model="newBgpMusteri.satisci"
-            />
+            <InputText id="satisci" type="text" v-model="newBgpMusteri.satisci" />
             <label for="satisci">Satışçı</label>
           </span>
+        
         </div>
+        <div class="col-6" style="margin-top:15px">
+          <span class="p-float-label">
+            <Textarea id="address" type="text" rows="5" cols="30" v-model="newBgpMusteri.adress" />
+            <label for="address">Adres</label>
+          </span>
+        
+        </div>
+        
       </div>
+
+
       <Button class="p-button-info" @click="save" label="Kaydet"></Button>
     </Dialog>
-  </div>
 </template>
 
 <script>

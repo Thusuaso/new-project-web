@@ -1,51 +1,45 @@
 <template>
   <br />
-  <div style="height: 250px">
-    <div class="forkliftDetayGenel">
-      <div class="forkliftDetay">
-        <AutoComplete
-          v-model="selectFirma"
-          :dropdown="true"
-          :suggestions="filteredBrands"
-          @complete="aramaKategori($event)"
-          placeholder="Firma Seç"
-          field="firmaAdi"
-          @item-select="isItemSelect(selectFirma)"
-        />
-      </div>
-
-      <div class="forkliftDetay">
+  <div class="grid">
+    <div class="col">
+      <AutoComplete v-model="selectFirma" :dropdown="true" :suggestions="filteredBrands" @complete="aramaKategori($event)"
+        placeholder="Firma Seç" field="firmaAdi" @item-select="isItemSelect(selectFirma)" />
+    </div>
+    <div class="col">
         <span class="p-float-label">
           <InputText id="ebat" type="text" v-model="ebat" />
           <label for="ebat">Taş Ebadı (EnxBoyxKenar)</label>
         </span>
-      </div>
-      <div class="forkliftDetay">
-        <span class="p-float-label">
-          <InputText id="forklift" type="text" v-model="forklift" />
-          <label for="forklift">Forklift</label>
-        </span>
-      </div>
-      <div class="forkliftDetay">
-        <span class="p-float-label">
-          <InputText id="genislik" type="text" v-model="genislik" />
-          <label for="genislik">Genişlik</label>
-        </span>
-      </div>
-      <div class="forkliftDetay">
-        <span class="p-float-label">
-          <InputText id="yukseklik" type="text" v-model="yukseklik" />
-          <label for="yukseklik">Yükseklik</label>
-        </span>
-      </div>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="forklift" type="text" v-model="forklift" />
+        <label for="forklift">Forklift</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="genislik" type="text" v-model="genislik" />
+        <label for="genislik">Genişlik</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="yukseklik" type="text" v-model="yukseklik" />
+        <label for="yukseklik">Yükseklik</label>
+      </span>
+    </div>
+    <div class="col">
+      <Button @click="is_kaydet_click" label="Kaydet" ></Button>
     </div>
 
-    <Button
-      @click="is_kaydet_click"
-      label="Kaydet"
-      style="margin-top: 10px"
-    ></Button>
   </div>
+
+
+
+
+
+
 </template>
 
 <script>

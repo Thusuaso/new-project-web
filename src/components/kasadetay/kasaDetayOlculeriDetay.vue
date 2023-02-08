@@ -1,58 +1,47 @@
 <template>
-  <div>
-    <br />
-    <div class="forkliftDetayGenel">
-      <div class="forkliftDetay">
-        <span class="p-float-label">
-          <InputText
-            id="firmaadi"
-            type="text"
-            v-model="kasaDatas.data.firmaadi"
-            :disabled="true"
-          />
-          <label for="firmaadi">Firma Adı</label>
-        </span>
-      </div>
-
-      <div class="forkliftDetay">
-        <span class="p-float-label">
-          <InputText id="ebat" type="text" v-model="kasaDatas.data.ebat" />
-          <label for="ebat">Taş Ebadı</label>
-        </span>
-      </div>
-
-      <div class="forkliftDetay">
-        <span class="p-float-label">
-          <InputText id="forklift" type="text" v-model="forklift" />
-          <label for="forklift">Forklift</label>
-        </span>
-      </div>
-      <div class="forkliftDetay">
-        <span class="p-float-label">
-          <InputText id="genislik" type="text" v-model="genislik" />
-          <label for="genislik">Genişlik</label>
-        </span>
-      </div>
-      <div class="forkliftDetay">
-        <span class="p-float-label">
-          <InputText id="yukseklik" type="text" v-model="yukseklik" />
-          <label for="yukseklik">Yükseklik</label>
-        </span>
-      </div>
+  <br/>
+  <div class="grid">
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="firmaadi" type="text" v-model="kasaDatas.data.firmaadi" :disabled="true" />
+        <label for="firmaadi">Firma Adı</label>
+      </span>
     </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="ebat" type="text" v-model="kasaDatas.data.ebat" />
+        <label for="ebat">Taş Ebadı</label>
+      </span>
 
-    <Button
-      @click="is_guncelle_click"
-      label="Güncelle"
-      style="margin-top: 10px; margin-left: 10px"
-    ></Button>
-    <Button
-      @click="is_sil_click"
-      label="Sil"
-      class="p-button-danger"
-      style="margin-top: 10px; margin-left: 10px"
-    ></Button>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="forklift" type="text" v-model="forklift" />
+        <label for="forklift">Forklift</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="genislik" type="text" v-model="genislik" />
+        <label for="genislik">Genişlik</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="yukseklik" type="text" v-model="yukseklik" />
+        <label for="yukseklik">Yükseklik</label>
+      </span>
+    </div>
   </div>
+  <div class="grid">
+    <div class="col">
+      <Button @click="is_guncelle_click" label="Güncelle" style="margin-top: 10px; margin-left: 10px" />
+    </div>
+    <div class="col">
+      <Button @click="is_sil_click" label="Sil" class="p-button-danger" style="margin-top: 10px; margin-left: 10px" />
+    </div>
+  </div>
+
 </template>
 
 <script>

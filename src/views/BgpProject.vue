@@ -1,69 +1,47 @@
 <template>
-  <div>
-    <div class="generalStatus">
-      <div class="limitationStatus">
-        <div class="columns">
-          <div class="column is-8">
-            <div class="columns">
-              <div class="column">
-                <Button class="p-button-success" style="width: 150px" :disabled="username_kontrol"
-                  @click="newProject">New Project</Button>
-              </div>
-              <div class="column">
-                <div class="column">
-                  <Dropdown v-model="selectedTemsilci" :options="temsilciler" style="z-index:98;" optionLabel="temsilci"
-                    placeholder="Select a Temsilci" @change="is_change_temsilci" />
+  <div class="grid">
+    <div class="col-8">
+      <div class="grid">
+        <div class="col">
+          <Button class="p-button-success" style="width: 150px" :disabled="username_kontrol" @click="newProject">New
+            Project</Button>
+        </div>
+        <div class="col">
+          
 
-                </div>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <Button class="p-button-info" style="width: 150px" @click="showCompany">Show Company
-                </Button>
-              </div>
-              <div class="column">
-                <div class="column">
-                  <Dropdown v-model="selectedCountry" :options="countries" optionLabel="country"
-                    placeholder="Select a Country" @change="is_change_country" style="z-index:97;" />
-                </div>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <Button class="p-button-warning" style="width: 150px" @click="statistics">Statistics
-                </Button>
-              </div>
-              <div class="column" v-if="countryName != null ? true:false">
-                <Button type="button" :label="countryName" :badge="countryCount"
-                  :badgeClass="`p-badge-${badge(selectedTemsilci.id)}`" />
-              </div>
-            </div>
-          </div>
-          <div class="column is-4">
-            <Chart type="bar" :data="bgpProjectStatisticChart" />
-          </div>
+            <Button class="p-button-warning" style="width: 150px" @click="statistics">Statistics
+            </Button>
+        </div>
+        <div class="col">
+          <Button class="p-button-info" style="width: 150px" @click="showCompany">Show Company
+          </Button>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col">
+          <Dropdown v-model="selectedTemsilci" :options="temsilciler" style="z-index:98;" optionLabel="temsilci"
+            placeholder="Select a Temsilci" @change="is_change_temsilci" />
+          
+        </div>
+        <div class="col">
+            <Dropdown v-model="selectedCountry" :options="countries" optionLabel="country" placeholder="Select a Country"
+              @change="is_change_country" style="z-index:97;" />
+        </div>
+        <div class="col">
+          <Button type="button" :label="countryName" :badge="countryCount"
+            :badgeClass="`p-badge-${badge(selectedTemsilci.id)}`" />
         </div>
       </div>
     </div>
+    <div class="col-4">
+            <Chart type="bar" :data="bgpProjectStatisticChart" />
 
+    </div>
+  </div>
+  
+  <div>
     <hr />
-    <Dialog v-model:visible="new_project_form" :modal="true" header="Yeni Bgp Projesi" maximizable>
-      <bgpNetworkForm :username="username"></bgpNetworkForm>
-    </Dialog>
-    <Dialog v-model:visible="change_project_form" :modal="true" header=" Bgp Projesi" maximizable>
-      <bgpNetworkFormChange :username="username" :bpgProjeAdi="projectName" :ulkeAdi="ulkeAdi" :projectId="projectId">
-      </bgpNetworkFormChange>
-    </Dialog>
-    <Dialog v-model:visible="bgp_project_ayrinti_form" :modal="true" :header="p_name" maximizable>
-      <bgpNetworkDetail></bgpNetworkDetail>
-    </Dialog>
-    <Dialog v-model:visible="show_company_form" header="Tüm Şirketler" :modal="true" maximizable>
-      <BgpNetworkCompany> </BgpNetworkCompany>
-    </Dialog>
-    <Dialog v-model:visible="show_statistic_form" header="Statistics" :modal="true" maximizable>
-      <BgpNetworkStatistics></BgpNetworkStatistics>
-    </Dialog>
+    
     <ul class="cards">
       <li v-for="item in bgpProjectList" :key="item.id">
         <a class="card" :style="{ borderColor: item.borderColor }">
@@ -108,6 +86,22 @@
       </li>
     </ul>
   </div>
+  <Dialog v-model:visible="new_project_form" :modal="true" header="Yeni Bgp Projesi" maximizable>
+    <bgpNetworkForm :username="username"></bgpNetworkForm>
+  </Dialog>
+  <Dialog v-model:visible="change_project_form" :modal="true" header=" Bgp Projesi" maximizable>
+    <bgpNetworkFormChange :username="username" :bpgProjeAdi="projectName" :ulkeAdi="ulkeAdi" :projectId="projectId">
+    </bgpNetworkFormChange>
+  </Dialog>
+  <Dialog v-model:visible="bgp_project_ayrinti_form" :modal="true" :header="p_name" maximizable>
+    <bgpNetworkDetail></bgpNetworkDetail>
+  </Dialog>
+  <Dialog v-model:visible="show_company_form" header="Tüm Şirketler" :modal="true" maximizable>
+    <BgpNetworkCompany> </BgpNetworkCompany>
+  </Dialog>
+  <Dialog v-model:visible="show_statistic_form" header="Statistics" :modal="true" maximizable>
+    <BgpNetworkStatistics></BgpNetworkStatistics>
+  </Dialog>
 </template>
 <script>
 import bgpNetworkForm from "../components/bgpproject/bgpNetworkForm.vue";

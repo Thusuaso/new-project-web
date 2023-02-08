@@ -31,9 +31,9 @@
         <label for="rapor2" class="p-radiobutton-label">Hepsi</label>
       </div>
     </div> -->
-    <Card>
+    <Card >
       <template #header>
-        <div class="columns">
+        <div class="columns" style="width:100%;">
           <div class="column">
 
             <div id="dashboardUstSol">
@@ -117,7 +117,7 @@
                 </div>
                 <div class="columns" id="rapors">
                   <div class="column is-6">
-                    <div class="columns">
+                    <div class="columns" id="ortalama">
                       <div class="column">
                         <h5 class="ortala">R3: Aylık Ortalama</h5>
                       </div>
@@ -135,7 +135,7 @@
                     </div>
                   </div>
                   <div class="column is-6">
-                    <div class="columns">
+                    <div class="columns" id="ortalama">
                       <div class="column">
                         <h5 class="ortala">R4: Yıl Sonu Tahmini</h5>
                       </div>
@@ -167,7 +167,7 @@
                         <p style="text-align: center">DDP</p>
                       </div>
                     </div>
-                    <div class="columns" style="margin-top: -25px">
+                    <div class="columns" id="ortalama">
                       <div class="column">
                         <h5 class="ortala">R5: Yüklenen Sipariş</h5>
                       </div>
@@ -177,7 +177,7 @@
                             formatPrice(gelenSiparisYuklenen.gelenSiparisFob)
                           "
                           @click="isButtonClick"
-                          class="yuklenenSiparis"
+                          class="gelenSiparis"
                         ></Button>
                         <a
                           ref="href"
@@ -187,11 +187,10 @@
                     </div>
                   </div>
                   <div class="column is-6">
-                    <div class="columns">
+                    <div class="columns" id="ortalama">
                       <div
                         class="column"
                         style="font-weight: bold"
-                        id="ortalama"
                       >
                         {{ gelenSiparisYearYuklenen.gelenSiparisYil }}
                         {{ gelenSiparisYearYuklenen.gelenSiparisAy }}
@@ -200,7 +199,7 @@
                         <p style="text-align: center">DDP</p>
                       </div>
                     </div>
-                    <div class="columns" style="margin-top: -25px">
+                    <div class="columns" id="ortalama">
                       <div class="column">
                         <h5 class="ortala">R6: Yüklenen Sipariş</h5>
                       </div>
@@ -212,7 +211,7 @@
                             )
                           "
                           @click="isButtonClick"
-                          class="yuklenenSiparis"
+                          class="gelenSiparis"
                         ></Button>
                         <a
                           ref="href"
@@ -225,7 +224,7 @@
 
                 <div class="columns" id="rapors">
                   <div class="column is-6">
-                    <div class="columns">
+                    <div class="columns" id="ortalama">
                       <div class="column">
                         <h5 class="ortala">R7: Aylık Ortalama</h5>
                       </div>
@@ -237,13 +236,13 @@
                             )
                           "
                           @click="isButtonClick"
-                          class="yuklenenSiparis"
+                          class="gelenSiparis"
                         ></Button>
                       </div>
                     </div>
                   </div>
                   <div class="column is-6">
-                    <div class="columns">
+                    <div class="columns" id="ortalama">
                       <div class="column">
                         <h5 class="ortala">R8: Yıl Sonu Tahmini</h5>
                       </div>
@@ -255,7 +254,7 @@
                             )
                           "
                           @click="isButtonClick"
-                          class="yuklenenSiparis"
+                          class="gelenSiparis"
                         ></Button>
                       </div>
                     </div>
@@ -460,7 +459,7 @@
                 </table>
               </div>
               <div class="columns">
-                <div class="column is-12">
+                <div class="column is-12" id="chart">
                   <Chart type="bar" :data="gelenSiparislerGrafik" />
                 </div>
               </div>
@@ -707,25 +706,9 @@ export default {
   background-color: #63d4b9;
 }
 
-#topKalan {
-  margin-left: 65px;
-}
 
-@media screen and (max-width: 600px) {
-  #topKalan {
-    margin-left: 0px;
-  }
-}
 
-#radioButton {
-  margin-left: 200px;
-}
 
-@media screen and (max-width: 600px) {
-  #radioButton {
-    margin-left: 40px;
-  }
-}
 
 table {
   width: 100%;
@@ -782,24 +765,25 @@ table {
   }
 
   #dashboardUstSag {
-    display: inline-block;
+    display: block;
     width: 100%;
     height: auto;
-    margin-top: 15px;
-    margin-left: -9px;
+    text-align:center;
   }
 
-  .ortala {
-    text-align: center;
-  }
 
   #ortalama {
     text-align: center;
+    width:100%;
 
   }
   .gelenSiparis{
     width:250px;
   }
+  #chart{
+    margin-left:-35px;
+  }
   
 }
+
 </style>

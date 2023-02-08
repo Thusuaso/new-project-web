@@ -1,7 +1,6 @@
 <template>
-
-    <div class="columns">
-      <div class="column">
+    <div class="grid">
+      <div class="col-6">
         <DataTable :value="finans_ayrinti_list" :scrollable="true" scrollHeight="420px" dataKey="id" selectionMode="single"
           v-model:selection="select_ayrinti" @row-select="select_ayrinti_sec($event)" v-model:filters="filters"
           filterDisplay="menu" @filter="isFinansAyrintiFilter">
@@ -35,8 +34,8 @@
           <Column field="tip" header="Status" headerStyle="width:20px" bodyStyle="text-align:center;">
             <template #body="slotProps">
               <div :class="
-                                slotProps.data.tip == 'Üretim' ? 'genel_status' : ''
-                              ">
+                                        slotProps.data.tip == 'Üretim' ? 'genel_status' : ''
+                                      ">
                 <div class="isMobile">
                   {{ slotProps.data.tip }}
                 </div>
@@ -74,12 +73,12 @@
             bodyStyle="text-align:center;">
             <template #body="slotProps">
               <div :class="
-                                slotProps.data.kalan > 0
-                                  ? 'kalan_borc'
-                                  : '' || slotProps.data.kalan < 0
-                                  ? 'odeme_kalan'
-                                  : ''
-                              ">
+                                        slotProps.data.kalan > 0
+                                          ? 'kalan_borc'
+                                          : '' || slotProps.data.kalan < 0
+                                          ? 'odeme_kalan'
+                                          : ''
+                                      ">
                 <div class="isMobile">
                   {{ formatPrice(slotProps.data.kalan) }}
                 </div>
@@ -110,7 +109,7 @@
         
         </DataTable>
       </div>
-      <div class="column is-4">
+      <div class="col-4">
         <DataTable :value="finans_ayrinti_odeme_list" :scrollable="true" scrollHeight="420px" dataKey="id"
           selectionMode="single" v-model:selection="select_odeme" @row-select="odemeSecim($event)">
           <template #header>
@@ -140,19 +139,28 @@
           </Column>
         </DataTable>
       </div>
-      <div class="column is-2">
-        <RadioButton v-model="excel_cikti" value="ayrinti_listesi" /> Ayrıntı
-        
-        <RadioButton v-model="excel_cikti" value="odeme_listesi" />Ödeme
-        
-        <Button @click="excel_cikti_click" label="Excel" class="p-button-success" />
+      <div class="col-2">
+        <div class="grid">
+          <div class="col">
+            <div class="grid">
+              <div class="col">
+                <RadioButton v-model="excel_cikti" value="ayrinti_listesi" /> Ayrıntı
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col">
+                <RadioButton v-model="excel_cikti" value="odeme_listesi" />Ödeme
+
+              </div>
+            </div>
+          </div>
+          <div class=col>
+              <Button @click="excel_cikti_click" label="Excel" class="p-button-success" />
+
+          </div>
+        </div>
       </div>
     </div>
-
-
-
-
-
   <Dialog v-model:visible="is_ödeme_ayrinti_form" maximizable :modal="true" position="top">
     <FinansAyrintiMusteriOdeme />
   </Dialog>

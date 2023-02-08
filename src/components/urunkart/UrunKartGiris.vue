@@ -1,172 +1,93 @@
 <template>
   <br />
-  <Card>
-    <template #header
-      ><div
-        v-if="seleksiyonKasaKontrol"
-        style="background-color: red; color: white; text-align: center"
-      >
-        {{ kontrolText }}
-      </div>
-    </template>
-    <template #content>
-      <div class="columns">
-        <div class="column">
-          <span class="p-float-label">
-            <AutoComplete
-              id="kategori"
-              v-model="kategori"
-              :suggestions="filterKategoriList"
-              field="kategoriAdi"
-              :dropdown="true"
-              @complete="aramaKategori($event)"
-              @item-select="kategoriDegisim"
-              :class="{ 'p-invalid': v$.kategori.$invalid && submitted }"
-            />
-            <label for="kategori">Kategori Adı</label>
-          </span>
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <AutoComplete
-              id="urun"
-              v-model="urun"
-              :suggestions="filterUrunList"
-              field="urunAdi"
-              :dropdown="true"
-              @complete="aramaUrun($event)"
-              @item-select="urunDegisim"
-              :class="{ 'p-invalid': v$.urun.$invalid && submitted }"
-            />
-            <label for="urun">Ürün Adı</label>
-          </span>
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <AutoComplete id="yuzey" v-model="yuzeyIslem" :suggestions="filterYuzeyIslemList" field="yuzeyIslemAdi"
-              :dropdown="true" @complete="aramaYuzeyIslem($event)" @item-select="yuzeyIslemDegisim" @input="isYuzeyBosluk"
-              :class="{ 'p-invalid': v$.yuzeyIslem.$invalid && submitted }" />
-            <label for="yuzey">Yüzey İşlem</label>
-          </span>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-          <span class="p-float-label">
-            <AutoComplete
-              id="en"
-              v-model="en"
-              :suggestions="filterEnList"
-              field="en"
-              :dropdown="true"
-              @complete="aramaEn($event)"
-              @input="isChangeEn"
-              :class="{ 'p-invalid': v$.en.$invalid && submitted }"
-            />
-            <label for="en">En</label>
-          </span>
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <AutoComplete
-              id="boy"
-              v-model="boy"
-              :suggestions="filterBoyList"
-              field="boy"
-              @input="isChangeBoy"
-              :dropdown="true"
-              @complete="aramaBoy($event)"
-              :class="{ 'p-invalid': v$.boy.$invalid && submitted }"
-            />
-            <label for="boy">Boy</label>
-          </span>
-        </div>
-        <div class="column">
-          <span class="p-float-label">
-            <AutoComplete
-              id="kenar"
-              v-model="kenar"
-              :suggestions="filterKenarList"
-              field="kenar"
-              :dropdown="true"
-              @complete="aramaKenar($event)"
-              @input="isChangeKenar"
-              :class="{ 'p-invalid': v$.kenar.$invalid && submitted }"
-            />
-            <label for="kenar">Kenar</label>
-          </span>
-        </div>
+  <div class="grid">
+    <div class="col"  v-if="seleksiyonKasaKontrol"
+        style="background-color: red; color: white; text-align: center">
+      {{ kontrolText }}
+    </div>
+  </div>
+  <br/>
+  <div class="grid">
+    <div class="col-4" style="margin-top:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="kategori" v-model="kategori" :suggestions="filterKategoriList" field="kategoriAdi" :dropdown="true"
+          @complete="aramaKategori($event)" @item-select="kategoriDegisim"
+          :class="{ 'p-invalid': v$.kategori.$invalid && submitted }" />
+        <label for="kategori">Kategori Adı</label>
+      </span>
+    </div>
+    <div class="col-4 " style="margin-top:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="urun" v-model="urun" :suggestions="filterUrunList" field="urunAdi" :dropdown="true"
+          @complete="aramaUrun($event)" @item-select="urunDegisim" :class="{ 'p-invalid': v$.urun.$invalid && submitted }" />
+        <label for="urun">Ürün Adı</label>
+      </span>
+    </div>
+    <div class="col-4" style="margin-top:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="yuzey" v-model="yuzeyIslem" :suggestions="filterYuzeyIslemList" field="yuzeyIslemAdi"
+          :dropdown="true" @complete="aramaYuzeyIslem($event)" @item-select="yuzeyIslemDegisim" @input="isYuzeyBosluk"
+          :class="{ 'p-invalid': v$.yuzeyIslem.$invalid && submitted }" />
+        <label for="yuzey">Yüzey İşlem</label>
+      </span>
+    </div>  
+    <div class="col-4" style="margin-top:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="en" v-model="en" :suggestions="filterEnList" field="en" :dropdown="true" @complete="aramaEn($event)"
+          @input="isChangeEn" :class="{ 'p-invalid': v$.en.$invalid && submitted }" />
+        <label for="en">En</label>
+      </span>
+    </div>
+    <div class="col-4" style="margin-top:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="boy" v-model="boy" :suggestions="filterBoyList" field="boy" @input="isChangeBoy" :dropdown="true"
+          @complete="aramaBoy($event)" :class="{ 'p-invalid': v$.boy.$invalid && submitted }" />
+        <label for="boy">Boy</label>
+      </span>
+    </div>
+    <div class="col-4" style="margin-top:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="kenar" v-model="kenar" :suggestions="filterKenarList" field="kenar" :dropdown="true"
+          @complete="aramaKenar($event)" @input="isChangeKenar" :class="{ 'p-invalid': v$.kenar.$invalid && submitted }" />
+        <label for="kenar">Kenar</label>
+      </span>
+    </div>
 
-      </div>
-      <div class="columns">
-        <div class="column">
-          <Button label="KAYDET" @click="urunKartKayitIslemi" :disabled="disKaydet"/>
-        </div>
-        <div class="column" v-if="isVisible">
-            <Button label="Sil" class="p-button-danger" :disabled="disSil"
-              @click="urunKartSil" />
-        </div>
-      </div>
+  </div>
+  <br/>
+  <div class="grid">
+    <div class="col">
+      <DataTable v-model:value="musteriSatisListesi" :paginator="false" dataKey="id" :scrollable="true" scrollHeight="310px">
+        <Column field="musteriAdi" header="Firma">
+          <template #body="slotProps">
+            {{ slotProps.data.musteriAdi }}
+          </template>
+        </Column>
+        <Column field="siparisNo" header="Po" bodyStyle="text-align:center" headerStyle="width:100px;">
+          <template #body="slotProps">
+            {{ slotProps.data.siparisNo }}
+          </template>
+        </Column>
+        <Column field="satisFiyati" header="Fiyat" bodyStyle="text-align:center" headerStyle="width:90px;">
+          <template #body="slotProps">
+            {{ formatDecimal(slotProps.data.satisFiyati) }}
+          </template>
+        </Column>
+        <Column field="miktar" header="Miktar" bodyStyle="text-align:center" headerStyle="width:90px;">
+          <template #body="slotProps">
+            {{ formatDecimal(slotProps.data.miktar) }}
+          </template>
+        </Column>
+        <Column field="tarih" header="Sevk Tarih" bodyStyle="text-align:center" headerStyle="width:120px;">
+          <template #body="slotProps">
+            {{ slotProps.data.tarih }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
 
-      <div class="columns">
-        <div class="column is-12">
-          <DataTable
-            v-model:value="musteriSatisListesi"
-            :paginator="false"
-            dataKey="id"
-            :scrollable="true"
-            scrollHeight="310px"
-          >
-            <Column field="musteriAdi" header="Firma">
-              <template #body="slotProps">
-                {{ slotProps.data.musteriAdi }}
-              </template>
-            </Column>
-            <Column
-              field="siparisNo"
-              header="Po"
-              bodyStyle="text-align:center"
-              headerStyle="width:100px;"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.siparisNo }}
-              </template>
-            </Column>
-            <Column
-              field="satisFiyati"
-              header="Fiyat"
-              bodyStyle="text-align:center"
-              headerStyle="width:90px;"
-            >
-              <template #body="slotProps">
-                {{ formatDecimal(slotProps.data.satisFiyati) }}
-              </template>
-            </Column>
-            <Column
-              field="miktar"
-              header="Miktar"
-              bodyStyle="text-align:center"
-              headerStyle="width:90px;"
-            >
-              <template #body="slotProps">
-                {{ formatDecimal(slotProps.data.miktar) }}
-              </template>
-            </Column>
-            <Column
-              field="tarih"
-              header="Sevk Tarih"
-              bodyStyle="text-align:center"
-              headerStyle="width:120px;"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.tarih }}
-              </template>
-            </Column>
-          </DataTable>
-        </div>
-      </div>
-    </template>
-  </Card>
+
 </template>
 <script>
 import urunKartService from "@/service/UrunKartService";

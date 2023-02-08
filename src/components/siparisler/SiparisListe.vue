@@ -1,168 +1,70 @@
 <template>
-  <div>
-    <div class="columns">
-      <div class="column">
-        <Card class="box-content">
-          <template #header>
-            <Button
-              class="p-button-success newButton"
-              @click="yeniSiparisAc"
-              outlined
-              >Yeni</Button
-            >
-          </template>
-        </Card>
-      </div>
-      <div class="column">
-        <Card class="box-content" style="margin-top: 12px">
-          <template #header>
-            <div
-              class="columns"
-              style="padding-top: 10px; padding-left: 8px; padding-right: 8px"
-            >
-              <div class="column">
-                <Dropdown
-                  v-model="select_yil"
-                  @change="yil_degisim_event"
-                  :options="yil_listesi"
-                  optionLabel="yil"
-                  placeholder="Year"
-                />
-              </div>
-              <div class="column">
-                <div class="columns">
-                  <div class="column">
-                    <Button
-                      @click="excel_cikti_click"
-                      class="p-button-help p-button-sm"
-                      label="TR"
-                      icon="far fa-file-excel"
-                    />
-                  </div>
-                  <div class="column">
-                    <Button
-                      @click="excel_cikti_click_en"
-                      class="p-button-help p-button-sm"
-                      label="EN"
-                      icon="far fa-file-excel"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </Card>
-      </div>
-      <div class="column">
-        <Card class="box-content">
-          <template #header>
-            <ul class="radioButton">
-              <li>
-                <b>Tedarikçi: </b>
-              </li>
-              <li>
-                <RadioButton
-                  v-model="FirmaAdi"
-                  name="name"
-                  @change="statuSecim2"
-                  value="Mekmer"
-                />Mekmer
-              </li>
-              <li>
-                <RadioButton
-                  v-model="FirmaAdi"
-                  name="name"
-                  @change="statuSecim2"
-                  value="Dis"
-                />Dış
-              </li>
-              <li>
-                <RadioButton
-                  v-model="FirmaAdi"
-                  name="name"
-                  @change="statuSecim2"
-                  value="Hepsi"
-                />Hepsi
-              </li>
-            </ul>
-            <ul class="radioButton">
-              <li>
-                <b>Satışçı: </b>
-              </li>
-              <li>
-                <RadioButton
-                  v-model="Fatura"
-                  name="name"
-                  @change="statuSecim3"
-                  value="Hepsi"
-                  style="padding-right: 13px"
-                />Hepsi
-              </li>
-              <li>
-                <RadioButton
-                  v-model="Fatura"
-                  name="name"
-                  @change="statuSecim3"
-                  value="Mekmar"
-                  style="padding-right: 2px"
-                />Mekmar
-              </li>
-              <li>
-                <RadioButton
-                  v-model="Fatura"
-                  name="name"
-                  @change="statuSecim3"
-                  value="Efes"
-                  style="padding-right: 2px"
-                />Efes
-              </li>
-            </ul>
-          </template>
-        </Card>
+  <div class="grid" style="text-align:center">
+    <div class="col" >
+      <Button class="p-button-success" @click="yeniSiparisAc" outlined label="Yeni" />
+    </div>
+    <div class="col">
+      <div class="grid">
+        <div class="col">
+          <Dropdown v-model="select_yil" @change="yil_degisim_event" :options="yil_listesi" optionLabel="yil"
+            placeholder="Year" />
+        </div>
+        <div class="col">
+          <Button @click="excel_cikti_click" class="p-button-help p-button-sm" label="TR" icon="far fa-file-excel" />
+        </div>
+        <div class="col">
+          <Button @click="excel_cikti_click_en" class="p-button-help p-button-sm" label="EN" icon="far fa-file-excel" />
+        </div>
       </div>
     </div>
-    <div v-if="!alan_gizle">
-      <SiparisListeKisitli
-        :siparisler="siparisler"
-        @siparisKisitliEmit="alan_gizle = $event"
-        @kisitliSiparisSecim="siparisSecim($event)"
-        :siparisTur="siparisTur"
-        :hasPage="hasPage"
-        :baslik="baslik"
-        :arkaPlanRengi="backColor"
-        :user="usrName"
-        :tonTopla="tonToplami"
-        :desktop="isDesktop"
-      />
+    <div class="col">
+      <div class="grid" style="text-align:left">
+        <div class="col-3">
+          <b>Tedarikçi: </b>
+        </div>
+        <div class="col-3">
+          <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim2" value="Mekmer" />Mekmer
+        </div>
+        <div class="col-3">
+          <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim2" value="Dis" />Dış
+        </div>
+        <div class="col-3">
+          <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim2" value="Hepsi" />Hepsi
+        </div>  
+      </div>
+      <div class="grid" style="text-align:left">
+        <div class="col-3">
+          <b>Satışçı: </b>
+        </div>
+        <div class="col-3">
+          <RadioButton v-model="Fatura" name="name" @change="statuSecim3" value="Hepsi"  />Hepsi
+        </div>
+        <div class="col-3">
+          <RadioButton v-model="Fatura" name="name" @change="statuSecim3" value="Mekmar"  />Mekmar
+        </div>
+        <div class="col-3">
+          <RadioButton v-model="Fatura" name="name" @change="statuSecim3" value="Efes"  />Efes
+        </div>
+      </div>
     </div>
-    <!-- <div v-if="alan_gizle">
-      <SiparisListeHepsi
-        :siparisler="siparisler"
-        @siparisHepsiEmit="alan_gizle = $event"
-        @hepsiSiparisSecim="siparisSecim($event)"
-        :siparisTur="siparisTur"
-        :hasPage="hasPage"
-        :baslik="baslik"
-        :pr_satisToplami="satisToplami"
-        :arkaPlanRengi="backColor"
-        :desktop="isDesktop"
-      />
-    </div> -->
-
-    <Dialog
-      v-model:visible="dialogVisible"
-      v-model:header="siparisFormBaslik"
-      :modal="true"
-      maximizable
-      position="top"
-      style="width: 100%;"
-    >
-      <siparis-giris-form
-        :dtSiparisNo="dtSiparisNo"
-        :yeniSiparis="yeniSiparis"
-      />
-    </Dialog>
   </div>
+  <div class="grid" >
+    <div class="col-12">
+      <SiparisListeKisitli :siparisler="siparisler" @siparisKisitliEmit="alan_gizle = $event"
+        @kisitliSiparisSecim="siparisSecim($event)" :siparisTur="siparisTur" :hasPage="hasPage" :baslik="baslik"
+        :arkaPlanRengi="backColor" :user="usrName" :tonTopla="tonToplami" :desktop="isDesktop" />
+    </div>
+  </div>
+
+  <Dialog v-model:visible="dialogVisible" v-model:header="siparisFormBaslik" :modal="true" maximizable position="top"
+    style="width: 100%;">
+    <siparis-giris-form :dtSiparisNo="dtSiparisNo" :yeniSiparis="yeniSiparis" />
+  </Dialog>
+
+
+
+
+  
 </template>
 <script>
 import siparisService from "../../service/SiparisService";

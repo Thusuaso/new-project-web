@@ -2,108 +2,55 @@
 <template>
   <section>
     <br/>
-    <div class="columns">
-      <div class="column is-12">
-        <div class="columns is-multiline" style="margin-left:22px;">
-          <div class="column is-2" style="background-color: white">
-            
-            <span class="p-float-label" v-if="yeniSiparis">
-              <InputText id="musteriAdi"  v-model="musteri.musteriadi" :disabled="true" />
-              <label for="musteriAdi">Müşteri Adı</label>
-            </span>
-            <span class="p-float-label" v-else>
-              <InputText id="musteriAdi" v-model="musteri.musteriadi" :disabled="true" />
-              <label for="musteriAdi">Müşteri Adı</label>
-            </span>
-            
-          </div>
-
-          <div class="column is-2">
-            
-            <span class="p-float-label">
-              <Calendar id="kayitTarihi" v-model="date" :disabled="is_form" />
-              <label for="kayitTarihi">Kayıt Tarihi</label>
-            </span>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="column is-6">
-            <div class="column is-12 card">
-              <div class="column is-12">
-                <div class="column is-10">
-                  <span class="p-float-label">
-                    <InputText
-                      id="baslik"
-                      v-model="musteri.baslik"
-                      :disabled="is_form"
-                    />
-                    <label for="baslik">Başlık</label>
-                  </span>
-                </div>
-                <div class="column is-12">
-                  <span class="p-float-label">
-                    <Textarea id="aciklama" v-model="musteri.aciklama" rows="10" cols="80" />
-                    <label for="aciklama">Açıklama</label>
-                  </span>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-6">
-            <div class="column is-12 card">
-              <div class="column is-12">
-                <div class="column is-5">
-                  
-                  <span class="p-float-label">
-                    <Calendar id="hatirlatmaTarihi" v-model="date_hatirlatma" :disabled="is_form" />
-                    <label for="hatirlatmaTarihi">Hatırlatma Tarihi</label>
-                  </span>
-                </div>
-                <div class="column is-12">
-                  <span class="p-float-label">
-                    <Textarea id="hatirlatmaNotu" v-model="musteri.hatirlatma_notu" rows="10" cols="80" />
-                    <label for="hatirlatmaNotu">Hatırlatma Notu</label>
-                  </span>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="columns is-multiline" style="margin-left: 530px">
-          <div class="column is-12">
-            <div class="columns is- multiline">
-              <div class="column is-2">
-                <Button
-                  class="p-button-secondary"
-                  @click="kaydet_click"
-                  :disabled="is_kaydet"
-                >
-                  Kaydet
-                </Button>
-              </div>
-              <div class="column is-2">
-                <Button
-                  :disabled="is_degistir"
-                  class="p-button-warning"
-                  @click="degistir_click"
-                >
-                  Guncelle
-                </Button>
-              </div>
-              <div class="column is-2">
-                <Button :disabled="is_sil" class="p-button-danger" @click="sil_click">
-                  Sil
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+    
+    <div class="grid">
+      <div class="col">
+        <span class="p-float-label" v-if="yeniSiparis">
+          <InputText id="musteriAdi" v-model="musteri.musteriadi" :disabled="true" />
+          <label for="musteriAdi">Müşteri Adı</label>
+        </span>
+        <span class="p-float-label" v-else>
+          <InputText id="musteriAdi" v-model="musteri.musteriadi" :disabled="true" />
+          <label for="musteriAdi">Müşteri Adı</label>
+        </span>
+      </div>
+      <div class="col">
+        <span class="p-float-label">
+          <Calendar id="kayitTarihi" v-model="date" :disabled="is_form" />
+          <label for="kayitTarihi">Kayıt Tarihi</label>
+        </span>
       </div>
     </div>
+    <br/>
+    <div class="grid">
+      <div class="col">
+          <span class="p-float-label">
+            <InputText id="baslik" v-model="musteri.baslik" :disabled="is_form" />
+            <label for="baslik">Başlık</label>
+          </span>
+        <br/>
+
+          <span class="p-float-label">
+            <Textarea id="aciklama" v-model="musteri.aciklama" rows="10" cols="60" />
+            <label for="aciklama">Açıklama</label>
+          </span>
+      </div>
+      
+      <div class="col">
+        <span class="p-float-label">
+          <Calendar id="hatirlatmaTarihi" v-model="date_hatirlatma" :disabled="is_form" />
+          <label for="hatirlatmaTarihi">Hatırlatma Tarihi</label>
+        </span>
+        <br />
+
+          <span class="p-float-label">
+            <Textarea id="hatirlatmaNotu" v-model="musteri.hatirlatma_notu" rows="10" cols="60" />
+            <label for="hatirlatmaNotu">Hatırlatma Notu</label>
+          </span>
+        </div>
+    </div>
+  
+  
   </section>
 </template>
 <script>

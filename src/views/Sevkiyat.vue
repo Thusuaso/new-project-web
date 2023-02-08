@@ -1,272 +1,185 @@
 <template>
-  <section>
-    <div class="columns is-multiline is-centered">
-      <div class="column is-10">
-        <div class="columns is-multiline" style="margin-left: -129px">
-          <div class="column is-4">
-            <span class="p-float-label">
-              <AutoComplete
-                id="siparisno"
-                v-model="siparis"
-                :suggestions="filterSiparisListe"
-                @item-select="siparisDegisim"
-                @complete="filterSiparisList($event)"
-                optionLabel="siparisno"
-                :class="{ 'p-invalid': v$.siparis.$invalid && submitted }"
-              />
+  <br/>
+  <div class="grid">
+    <div class="col">
+        <span class="p-float-label">
+          <AutoComplete id="siparisno" v-model="siparis" :suggestions="filterSiparisListe" @item-select="siparisDegisim"
+            @complete="filterSiparisList($event)" optionLabel="siparisno"
+            :class="{ 'p-invalid': v$.siparis.$invalid && submitted }" />
+        
+          <label for="siparisno">Sipariş Listesi</label>
+        </span>
+    </div>
+  </div>
+  <h2 style="text-align:center;font-size:20px;">
+    Çıkış Bilgileri
+  </h2>
+  <br/>
+  <div class="grid">
+    <div class="col">
+      <Calendar v-model="cikis_tarihi" :class="{ 'p-invalid': v$.cikis_tarihi.$invalid && submitted }" />
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="faturano" type="text" v-model="faturano" :class="{ 'p-invalid': v$.faturano.$invalid && submitted }" />
+      
+        <label for="faturano">Fatura No</label>
+      </span>
+    </div>
+    <div class="col">
+      <Checkbox v-model="takip" :binary="true" />Takip
+    </div>
+    <div class="col">
+      <Checkbox @input="normalSevkIslem" v-model="normal_sevk" :binary="true" :disabled="normal_sevk_form" />Normal Sevk
+    </div>
+    <div class="col">
+      <Checkbox @input="hizliSevkIslem" v-model="hizli_sevk" :binary="true" :disabled="hizli_sevk_form" />Hızlı Sevk
+    </div>
 
-              <label for="siparisno">Sipariş Listesi</label>
-            </span>
+  </div>
+  <br/>
+  <div class="grid">
+    <div class=col>
+      <span class="p-float-label">
+        <Dropdown id="icerik" @change="siparisKalemDegisim($event)" v-model="selectedSipKalem" :options="sipariskalemlist"
+          optionLabel="icerik" :style="{ width: '350px' }" />
+      
+        <label for="icerik">Sipariş Kalem Listesi</label>
+      </span>
+    </div>
+    <div class=col>
+      <span class="p-float-label">
+        <InputText id="siparis" type="text" v-model="siparis_miktar" disabled />
+      
+        <label for="siparis">Sipariş</label>
+      </span>
+    </div>
+    <div class=col>
+      <span class="p-float-label">
+        <InputText id="giden" type="text" v-model="gidenMiktar" disabled />
+      
+        <label for="giden">Giden</label>
+      </span>
+    </div>
+    <div class=col>
+      <span class="p-float-label">
+        <InputText id="kalan" type="text" v-model="kalan" disabled />
+        <label for="kalan">Kalan</label>
+      </span>
+    </div>
+    <div class=col>
+      <Button type="is-success" @click="sevkiyatIslemi" label="Sevk Et" :disabled="is_sevk_disabled" />
+    </div>
+  </div>
+  <br />
+
+  <div class="grid">
+    <div class="col">
+      <h2 style="text-align:center;font-size:20px;">Üretim Ürün Listesi</h2>
+      <div class="grid">
+        <div class="col">
+          <DataTable :value="kasalistesi" dataKey="kasano">
+            <Column field="kasano" header="No">
+              <template #body="slotProps">
+                {{ slotProps.data.kasano }}
+              </template>
+              <template #footer>
+                {{ toplam_uretim_adet }}
+              </template>
+            </Column>
+            <Column field="miktar" header="Miktar">
+              <template #body="slotProps">
+                {{ slotProps.data.miktar }}
+              </template>
+              <template #footer>
+                {{ formatDecimal(toplam_uretim_miktar) }}
+              </template>
+            </Column>
+            <Column field="birimadi" header="B">
+              <template #body="slotProps">
+                {{ slotProps.data.birimadi }}
+              </template>
+            </Column>
+          
+            <Column field="kasa_secim" header="S" bodyStyle="text-align:center;">
+              <template #body="slotProps">
+                <Checkbox v-model="slotProps.data.kasa_secim" :binary="true" />
+              </template>
+            </Column>
+          </DataTable>
+        </div>
+        <div class="col">
+          <div class="grid">
+            <div class="col">
+                        <Button class="p-button-secondary" @click="kasaCikisYap" :disabled="is_kasa_form" label="Kasa Çık" />
+
+            </div>
+
+
           </div>
+          <div class="grid">
+            <div class="col">
+              <Checkbox @input="kasaHepsiSec($event)" v-model="isSelectedHepsi" :disabled="is_all_form" :binary="true" />
+              
+              
+              Hepsi
+            </div>
+          </div>
+
+          
         </div>
       </div>
     </div>
-    <div class="columns is-multiline">
-      <div class="column is-12 box">
-        <h4 class="subtitle">Çıkış Bilgileri</h4>
-
-        <div class="columns is-multiline">
-          <div class="column is-2">
-            <Calendar
-              v-model="cikis_tarihi"
-              :class="{ 'p-invalid': v$.cikis_tarihi.$invalid && submitted }"
-            />
-          </div>
-          <div class="column is-2">
-            <span class="p-float-label">
-              <InputText
-                id="faturano"
-                type="text"
-                v-model="faturano"
-                :class="{ 'p-invalid': v$.faturano.$invalid && submitted }"
-              />
-
-              <label for="faturano">Fatura No</label>
-            </span>
-          </div>
-          <div class="column is-2">
-            <Checkbox v-model="takip" :binary="true" />Takip
-          </div>
-          <div class="column is-2">
-            <Checkbox
-              @input="normalSevkIslem"
-              v-model="normal_sevk"
-              :binary="true"
-              :disabled="normal_sevk_form"
-            />Normal Sevk
-          </div>
-          <div class="column is-2">
-            <Checkbox
-              @input="hizliSevkIslem"
-              v-model="hizli_sevk"
-              :binary="true"
-              :disabled="hizli_sevk_form"
-            />Hızlı Sevk
-          </div>
-        </div>
-      </div>
-      <br />
+    <div class="col">
+      <h2 style="text-align:center;font-size:20px;">Çıkış Ürün Listesi</h2>
+      <DataTable :value="sevk_kasa_listesi">
+        <Column header="Kasa No" headerStyle="width:70px" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.kasano }}
+          </template>
+        </Column>
+        <Column header="Ürün" headerStyle="width:70px" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.urunadi }}
+          </template>
+        </Column>
+        <Column header="Ebat" headerStyle="width:70px" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ebat }}
+          </template>
+        </Column>
+        <Column header="Yüzey" headerStyle="width:130px">
+          <template #body="slotProps">
+            {{ slotProps.data.yuzeyislem }}
+          </template>
+        </Column>
+        <Column field="miktar" header="Miktar" headerStyle="width:70px" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ formatDecimal(slotProps.data.miktar) }}
+          </template>
+          <template #footer>
+            {{ formatDecimal(sevk_toplam_miktar) }}
+          </template>
+        </Column>
+        <Column field="birimfiyat" header="B" headerStyle="width:70px" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ formatDecimal(slotProps.data.birimfiyat) }}
+          </template>
+        </Column>
+        <Column header="Satış Toplam" headerStyle="width:90px" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ formatDecimal(slotProps.data.toplam) }}
+          </template>
+          <template #footer>
+            {{ formatDecimal(sevk_toplam_satis) }}
+          </template>
+        </Column>
+      </DataTable>
     </div>
-    <div class="columns is-multiline">
-      <div class="column is-12 box">
-        <div class="columns is-multiline">
-          <div class="column is-4">
-            <span class="p-float-label">
-              <Dropdown
-                id="icerik"
-                @change="siparisKalemDegisim($event)"
-                v-model="selectedSipKalem"
-                :options="sipariskalemlist"
-                optionLabel="icerik"
-                :style="{ width: '350px' }"
-              />
+  </div>
 
-              <label for="icerik">Sipariş Kalem Listesi</label>
-            </span>
-          </div>
-          <div class="column is-2">
-            <span class="p-float-label">
-              <InputText
-                id="siparis"
-                type="text"
-                v-model="siparis_miktar"
-                disabled
-              />
 
-              <label for="siparis">Sipariş</label>
-            </span>
-          </div>
-          <div class="column is-2">
-            <span class="p-float-label">
-              <InputText
-                id="giden"
-                type="text"
-                v-model="gidenMiktar"
-                disabled
-              />
 
-              <label for="giden">Giden</label>
-            </span>
-          </div>
-          <div class="column is-2" style="text-align: center">
-            <span class="p-float-label">
-              <InputText id="kalan" type="text" v-model="kalan" disabled />
-              <label for="kalan">Kalan</label>
-            </span>
-          </div>
-          <div class="column is-2">
-            <Button type="is-success" @click="sevkiyatIslemi" label="Sevk Et" :disabled="is_sevk_disabled"/>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="columns is-multiline">
-      <div class="column is-4">
-        <div class="columns is-multiline">
-          <div class="column is-12">
-            <h2 class="has-text-centered">ÜRETİM ÜRÜN LİSTESİ</h2>
-          </div>
-          <div class="column is-12">
-            <DataTable :value="kasalistesi" dataKey="kasano">
-              <Column field="kasano" header="No">
-                <template #body="slotProps">
-                  {{ slotProps.data.kasano }}
-                </template>
-                <template #footer>
-                  {{ toplam_uretim_adet }}
-                </template>
-              </Column>
-              <Column field="miktar" header="Miktar">
-                <template #body="slotProps">
-                  {{ slotProps.data.miktar }}
-                </template>
-                <template #footer>
-                  {{ formatDecimal(toplam_uretim_miktar) }}
-                </template>
-              </Column>
-              <Column field="birimadi" header="B">
-                <template #body="slotProps">
-                  {{ slotProps.data.birimadi }}
-                </template>
-              </Column>
-
-              <Column
-                field="kasa_secim"
-                header="S"
-                bodyStyle="text-align:center;"
-              >
-                <template #body="slotProps">
-                  <Checkbox
-                    v-model="slotProps.data.kasa_secim"
-                    :binary="true"
-                  />
-                </template>
-              </Column>
-            </DataTable>
-          </div>
-        </div>
-      </div>
-      <div class="column is-2">
-        <div class="columns is-multiline">
-          <div class="column is-12 btn_islem">
-            <Button
-              class="p-button-secondary"
-              @click="kasaCikisYap"
-              :disabled="is_kasa_form"
-              label="Kasa Çık"
-            />
-          </div>
-          <div class="column is-12 is-justified">
-            <Checkbox
-              @input="kasaHepsiSec($event)"
-              v-model="isSelectedHepsi"
-              :disabled="is_all_form"
-              :binary="true"
-            />
-            Hepsi
-          </div>
-        </div>
-      </div>
-      <div class="column is-6">
-        <div class="columns is-multiline is-mobile">
-          <div class="column is-12">
-            <h2 class="has-text-centered">ÇIKIŞ ÜRÜN LİSTESİ</h2>
-          </div>
-          <div class="column is-12">
-            <DataTable :value="sevk_kasa_listesi">
-              <Column
-                header="Kasa No"
-                headerStyle="width:70px"
-                bodyStyle="text-align:center"
-              >
-                <template #body="slotProps">
-                  {{ slotProps.data.kasano }}
-                </template>
-              </Column>
-              <Column
-                header="Ürün"
-                headerStyle="width:70px"
-                bodyStyle="text-align:center"
-              >
-                <template #body="slotProps">
-                  {{ slotProps.data.urunadi }}
-                </template>
-              </Column>
-              <Column
-                header="Ebat"
-                headerStyle="width:70px"
-                bodyStyle="text-align:center"
-              >
-                <template #body="slotProps">
-                  {{ slotProps.data.ebat }}
-                </template>
-              </Column>
-              <Column header="Yüzey" headerStyle="width:130px">
-                <template #body="slotProps">
-                  {{ slotProps.data.yuzeyislem }}
-                </template>
-              </Column>
-              <Column
-                field="miktar"
-                header="Miktar"
-                headerStyle="width:70px"
-                bodyStyle="text-align:center"
-              >
-                <template #body="slotProps">
-                  {{ formatDecimal(slotProps.data.miktar) }}
-                </template>
-                <template #footer>
-                  {{ formatDecimal(sevk_toplam_miktar) }}
-                </template>
-              </Column>
-              <Column
-                field="birimfiyat"
-                header="B"
-                headerStyle="width:70px"
-                bodyStyle="text-align:center"
-              >
-                <template #body="slotProps">
-                  {{ formatDecimal(slotProps.data.birimfiyat) }}
-                </template>
-              </Column>
-              <Column
-                header="Satış Toplam"
-                headerStyle="width:90px"
-                bodyStyle="text-align:center"
-              >
-                <template #body="slotProps">
-                  {{ formatDecimal(slotProps.data.toplam) }}
-                </template>
-                <template #footer>
-                  {{ formatDecimal(sevk_toplam_satis) }}
-                </template>
-              </Column>
-            </DataTable>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 </template>
 <script>
 import service from "../service/SevkiyatService";

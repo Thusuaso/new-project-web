@@ -578,6 +578,7 @@ export default {
       ulkeId: { required },
       faturaKesimTurId: { required },
     },
+    faturaTur:{required}
   },
   localService: null,
   created() {
@@ -635,8 +636,7 @@ export default {
         this.odemeTur = this.odemeTurList.find(
           (x) => x.id == this.profData.odemeTurId
         );
-        console.log(this.faturaKesimTurList)
-        console.log(this.profData)
+
 
         this.faturaTur = this.faturaKesimTurList.find(
           (x) => x.id == this.profData.faturaKesimTurId
@@ -865,6 +865,7 @@ export default {
 
     },
     faturaTurDegisim() {
+      console.log(this.profData.faturaKesimTurId)
       this.profData.faturaKesimTurId = this.faturaTur.id;
 
       this.kayitKontrol();

@@ -1,263 +1,163 @@
 <template>
     <br/>
-    <div class="columns">
-      <div class="column is-9">
-        <div class="columns">
-          <div class="column is-12">
+    <div class="grid">
+      <div class="col-8">
+
+        <div class="grid">
+          <div class="col" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <InputText
-                id="musteriAdi"
-                type="text"
-                v-model="musteri_model.musteri_adi"
-                :class="{
-                  'p-invalid':
-                    v$.musteri_model.musteri_adi.$invalid && submitted,
-                }"
-              />
+              <InputText id="musteriAdi" type="text" v-model="musteri_model.musteri_adi" :class="{
+                                  'p-invalid':
+                                    v$.musteri_model.musteri_adi.$invalid && submitted,
+                                }" />
               <label for="musteriAdi">Müşteri Adı</label>
             </span>
           </div>
-        </div>
-        <div class="columns">
-          <div class="column">
+          <div class="col" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <Textarea
-                id="firmaAdi"
-                type="text"
-                v-model="musteri_model.unvan"
-                rows="5"
-                cols="30"
-                :class="{
-                  'p-invalid': v$.musteri_model.unvan.$invalid && submitted,
-                }"
-              />
+              <InputText id="mail" type="text" v-model="musteri_model.mail_adresi" :class="{
+                                          'p-invalid':
+                                            v$.musteri_model.mail_adresi.$invalid && submitted,
+                                        }" />
+              <label for="mail">MAİL</label>
+            </span>
+          </div>
+          
+        
+        
+        </div>
+        <br/>
+        <div class="grid">
+          <div class="col" style="margin-bottom:15px;">
+            <span class="p-float-label">
+              <Textarea id="firmaAdi" type="text" v-model="musteri_model.unvan" rows="5" cols="30" :class="{
+                                                'p-invalid': v$.musteri_model.unvan.$invalid && submitted,
+                                              }" />
               <label for="firmaAdi">Firma Adı</label>
             </span>
           </div>
-          <div class="column">
-            <div class="column">
-              <span class="p-float-label">
-                <InputText
-                  id="mail"
-                  type="text"
-                  v-model="musteri_model.mail_adresi"
-                  :class="{
-                    'p-invalid':
-                      v$.musteri_model.mail_adresi.$invalid && submitted,
-                  }"
-                />
-                <label for="mail">MAİL</label>
-              </span>
-              <br />
-              <span class="p-float-label">
-                <InputText id="sira" type="text" v-model="musteri_model.sira" />
-                <label for="sira">SIRA</label>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column">
+          <div class="col" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <Textarea
-                id="sira"
-                v-model="musteri_model.adres"
-                rows="5"
-                cols="100"
-                :class="{
-                  'p-invalid': v$.musteri_model.adres.$invalid && submitted,
-                }"
-              />
+              <Textarea id="sira" v-model="musteri_model.adres" rows="5" cols="100" :class="{
+                                  'p-invalid': v$.musteri_model.adres.$invalid && submitted,
+                                }" />
               <label for="sira">ADRES</label>
             </span>
           </div>
         </div>
-        <div class="columns">
-          <div class="column is-3">
+        <br />
+
+        <div class="grid">
+          <div class="col-6" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <InputText
-                id="marketing"
-                type="text"
-                v-model="musteri_model.marketing"
-                :class="{
-                  'p-invalid': v$.musteri_model.marketing.$invalid && submitted,
-                }"
-              />
+              <InputText id="marketing" type="text" v-model="musteri_model.marketing" :class="{
+                              'p-invalid': v$.musteri_model.marketing.$invalid && submitted,
+                            }" />
               <label for="marketing">Pazarlama</label>
             </span>
           </div>
-          <div class="column is-3" style="margin-left:100px;">
+          <div class="col-6" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <AutoComplete
-                id="ulke"
-                v-model="select_ulke"
-                :suggestions="filter_ulke_list"
-                @complete="ulke_complete_event($event)"
-                field="ulke_adi"
-                :class="{ 'p-invalid': v$.select_ulke.$invalid && submitted }"
-              />
+              <AutoComplete id="ulke" v-model="select_ulke" :suggestions="filter_ulke_list" @complete="ulke_complete_event($event)"
+                field="ulke_adi" :class="{ 'p-invalid': v$.select_ulke.$invalid && submitted }" />
               <label for="ulke">Ülke</label>
             </span>
           </div>
-        </div>
-        <div class="columns">
-          <div class="column is-3">
+          <div class="col-6" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <InputText
-                id="telefon"
-                type="text"
-                v-model="musteri_model.telefon"
-                :class="{
-                  'p-invalid': v$.musteri_model.telefon.$invalid && submitted,
-                }"
-              />
+              <InputText id="telefon" type="text" v-model="musteri_model.telefon" :class="{
+                              'p-invalid': v$.musteri_model.telefon.$invalid && submitted,
+                            }" />
               <label for="telefon">TELEFON</label>
             </span>
           </div>
-          <div class="column is-3" style="margin-left:100px;">
+          <div class="col-6" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <AutoComplete
-                id="temsilci"
-                v-model="select_temsilci"
-                :suggestions="filter_temsilci_list"
-                @complete="temsilci_complete_event($event)"
-                field="kullanici_adi"
-                :class="{
-                  'p-invalid': v$.select_temsilci.$invalid && submitted,
-                }"
-              />
+              <AutoComplete id="temsilci" v-model="select_temsilci" :suggestions="filter_temsilci_list"
+                @complete="temsilci_complete_event($event)" field="kullanici_adi" :class="{
+                              'p-invalid': v$.select_temsilci.$invalid && submitted,
+                            }" />
               <label for="temsilci">Temsilci</label>
             </span>
           </div>
-        </div>
-        <div class="columns">
-          <div class="column is-3" >
+          <div class="col-6" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <AutoComplete
-                id="satisci"
-                v-model="select_satisci"
-                :suggestions="filter_satisci_list"
-                @complete="satisci_complete_event($event)"
-                @item-select="satisci_selected($event)"
-                field="kullanici_adi"
-                :class="{
-                  'p-invalid': v$.select_satisci.$invalid && submitted,
-                }"
-              />
+              <AutoComplete id="satisci" v-model="select_satisci" :suggestions="filter_satisci_list"
+                @complete="satisci_complete_event($event)" @item-select="satisci_selected($event)" field="kullanici_adi" :class="{
+                              'p-invalid': v$.select_satisci.$invalid && submitted,
+                            }" />
               <label for="satisci">Satışçı</label>
             </span>
           </div>
-          <div class="column is-3" style="margin-left:100px;">
+          <div class="col-6" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <Dropdown
-                id="oncelik"
-                style="width: 100px"
-                v-model="selectOncelik"
-                :options="oncelikList"
-                optionLabel="name"
-                :class="{
-                  'p-invalid': v$.selectOncelik.$invalid && submitted,
-                }"
-              />
+              <Dropdown id="oncelik" style="width: 100px" v-model="selectOncelik" :options="oncelikList" optionLabel="name" :class="{
+                              'p-invalid': v$.selectOncelik.$invalid && submitted,
+                            }" />
               <label for="oncelik">Öncelik</label>
             </span>
           </div>
-        </div>
-        <div class="columns">
-          <div class="column is-6">
+          <div class="col-6" style="margin-bottom:15px;">
             <span class="p-float-label">
-              <Textarea
-                id="notlar"
-                v-model="musteri_model.notlar"
-                rows="5"
-                cols="30"
-              />
+              <Textarea id="notlar" v-model="musteri_model.notlar" rows="5" cols="30" />
               <label for="notlar">Notlar</label>
             </span>
           </div>
-          <div class="column is-4">
-            <div class="columns">
-              <div class="column is-2" style="margin-right:70px;">
-                <Checkbox v-model="musteri_model.devir" :binary="true" /> Devir
-              </div>
-              <div class="column is-2" style="margin-right:70px;">
-                <Checkbox v-model="musteri_model.ozel" :binary="true" />
-                Özel
-              </div>
-              <div class="column is-2" style="margin-right:70px;">
-                <Checkbox
-                  id="takip"
-                  v-model="musteri_model.takip"
-                  @change="isFollowChange"
-                  :binary="true"
-                />
-                <label for="takip">Takip</label>
-              </div>
-              <div class="column is-2" style="margin-right:70px;">
-                <h3>Son Kullanıcı</h3>
-                <InputSwitch
-                  id="sonkullanici"
-                  v-model="musteri_model.sonkullanici"
-                />
-              </div>
-            </div>
+          <div class="col-6" style="margin-bottom:15px;">
+            <span class="p-float-label">
+              <InputText id="sira" type="text" v-model="musteri_model.sira" />
+              <label for="sira">SIRA</label>
+            </span>
           </div>
         </div>
+        <br />
+
+        <div class="grid">
+          <div class="col">
+              <Checkbox v-model="musteri_model.devir" :binary="true" /> Devir
+          </div>
+          <div class="col">
+            <Checkbox v-model="musteri_model.ozel" :binary="true" />
+            Özel
+          </div>
+          <div class="col">
+            <Checkbox id="takip" v-model="musteri_model.takip" @change="isFollowChange" :binary="true" />
+            <label for="takip">Takip</label>
+          </div>
+          <div class="col">
+            <h3>Son Kullanıcı</h3>
+            <InputSwitch id="sonkullanici" v-model="musteri_model.sonkullanici" />
+          </div>
+        </div>
+        <br />
+
       </div>
-      <div class="column is-3" style="margin-left: 40px">
-        <DataTable
-          :value="siparis_ozet_list"
-          :scrollable="true"
-          scrollHeight="390px"
-          selectionMode="single"
-          dataKey="Yil"
-          v-model:selection="selectYil"
-          @row-select="YilUrunSecim($event)"
-        >
-          <Column
-            field="Yil"
-            header="Yıl"
-            headerStyle="width:3%;"
-            bodyStyle="text-align:left"
-          >
+      <div class="col-4">
+        <DataTable :value="siparis_ozet_list" :scrollable="true" scrollHeight="390px" selectionMode="single" dataKey="Yil"
+          v-model:selection="selectYil" @row-select="YilUrunSecim($event)">
+          <Column field="Yil" header="Yıl" headerStyle="width:3%;" bodyStyle="text-align:left">
             <template #body="slotProps">
               {{ slotProps.data.Yil }}
             </template>
           </Column>
-          <Column
-            field="Total"
-            header="DDP"
-            headerStyle="width:3%;"
-            bodyStyle="text-align:left"
-          >
+          <Column field="Total" header="DDP" headerStyle="width:3%;" bodyStyle="text-align:left">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.Total) }}
             </template>
           </Column>
         </DataTable>
       </div>
-    </div>
 
-    <div class="columns is-multiline is-centered">
-      <div class="column is-2">
-        <Button
-          :disabled="is_kaydet"
-          @click="musteri_kaydet_click"
-          expanded
-          type="is-success"
-          >KAYDET
-        </Button>
+    </div>
+    <div class="grid" style="text-align:center;">
+      <div class="col">
+        <Button :disabled="is_kaydet" @click="musteri_kaydet_click" expanded type="is-success" label="KAYDET"/>
       </div>
-      <div class="column is-1">
-        <Button
-          :disabled="is_sil"
-          @click="musteri_sil_click"
-          expanded
-          class="p-button-danger"
-          >SİL</Button
-        >
+      <div class="col">
+        <Button :disabled="is_sil" @click="musteri_sil_click" expanded class="p-button-danger" label="SİL" />
       </div>
     </div>
+    
     <Dialog
       v-model:visible="is_form"
       :modal="true"

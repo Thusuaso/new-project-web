@@ -1,193 +1,105 @@
 <template>
   <br />
-  <div class="columns">
-    <div class="column is-12">
-      <div class="columns is-multiline">
-        <div class="column is-3" style="background-color: white">
-          <span class="p-float-label">
-            <InputText
-              id="firmaAdi"
-              type="text"
-              v-model="bgpProjectAyrintiForm.firmaAdi"
-              :class="{
-                'p-invalid':
-                  v$.bgpProjectAyrintiForm.firmaAdi.$invalid && submitted,
-              }"
-            />
-            <label for="firmaAdi">Firma Adı</label>
-          </span>
-        </div>
-
-        <div class="column is-3">
-          <span class="p-float-label">
-            <Calendar
-              id="kayitTarihi"
-              v-model="date"
-              :class="{ 'p-invalid': v$.date.$invalid && submitted }"
-            />
-
-            <label for="kayitTarihi">Kayıt Tarihi</label>
-          </span>
-        </div>
-        <div class="column is-3" style="background-color: white">
-          <span class="p-float-label">
-            <InputText
-              id="email"
-              type="text"
-              v-model="bgpProjectAyrintiForm.email"
-              :class="{
-                'p-invalid':
-                  v$.bgpProjectAyrintiForm.email.$invalid && submitted,
-              }"
-            />
-            <label for="email">Email</label>
-          </span>
-        </div>
-        <div class="column is-3" style="background-color: white">
-          <span class="p-float-label">
-            <InputText
-              id="phoneNumber"
-              type="text"
-              v-model="bgpProjectAyrintiForm.phoneNumber"
-              :class="{
-                'p-invalid':
-                  v$.bgpProjectAyrintiForm.phoneNumber.$invalid && submitted,
-              }"
-            />
-            <label for="phoneNumber">Telefon Numarası</label>
-          </span>
-        </div>
-      </div>
-      <hr />
-      <div class="columns">
-        <div class="column">
-          <Checkbox
-            v-model="bgpProjectAyrintiForm.wrongNumber"
-            :binary="true"
-          />Numara Hatalı
-        </div>
-        <div class="column">
-          <Checkbox
-            v-model="bgpProjectAyrintiForm.notResponse"
-            :binary="true"
-          />Arandı, Açmadı, Sesli Mesaj
-        </div>
-        <div class="column">
-          <Checkbox
-            v-model="bgpProjectAyrintiForm.notInterested"
-            :binary="true"
-          />Açtı, İlgilenmiyor
-        </div>
-        <div class="column">
-          <Checkbox
-            v-model="bgpProjectAyrintiForm.interested"
-            :binary="true"
-          />Açtı, İlgileniyor
-        </div>
-      </div>
-      <hr />
-      <div class="columns">
-        <div class="column">
-          <RadioButton
-            name="name"
-            value="contractor"
-            v-model="bgpProjectAyrintiForm.unvan"
-          />Constructor
-          <RadioButton
-            v-model="bgpProjectAyrintiForm.unvan"
-            name="name"
-            value="architect"
-          />Architect
-        </div>
-      </div>
-      <hr />
-      <div class="columns">
-        <div class="column is-6">
-          <div class="column is-12 card">
-            <div class="column is-12">
-              <div class="column is-10">
-                <span class="p-float-label">
-                  <InputText
-                    id="baslik"
-                    type="text"
-                    v-model="bgpProjectAyrintiForm.baslik"
-                    :class="{
+  <div class="grid">
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="firmaAdi" type="text" v-model="bgpProjectAyrintiForm.firmaAdi" :class="{
+          'p-invalid':
+            v$.bgpProjectAyrintiForm.firmaAdi.$invalid && submitted,
+        }" />
+        <label for="firmaAdi">Firma Adı</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <Calendar id="kayitTarihi" v-model="date" :class="{ 'p-invalid': v$.date.$invalid && submitted }" />
+      
+        <label for="kayitTarihi">Kayıt Tarihi</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="email" type="text" v-model="bgpProjectAyrintiForm.email" :class="{
                       'p-invalid':
-                        v$.bgpProjectAyrintiForm.baslik.$invalid && submitted,
-                    }"
-                  />
-                  <label for="baslik">Başlık</label>
-                </span>
-              </div>
-              <div class="column is-12">
-                <span class="p-float-label">
-                  <Textarea
-                    id="aciklama"
-                    rows="5"
-                    cols="30"
-                    v-model="bgpProjectAyrintiForm.aciklama"
-                    :class="{
+                        v$.bgpProjectAyrintiForm.email.$invalid && submitted,
+                    }" />
+        <label for="email">Email</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="phoneNumber" type="text" v-model="bgpProjectAyrintiForm.phoneNumber" :class="{
                       'p-invalid':
-                        v$.bgpProjectAyrintiForm.aciklama.$invalid && submitted,
-                    }"
-                  />
-                  <label for="aciklama">Detay</label>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-6">
-          <div class="column is-12 card">
-            <div class="column is-12">
-              <div class="column is-5">
-                <span class="p-float-label">
-                  <Calendar v-model="date_hatirlatma" />
-                  <label for="aciklama">Detay</label>
-                </span>
-              </div>
-              <div class="column is-12">
-                <span class="p-float-label">
-                  <Textarea
-                    rows="5"
-                    id="haciklama"
-                    cols="30"
-                    v-model="bgpProjectAyrintiForm.hatirlatmaAciklama"
-                  />
-                  <label for="haciklama">Hatırlatma Açıklama</label>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div class="columns is-multiline">
-        <div class="column is-12">
-          <div class="columns is- multiline">
-            <div class="column is-2">
-              <Button
-                :disabled="username_kontrol"
-                class="p-button-warning"
-                @click="degistir_click"
-              >
-                Guncelle
-              </Button>
-            </div>
-            <div class="column is-2">
-              <Button
-                :disabled="username_kontrol"
-                class="p-button-danger"
-                @click="sil_click"
-              >
-                Sil
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+                        v$.bgpProjectAyrintiForm.phoneNumber.$invalid && submitted,
+                    }" />
+        <label for="phoneNumber">Telefon Numarası</label>
+      </span>
     </div>
   </div>
+  <br/>
+  <div class="grid">
+    <div class="col">
+      <Checkbox v-model="bgpProjectAyrintiForm.wrongNumber" :binary="true" />Numara Hatalı
+    </div>
+    <div class="col">
+      <Checkbox v-model="bgpProjectAyrintiForm.notResponse" :binary="true" />Arandı, Açmadı, Sesli Mesaj
+    </div>
+    <div class="col">
+      <Checkbox v-model="bgpProjectAyrintiForm.notInterested" :binary="true" />Açtı, İlgilenmiyor
+    </div>
+    <div class="col">
+      <Checkbox v-model="bgpProjectAyrintiForm.interested" :binary="true" />Açtı, İlgileniyor
+    </div>
+
+  </div>
+  <br />
+  <div class="grid">
+    <div class="col"><RadioButton name="name" value="contractor" v-model="bgpProjectAyrintiForm.unvan" />Constructor</div>
+    <div class="col"><RadioButton v-model="bgpProjectAyrintiForm.unvan" name="name" value="architect" />Architect</div>
+  </div>
+  <br />
+  <div class="grid">
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="baslik" type="text" v-model="bgpProjectAyrintiForm.baslik" :class="{
+                            'p-invalid':
+                              v$.bgpProjectAyrintiForm.baslik.$invalid && submitted,
+                          }" />
+        <label for="baslik">Başlık</label>
+
+      </span>
+      <br />
+      <span class="p-float-label">
+        <Textarea id="aciklama" rows="5" cols="30" v-model="bgpProjectAyrintiForm.aciklama" :class="{
+                            'p-invalid':
+                              v$.bgpProjectAyrintiForm.aciklama.$invalid && submitted,
+                          }" />
+        <label for="aciklama">Detay</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <Calendar v-model="date_hatirlatma" />
+        <label for="aciklama">Detay</label>
+      </span>
+      <br />
+      <span class="p-float-label">
+        <Textarea rows="5" id="haciklama" cols="30" v-model="bgpProjectAyrintiForm.hatirlatmaAciklama" />
+        <label for="haciklama">Hatırlatma Açıklama</label>
+      </span>
+    </div>
+  </div>
+  <br />
+  <div class="grid">
+    <div class="col"><Button :disabled="username_kontrol" class="p-button-warning" @click="degistir_click" label="Guncelle" />
+      </div>
+    <div class="col">
+      <Button :disabled="username_kontrol" class="p-button-danger" @click="sil_click" label="Sil" />
+        
+    </div>
+
+  </div>
+
 </template>
 
 <script>

@@ -93,6 +93,7 @@
                 v-model="siparis.siparisNo"
                 placeholder="Sipariş No"
                 class="inputs"
+                @input="kayitDurum = false"
               />
               <Calendar
                 v-model="siparisTarihi"
@@ -219,13 +220,6 @@
               <br />
 
               <span class="p-float-label">
-                <!-- <input-currency
-                  id="pesinat"
-                  :disAktif="disPesinat"
-                  :value="siparis.pesinat"
-                  @input="siparis.pesinat = $event.data"
-                  class="inputs"
-                /> -->
                 <InputNumber class="p-inputtext-sm" id="detayAlis_3" @input="siparis.pesinat = $event.value.replace(',','.')"
                   v-model="siparis.pesinat" :disabled="disPesinat" mode="currency" currency="USD" locale="jp-JP" inputStyle="text-align:center;" style="width:100%;height:40px;"/>
 
@@ -441,7 +435,9 @@ import { mapGetters } from "vuex";
 import store from "@/store";
 import SiparisBolmeAlani from "../../components/siparisler/siparisListeler/SiparisBolmeAlani.vue";
 import GidecekSipBilgileriRaporuUretim from "../../components/raporlar/GidecekSipBilgileriRaporuUretim.vue";
+
 export default {
+
   data() {
     return {
       iscilikData: 0,
@@ -625,7 +621,9 @@ export default {
     siparisTarihiDegisim() {
       this.siparis.siparisTarihi = this.localService.getDateString(
         this.siparisTarihi
+
       );
+      this.kayitDurum = false;
     },
     TahminiyuklemeTarihiDegisim() {
       this.siparis.TahminiyuklemeTarihi = this.localService.getDateString(
@@ -658,9 +656,11 @@ export default {
     siparisKaydet() {
       if (this.kayitDurum != true) {
         this.kayitDurum = true;
+
         store.dispatch("kayit_kontrol_degeri_act", true);
         if (this.yeniSiparis){
           this.yeniSiparisKayit()
+
         }
         else {
           this.siparisGuncelleme();
@@ -689,9 +689,10 @@ export default {
         siparis: this.siparis,
         siparisUrunler: this.siparisUrunler,
       };
+      if (this.control(siparisVeri)) {
       this.kayitDurum = true;
       this.$store.dispatch('fullscreenLoadingAct', true)
-
+      
       siparisService.setSiparisKaydet(siparisVeri).then((data) => {
         if (data.status == true) {
           this.$store.dispatch('fullscreenLoadingAct', false)
@@ -704,6 +705,7 @@ export default {
           });
           this.kayitDurum = true;
           socket.siparis.emit("siparisler_list_event")
+          // eslint-disable-next-line vue/no-mutating-props
           this.yeniSiparis = false;
           socket.siparis.emit(
             "anaSayfaDegisiklikEvent",
@@ -724,7 +726,54 @@ export default {
 
         }
       });
+      }
+      
     },
+    control(siparisVeri) {
+      if (siparisVeri.siparis.faturaKesimTurId == null) {
+        alert('Fatura Türünü Seçiniz!')
+        return false
+      } else if (siparisVeri.siparis.siparisNo == "" || siparisVeri.siparis.siparisNo == null) {
+        alert('Sipariş No Giriniz!')
+        return false
+    }
+
+      else if (siparisVeri.siparis.musteriId == null) {
+        alert('Müşteriyi Seçiniz!')
+
+        return false
+      } else if (siparisVeri.siparis.finansman == 0) {
+        alert('Finansmanı Seçiniz!')
+        return false
+      } else if (siparisVeri.siparis.operasyon == 0) {
+        alert('Operasyoncuyu Seçiniz!')
+        return false
+      } else if (siparisVeri.siparis.ulkeId == null) {
+        alert('Ülkeyi Seçiniz!')
+        return false
+      } else if (siparisVeri.siparis.siparisSahibi == "" || siparisVeri.siparis.siparisSahibi == null) {
+        alert('Sipariş Sahibini Seçiniz!')
+        return false
+      } else if (siparisVeri.siparis.siparisTarihi == "") {
+        alert('Sipariş Tarihini Giriniz!')
+        return false
+      } else if (siparisVeri.siparis.teslimTurId == null) {
+        alert('Teslim Türünü Seçiniz!')
+        return false
+      } else if (siparisVeri.siparis.odemeTurId == null) {
+        alert('Ödeme Türünü Seçiniz!')
+        return false
+      } else if (siparisVeri.siparisUrunler.length == 0) {
+        alert('Ürün Bilgilerini Giriniz!')
+        return false
+      } 
+
+      else {
+        return true
+      }
+    },
+
+    
     siparisGuncelleme() {
       const username = this.$store.getters.__getUsername.toUpperCase();
       const username2 = this.$store.getters.__getUsername.toLowerCase();
@@ -783,10 +832,12 @@ export default {
           this.disPesinat = false;
         }
       }
+      this.kayitDurum = false;
     },
     musteriDegisim() {
       if (this.musteri) {
         this.siparis.musteriId = this.musteri.id;
+        this.kayitDurum = false;
       }
     },
 

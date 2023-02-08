@@ -1,201 +1,89 @@
 <template>
-  <section>
-    <div class="columns">
-      <div class="column is-9">
-        <div class="columns">
-          <div class="column">
-            <RadioButton
-              v-model="FirmaAdi"
-              name="name"
-              @change="statuSecim"
-              value="OnlyMekmer"
-            />Sadece Stok
-          </div>
-          <div class="column">
-            <RadioButton
-              v-model="FirmaAdi"
-              name="name"
-              @change="statuSecim"
-              value="Mekmer"
-            />Mekmer
-          </div>
-          <div class="column">
-            <RadioButton
-              v-model="FirmaAdi"
-              name="name"
-              @change="statuSecim"
-              value="Mek-Moz"
-            />Mek-Moz
-          </div>
-          <div class="column">
-            <RadioButton
-              v-model="FirmaAdi"
-              name="name"
-              @change="statuSecim"
-              value="Hepsi"
-            />Hepsi
-          </div>
-        </div>
+
+    <div class="grid">
+      <div class="col">
+        <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim" value="OnlyMekmer" />Sadece Stok
       </div>
-      <div class="column is-3">
-        <Button @click="excel_cikti_click" label="Excel" />
+      <div class="col">
+        <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim" value="Mekmer" />Mekmer
       </div>
-      
+      <div class="col">
+        <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim" value="Mek-Moz" />Mek-Moz
+      </div>
+      <div class="col">
+        <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim" value="Mek-Moz" />Mek-Moz
+      </div>
     </div>
-    <div class="columns">
-      <div class="column">
+    <div class="grid">
+      <div class="col">
         <h2 class="has-text-centered has-text-weight-bold">STOCK LIST</h2>
-        <DataTable
-          :value="uretimKasalar"
-          :rows="30"
-          v-model:filters="filters"
-          filterDisplay="row"
-          selectionMode="single"
-          dataKey="id"
-          @row-select="depo_item_sec($event)"
-          v-model:selection="select_depo"
-          groupRowsBy="ebat"
-          sortField="ebat"
-          @filter="stokKasaToplama($event)"
-          rowGroupMode="rowspan"
-          sortMode="many"
-          :sortOrder="1"
-          scrollable
-          scrollHeight="520px"
-          :loading="datatableLoading"
-        >
-          <Column
-            field="en"
-            header="En"
-            headerStyle="width:12%"
-            bodyStyle="text-align:center"
-            :showFilterMenu="false"
-          >
+        <DataTable :value="uretimKasalar" :rows="30" v-model:filters="filters" filterDisplay="row" selectionMode="single"
+          dataKey="id" @row-select="depo_item_sec($event)" v-model:selection="select_depo" groupRowsBy="ebat" sortField="ebat"
+          @filter="stokKasaToplama($event)" rowGroupMode="rowspan" sortMode="many" :sortOrder="1" scrollable
+          scrollHeight="520px" :loading="datatableLoading" responsiveLayout="scroll">
+          <Column field="en" header="En" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false">
             <template style="display: sticky" #body="slotProps">
               {{ slotProps.data.en }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                :placeholder="`Search by name - `"
-                v-tooltip.top.focus="'Hit enter key to filter'"
-              />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-          <Column
-            field="boy"
-            header="Boy"
-            headerStyle="width:12%"
-            bodyStyle="text-align:center"
-            :showFilterMenu="false"
-          >
+          <Column field="boy" header="Boy" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.boy }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                :placeholder="`Search by name - `"
-                v-tooltip.top.focus="'Hit enter key to filter'"
-              />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-          <Column
-            field="kenar"
-            header="Kenar"
-            headerStyle="width:12%"
-            bodyStyle="text-align:center"
-            :showFilterMenu="false"
-          >
+          <Column field="kenar" header="Kenar" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false">
             <template style="display: sticky" #body="slotProps">
               {{ slotProps.data.kenar }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                :placeholder="`Search by name - `"
-                v-tooltip.top.focus="'Hit enter key to filter'"
-              />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-          <Column
-            field="urunAdi"
-            header="Ürün"
-            headerStyle="width:25%"
-            bodyStyle="text-align:center"
-            :showFilterMenu="false"
-          >
+          <Column field="urunAdi" header="Ürün" headerStyle="width:25%" bodyStyle="text-align:center" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.urunAdi }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                :placeholder="`Search by name - `"
-                v-tooltip.top.focus="'Hit enter key to filter'"
-              />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-          <Column
-            field="yuzeyIslem"
-            header="Yuzey"
-            headerStyle="width:25%"
-            bodyStyle="text-align:center"
-            :showFilterMenu="false"
-          >
+          <Column field="yuzeyIslem" header="Yuzey" headerStyle="width:25%" bodyStyle="text-align:center"
+            :showFilterMenu="false">
             <template #body="slotProps">
               <div style="word-break: break-all">
                 {{ slotProps.data.yuzeyIslem }}
               </div>
             </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                :placeholder="`Search by name - `"
-                v-tooltip.top.focus="'Hit enter key to filter'"
-              />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
-
+        
             <template #footer> Kasa Toplam : </template>
           </Column>
-
-          <Column
-            field="kasaSayisi"
-            header="Kasa"
-            headerStyle="width:12%"
-            bodyStyle="text-align:center"
-            :showFilterMatchModes="false"
-          >
+        
+          <Column field="kasaSayisi" header="Kasa" headerStyle="width:12%" bodyStyle="text-align:center"
+            :showFilterMatchModes="false">
             <template #body="slotProps">
               {{ slotProps.data.kasaSayisi }}
             </template>
-
+        
             <template #footer>
               {{ kasa_toplami }}
             </template>
           </Column>
-          <Column
-            field="miktar"
-            header="Miktar"
-            headerStyle="width:12%"
-            bodyStyle="text-align:center"
-            :showFilterMatchModes="false"
-          >
+          <Column field="miktar" header="Miktar" headerStyle="width:12%" bodyStyle="text-align:center"
+            :showFilterMatchModes="false">
             <template #body="slotProps">
               {{ slotProps.data.miktar }}
             </template>
@@ -204,13 +92,13 @@
             </template>
           </Column>
           <Column field="price" header="Fiyat" bodyStyle="text-align:center">
-            <template #body="slotProps" >
+            <template #body="slotProps">
               <div v-if="slotProps.data.price != null" style="text-align:center;">
-                  ${{ slotProps.data.price }}
-
+                ${{ slotProps.data.price }}
+        
               </div>
               <div v-else style="text-align:center;">
-              $0
+                $0
               </div>
             </template>
           </Column>
@@ -218,112 +106,62 @@
       </div>
     </div>
 
-    <Dialog
-      v-model:visible="is_form"
-      position="top"
-      :modal="true"
-      header="Stok Raporu Ayrıntı"
-      maximizable
-      :breakpoints="{'960px': '75vw', '640px': '100vw'}" 
-      :style="{width: '100%'}"
-    >
+    
 
-              <StokAyrintiListesi :urunid="urunId" :price = "productPrice"/>
-
-    </Dialog>
-
-    <Dialog
-      v-model:visible="is_form2"
-      position="top"
-      :modal="true"
-      header="Stok Raporu Ayrıntı"
-      maximizable
-    >
-      <section>
-        <div class="container">
-          <div class="columns">
-            <div class="column is-12">
-              <DataTable
-                :value="filterEbats"
-                :rows="30"
-                v-model:filters="filters2"
-                selectionMode="single"
-                dataKey="id"
-                @row-select="depo_item_sec($event)"
-                v-model:selection="select_depo"
-                groupRowsBy="ebat"
-                sortField="ebat"
-                rowGroupMode="rowspan"
-                sortMode="many"
-                :sortOrder="1"
-                scrollable
-                scrollHeight="459px"
-                @filter="stokKasaToplama2($event)"
-              >
-                <Column
-                  field="ebat"
-                  header="Ebat"
-                  headerStyle="width:80px"
-                  bodyStyle="text-align:center"
-                >
-                  <template style="display: sticky" #body="slotProps">
-                    {{ slotProps.data.ebat }}
-                  </template>
-                </Column>
-                <Column
-                  field="yuzeyIslem"
-                  header="Yuzey"
-                  headerStyle="width:100px"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.yuzeyIslem }}
-                  </template>
-                </Column>
-                <Column
-                  field="urunAdi"
-                  header="Ürün"
-                  headerStyle="width:80px"
-                  bodyStyle="text-align:center"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.urunAdi }}
-                  </template>
-                  <template #footer> Kasa Toplam : </template>
-                </Column>
-                <Column
-                  field="kasaSayisi"
-                  header="Kasa"
-                  headerStyle="width:20px"
-                  bodyStyle="text-align:center"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.kasaSayisi }}
-                  </template>
-                  <template #footer>
-                    {{ kasa_toplami2 }}
-                  </template>
-                </Column>
-                <Column
-                  field="miktar"
-                  header="Miktar"
-                  headerStyle="width:20px"
-                  bodyStyle="text-align:center"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.miktar }}
-                  </template>
-                  <template #footer>
-                    {{ formatDecimal(m2toplami2) }}
-                  </template>
-                </Column>
-              </DataTable>
-            </div>
+  <Dialog v-model:visible="is_form" position="top" :modal="true" header="Stok Raporu Ayrıntı" maximizable
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '100%'}">
+  
+    <StokAyrintiListesi :urunid="urunId" :price="productPrice" />
+  
+  </Dialog>
+  
+  <Dialog v-model:visible="is_form2" position="top" :modal="true" header="Stok Raporu Ayrıntı" maximizable>
+    <section>
+      <div class="container">
+        <div class="columns">
+          <div class="column is-12">
+            <DataTable :value="filterEbats" :rows="30" v-model:filters="filters2" selectionMode="single" dataKey="id"
+              @row-select="depo_item_sec($event)" v-model:selection="select_depo" groupRowsBy="ebat" sortField="ebat"
+              rowGroupMode="rowspan" sortMode="many" :sortOrder="1" scrollable scrollHeight="459px"
+              @filter="stokKasaToplama2($event)">
+              <Column field="ebat" header="Ebat" headerStyle="width:80px" bodyStyle="text-align:center">
+                <template style="display: sticky" #body="slotProps">
+                  {{ slotProps.data.ebat }}
+                </template>
+              </Column>
+              <Column field="yuzeyIslem" header="Yuzey" headerStyle="width:100px">
+                <template #body="slotProps">
+                  {{ slotProps.data.yuzeyIslem }}
+                </template>
+              </Column>
+              <Column field="urunAdi" header="Ürün" headerStyle="width:80px" bodyStyle="text-align:center">
+                <template #body="slotProps">
+                  {{ slotProps.data.urunAdi }}
+                </template>
+                <template #footer> Kasa Toplam : </template>
+              </Column>
+              <Column field="kasaSayisi" header="Kasa" headerStyle="width:20px" bodyStyle="text-align:center">
+                <template #body="slotProps">
+                  {{ slotProps.data.kasaSayisi }}
+                </template>
+                <template #footer>
+                  {{ kasa_toplami2 }}
+                </template>
+              </Column>
+              <Column field="miktar" header="Miktar" headerStyle="width:20px" bodyStyle="text-align:center">
+                <template #body="slotProps">
+                  {{ slotProps.data.miktar }}
+                </template>
+                <template #footer>
+                  {{ formatDecimal(m2toplami2) }}
+                </template>
+              </Column>
+            </DataTable>
           </div>
         </div>
-      </section>
-    </Dialog>
-
-  </section>
+      </div>
+    </section>
+  </Dialog>
 </template>
 <script>
 import store from "@/store";

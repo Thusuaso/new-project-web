@@ -1,91 +1,56 @@
 <template>
-  <div>
-    <Button
-      label="Yeni"
-      @click="isSelectNew"
-      class="p-button-info"
-      style="margin-right: 5px"
-    ></Button>
-    <Button
-      @click="excel_cikti_click_kasa_olculeri"
-      class="p-button-warning"
-      icon="pi pi-file-excel"
-    />
 
-    <DataTable
-      :value="kasa_ebatlari_list"
-      responsiveLayout="scroll"
-      @row-select="isKasaOlcuSelect"
-      selectionMode="single"
-      v-model:filters="filters"
-      filterDisplay="row"
-    >
-      <Column field="ebat" header="Taş Ebatları" :showFilterMenu="false">
-        <template #body="slotProps">
-          {{ slotProps.data.ebat }}
-        </template>
-        <template #filter="{ filterModel, filterCallback }">
-          <InputText
-            type="text"
-            v-model="filterModel.value"
-            @input="filterCallback()"
-            class="p-column-filter"
-            placeholder="Search by Date"
-          />
-        </template>
-      </Column>
-      <Column
-        field="kasaOlculeri"
-        header="Kasa Ölculeri"
-        :showFilterMenu="false"
-      >
-        <template #body="slotProps">
-          {{ slotProps.data.kasaOlculeri }}
-        </template>
-        <template #filter="{ filterModel, filterCallback }">
-          <InputText
-            type="text"
-            v-model="filterModel.value"
-            @input="filterCallback()"
-            class="p-column-filter"
-            placeholder="Search by Date"
-          />
-        </template>
-      </Column>
-      <Column field="firmaadi" header="Firma Adı" :showFilterMenu="false">
-        <template #body="slotProps">
-          {{ slotProps.data.firmaadi }}
-        </template>
-        <template #filter="{ filterModel, filterCallback }">
-          <InputText
-            type="text"
-            v-model="filterModel.value"
-            @input="filterCallback()"
-            class="p-column-filter"
-            placeholder="Search by Date"
-          />
-        </template>
-      </Column>
-    </DataTable>
-
-    <Dialog
-      v-model:visible="is_select_chest"
-      header="Kasa Ölçüleri Detay"
-      :modal="true"
-      position="top"
-    >
-      <kasaDetayOlculeriDetay :kasaDatas="kasaDatas"></kasaDetayOlculeriDetay>
-    </Dialog>
-
-    <Dialog
-      v-model:visible="is_select_new"
-      header="Kasa Ölçüleri Yeni"
-      :modal="true"
-      position="top"
-    >
-      <kasaDetayOlculeriYeni></kasaDetayOlculeriYeni>
-    </Dialog>
+  <div class="grid">
+    <div class="col-1">
+      <Button label="Yeni" @click="isSelectNew" class="p-button-info" style="margin-right: 5px" />
+    </div>
+    <div class="col-1">
+      <Button @click="excel_cikti_click_kasa_olculeri" class="p-button-warning" icon="pi pi-file-excel" />
+    </div>
   </div>
+  <div class="grid">
+    <div class="col">
+      <DataTable :value="kasa_ebatlari_list" responsiveLayout="scroll" @row-select="isKasaOlcuSelect" selectionMode="single"
+        v-model:filters="filters" filterDisplay="row">
+        <Column field="ebat" header="Taş Ebatları" :showFilterMenu="false">
+          <template #body="slotProps">
+            {{ slotProps.data.ebat }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by Date" />
+          </template>
+        </Column>
+        <Column field="kasaOlculeri" header="Kasa Ölculeri" :showFilterMenu="false">
+          <template #body="slotProps">
+            {{ slotProps.data.kasaOlculeri }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by Date" />
+          </template>
+        </Column>
+        <Column field="firmaadi" header="Firma Adı" :showFilterMenu="false">
+          <template #body="slotProps">
+            {{ slotProps.data.firmaadi }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by Date" />
+          </template>
+        </Column>
+      </DataTable>
+
+    </div>
+  </div>
+
+  <Dialog v-model:visible="is_select_chest" header="Kasa Ölçüleri Detay" :modal="true" position="top">
+    <kasaDetayOlculeriDetay :kasaDatas="kasaDatas"></kasaDetayOlculeriDetay>
+  </Dialog>
+  
+  <Dialog v-model:visible="is_select_new" header="Kasa Ölçüleri Yeni" :modal="true" position="top">
+    <kasaDetayOlculeriYeni></kasaDetayOlculeriYeni>
+  </Dialog>
 </template>
 <script>
 import service from "../service/SeleksiyonService";

@@ -1,12 +1,11 @@
 <template>
-  <section>
     <br/>
-    <div class="columns is-multiline is-centered">
-      <div class="column is-12 is-centered">
+    <div class="grid">
+      <div class="col">
         <DataTable :value="list">
           <template #header>
             <div class="columns is-multiline">
-              <div class="column is-12">
+              <div class="column">
                 <span style="font-size: 15px"> Vadeli Alacaklar Listesi </span>
               </div>
             </div>
@@ -16,17 +15,13 @@
               {{ slotProps.data.firmaAdi }}
             </template>
           </Column>
-
+        
           <Column field="siparis_no" header="PO" bodyStyle="text-align:center;">
             <template #body="slotProps">
               {{ slotProps.data.siparis_no }}
             </template>
           </Column>
-          <Column
-            field="vade_tarih"
-            header="Vade Tarihi"
-            bodyStyle="text-align:center;"
-          >
+          <Column field="vade_tarih" header="Vade Tarihi" bodyStyle="text-align:center;">
             <template #body="slotProps">
               {{ slotProps.data.vade_tarih }}
             </template>
@@ -42,7 +37,7 @@
         </DataTable>
       </div>
     </div>
-  </section>
+
 </template>
 <script>
 import service from "../../service/FinansService";

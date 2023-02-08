@@ -1,184 +1,111 @@
 <template>
-  <section>
-    <div class="columns" style="background-color: White">
-      <div class="column is-5" style="margin-top: 35px">
-        <div class="columns">
-          <div class="column">
-            <div class="col-12 col-sm-12 stilim">
-              <AutoComplete
-                v-model="SiparisTur"
-                :suggestions="filterSiparisTurList"
-                @complete="aramaSiparisTur($event)"
-                :dropdown="true"
-                field="siparisno"
-                placeholder="Sipariş Seçiniz"
-                @item-select="siparisTurDegisim"
-              >
-                <template #items="slotProps">
-                  <div class="p-clearfix p-autocomplete-brand-item">
-                    <div>
-                      {{ slotProps.siparisno }}
-                    </div>
-                  </div>
-                </template>
-              </AutoComplete>
-            </div>
-            <div class="col-12 col-sm-12 stilim" style="margin-top: 20px">
-              <InputText v-model="musteriAdi" :disabled="true" />
-            </div>
-            <div class="col-12 col-sm-12 stilim" style="margin-top: 35px">
-              <InputText v-model="mail" :disabled="true" />
-            </div>
-            <div class="col-12 col-sm-12 stilim" style="margin-top: 35px">
-              <InputText v-model="KonteynerNo" :disabled="true" />
-            </div>
-            <div class="col-12 col-sm-12 stilim" style="margin-top: 35px">
-              <InputText v-model="teslim" :disabled="true" />
-            </div>
-            <div class="col-12 col-sm-12 stilim" style="margin-top: 35px">
-              <InputText v-model="odeme" :disabled="true" />
-            </div>
-            <div class="col-12 col-sm-12 stilim" style="margin-top: 35px">
-              <InputText v-model="navlunAlis" :disabled="true" />
-            </div>
-            <div class="col-12 col-sm-12 stilim" style="margin-top: 35px">
-              <InputText v-model="navlunSatis" :disabled="true" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="column is-6"
-        style=" font-size: 15px; font-weight: bold"
-      >
-          <DataTable
-            :value="SiparisEvrakList1"
-            :scrollable="true"
-            scrollHeight="700px"
-            selectionMode="single"
-            v-model:selection="select_ayrinti"
-            @row-select="select_ayrinti_sec($event)"
-            :loading="table_loading"
-          >
-            <template #header>
-              <div class="columns is-multiline">
-                <div class="column is-12">
-                  <span style="font-size: 15px">EVRAKLAR</span>
+  <div class="grid"> 
+    <div class="col-2" >
+      <div class="grid">
+        <div class="col">
+          <AutoComplete v-model="SiparisTur" :suggestions="filterSiparisTurList" @complete="aramaSiparisTur($event)"
+            :dropdown="true" field="siparisno" placeholder="Sipariş Seçiniz" @item-select="siparisTurDegisim">
+            <template #items="slotProps">
+              <div class="p-clearfix p-autocomplete-brand-item">
+                <div>
+                  {{ slotProps.siparisno }}
                 </div>
               </div>
             </template>
-            <Column
-              field="Faturaid"
-              header="ID"
-              headerStyle="width:20px"
-              bodyStyle="text-align:center"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.Faturaid }}
-              </template>
-            </Column>
-            <Column
-              field="faturaadi"
-              header="Evrak Adı"
-              headerStyle="width:50px"
-              bodyStyle="text-align:left"
-            >
-              <template #body="slotProps">
-                <div
-                  :style="{
-                    color: slotProps.data.renk,
-                    backgroundColor:
-                      slotProps.data.renk == 'red' ? '#F4B8AC' : '#CAF7AD',
-                  }"
-                >
-                  {{ slotProps.data.faturaadi }}
-                </div>
-              </template>
-            </Column>
-            <template #footer> </template>
-          </DataTable>
-          <div class="column">
-            <input
-              type="file"
-              ref="file"
-              class="form-control validator"
-              autocomplete="off"
-              @change="handleUpload()"
-              name="files[]"
-              id="files"
-              multiple
-            />
-          </div>
-          <Dialog
-            v-model:visible="is_diger"
-            v-model:header="evrakFormBaslik"
-            position="top"
-            :modal="true"
-            maximizable
-            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
-          >
-            <EvrakDigerForm />
-          </Dialog>
-
-          <Dialog
-            v-model:visible="is_tedarikci"
-            v-model:header="evrakFormBaslik"
-            position="top"
-            :modal="true"
-            maximizable
-            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
-          >
-            <EvrakTedarikciForm />
-          </Dialog>
-          <Dialog
-            v-model:visible="is_nakliye"
-            v-model:header="evrakFormBaslik"
-            position="top"
-            :modal="true"
-            maximizable
-            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
-          >
-            <NakliyeFaturaGiris />
-          </Dialog>
-          <Dialog
-            v-model:visible="is_denizcilik"
-            v-model:header="evrakFormBaslik"
-            position="top"
-            :modal="true"
-            maximizable
-            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
-          >
-            <EvrakDenizcilikForm />
-          </Dialog>
-          <Dialog
-            v-model:visible="is_gumruk_ilaclama"
-            v-model:header="evrakFormBaslik"
-            position="top"
-            :modal="true"
-            maximizable
-            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
-          >
-            <GumrukIlaclamaForm />
-          </Dialog>
-          <Dialog
-            v-model:visible="is_ozeliscilik"
-            v-model:header="evrakFormBaslik"
-            position="top"
-            :modal="true"
-            maximizable
-            :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
-          >
-            <EvrakOzelIscilikForm />
-          </Dialog>
-
-
-
-
-
+          </AutoComplete>
+        </div>
+        <div class="col">
+          <InputText v-model="musteriAdi" :disabled="true" />
+        </div>
+        <div class="col">
+          <InputText v-model="mail" :disabled="true" />
+        </div>
+        <div class="col">
+          <InputText v-model="KonteynerNo" :disabled="true" />
+        </div>
+        <div class="col">
+          <InputText v-model="teslim" :disabled="true" />
+        </div>
+        <div class="col">
+          <InputText v-model="odeme" :disabled="true" />
+        </div>
+        <div class="col">
+          <InputText v-model="navlunAlis" :disabled="true" />
+        </div>
+        <div class="col">
+          <InputText v-model="navlunSatis" :disabled="true" />
+        </div>
       </div>
     </div>
-  </section>
+    <div class="col-4">
+
+    </div>
+    <div class="col-6">
+      <DataTable :value="SiparisEvrakList1" :scrollable="true" scrollHeight="700px" selectionMode="single"
+        v-model:selection="select_ayrinti" @row-select="select_ayrinti_sec($event)" :loading="table_loading">
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">EVRAKLAR</span>
+            </div>
+          </div>
+        </template>
+        <Column field="Faturaid" header="ID" headerStyle="width:20px" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.Faturaid }}
+          </template>
+        </Column>
+        <Column field="faturaadi" header="Evrak Adı" headerStyle="width:50px" bodyStyle="text-align:left">
+          <template #body="slotProps">
+            <div :style="{
+                          color: slotProps.data.renk,
+                          backgroundColor:
+                            slotProps.data.renk == 'red' ? '#F4B8AC' : '#CAF7AD',
+                        }">
+              {{ slotProps.data.faturaadi }}
+            </div>
+          </template>
+        </Column>
+        <template #footer> </template>
+      </DataTable>
+      <input type="file" ref="file" class="form-control validator" autocomplete="off" @change="handleUpload()" name="files[]"
+        id="files" multiple />
+    </div>
+
+  </div>
+  
+
+
+  <Dialog v-model:visible="is_diger" v-model:header="evrakFormBaslik" position="top" :modal="true" maximizable
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <EvrakDigerForm />
+  </Dialog>
+  
+  <Dialog v-model:visible="is_tedarikci" v-model:header="evrakFormBaslik" position="top" :modal="true" maximizable
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <EvrakTedarikciForm />
+  </Dialog>
+  <Dialog v-model:visible="is_nakliye" v-model:header="evrakFormBaslik" position="top" :modal="true" maximizable
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <NakliyeFaturaGiris />
+  </Dialog>
+  <Dialog v-model:visible="is_denizcilik" v-model:header="evrakFormBaslik" position="top" :modal="true" maximizable
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <EvrakDenizcilikForm />
+  </Dialog>
+  <Dialog v-model:visible="is_gumruk_ilaclama" v-model:header="evrakFormBaslik" position="top" :modal="true" maximizable
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <GumrukIlaclamaForm />
+  </Dialog>
+  <Dialog v-model:visible="is_ozeliscilik" v-model:header="evrakFormBaslik" position="top" :modal="true" maximizable
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <EvrakOzelIscilikForm />
+  </Dialog>
+
+
+
+
+
 </template>
 <script>
 import service from "../service/OperasyonService";

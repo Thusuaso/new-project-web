@@ -1,8 +1,20 @@
 <template>
-    <Button class="p-button-primary" @click="newForm" label="Yeni" />
-    <AutoComplete id="surface" name="phone" v-model="selectedSurface" :suggestions="filteredSurfaceList"
-        @complete="searchSurface($event)" optionLabel="surface" style="margin-left:100px;" @item-select="isSelectedSurface($event)"/>
+    <div class="grid"> 
+        <div class="col">
+            <Button class="p-button-primary" @click="newForm" label="Yeni" />
+
+        </div>
+        <div class="col">
+            <AutoComplete id="surface" name="phone" v-model="selectedSurface" :suggestions="filteredSurfaceList"
+                @complete="searchSurface($event)" optionLabel="surface" style="margin-left:100px;"
+                @item-select="isSelectedSurface($event)" />
+        </div>
+        <div class="col">
     <Button class="p-button-info" label="Hepsi" @click="allCleaner" style="margin-left:100px;"/>
+
+        </div>
+    </div>
+    
     <div class="card" style="height: calc(100vh - 143px);margin-top:25px;padding-top:10px;">
         <div class="mainData"  v-if="!isFilter">
             <div class="mainDataRestricted" v-for="i in customerSurfaceListA" :key="i">

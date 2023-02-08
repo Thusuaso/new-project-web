@@ -1,281 +1,276 @@
 <template>
-  <div class="columns">
-    <div class="column">
-      <RadioButton name="city" value="Mekmer+Mekmoz" v-model="status" @change="changeStatus"/> Mekmer + Mekmoz
+  <br/>
+  <div class="grid">
+    <div class="col">
+            <RadioButton name="city" value="Mekmer+Mekmoz" v-model="status" @change="changeStatus" /> Mekmer + Mekmoz
 
     </div>
-    <div class="column">
-      <RadioButton name="city" value="Dis" v-model="status" @change="changeStatus"/> Dışarda Olan Mekmer Kasaları
+    <div class="col">
+            <RadioButton name="city" value="Dis" v-model="status" @change="changeStatus" /> Dışarda Olan Mekmer Kasaları
+
     </div>
-    <div class="column">
-      <RadioButton name="city" value="MekmerDis" v-model="status" @change="changeStatus" /> Mekmerde Olan Dış Kasalar
+    <div class="col">
+            <RadioButton name="city" value="MekmerDis" v-model="status" @change="changeStatus" /> Mekmerde Olan Dış Kasalar
+
     </div>
-    <div class="column">
-      <Button class="p-button-primary" @click="cikti_al" label="EXCELL" />
+    <div class="col">
+            <Button class="p-button-primary" @click="cikti_al" label="EXCELL" />
+
     </div>
   </div>
-  <div> 
-    <DataTable 
-    :value="uretimStok" 
-    responsiveLayout="scroll" 
-    @row-select="mekmerMekmozSelected($event)" 
-    v-if="status == 'Mekmer+Mekmoz'" 
-    v-model:selection="mekmerMekmozData" 
-    selectionMode="single"
-    v-model:filters="filters1" 
-    filterDisplay="row"
+
+
+
+
+  <div class="grid">
+    <div class="col">
+          <DataTable :value="uretimStok" responsiveLayout="scroll" @row-select="mekmerMekmozSelected($event)"
+            v-if="status == 'Mekmer+Mekmoz'" v-model:selection="mekmerMekmozData" selectionMode="single"
+            v-model:filters="filters1" filterDisplay="row">
+            <Column field="en" header="En" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by En" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="boy" header="Boy" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Boy" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="kenar" header="Kenar" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Kenar" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="urunAdi" header="Ürün Adı" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Ürün Adı" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="yuzeyIslem" header="Yüzey İşlem" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Yüzey İşlem" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="kasaSayisi" header="Kasa Adedi">
+              <template #footer>
+                {{ formatDecimal(toplam_kasa_adedi) }}
+              </template>
+            </Column>
+            <Column field="miktar" header="Miktar">
+              <template #body="slotProps">
+                {{ formatDecimal(slotProps.data.miktar) }}
+              </template>
+              <template #footer>
+                {{ formatDecimal(toplam_miktar) }}
+              </template>
+            </Column>
+            <Column field="price" header="Fiyat">
+              <template #body="slotProps">
+                <div v-if="slotProps.data.price == null">
+                  {{formatPrice(0) }}
+          
+                </div>
+                <div v-else>
+                  {{formatPrice(slotProps.data.price) }}
+          
+                </div>
+              </template>
+            </Column>
+          
+          
+          </DataTable>
+          <DataTable :value="uretimStok" responsiveLayout="scroll" @row-select="disSelected($event)" v-model:selection="disData"
+            selectionMode="single" v-model:filters="filters2" filterDisplay="row" v-else-if="status == 'Dis'">
+            <Column field="en" header="En" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by En" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="boy" header="Boy" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Boy" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="kenar" header="Kenar" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Kenar" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="urunAdi" header="Ürün Adı" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Ürün Adı" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="yuzeyIslem" header="Yüzey İşlem" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Yüzey İşlem" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="kasaSayisi" header="Kasa Adedi">
+              <template #footer>
+                {{ formatDecimal(toplam_kasa_adedi) }}
+              </template>
+            </Column>
+            <Column field="miktar" header="Miktar">
+              <template #body="slotProps">
+                {{ formatDecimal(slotProps.data.miktar) }}
+              </template>
+              <template #footer>
+                {{ formatDecimal(toplam_miktar) }}
+              </template>
+            </Column>
+            <Column field="price" header="Fiyat">
+              <template #body="slotProps">
+                <div v-if="slotProps.data.price == null">
+                  {{formatPrice(0) }}
+          
+                </div>
+                <div v-else>
+                  {{formatPrice(slotProps.data.price) }}
+          
+                </div>
+              </template>
+            </Column>
+          
+          
+          </DataTable>
+          <DataTable :value="uretimStok" responsiveLayout="scroll" @row-select="disMekmerSelected($event)"
+            v-model:selection="disMekmerData" v-model:filters="filters3" filterDisplay="row" selectionMode="single"
+            v-else-if="status == 'MekmerDis'">
+            <Column field="en" header="En" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by En" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="boy" header="Boy" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Boy" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="kenar" header="Kenar" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Kenar" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="urunAdi" header="Ürün Adı" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Ürün Adı" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="yuzeyIslem" header="Yüzey İşlem" :showFilterMenu="false">
+              <template #filter="{filterModel,filterCallback}">
+                <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                  placeholder="Search by Yüzey İşlem" v-tooltip.top.focus="'Filter as you type'" />
+              </template>
+            </Column>
+            <Column field="kasaSayisi" header="Kasa Adedi">
+              <template #footer>
+                {{ formatDecimal(toplam_kasa_adedi) }}
+              </template>
+            </Column>
+            <Column field="miktar" header="Miktar">
+              <template #body="slotProps">
+                {{ formatDecimal(slotProps.data.miktar) }}
+              </template>
+              <template #footer>
+                {{ formatDecimal(toplam_miktar) }}
+              </template>
+            </Column>
+            <Column field="price" header="Fiyat">
+              <template #body="slotProps">
+                <div v-if="slotProps.data.price == null">
+                  {{formatPrice(0) }}
+          
+                </div>
+                <div v-else>
+                  {{formatPrice(slotProps.data.price) }}
+          
+                </div>
+              </template>
+            </Column>
+          
+          </DataTable>
+    </div> 
+
+
     
-    >
-      <Column field="en" header="En" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by En" v-tooltip.top.focus="'Filter as you type'"/>
-        </template>
-      </Column>
-      <Column field="boy" header="Boy" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-                        <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by Boy" v-tooltip.top.focus="'Filter as you type'"/>
-                    </template>
-      </Column>
-      <Column field="kenar" header="Kenar" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Kenar" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="urunAdi" header="Ürün Adı" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Ürün Adı" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="yuzeyIslem" header="Yüzey İşlem" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Yüzey İşlem" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="kasaSayisi" header="Kasa Adedi">
+
+
+  </div>
+  <Dialog v-model:visible="mekmer_mekmoz_form" header="Mekmer + Mekmoz Ayrıntı" :modal="true">
+    <Button @click="addPriceForm" class="p-button-info" label="Fiyat Gir" style="margin-left:10px;" />
+    <DataTable :value="uretimStokAyrinti" responsiveLayout="scroll">
+      <Column field="sira" header="Sıra"></Column>
+      <Column field="kategoritop" header="Kategori"></Column>
+      <Column field="tedarikci_aditop" header="Tedarikçi"></Column>
+      <Column field="tarihtop" header="Tarih"></Column>
+      <Column field="kasanotop" header="Kasa No"></Column>
+      <Column field="urunaditop" header="Ürün Adı"></Column>
+      <Column field="ocakaditop" header="Ocak Adı"></Column>
+      <Column field="yuzeyislemtop" header="Yüzey"></Column>
+      <Column field="entop" header="En"></Column>
+      <Column field="boytop" header="Boy"></Column>
+      <Column field="kenartop" header="Kenar"></Column>
+      <Column field="kutuadettop" header="Kutu Adet">
         <template #footer>
-          {{ formatDecimal(toplam_kasa_adedi) }}
+          {{ formatDecimal(kutuAdetTop) }}
         </template>
       </Column>
-      <Column field="miktar" header="Miktar">
+      <Column field="adettop" header="Adet">
+        <template #footer>
+          {{ formatDecimal(adetTop) }}
+        </template>
+      </Column>
+      <Column field="miktartop" header="Miktar">
         <template #body="slotProps">
-          {{ formatDecimal(slotProps.data.miktar) }}
+          {{ formatDecimal(slotProps.data.miktartop) }}
         </template>
         <template #footer>
-          {{ formatDecimal(toplam_miktar) }}
+          {{ formatDecimal(miktarTop) }}
         </template>
       </Column>
-      <Column field="price" header="Fiyat">
-        <template #body="slotProps">
-          <div v-if="slotProps.data.price == null">
-          {{formatPrice(0) }}
-
-          </div>
-          <div v-else>
-          {{formatPrice(slotProps.data.price) }}
-
-          </div>
-        </template>
-      </Column>
-
-
+      <Column field="birimaditop" header="Birim"></Column>
+      <Column field="durum" header="Durum"></Column>
+  
+  
+  
+  
+  
+  
     </DataTable>
-    <DataTable :value="uretimStok"
-     responsiveLayout="scroll" 
-     @row-select="disSelected($event)"
-      v-model:selection="disData" 
-      selectionMode="single"
-      v-model:filters="filters2" 
-      filterDisplay="row"
-      v-else-if="status == 'Dis'">
-      <Column field="en" header="En" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by En" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="boy" header="Boy" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Boy" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="kenar" header="Kenar" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Kenar" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="urunAdi" header="Ürün Adı" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Ürün Adı" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="yuzeyIslem" header="Yüzey İşlem" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Yüzey İşlem" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="kasaSayisi" header="Kasa Adedi">
-        <template #footer>
-          {{ formatDecimal(toplam_kasa_adedi) }}
-        </template>
-      </Column>
-      <Column field="miktar" header="Miktar">
-        <template #body="slotProps">
-          {{ formatDecimal(slotProps.data.miktar) }}
-        </template>
-        <template #footer>
-          {{ formatDecimal(toplam_miktar) }}
-        </template>
-      </Column>
-      <Column field="price" header="Fiyat">
-        <template #body="slotProps">
-          <div v-if="slotProps.data.price == null">
-            {{formatPrice(0) }}
-      
-          </div>
-          <div v-else>
-            {{formatPrice(slotProps.data.price) }}
-      
-          </div>
-        </template>
-      </Column>
-    
-    
-    </DataTable>
-    <DataTable :value="uretimStok" 
-    responsiveLayout="scroll" 
-    @row-select="disMekmerSelected($event)"
-     v-model:selection="disMekmerData"
-     v-model:filters="filters3" 
-      filterDisplay="row"
-      selectionMode="single" v-else-if="status == 'MekmerDis'">
-      <Column field="en" header="En" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by En" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="boy" header="Boy" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Boy" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="kenar" header="Kenar" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Kenar" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="urunAdi" header="Ürün Adı" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Ürün Adı" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="yuzeyIslem" header="Yüzey İşlem" :showFilterMenu="false">
-        <template #filter="{filterModel,filterCallback}">
-          <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-            placeholder="Search by Yüzey İşlem" v-tooltip.top.focus="'Filter as you type'" />
-        </template>
-      </Column>
-      <Column field="kasaSayisi" header="Kasa Adedi">
-        <template #footer>
-          {{ formatDecimal(toplam_kasa_adedi) }}
-        </template>
-      </Column>
-      <Column field="miktar" header="Miktar">
-        <template #body="slotProps">
-          {{ formatDecimal(slotProps.data.miktar) }}
-        </template>
-        <template #footer>
-          {{ formatDecimal(toplam_miktar) }}
-        </template>
-      </Column>
-      <Column field="price" header="Fiyat">
-        <template #body="slotProps">
-          <div v-if="slotProps.data.price == null">
-            {{formatPrice(0) }}
-      
-          </div>
-          <div v-else>
-            {{formatPrice(slotProps.data.price) }}
-      
-          </div>
-        </template>
-      </Column>
-    
-    </DataTable>
-
-    <Dialog v-model:visible="mekmer_mekmoz_form" header="Mekmer + Mekmoz Ayrıntı" :modal="true">
-      <Button @click="addPriceForm" class="p-button-info" label="Fiyat Gir" style="margin-left:10px;" />
-      <DataTable :value="uretimStokAyrinti"
-        responsiveLayout="scroll">
-        <Column field="sira" header="Sıra"></Column>
-        <Column field="kategoritop" header="Kategori"></Column>
-        <Column field="tedarikci_aditop" header="Tedarikçi"></Column>
-        <Column field="tarihtop" header="Tarih"></Column>
-        <Column field="kasanotop" header="Kasa No"></Column>
-        <Column field="urunaditop" header="Ürün Adı"></Column>
-        <Column field="ocakaditop" header="Ocak Adı"></Column>
-        <Column field="yuzeyislemtop" header="Yüzey"></Column>
-        <Column field="entop" header="En"></Column>
-        <Column field="boytop" header="Boy"></Column>
-        <Column field="kenartop" header="Kenar"></Column>
-        <Column field="kutuadettop" header="Kutu Adet">
-          <template #footer>
-            {{ formatDecimal(kutuAdetTop) }}
-          </template>
-        </Column>
-        <Column field="adettop" header="Adet">
-          <template #footer>
-            {{ formatDecimal(adetTop) }}
-          </template>
-        </Column>
-        <Column field="miktartop" header="Miktar">
-          <template #body="slotProps">
-            {{ formatDecimal(slotProps.data.miktartop) }}
-          </template>
-          <template #footer>
-            {{ formatDecimal(miktarTop) }}
-          </template>
-        </Column>
-        <Column field="birimaditop" header="Birim"></Column>
-        <Column field="durum" header="Durum"></Column>
-
-
-
-
-
-
-      </DataTable>
-      <Dialog v-model:visible="add_price_form" header="Yeni Fiyat Gir" :modal="true">
-        <br />
-        <div class="columns">
-          <div class="column">
-            <span class="p-float-label">
-              <InputNumber id="fiyat" v-model="addPrice.price" mode="currency" currency="USD" />
-      
-              <label for="fiyat">Fiyat</label>
-            </span>
-          </div>
-          <div class="column">
-            <Button class="p-button-success" @click="add_price" label="Ekle ve Güncelle" />
-      
-          </div>
-      
+    <Dialog v-model:visible="add_price_form" header="Yeni Fiyat Gir" :modal="true">
+      <br />
+      <div class="columns">
+        <div class="column">
+          <span class="p-float-label">
+            <InputNumber id="fiyat" v-model="addPrice.price" mode="currency" currency="USD" />
+  
+            <label for="fiyat">Fiyat</label>
+          </span>
         </div>
-      </Dialog>
+        <div class="column">
+          <Button class="p-button-success" @click="add_price" label="Ekle ve Güncelle" />
+  
+        </div>
+  
+      </div>
     </Dialog>
-
-
-  </div>
+  </Dialog>
 </template>
 
 <script>

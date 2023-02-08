@@ -1,127 +1,64 @@
 <template>
-  <section>
-    <div class="columns is-multiline is-centered">
-      <div class="column is-4">
-        <Dropdown
-          v-model="select_yil"
-          :options="yil_listesi"
-          optionLabel="yil"
-          @change="yil_degisim_event"
-          placeholder="Select a Year"
-          :disabled="is_form"
-        >
-          <template #value="slotProps">
-            <div class="p-dropdown-car-value">
-              <span>{{ slotProps.value }}</span>
-            </div>
-          </template>
-        </Dropdown>
-      </div>
-      <div class="column is-4">
-        <Dropdown
-          v-model="select_aystr"
-          :options="ay_listesi"
-          optionLabel="ay_str"
-          @change="ay_degisim_event"
-          placeholder="Select a Month"
-          :disabled="is_form"
-        >
-          <template #value="slotProps">
-            <div class="p-dropdown-car-value">
-              <span>{{ slotProps.value }}</span>
-            </div>
-          </template>
-        </Dropdown>
-      </div>
-      <div class="column is-4">
-        <Button
-          class="p-button-primary"
-          @click="excel_cikti_click"
-          label="Excel"
-        />
-      </div>
+
+  <div class="grid">
+    <div class="col">
+      <Dropdown v-model="select_yil" :options="yil_listesi" optionLabel="yil" @change="yil_degisim_event"
+        placeholder="Select a Year" :disabled="is_form">
+        <template #value="slotProps">
+          <div class="p-dropdown-car-value">
+            <span>{{ slotProps.value }}</span>
+          </div>
+        </template>
+      </Dropdown>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-12">
-        <DataTable
-          :value="odeme_listesi"
-          :scrollable="true"
-          scrollHeight="500px"
-          :loading="loading"
-          v-model:filters="filters"
-          filterDisplay="row"
-          @filter="isFilterChange($event)"
-        >
-          <Column
-            header="Ödeme Tarihi"
-            :showFilterMenu="false"
-            field="tarih"
-            headerStyle="width:10%"
-          >
+    <div class="col">
+      <Dropdown v-model="select_aystr" :options="ay_listesi" optionLabel="ay_str" @change="ay_degisim_event"
+        placeholder="Select a Month" :disabled="is_form">
+        <template #value="slotProps">
+          <div class="p-dropdown-car-value">
+            <span>{{ slotProps.value }}</span>
+          </div>
+        </template>
+      </Dropdown>
+    </div>
+    <div class="col">
+      <Button class="p-button-primary" @click="excel_cikti_click" label="Excel" />
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col">
+        <DataTable :value="odeme_listesi" :scrollable="true" scrollHeight="500px" :loading="loading" v-model:filters="filters"
+          filterDisplay="row" @filter="isFilterChange($event)">
+          <Column header="Ödeme Tarihi" :showFilterMenu="false" field="tarih" headerStyle="width:10%">
             <template #body="slotProps">
               {{ slotProps.data.tarih }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                placeholder="Search by"
-                v-tooltip.top.focus="'Filter as you type'"
-              />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                placeholder="Search by" v-tooltip.top.focus="'Filter as you type'" />
             </template>
           </Column>
-          <Column
-            header="Müşteri Adı"
-            headerStyle="width:25%"
-            field="musteriadi"
-            :showFilterMenu="false"
-          >
+          <Column header="Müşteri Adı" headerStyle="width:25%" field="musteriadi" :showFilterMenu="false">
             <template #body="slotProps">
               {{ slotProps.data.musteriadi }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                placeholder="Search by"
-                v-tooltip.top.focus="'Filter as you type'"
-              />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                placeholder="Search by" v-tooltip.top.focus="'Filter as you type'" />
             </template>
           </Column>
-          <Column
-            header="Sipariş Numarası"
-            :showFilterMenu="false"
-            headerStyle="width:25%"
-            field="po"
-          >
+          <Column header="Sipariş Numarası" :showFilterMenu="false" headerStyle="width:25%" field="po">
             <template #body="slotProps">
-              <div
-                :class="slotProps.data.status == 'Numune' ? 'genel_status' : ''"
-              >
+              <div :class="slotProps.data.status == 'Numune' ? 'genel_status' : ''">
                 {{ slotProps.data.po }}
               </div>
             </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                placeholder="Search by"
-                v-tooltip.top.focus="'Filter as you type'"
-              />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                placeholder="Search by" v-tooltip.top.focus="'Filter as you type'" />
             </template>
           </Column>
-          <Column
-            header="Tutar"
-            field="tutar"
-            headerStyle="background-color:#7aa998;width:15%"
-            sortable="true"
-          >
+          <Column header="Tutar" field="tutar" headerStyle="background-color:#7aa998;width:15%" sortable="true">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.tutar) }}
             </template>
@@ -130,9 +67,8 @@
             </template>
           </Column>
         </DataTable>
-      </div>
     </div>
-  </section>
+  </div>
 </template>
 <script>
 import service from "../../service/FinansService";

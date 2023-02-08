@@ -1,10 +1,7 @@
 <template>
-  <section>
-    <div
-      class="columns is-centered"
-      style="margin-top: -15px; margin-left: -22px"
-    >
-      <div class="column is-5" style="margin-top: -13px">
+
+    <div class="grid">
+      <div class="col">
         <DataTable :value="seleksiyon_uretimozetlist">
           <Column field="tanim" header="Üretici" bodyStyle="text-align:center;">
             <template #body="slotProps">
@@ -40,305 +37,199 @@
             </template>
           </Column>
         </DataTable>
-      </div>
-      <div class="column is-1">
-        <Button @click="btn_yeni_click" class="p-button-success" label="Yeni" />
-      </div>
-      <div class="column is-1">
-        <Button
-          :disabled="slk_enb_mekmar"
-          @click="btn_mekmar_click"
-          label="Mekmer"
-          class="p-button-primary p-button-sm"
-          style="width: 100px"
-        />
 
-        <Button
-          :disabled="slk_enb_dis"
-          @click="btn_dis_click"
-          label="Dış"
-          class="p-button-secondary p-button-sm"
-          style="width: 100px"
-        />
-
-        <Button
-          :disabled="slk_enb_mekmer_dis"
-          @click="btn_mekmer_dis_click"
-          label="Mekmer Dış"
-          class="p-button-info p-button-sm"
-          style="width: 100px"
-        />
-        <Button
-          label="Toplu Kasa"
-          @click="getAllCrateDialog"
-          style="width: 100px"
-        />
       </div>
+      <div class="col-1">
+                <Button @click="btn_yeni_click" class="p-button-success" label="Yeni" />
 
-      <div class="column is-1">
-        <Button
-          @click="excel_cikti_click"
-          label="Excel"
-          class="p-button-dark"
-        />
       </div>
-      <div>
-        <div
-          class="column is-12 box"
-          style="
-            height: 119px;
-            background-color: #f4f4f4;
-            margin-left: -10px;
-            padding-right: 15px;
-          "
-        >
-          <h5 class="subtitle">Etiket Çıkart</h5>
-          <div class="columns is-multiline">
-            <div class="column is-6">
-              <Calendar
-                size="is-small"
-                icon="calendar-today"
-                v-model="son_tarih"
-                placeholder="Tarih Giriniz ! "
-              >
-                <button class="button is-danger">
-                  <span>Temizle</span>
-                </button>
-              </Calendar>
-            </div>
-            <div class="column is-5">
-              <Button
-                @click="etiket_cikti_click"
-                label="Etiket Çıkart"
-                class="p-button-info"
-              />
-            </div>
+      <div class="col">
+        <div class="grid">
+          <div class="col">
+            <Button :disabled="slk_enb_mekmar" @click="btn_mekmar_click" label="Mekmer" class="p-button-primary p-button-sm"
+              style="width: 100px" />
           </div>
         </div>
-        <div
-          class="column is-12 box"
-          style="
-            height: 185px;
-            background-color: #f4f4f4;
-            margin-left: -10px;
-            padding-right: 15px;
-            margin-top: -15px;
-          "
-        >
-          <div class="columns">
-            <div class="column is-6">
-              <Dropdown
-                v-model="codeSelected"
-                style="width: 150px"
-                :options="etiketlerVeikKutu"
-                optionLabel="urun"
-                @change="isDropDownChange"
-                placeholder="Veik Kutu Etiketi"
-              />
-            </div>
-            <div class="column is-6">
-              <Dropdown
-                v-model="codeSelectedKasa"
-                style="width: 150px"
-                :options="etiketlerVeikKasa"
-                optionLabel="urun"
-                @change="isDropDownChangeTwo"
-                placeholder="Veik Kasa Etiketi"
-              />
-            </div>
-          </div>
-
-          <div class="columns">
-            <div class="column is-6">
-              <Dropdown
-                v-model="codeSelected"
-                style="width: 150px"
-                :options="etiketlerNovaKutu"
-                optionLabel="urun"
-                @change="isDropDownChangeThree"
-                placeholder="Nova Kutu Etiketi"
-              />
-            </div>
-            <div class="column is-6">
-              <Dropdown
-                v-model="codeSelectedKasa"
-                style="width: 150px"
-                :options="etiketlerNovaKasa"
-                optionLabel="urun"
-                @change="isDropDownChangeFour"
-                placeholder="Nova Kasa Etiketi"
-              />
-            </div>
-          </div>
-          <div class="columns is-centered">
-            <Button
-              type="button"
-              @click="etiketDowload()"
-              icon="fas fa-download"
-              label="Indir"
-              style="margin-right: 0.5em; padding-bottom: 5px;margin-bottom:10px;"
-            />
+        <div class="grid">
+          <div class="col">
+            <Button :disabled="slk_enb_dis" @click="btn_dis_click" label="Dış" class="p-button-secondary p-button-sm"
+              style="width: 100px" />
           </div>
         </div>
+        <div class="grid">
+          <div class="col">
+            <Button :disabled="slk_enb_mekmer_dis" @click="btn_mekmer_dis_click" label="Mekmer Dış"
+              class="p-button-info p-button-sm" style="width: 100px" />
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col">
+            <Button label="Toplu Kasa" @click="getAllCrateDialog" style="width: 100px" />
+          </div>
+        </div>
+        
+        
+        
+        
+        
+        
+
+      </div>
+      <div class="col-1">
+        <Button @click="excel_cikti_click" label="Excel" class="p-button-dark" />
+      </div>
+      <div class="col">
+        <div class="grid">
+          <div class="col">
+            <Calendar size="is-small" icon="calendar-today" v-model="son_tarih" placeholder="Tarih Giriniz ! ">
+              <button class="button is-danger">
+                <span>Temizle</span>
+              </button>
+            </Calendar>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col">
+        <Button @click="etiket_cikti_click" label="Etiket Çıkart" class="p-button-info" />
+            
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-3">
+        <div class="grid">
+          <div class=col>
+              <Dropdown v-model="codeSelected" style="width: 150px" :options="etiketlerVeikKutu" optionLabel="urun"
+                @change="isDropDownChange" placeholder="Veik Kutu Etiketi" />
+
+          </div>
+          <div class="col">
+            <Dropdown v-model="codeSelectedKasa" style="width: 150px" :options="etiketlerVeikKasa" optionLabel="urun"
+              @change="isDropDownChangeTwo" placeholder="Veik Kasa Etiketi" />
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col">
+            <Dropdown v-model="codeSelected" style="width: 150px" :options="etiketlerNovaKutu" optionLabel="urun"
+              @change="isDropDownChangeThree" placeholder="Nova Kutu Etiketi" />
+          </div>
+          <div class="col">
+            <Dropdown v-model="codeSelectedKasa" style="width: 150px" :options="etiketlerNovaKasa" optionLabel="urun"
+              @change="isDropDownChangeFour" placeholder="Nova Kasa Etiketi" />
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col" style="text-align:center;">
+            <Button type="button" @click="etiketDowload()" icon="fas fa-download" label="Indir"
+               />
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    
+
+  <Dialog v-model:visible="is_uretimform" header="Seleksiyon Form" :modal="true" maximizable position="top"
+    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{ width: '100vw', height:'120vw' }">
+    <section>
+  
+      <UretimForm :kayitstatu="true" :kasano="0" />
+    </section>
+  </Dialog>
+  <Dialog v-model:visible="topluKasaForm" position="top" maximizable :modal="true">
+    <div class="grid">
+      <div class="col-2">
+        <AutoComplete v-model="selectedPo" :dropdown="true" :suggestions="filteredOrders" @complete="poChangeEvent($event)"
+          placeholder="Select a Order" field="siparisNo" @item-select="isSelectedPo" />
+      </div>
+      <div class="col-4">
+        <Dropdown v-model="selectedProduct" :options="productList" optionLabel="product_full_name"
+          placeholder="Select a Product" />
+      </div>
+      <div class="col-2">
+        <Button @click="setCrateAll" label="Değiştir" class="p-button-primary" :disabled="crateAllDisabled" />
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <DataTable ref="dt" :value="seleksiyon_uretimlist" v-model:selection="selectedProducts" :paginator="true" :rows="10"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 25]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+          responsiveLayout="scroll" v-model:filters="filterTopuKasa" filterDisplay="row" style="margin-top:15px;">
+          <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
+          <Column field="kasa_no" header="Kasa No" :showFilterMenu="false">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+          <Column field="kategori" header="Kategori" :showFilterMenu="false">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+          <Column field="urunadi" header="Ürün Adı" :showFilterMenu="false">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+          <Column field="kenarislem" header="Yüzey Adı" :showFilterMenu="false">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+          <Column field="en" header="En" :showFilterMenu="false">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+          <Column field="boy" header="Boy" :showFilterMenu="false">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+          <Column field="kenar" header="Kenar" :showFilterMenu="false">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+          <Column field="birim_id" header="Birim">
+            <template #body="slotProps">
+              {{ getBirim(slotProps.data.birim_id) }}
+            </template>
+          </Column>
+        
+          <Column field="miktar" header="Miktar" style="min-width: 12rem">
+            <template #body="slotProps">
+              {{ formatDecimal(slotProps.data.miktar) }}
+            </template>
+          </Column>
+          <Column field="siparisaciklama" header="PO" :showFilterMenu="false">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                :placeholder="`Search by - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+            </template>
+          </Column>
+        </DataTable>
       </div>
     </div>
 
-    <Dialog
-      v-model:visible="is_uretimform"
-      header="Seleksiyon Form"
-      :modal="true"
-      maximizable
-      position="top"
-      :breakpoints="{'960px': '75vw', '640px': '100vw'}" 
-      :style="{ width: '150vw', height:'150vw'}"
-    >
-      <section>
 
-              <UretimForm :kayitstatu="true" :kasano="0" />
-      </section>
-    </Dialog>
-    <Dialog v-model:visible="topluKasaForm" position="top" maximizable :modal="true">
-      <AutoComplete
-        v-model="selectedPo"
-        :dropdown="true"
-        :suggestions="filteredOrders"
-        @complete="poChangeEvent($event)"
-        placeholder="Select a Order"
-        field="siparisNo"
-        @item-select="isSelectedPo"
-        style="margin-left:5px;"
-      />
-      <Dropdown v-model="selectedProduct" :options="productList" optionLabel="product_full_name" placeholder="Select a Product" style="margin-left:5px;" />
-      <Button @click="setCrateAll" label="Değiştir" class="p-button-primary" :disabled="crateAllDisabled" style="margin-left:5px" />
-      <DataTable
-        ref="dt"
-        :value="seleksiyon_uretimlist"
-        v-model:selection="selectedProducts"
-        :paginator="true"
-        :rows="10"
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        :rowsPerPageOptions="[5, 10, 25]"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-        responsiveLayout="scroll"
-        v-model:filters="filterTopuKasa"
-        filterDisplay="row"
-        style="margin-top:15px;"
-      >
-        <Column
-          selectionMode="multiple"
-          style="width: 3rem"
-          :exportable="false"
-        ></Column>
-        <Column field="kasa_no" header="Kasa No" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-        <Column field="kategori" header="Kategori" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-        <Column field="urunadi" header="Ürün Adı" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-        <Column field="kenarislem" header="Yüzey Adı" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-        <Column field="en" header="En" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-        <Column field="boy" header="Boy" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-        <Column field="kenar" header="Kenar" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-        <Column field="birim_id" header="Birim">
-          <template #body="slotProps">
-            {{ getBirim(slotProps.data.birim_id) }}
-          </template>
-        </Column>
 
-        <Column field="miktar" header="Miktar" style="min-width: 12rem">
-          <template #body="slotProps">
-            {{ formatDecimal(slotProps.data.miktar) }}
-          </template>
-        </Column>
-        <Column field="siparisaciklama" header="PO" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              type="text"
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              class="p-column-filter"
-              :placeholder="`Search by - `"
-              v-tooltip.top.focus="'Hit enter key to filter'"
-            />
-          </template>
-        </Column>
-      </DataTable>
-    </Dialog>
-  </section>
+    
+    
+    
+    
+  </Dialog>
 </template>
 <script>
 import { mapGetters } from "vuex";
