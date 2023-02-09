@@ -2,15 +2,22 @@
     <div>
         <div class="columns">
             <div class="column is-2">
-        <Dropdown v-model="selectedProject" :options="projects" optionLabel="project" placeholder="Select a Project" @change="project_change_seleted"/>
+                <Dropdown v-model="selectedProject" :options="projects" optionLabel="project" placeholder="Select a Project" @change="project_change_seleted"/>
 
             </div>
             <div class="column">
-        <FileUpload mode="basic" @select="fotoGonder($event)" v-model="file" :maxFileSize="5000000" :multiple="true" :disabled="image_upload_form"/>
+                <FileUpload mode="basic" @select="fotoGonder($event)" v-model="file" :maxFileSize="5000000" :multiple="true" :disabled="image_upload_form"/>
+
+            </div>
+            <div class="column">
+            <Button class="p-button-primary" label="Video Ekle" @click="is_videos_form = true" :disabled="image_upload_form"/>
 
             </div>
         </div>
-
+        <Dialog v-model:visible="is_videos_form" :modal="true" header="Video Ekleme">
+            <InputText v-model="videos.videos_link" type="text" placeholder="Video Linki"/>
+            <Button class="p-button-success" @click="video_add" label="Videoyu Ekle"/>
+        </Dialog>
 
         <div class="columns is-centered" v-if="galleriPhotosList.length>0">
             <div class="column is-6">
@@ -25,13 +32,18 @@
                 >
                     <Column field="image_link" header="Code" bodyStyle="text-align:center">
                         <template #body="slotProps">
-                            <img :src="slotProps.data.image_link" width="150" height="150" />
+                            <img :src="slotProps.data.image_link" v-if="slotProps.data.videos_control == false" width="150" height="150" />
+                            <iframe v-else width="300" height="250" :src="slotProps.data.image_link" title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+
                         </template>
                     </Column>
                 
                 </DataTable>
             </div>
-            <Button label="Fotoğrafı Sil" @click="deletePhotos" class="p-button-danger" :disabled="delete_photos_button_form"/>
+            <Button label="Sil" @click="deletePhotos" class="p-button-danger" :disabled="delete_photos_button_form"/>
 
         </div>
         
@@ -51,6 +63,7 @@ export default {
     },
     data() {
         return {
+            is_videos_form:false,
             fileControl: false,
             selectedProduct: null,
             delete_photos_button_form: true,
@@ -61,11 +74,32 @@ export default {
                 { id: 3, 'project': 'Singapore' },
 
             ],
-            image_upload_form:true
+            image_upload_form: true,
+            videos: {
+                videos_link: "",
+                videos_project_id:0,
+                videos_product_id:0,
+                videos_file_name: "",
+                videos_control:1
+            }
         }
     },
     props: ['urunId'],
     methods: {
+        video_add() {
+            this.videos.videos_project_id = this.selectedProject.id
+            this.videos.videos_product_id = this.urunId
+            this.videos.videos_file_name = "Videos"
+            raporService.galleryAddVideo(this.videos).then(data => {
+                if (data) {
+                    this.$toast.add({ severity: 'success', summary: 'Video Kayıt', detail: 'Video Kayıt Başarılı', life: 3000 })
+                    this.is_videos_form = false
+                } else {
+                    this.$toast.add({ severity: 'error', summary: 'Video Kayıt', detail: 'Video Kayıt Hatalı', life: 3000 })
+
+                }
+            })
+        },
         project_change_seleted() {
             this.image_upload_form = false
         },

@@ -1,600 +1,385 @@
 <template>
-  <section>
-    <div class="columns">
-      <div class="column" style="padding-right: 5px">
-        <!----2020 için sipariş özeti--->
-
-        <DataTable
-          v-model:value="siparis_list"
-          selectionMode="single"
-          v-model:selection="select_sip_oncekiyil"
-          :scrollable="true"
-          scrollHeight="380px"
-          @row-select="sip_onceki_yil_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px"
-                  >{{ gecen_yil - 1 }} Sipariş Özeti</span
-                >
-              </div>
+  <div class="grid">
+    <div class="col">
+      <DataTable v-model:value="siparis_list" selectionMode="single" v-model:selection="select_sip_oncekiyil"
+        :scrollable="true" scrollHeight="380px" @row-select="sip_onceki_yil_sec($event)" :resizableColumns="true"
+        columnResizeMode="fit" showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">{{ gecen_yil - 1 }} Sipariş Özeti</span>
             </div>
+          </div>
+        </template>
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="oncekiyil_mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="width:37%; background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.oncekiyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_oncekiyil_f_toplami) }}
-            </template>
-          </Column>
-          <Column
-            field="oncekiyil_toplam"
-            header="DDP"
-            bodyStyle="text-align:center"
-            headerStyle="width:36%;"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.oncekiyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_oncekiyil_toplami) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-
-      <div class="column" style="padding-right: 5px">
-        <!----2021 için sipariş özeti--->
-
-        <DataTable
-          v-model:value="siparis_list"
-          selectionMode="single"
-          v-model:selection="select_sip_gecenyil"
-          :scrollable="true"
-          scrollHeight="380px"
-          @row-select="sip_gecen_yil_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px"
-                  >{{ gecen_yil }} Sipariş Özeti</span
-                >
-              </div>
-            </div>
+        </Column>
+        <Column field="oncekiyil_mal_bedeli" header="FOB" bodyStyle="text-align:center"
+          headerStyle="width:37%; background-color:yellow">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.oncekiyil_mal_bedeli) }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="gecenyil_mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="width:37%; background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.gecenyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_gecenyil_f_toplami) }}
-            </template>
-          </Column>
-          <Column
-            field="gecenyil_toplam"
-            header="DDP"
-            bodyStyle="text-align:center"
-            headerStyle="width:36%;"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.gecenyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_gecenyil_toplami) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-
-      <div class="column" style="padding-right: 5px">
-        <!----2022 için sipariş özeti--->
-
-        <DataTable
-          v-model:value="siparis_list"
-          selectionMode="single"
-          v-model:selection="select_sip_buyil"
-          :scrollable="true"
-          scrollHeight="380px"
-          @row-select="sip_bu_yil_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px">{{ bu_yil }} Sipariş Özeti</span>
-              </div>
-            </div>
+          <template #footer>
+            {{ formatPrice(siparis_oncekiyil_f_toplami) }}
           </template>
-
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="buyil_mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="background-color:yellow;width:26%"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.buyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_buyil_f_toplami) }}
-            </template>
-          </Column>
-
-          <Column
-            field="buyil_toplam"
-            header="DDP"
-            bodyStyle="text-align:center"
-            headerStyle="width:26%"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.buyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_buyil_toplami) }}
-            </template>
-          </Column>
-          <Column
-            field="fark"
-            header="Fark (DDP)"
-            bodyStyle="text-align:center"
-            headerStyle="width:26%;font-size:9px;"
-          >
-            <template #body="slotProps">
-              <div :class="slotProps.data.fark > 0 ? 'yesil' : 'red'">
-                {{ formatYuzde(slotProps.data.fark) }}
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-
-      <div class="column" style="padding-right: 5px">
-        <DataTable
-          v-model:value="siparis_kullanici_gecen"
-          selectionMode="single"
-          v-model:selection="kullanici_sip_gecen"
-          :scrollable="true"
-          scrollHeight="380px"
-          :loading="loading"
-          @row-select="sip_kullanici_gecen_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px">
-                  {{ gecen_yil }} Satışçı Sipariş Özeti</span
-                >
-              </div>
-            </div>
+        </Column>
+        <Column field="oncekiyil_toplam" header="DDP" bodyStyle="text-align:center" headerStyle="width:36%;">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.oncekiyil_toplam) }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="width:35%; background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.gecenyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_kullanici_gecen_f_toplam) }}
-            </template>
-          </Column>
-          <Column field="toplam" header="DDP" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.gecenyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_kullanici_gecen_toplam) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-
-      <div class="column">
-        <DataTable
-          selectionMode="single"
-          v-model:value="siparis_kullanici"
-          v-model:selection="kullanici_sip"
-          :scrollable="true"
-          scrollHeight="380px"
-          :loading="loading"
-          @row-select="sip_kullanici_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px">
-                  {{ bu_yil }} Satışçı Sipariş Özeti</span
-                >
-              </div>
-            </div>
+          <template #footer>
+            {{ formatPrice(siparis_oncekiyil_toplami) }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.buyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_kullanici_f_toplam) }}
-            </template>
-          </Column>
-          <Column field="toplam" header="DDP" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.buyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(siparis_kullanici_toplam) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
+        </Column>
+      </DataTable>
     </div>
- 
-    <div class="column">
-      <div class="column is-6 count">
-        <span class="count">Fark : {{ formatPrice(siparis_fark) }}</span> &#160;
-        &#160; &#160;
-        <span :class="siparis_fark_yuzde > 0 ? 'yesil' : 'red'">{{
-          formatYuzde(siparis_fark_yuzde)
+    <div class="col">
+      <DataTable v-model:value="siparis_list" selectionMode="single" v-model:selection="select_sip_gecenyil"
+        :scrollable="true" scrollHeight="380px" @row-select="sip_gecen_yil_sec($event)" :resizableColumns="true"
+        columnResizeMode="fit" showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">{{ gecen_yil }} Sipariş Özeti</span>
+            </div>
+          </div>
+        </template>
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
+          </template>
+        </Column>
+        <Column field="gecenyil_mal_bedeli" header="FOB" bodyStyle="text-align:center"
+          headerStyle="width:37%; background-color:yellow">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.gecenyil_mal_bedeli) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(siparis_gecenyil_f_toplami) }}
+          </template>
+        </Column>
+        <Column field="gecenyil_toplam" header="DDP" bodyStyle="text-align:center" headerStyle="width:36%;">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.gecenyil_toplam) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(siparis_gecenyil_toplami) }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+    <div class="col">
+      <DataTable v-model:value="siparis_list" selectionMode="single" v-model:selection="select_sip_buyil" :scrollable="true"
+        scrollHeight="380px" @row-select="sip_bu_yil_sec($event)" :resizableColumns="true" columnResizeMode="fit"
+        showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">{{ bu_yil }} Sipariş Özeti</span>
+            </div>
+          </div>
+        </template>
+      
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
+          </template>
+        </Column>
+        <Column field="buyil_mal_bedeli" header="FOB" bodyStyle="text-align:center"
+          headerStyle="background-color:yellow;width:26%">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.buyil_mal_bedeli) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(siparis_buyil_f_toplami) }}
+          </template>
+        </Column>
+      
+        <Column field="buyil_toplam" header="DDP" bodyStyle="text-align:center" headerStyle="width:26%">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.buyil_toplam) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(siparis_buyil_toplami) }}
+          </template>
+        </Column>
+        <Column field="fark" header="Fark (DDP)" bodyStyle="text-align:center" headerStyle="width:26%;font-size:9px;">
+          <template #body="slotProps">
+            <div :class="slotProps.data.fark > 0 ? 'yesil' : 'red'">
+              {{ formatYuzde(slotProps.data.fark) }}
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+    <div class="col">
+      <DataTable v-model:value="siparis_kullanici_gecen" selectionMode="single" v-model:selection="kullanici_sip_gecen"
+        :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sip_kullanici_gecen_sec($event)"
+        :resizableColumns="true" columnResizeMode="fit" showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">
+                {{ gecen_yil }} Satışçı Sipariş Özeti</span>
+            </div>
+          </div>
+        </template>
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
+          </template>
+        </Column>
+        <Column field="mal_bedeli" header="FOB" bodyStyle="text-align:center"
+          headerStyle="width:35%; background-color:yellow">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.gecenyil_mal_bedeli) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(siparis_kullanici_gecen_f_toplam) }}
+          </template>
+        </Column>
+        <Column field="toplam" header="DDP" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.gecenyil_toplam) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(siparis_kullanici_gecen_toplam) }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+    <div class="col">
+      <DataTable selectionMode="single" v-model:value="siparis_kullanici" v-model:selection="kullanici_sip" :scrollable="true"
+        scrollHeight="380px" :loading="loading" @row-select="sip_kullanici_sec($event)" :resizableColumns="true"
+        columnResizeMode="fit" showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">
+                {{ bu_yil }} Satışçı Sipariş Özeti</span>
+            </div>
+          </div>
+        </template>
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
+          </template>
+        </Column>
+        <Column field="mal_bedeli" header="FOB" bodyStyle="text-align:center" headerStyle="background-color:yellow">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.buyil_mal_bedeli) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(siparis_kullanici_f_toplam) }}
+          </template>
+        </Column>
+        <Column field="toplam" header="DDP" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.buyil_toplam) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(siparis_kullanici_toplam) }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
+  <div class="grid" style="text-align:center;">
+    <div class="col">
+      <span class="count">Fark : {{ formatPrice(siparis_fark) }}</span> &#160;
+      &#160; &#160;
+      <span :class="siparis_fark_yuzde > 0 ? 'yesil' : 'red'">{{
+        formatYuzde(siparis_fark_yuzde)
         }}</span>
-      </div>
     </div>
-    <div class="columns">
-      <div class="column" >
-        <DataTable
-          v-model:value="sevk_list"
-          selectionMode="single"
-          v-model:selection="select_sev_oncekiyil"
-          :scrollable="true"
-          scrollHeight="380px"
-          :loading="loading"
-          @row-select="sev_onceki_yil_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px">
-                  {{ gecen_yil - 1 }} Sevkiyat Özeti</span
-                >
-              </div>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <DataTable v-model:value="sevk_list" selectionMode="single" v-model:selection="select_sev_oncekiyil" :scrollable="true"
+        scrollHeight="380px" :loading="loading" @row-select="sev_onceki_yil_sec($event)" :resizableColumns="true"
+        columnResizeMode="fit" showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">
+                {{ gecen_yil - 1 }} Sevkiyat Özeti</span>
             </div>
+          </div>
+        </template>
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="oncekiyil_mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="width:37%; background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.oncekiyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_oncekiyil_fob_toplam) }}
-            </template>
-          </Column>
-          <Column
-            field="oncekiyil_toplam"
-            header="DDP"
-            bodyStyle="text-align:center"
-            headerStyle="width:36%;"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.oncekiyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_oncekiyil_toplami) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-      <div class="column">
-        <DataTable
-          v-model:value="sevk_list"
-          selectionMode="single"
-          v-model:selection="select_sev_gecenyil"
-          :scrollable="true"
-          scrollHeight="380px"
-          :loading="loading"
-          @row-select="sev_gecen_yil_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px">
-                  {{ gecen_yil }} Sevkiyat Özeti</span
-                >
-              </div>
-            </div>
+        </Column>
+        <Column field="oncekiyil_mal_bedeli" header="FOB" bodyStyle="text-align:center"
+          headerStyle="width:37%; background-color:yellow">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.oncekiyil_mal_bedeli) }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="gecenyil_mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="width:37%; background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.gecenyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_gecenyil_fob_toplam) }}
-            </template>
-          </Column>
-          <Column
-            field="gecenyil_toplam"
-            header="DDP"
-            bodyStyle="text-align:center"
-            headerStyle="width:36%;"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.gecenyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_gecenyil_toplami) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-
-      <div class="column" >
-        <DataTable
-          selectionMode="single"
-          v-model:value="sevk_list"
-          v-model:selection="select_sev_buyil"
-          :scrollable="true"
-          scrollHeight="380px"
-          :loading="loading"
-          @row-select="sev_bu_yil_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px">
-                  {{ bu_yil }} Sevkiyat Özeti</span
-                >
-              </div>
-            </div>
+          <template #footer>
+            {{ formatPrice(sevkiyat_oncekiyil_fob_toplam) }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="buyil_mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="width:26%; background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.buyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_buyil_fob_toplam) }}
-            </template>
-          </Column>
-          <Column
-            field="buyil_toplam"
-            header="DDP"
-            bodyStyle="text-align:center"
-            headerStyle="width:26%; "
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.buyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_buyil_toplami) }}
-            </template>
-          </Column>
-          <Column
-            field="fark"
-            header="Fark (DDP)"
-            bodyStyle="text-align:center"
-            headerStyle="font-size:9px;width:26%;"
-          >
-            <template #body="slotProps">
-              <div :class="slotProps.data.fark > 0 ? 'yesil' : 'red'">
-                {{ formatYuzde(slotProps.data.fark) }}
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-      <div class="column" >
-        <DataTable
-          v-model:value="sevkiyat_kullanici_gecen"
-          selectionMode="single"
-          v-model:selection="kullanici_sev_gecen"
-          :scrollable="true"
-          scrollHeight="380px"
-          :loading="loading"
-          @row-select="sev_kullanici_gecen_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px">
-                  {{ gecen_yil }} Satışçı Sevkiyat Özeti</span
-                >
-              </div>
-            </div>
+        </Column>
+        <Column field="oncekiyil_toplam" header="DDP" bodyStyle="text-align:center" headerStyle="width:36%;">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.oncekiyil_toplam) }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="width:35%; background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.gecenyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_kullanici_gecen_f_toplam) }}
-            </template>
-          </Column>
-          <Column
-            field="toplam"
-            header="DDP"
-            bodyStyle="text-align:center"
-            headerStyle="width:35%;"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.gecenyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_kullanici_gecen_toplam) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-
-      <div class="column" >
-        <DataTable
-          v-model:value="sevkiyat_kullanici"
-          selectionMode="single"
-          v-model:selection="kullanici_sev"
-          :scrollable="true"
-          scrollHeight="380px"
-          :loading="loading"
-          @row-select="sev_kullanici_sec($event)"
-          :resizableColumns="true" columnResizeMode="fit" showGridlines
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px">
-                  {{ bu_yil }} Satışçı Sevkiyat Özeti</span
-                >
-              </div>
-            </div>
+          <template #footer>
+            {{ formatPrice(sevkiyat_oncekiyil_toplami) }}
           </template>
-          <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
-            <template #body="slotProps">
-              {{ slotProps.data.ay_adi }}
-            </template>
-          </Column>
-          <Column
-            field="mal_bedeli"
-            header="FOB"
-            bodyStyle="text-align:center"
-            headerStyle="width:35%; background-color:yellow"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.buyil_mal_bedeli) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_kullanici_f_toplam) }}
-            </template>
-          </Column>
-
-          <Column
-            field="toplam"
-            header="DDP"
-            bodyStyle="text-align:center"
-            headerStyle="width:35%;"
-          >
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.buyil_toplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(sevkiyat_kullanici_toplam) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
+        </Column>
+      </DataTable>
     </div>
-    <div class="columns">
-      <div class="column is-6 count">
-        <span> Fark : {{ formatPrice(sevkiyat_fark) }}</span> &#160; &#160;
-        &#160; &#160;
-        <span :class="sevkiyat_fark_yuzde > 0 ? 'yesil' : 'red'">
-          {{ formatYuzde(sevkiyat_fark_yuzde) }}</span
-        >
-      </div>
+    <div class="col">
+      <DataTable v-model:value="sevk_list" selectionMode="single" v-model:selection="select_sev_gecenyil" :scrollable="true"
+        scrollHeight="380px" :loading="loading" @row-select="sev_gecen_yil_sec($event)" :resizableColumns="true"
+        columnResizeMode="fit" showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">
+                {{ gecen_yil }} Sevkiyat Özeti</span>
+            </div>
+          </div>
+        </template>
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
+          </template>
+        </Column>
+        <Column field="gecenyil_mal_bedeli" header="FOB" bodyStyle="text-align:center"
+          headerStyle="width:37%; background-color:yellow">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.gecenyil_mal_bedeli) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(sevkiyat_gecenyil_fob_toplam) }}
+          </template>
+        </Column>
+        <Column field="gecenyil_toplam" header="DDP" bodyStyle="text-align:center" headerStyle="width:36%;">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.gecenyil_toplam) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(sevkiyat_gecenyil_toplami) }}
+          </template>
+        </Column>
+      </DataTable>
     </div>
-
-    <div class=columns>
-      <div class="column">
-          <ceyreklikSatislar></ceyreklikSatislar>
-      </div>
+    <div class="col">
+      <DataTable selectionMode="single" v-model:value="sevk_list" v-model:selection="select_sev_buyil" :scrollable="true"
+        scrollHeight="380px" :loading="loading" @row-select="sev_bu_yil_sec($event)" :resizableColumns="true"
+        columnResizeMode="fit" showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">
+                {{ bu_yil }} Sevkiyat Özeti</span>
+            </div>
+          </div>
+        </template>
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
+          </template>
+        </Column>
+        <Column field="buyil_mal_bedeli" header="FOB" bodyStyle="text-align:center"
+          headerStyle="width:26%; background-color:yellow">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.buyil_mal_bedeli) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(sevkiyat_buyil_fob_toplam) }}
+          </template>
+        </Column>
+        <Column field="buyil_toplam" header="DDP" bodyStyle="text-align:center" headerStyle="width:26%; ">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.buyil_toplam) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(sevkiyat_buyil_toplami) }}
+          </template>
+        </Column>
+        <Column field="fark" header="Fark (DDP)" bodyStyle="text-align:center" headerStyle="font-size:9px;width:26%;">
+          <template #body="slotProps">
+            <div :class="slotProps.data.fark > 0 ? 'yesil' : 'red'">
+              {{ formatYuzde(slotProps.data.fark) }}
+            </div>
+          </template>
+        </Column>
+      </DataTable>
     </div>
-    <Dialog
-      v-model:visible="is_form"
-      header="Sipariş Özeti Ayrıntı"
-      position="top"
-      :modal="true"
-      maximizable
-    >
+    <div class="col">
+      <DataTable v-model:value="sevkiyat_kullanici_gecen" selectionMode="single" v-model:selection="kullanici_sev_gecen"
+        :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_kullanici_gecen_sec($event)"
+        :resizableColumns="true" columnResizeMode="fit" showGridlines>
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 15px">
+                {{ gecen_yil }} Satışçı Sevkiyat Özeti</span>
+            </div>
+          </div>
+        </template>
+        <Column field="ay_adi" header="Ay" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.ay_adi }}
+          </template>
+        </Column>
+        <Column field="mal_bedeli" header="FOB" bodyStyle="text-align:center"
+          headerStyle="width:35%; background-color:yellow">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.gecenyil_mal_bedeli) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(sevkiyat_kullanici_gecen_f_toplam) }}
+          </template>
+        </Column>
+        <Column field="toplam" header="DDP" bodyStyle="text-align:center" headerStyle="width:35%;">
+          <template #body="slotProps">
+            {{ formatPrice(slotProps.data.gecenyil_toplam) }}
+          </template>
+          <template #footer>
+            {{ formatPrice(sevkiyat_kullanici_gecen_toplam) }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
+  <div class="grid" style="text-align:center;">
+    <div class="col">
+      <span> Fark : {{ formatPrice(sevkiyat_fark) }}</span> &#160; &#160;
+      &#160; &#160;
+      <span :class="sevkiyat_fark_yuzde > 0 ? 'yesil' : 'red'">
+        {{ formatYuzde(sevkiyat_fark_yuzde) }}</span>
+    </div>
+  </div>
 
-              <OzetAyrinti />
+  <div class="grid">
+    <div class="col">
+      <ceyreklikSatislar></ceyreklikSatislar>
+    </div>
+  </div>
 
-    </Dialog>
-  </section>
+
+
+
+
+
+
+  <Dialog
+  v-model:visible="is_form"
+  header="Sipariş Özeti Ayrıntı"
+  position="top"
+  :modal="true"
+  maximizable
+  >
+  
+  <OzetAyrinti />
+  
+  </Dialog>
 </template>
 <script>
 import service from "../service/RaporService";

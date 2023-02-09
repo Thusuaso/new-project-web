@@ -54,6 +54,12 @@
     </div>
 
   </div>
+  <div class="grid">
+    <div class="col">
+      <Button class="p-button-success" @click="urunKartKayitIslemi" label="Kaydet"/>
+
+    </div>
+  </div>
   <br/>
   <div class="grid">
     <div class="col">

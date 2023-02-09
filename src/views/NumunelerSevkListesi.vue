@@ -1,201 +1,98 @@
 <template>
-  <section>
-    <div class="columns is-multiline">
-      <div class="columns is-12">
-        <div class="column">
-          <Button
-            @click="yeniSiparisAc"
-            label="Yeni"
-            class="p-button-primary"
-          />
-        </div>
-        <div class="column">
-          <Dropdown
-            v-model="select_yil"
-            :options="yil_listesi"
-            @change="YilSecim(select_yil.yil)"
-            optionLabel="yil"
-            placeholder="Select a Year"
-          />
-        </div>
-      </div>
+  <div class="grid">
+    <div class="col-1">
+      <Button @click="yeniSiparisAc" label="Yeni" class="p-button-primary" />
     </div>
-    <div class="columns">
-      <div class="column is-12">
-        <DataTable
-          :value="numune_listesi"
-          v-model:filters="filters"
-          filterDisplay="menu"
-          :paginator="true"
-          :rows="15"
-          rowGroupMode="rowspan"
-          :groupRowsBy="groups"
-          @row-select="numuneSec($event)"
-          selectionMode="single"
-          dataKey="id"
-          @filter="isNumuneList"
-          :loading="datatableLoading"
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 14px">Numune Listesi</span>
-              </div>
+    <div class="col-1">
+      <Dropdown v-model="select_yil" :options="yil_listesi" @change="YilSecim(select_yil.yil)" optionLabel="yil"
+        placeholder="Select a Year" />
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <DataTable :value="numune_listesi" v-model:filters="filters" filterDisplay="menu" :paginator="true" :rows="15"
+        rowGroupMode="rowspan" :groupRowsBy="groups" @row-select="numuneSec($event)" selectionMode="single" dataKey="id"
+        @filter="isNumuneList" :loading="datatableLoading">
+        <template #header>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <span style="font-size: 14px">Numune Listesi</span>
             </div>
+          </div>
+        </template>
+        <Column field="tarih" header="Gönderilme Tarihi" headerStyle="width:3%;" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.tarih }}
           </template>
-          <Column
-            field="tarih"
-            header="Gönderilme Tarihi"
-            headerStyle="width:3%;"
-            bodyStyle="text-align:center"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.tarih }}
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                placeholder="Search by Date"
-                v-tooltip.top.focus="'Filter as you type'"
-              />
-            </template>
-          </Column>
-          <Column
-            field="temsilci"
-            header="T"
-            headerStyle="width:2%"
-            bodyStyle="text-align:center"
-          >
-            <template #body="slotProps">
-              <img
-                class="dairesel"
-                :src="slotProps.data.link"
-                bodyStyle="text-align:center"
-                width="40"
-                height="40"
-              />
-            </template>
-          </Column>
-
-          <Column
-            field="musteriadi"
-            header="Müşteri"
-            headerStyle="width:3%;"
-            bodyStyle="text-align:left"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.musteriadi }}
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                placeholder="Search by Customer"
-                v-tooltip.top.focus="'Filter as you type'"
-              />
-            </template>
-          </Column>
-          <Column
-            field="numuneNo"
-            header="Po Numarası"
-            headerStyle="width:5%;"
-            bodyStyle="text-align:center"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.numuneNo }}
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                placeholder="Search by PO"
-                v-tooltip.top.focus="'Filter as you type'"
-              />
-            </template>
-          </Column>
-          <Column
-            field="kategori"
-            header="Kategori Adı"
-            headerStyle="width:5%;"
-            bodyStyle="text-align:left"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.kategori }}
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                @input="filterCallback()"
-                class="p-column-filter"
-                placeholder="Search by Category"
-                v-tooltip.top.focus="'Filter as you type'"
-              />
-            </template>
-          </Column>
-
-          <Column
-            field="miktar"
-            header="Miktar"
-            headerStyle="width:3%;"
-            bodyStyle="text-align:center"
-            footerStyle="text-align:center"
-
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.miktar + " / " + slotProps.data.birim }}
-            </template>
-
-            <template #footer>
-              {{ miktar_toplam }}
-            </template>
-          </Column>
-          <Column
-            field="gonderi_tipi"
-            header="Gönderi Tipi"
-            bodyStyle="text-align:center"
-            footerStyle="text-align:center"
-            headerStyle="width:3%;"
-          >
-          </Column>
-          <Column
-            field ="banka_secimi"
-            header="Banka Seçimi"
-            bodyStyle="text-align:center"
-            footerStyle="text-align:center"
-            headerStyle="width:3%;"
-          >
-          </Column>
-        </DataTable>
-      </div>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by Date" v-tooltip.top.focus="'Filter as you type'" />
+          </template>
+        </Column>
+        <Column field="temsilci" header="T" headerStyle="width:2%" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            <img class="dairesel" :src="slotProps.data.link" bodyStyle="text-align:center" width="40" height="40" />
+          </template>
+        </Column>
+      
+        <Column field="musteriadi" header="Müşteri" headerStyle="width:3%;" bodyStyle="text-align:left">
+          <template #body="slotProps">
+            {{ slotProps.data.musteriadi }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by Customer" v-tooltip.top.focus="'Filter as you type'" />
+          </template>
+        </Column>
+        <Column field="numuneNo" header="Po Numarası" headerStyle="width:5%;" bodyStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.numuneNo }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by PO" v-tooltip.top.focus="'Filter as you type'" />
+          </template>
+        </Column>
+        <Column field="kategori" header="Kategori Adı" headerStyle="width:5%;" bodyStyle="text-align:left">
+          <template #body="slotProps">
+            {{ slotProps.data.kategori }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+              placeholder="Search by Category" v-tooltip.top.focus="'Filter as you type'" />
+          </template>
+        </Column>
+      
+        <Column field="miktar" header="Miktar" headerStyle="width:3%;" bodyStyle="text-align:center"
+          footerStyle="text-align:center">
+          <template #body="slotProps">
+            {{ slotProps.data.miktar + " / " + slotProps.data.birim }}
+          </template>
+      
+          <template #footer>
+            {{ miktar_toplam }}
+          </template>
+        </Column>
+        <Column field="gonderi_tipi" header="Gönderi Tipi" bodyStyle="text-align:center" footerStyle="text-align:center"
+          headerStyle="width:3%;">
+        </Column>
+        <Column field="banka_secimi" header="Banka Seçimi" bodyStyle="text-align:center" footerStyle="text-align:center"
+          headerStyle="width:3%;">
+        </Column>
+      </DataTable>
     </div>
 
-    <Dialog
-      v-model:visible="is_numuneform"
-      v-model:header="siparisFormBaslik"
-      :modal="true"
-      position="top"
-      maximizable
-    >
-      <numuneForm :select_numune="select_numune" :yeniSiparis="false" />
-    </Dialog>
-    <Dialog
-      v-model:visible="is_numuneform2"
-      v-model:header="siparisFormBaslik"
-      :modal="true"
-      position="top"
-      maximizable
-    >
-      <numuneForm :select_numune="select_numune" :yeniSiparis="true" />
-    </Dialog>
-  </section>
+  </div>
+
+  <Dialog v-model:visible="is_numuneform" v-model:header="siparisFormBaslik" :modal="true" position="top" maximizable>
+    <numuneForm :select_numune="select_numune" :yeniSiparis="false" />
+  </Dialog>
+  <Dialog v-model:visible="is_numuneform2" v-model:header="siparisFormBaslik" :modal="true" position="top" maximizable>
+    <numuneForm :select_numune="select_numune" :yeniSiparis="true" />
+  </Dialog>
+
+
+
 </template>
 <script>
 import service from "../service/NumuneService";

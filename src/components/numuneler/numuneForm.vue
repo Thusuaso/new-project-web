@@ -1,488 +1,305 @@
 <template>
-  <div class="columns">
-    <div class="column is-9">
+  <div class="grid">
+    <div class="col-9">
       <TabView>
-        <TabPanel
-          header="Numune Bilgileri"
-          style="height: 650px; background-color: white"
-        >
-          <div class="p-fluid">
-            <Card>
-              <template #header> ÜRÜN </template>
-              <template #content>
-                <div class="columns">
-                  <div class="column">
-                    <span class="p-float-label">
-                      <AutoComplete
-                        id="kategori"
-                        v-model="kategori"
-                        :suggestions="filterKategoriList"
-                        @complete="aramaKategori($event)"
-                        optionLabel="name"
-                        @item-select="degisimKategori"
-                      />
-                      <label for="kategori">Kategori</label>
-                    </span>
-                  </div>
-                  <div class="column">
-                    <span class="p-float-label">
-                      <AutoComplete
-                        v-model="birim"
-                        :suggestions="filterBirimList"
-                        @complete="aramaBirim($event)"
-                        optionLabel="name"
-                        id="birim"
-                        @item-select="degisimBirim"
-                      />
+        <TabPanel header="Numune Bilgileri">
+          <h2 style="font-size:20px;font-weight:bold;text-align:center;">
+            Ürün Bilgileri
+          </h2>
+          <br />
+      
+          <div class="grid">
+      
+            <div class="col">
+              <span class="p-float-label">
+                <AutoComplete id="kategori" v-model="kategori" :suggestions="filterKategoriList"
+                  @complete="aramaKategori($event)" optionLabel="name" @item-select="degisimKategori" />
+                <label for="kategori">Kategori</label>
+              </span>
+            </div>
+      
+            <div class="col">
+              <span class="p-float-label">
+                <AutoComplete v-model="birim" :suggestions="filterBirimList" @complete="aramaBirim($event)" optionLabel="name"
+                  id="birim" @item-select="degisimBirim" />
+      
+                <label for="birim">Birim</label>
+              </span>
+            </div>
+            <div class="col">
+              <span class="p-float-label">
+                <InputNumber class="p-inputtext-sm" id="detayAlis_3" @input="numune.Miktar = $event.value"
+                  v-model="numune.Miktar" :disabled="disPesinat" inputStyle="text-align:center;"
+                  style="width:100%;height:40px;" />
+      
+                <label for="miktar">Miktar</label>
+              </span>
+            </div>
+          </div>
+          <h2 style="font-size:20px;font-weight:bold;text-align:center;">
+            Ödeme Bilgileri
+          </h2>
+          <div class="grid">
+            <div class="col-3">
+              
+              <h2 style="font-size:14px;font-weight:bold;text-align:left;">Gönderi Tipi</h2>
+                <br />
 
-                      <label for="birim">Birim</label>
-                    </span>
-                  </div>
-                  <div class="column">
-                    <span class="p-float-label">
-                      <InputNumber class="p-inputtext-sm" id="detayAlis_3" @input="numune.Miktar = $event.value"
-                        v-model="numune.Miktar" :disabled="disPesinat"
-                        inputStyle="text-align:center;" style="width:100%;height:40px;" />
+              <div class="p-field-radiobutton">
+                <RadioButton :disabled="dis_takipEt" value="Customer Account" v-model="odeme" @change="odemeSecim()" name="odeme" />
+                <label class="p-checkbox-label">Customer Account</label>
+              </div>
+                <br />
 
-                      <label for="miktar">Miktar</label>
-                    </span>
-                  </div>
+              <div class="p-field-radiobutton">
+                <RadioButton :disabled="dis_takipEt" value="Customer Paid to Mekmar" v-model="odeme" @change="odemeSecim()"
+                  name="odeme" />
+                <label class="p-checkbox-label">Customer Paid to Mekmar</label>
+              </div>
+                <br />
+
+              <div class="p-field-radiobutton">
+                <RadioButton :disabled="dis_takipEt" value="Mekmar Paid" v-model="odeme" @change="odemeSecim()" name="odeme" />
+                <label class="p-checkbox-label">Mekmar Paid</label>
+              </div>
+            </div>
+            <div class="col-3">
+                <h2 style="font-size:14px;font-weight:bold;text-align:left;">Banka Seçimi</h2>
+                <br/>
+                <div class="p-field-radiobutton">
+                  <RadioButton :disabled="dis_Odeme" value="Maya Paypal" @change="bankSecim()" name="banka" v-model="banka" />
+                  <label class="p-checkbox-label">Maya Paypal</label>
                 </div>
-              </template>
-            </Card>
+                <br/>
+                <div class="p-field-radiobutton">
+                  <RadioButton :disabled="dis_Odeme" value="Maya Bank" name="banka" @change="bankSecim()" v-model="banka" />
+                  <label class="p-checkbox-label">Maya Bank</label>
+                </div>
+                <br />
 
-            <Card>
-              <template #header> ÖDEME </template>
-              <template #content>
-                <div class="columns">
-                  <div class="column">
-                    <div>
-                      <h3>Gönderi Tipi</h3>
-                      <div class="p-field-radiobutton">
-                        <RadioButton
-                          :disabled="dis_takipEt"
-                          value="Customer Account"
-                          v-model="odeme"
-                          @change="odemeSecim()"
-                          name="odeme"
-                        />
-                        <label class="p-checkbox-label">Customer Account</label>
-                      </div>
-                      <div class="p-field-radiobutton">
-                        <RadioButton
-                          :disabled="dis_takipEt"
-                          value="Customer Paid to Mekmar"
-                          v-model="odeme"
-                          @change="odemeSecim()"
-                          name="odeme"
-                        />
-                        <label class="p-checkbox-label"
-                          >Customer Paid to Mekmar</label
-                        >
-                      </div>
-                      <div class="p-field-radiobutton">
-                        <RadioButton
-                          :disabled="dis_takipEt"
-                          value="Mekmar Paid"
-                          v-model="odeme"
-                          @change="odemeSecim()"
-                          name="odeme"
-                        />
-                        <label class="p-checkbox-label">Mekmar Paid</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="column">
-                    <div>
-                      <h3>Banka Seçimi</h3>
-
-                      <div class="p-field-radiobutton">
-                        <RadioButton
-                          :disabled="dis_Odeme"
-                          value="Maya Paypal"
-                          @change="bankSecim()"
-                          name="banka"
-                          v-model="banka"
-                        />
-                        <label class="p-checkbox-label">Maya Paypal</label>
-                      </div>
-                      <div class="p-field-radiobutton">
-                        <RadioButton
-                          :disabled="dis_Odeme"
-                          value="Maya Bank"
-                          name="banka"
-                          @change="bankSecim()"
-                          v-model="banka"
-                        />
-                        <label class="p-checkbox-label">Maya Bank</label>
-                      </div>
-                      <div class="p-field-radiobutton">
-                        <RadioButton
-                          :disabled="dis_Odeme"
-                          value="Mekmar Bank"
-                          name="banka"
-                          @change="bankSecim()"
-                          v-model="banka"
-                        />
-                        <label class="p-checkbox-label">Mekmar Bank</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="column">
-                    <h3>Kurye Detay</h3>
+                <div class="p-field-radiobutton">
+                  <RadioButton :disabled="dis_Odeme" value="Mekmar Bank" name="banka" @change="bankSecim()" v-model="banka" />
+                  <label class="p-checkbox-label">Mekmar Bank</label>
+                </div>
+              </div>
+            <div class="col-6">
+                <h2 style="font-size:14px;font-weight:bold;text-align:left;">
+                  Kurye Detay
+                </h2>
+                <br/>
+                <div class="grid">
+                  <div class="col-6">
+                    <h2 style="font-size:10px;font-weight:bold;text-align:left;">Kurye Alış</h2>
                     <br/>
-                    <div class="columns">
-                      <div class="column is-2">
-                        <span> Alış: </span>
-                      </div>
-                      <div class="column is-3">
+                    <span class="p-float-label">
+                      <InputNumber id="fobFiyat" v-model="numune.kuryeAlis" mode="currency" :disabled="dis_Alis" currency="USD" />
+                      <label for="fobFiyat">Fob Fiyat</label>
+                    </span>
+                    <br/>
+                    <span class="p-float-label">
+                      <InputNumber id="TL_Alis" v-model="numune.TL_Alis" mode="currency" :disabled="dis_Alis" currency="TRY" />
+                      <label for="TL_Alis">₺</label>
+                    </span>
+                    <br />
 
-                        <span class="p-float-label">
-                          <InputNumber id="fobFiyat" v-model="numune.kuryeAlis" mode="currency"
-                            :disabled="dis_Alis" currency="USD" />
-                          <label for="fobFiyat">Fob Fiyat</label>
-                        </span>
-                      </div>
-                      <div class="column is-3">
-                        <span class="p-float-label">
-                          <InputNumber id="TL_Alis" v-model="numune.TL_Alis" mode="currency" :disabled="dis_Alis" currency="TRY" />
-                          <label for="TL_Alis">₺</label>
-                        </span>
-                      </div>
-                      <div class="column is-3">
-                        <span class="p-float-label">
-                          <InputNumber id="Euro_Alis" v-model="numune.Euro_Alis" mode="currency" :disabled="dis_Alis" currency="EUR" />
-                          <label for="Euro_Alis">€</label>
-                        </span>
+                    <span class="p-float-label">
+                      <InputNumber id="Euro_Alis" v-model="numune.Euro_Alis" mode="currency" :disabled="dis_Alis" currency="EUR" />
+                      <label for="Euro_Alis">€</label>
+                    </span>
+                  </div> 
+                  <div class="col-6">
+                    <h2 style="font-size:10px;font-weight:bold;text-align:left;">Kurye Satış</h2>
+                    <br />
+                    <span class="p-float-label">
+                      <InputNumber id="Euro_Alis" v-model="numune.kuryeSatis" mode="currency" :disabled="dis_Satis" currency="USD" />
+                      <label for="Euro_Alis">Kurye Satış</label>
+                    </span>
+                    <br/>
+                    <span class="p-float-label">
+                      <InputNumber id="Euro_Alis" v-model="numune.TL_Satis" mode="currency" :disabled="dis_Satis" currency="TRY" />
+                      <label for="Euro_Alis">₺</label>
+                    </span>
+                    <br />
 
-                      </div>
-                    </div>
-
-                    <div class="columns">
-                      <div class="column is-2">
-                        <span> Satış: </span>
-                      </div>
-                      <div class="column is-3">
-                        <span class="p-float-label">
-                          <InputNumber id="Euro_Alis" v-model="numune.kuryeSatis" mode="currency" :disabled="dis_Satis" currency="USD" />
-                          <label for="Euro_Alis">Kurye Satış</label>
-                        </span>
-                      </div>
-                      <div class="column is-3">
-
-                        <span class="p-float-label">
-                          <InputNumber id="Euro_Alis" v-model="numune.TL_Satis" mode="currency" :disabled="dis_Satis" currency="TRY" />
-                          <label for="Euro_Alis">₺</label>
-                        </span>
-                      </div>
-                      <div class="column is-3">
-
-                        <span class="p-float-label">
-                          <InputNumber id="Euro_Alis" v-model="numune.Euro_Satis" mode="currency" :disabled="dis_Satis" currency="EUR" />
-                          <label for="Euro_Alis">€</label>
-                        </span>
-                      </div>
-                    </div>
+                    <span class="p-float-label">
+                      <InputNumber id="Euro_Alis" v-model="numune.Euro_Satis" mode="currency" :disabled="dis_Satis" currency="EUR" />
+                      <label for="Euro_Alis">€</label>
+                    </span>
                   </div>
                 </div>
-              </template>
-            </Card>
 
-            <div class="p-col-12 p-lg-12">
-              <Card>
-                <template #header> NOT </template>
-                <template #content>
-                  <div class="p-grid fluid">
-                    <div class="p-col-12">
-                      <Textarea rows="4" cols="8" v-model="numune.aciklama" />
-                    </div>
-                  </div>
-                </template>
-              </Card>
+                
+
+            </div>
+          </div>
+          <div class="grid">
+            <div class="col">
+                <Textarea rows="4" cols="75" v-model="numune.aciklama" placeholder="Not" />
             </div>
           </div>
         </TabPanel>
         <TabPanel header="Ödeme Bilgileri">
           <br/>
-          <div class="columns">
-            <div class="p-col-2">
+          <div class="grid">
+            <div class="col">
               <span class="p-float-label">
                 <Calendar id="date" v-model="date" :touchUI="true" />
                 <label for="date">Tarih</label>
               </span>
             </div>
-
-            <div class="p-col-2">
-
+            <div class="col">
               <span class="p-float-label">
                 <InputNumber id="kuryeSatis" v-model="numune.kuryeSatis" mode="currency" :disabled="dis_Alis" currency="USD" />
                 <label for="kuryeSatis">$</label>
               </span>
             </div>
-            <div class="p-col-2">
-
+            <div class="col"> 
               <span class="p-float-label">
                 <InputNumber id="TL_Satis" v-model="numune.TL_Satis" mode="currency" :disabled="dis_Alis" currency="TRY" />
                 <label for="TL_Satis">₺</label>
               </span>
             </div>
-            <div class="p-col-2">
-
+            <div class="col">
               <span class="p-float-label">
                 <InputNumber id="TL_Satis" v-model="numune.Euro_Satis" mode="currency" :disabled="dis_Alis" currency="EUR" />
                 <label for="TL_Satis">€</label>
               </span>
             </div>
-            <div class="p-col-3">
+            <div class="col">
               <span class="p-float-label">
-                <InputText
-                  id="banka"
-                  type="text"
-                  :disabled="dis_finans"
-                  v-model="numune.bankaAdi"
-                  @change="bankSecim()"
-                />
+                <InputText id="banka" type="text" :disabled="dis_finans" v-model="numune.bankaAdi" @change="bankSecim()" />
                 <label for="banka">Banka</label>
               </span>
             </div>
-          </div>
-
-          <div class="columns">
-            <div class="column is-3">
-              <Button
-                label="Kaydet"
-                @click="islem()"
-                class="p-button-success"
-              />
+            <div class="col">
+              <Button label="Kaydet" @click="islem()" class="p-button-success" />
             </div>
           </div>
         </TabPanel>
-        <TabPanel
-          header="Images"
-          style="height: 800px; background-color: white"
-        >
-          <div class="p-col-12 p-lg-12">
-            <div class="p-grid">
-              <div class="p-col-6">
-                <div class="p-col-6">
-                  <custom-file-input
-                    style="width: 190px"
-                    baslik="Upload 1 "
-                    @sunucuDosyaYolla="numuneDosyaGonder($event)"
-                  />
+        <TabPanel header="Images">
+          <div class="grid">
+            <div class="col"> 
+              <custom-file-input style="width: 190px" baslik="Upload 1 " @sunucuDosyaYolla="numuneDosyaGonder($event)" />
+              <h2 style="font-size:20px;font-weight:bold;text-align:center;"> 
+                Ürünlerin Ön Yüzü
+              </h2>
+              <div class="grid">
+                <div class="col">
+                  <a :href="numuneLink" target="_blank">
+                    <img :src="numuneLink" width="500" title="Resmi indirmek için tıklayınız." alt="Resim Yüklü Değil" height="580"
+                      style="border: none" allowfullscreen webkitallowfullscreen />
+                  </a>
                 </div>
-                <h2>
-                  Image 1
-                  <span style="font-style: italic; size: 8px"
-                    >: Ürünlerin Ön Yüzü
-                  </span>
-                </h2>
-                <br />
-                <a :href="numuneLink" target="_blank">
-                  <img
-                    :src="numuneLink"
-                    width="500"
-                    title="Resmi indirmek için tıklayınız."
-                    alt="Resim Yüklü Değil"
-                    height="580"
-                    style="border: none"
-                    allowfullscreen
-                    webkitallowfullscreen
-                  />
-                </a>
               </div>
-              <div class="p-col-6">
-                <div class="p-col-6">
-                  <custom-file-input
-                    style="width: 190px"
-                    baslik="Upload 2 "
-                    @sunucuDosyaYolla="numuneDosyaGonder2($event)"
-                  />
+            </div>
+            <div class="col">
+              <custom-file-input style="width: 190px" baslik="Upload 2 " @sunucuDosyaYolla="numuneDosyaGonder2($event)" />
+              <h2 style="font-size:20px;font-weight:bold;text-align:center;">
+                Ürünlerin Arka Yüzü
+              </h2>
+              <div class="grid">
+                <div class="col">
+                  <a :href="numuneLink2" target="_blank">
+                    <img :src="numuneLink2" width="500" title="Resmi indirmek için tıklayınız." alt="Resim Yüklü Değil" height="580"
+                      style="border: none" allowfullscreen webkitallowfullscreen />
+                  </a>
                 </div>
-                <h2>
-                  Image 2
-                  <span style="font-style: italic; size: 8px"
-                    >: Ürünlerin Arka Yüzü</span
-                  >
-                </h2>
-                <br />
-                <a :href="numuneLink2" target="_blank">
-                  <img
-                    :src="numuneLink2"
-                    width="500"
-                    title="Resmi indirmek için tıklayınız."
-                    alt="Resim Yüklü Değil"
-                    height="580"
-                    style="border: none"
-                    allowfullscreen
-                    webkitallowfullscreen
-                  />
-                </a>
               </div>
             </div>
           </div>
         </TabPanel>
       </TabView>
     </div>
-    <div class="column is-3">
-      <Button
-        label="KAYDET"
-        class="p-button-success"
-        :disabled="dis_kaydet"
-        @click="teklifKayitIslemi"
-      />
+    <div class="col-3">
+        <Button label="KAYDET" class="p-button-success" :disabled="dis_kaydet" @click="teklifKayitIslemi" />
+        <br/>
 
-      <Card>
-        <template #header>
-          <span style="margin-left: 75px">Numune Bilgi</span>
-        </template>
-        <template #content>
-          <div class="p-grid">
-            <div class="p-col-8">
-              <span>Po Numarası</span>
-            </div>
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <i class=" "></i>
-                <InputText
-                  :disabled="dis_numuneBilgi"
+        <h2 style="font-size:14px;font-weight:bold;text-align:center;">Numune Bilgi</h2>
+        <br/>
+        <div class="grid" >
+            <div class="col-12" style="margin-bottom:15px;">
+              <span class="p-float-label">
+                <InputText id="po" :disabled="dis_numuneBilgi"
                   type="text"
-                  v-model="numune.numuneNo"
-                />
+                  v-model="numune.numuneNo" style="width:250px;"/>
+                <label for="po">PO</label>
               </span>
-            </div>
 
-            <div class="p-col-8">
-              <span>Gönderilme Tarihi</span>
             </div>
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <Calendar
-                  :touchUI="true"
-                  v-model="giristarih"
-                  :value="numune.giristarih"
-                  dateFormat="dd/mm/yy"
-                  @date-select="siparisTarihiDegisim"
-                />
+            <div class="col-12" style="margin-bottom:15px;">
+              <span class="p-float-label">
+                <Calendar id="gTarihi" :touchUI="true" v-model="giristarih" :value="numune.giristarih" dateFormat="dd/mm/yy"
+                  @date-select="siparisTarihiDegisim" style="width:250px;"/>
+                <label for="gTarihi">Gönderim Tarihi</label>
               </span>
             </div>
-            <div class="p-col-8">
-              <span>Teslim Tarihi</span>
-            </div>
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <Calendar
-                  :touchUI="true"
-                  v-model="yukleme_tarihi"
-                  :value="numune.yukleme_tarihi"
-                  dateFormat="dd/mm/yy"
-                  @date-select="yuklemeTarihiDegisim"
-                />
-              </span>
-            </div>
-            <div class="p-col-8">
-              <span>Müşteri</span>
-            </div>
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <AutoComplete
-                  v-model="musteri"
-                  :suggestions="filterMusteriList"
-                  @complete="aramaMusteri($event)"
-                  optionLabel="musteriAdi"
-                  @item-select="musteriDegisim"
-                  @change="musteriChangeEvent($event)"
-                >
+            <div class="col-12" style="margin-bottom:15px;">
+              <span class="p-float-label">
+                <AutoComplete id="musteri" style="width:250px;" v-model="musteri" :suggestions="filterMusteriList" @complete="aramaMusteri($event)"
+                  optionLabel="musteriAdi" @item-select="musteriDegisim" @change="musteriChangeEvent($event)">
                   <template #items="slotProps">
                     <div class="p-clearfix p-autocomplete-brand-item">
                       <div>{{ slotProps.musteriAdi }}</div>
                     </div>
                   </template>
                 </AutoComplete>
+                <label for="musteri">Müşteri</label>
               </span>
             </div>
-            <div class="p-col-8">
-              <span>Ülke</span>
-            </div>
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <i class="fas fa-globe-asia"> </i>
-                <AutoComplete
-                  v-model="ulke"
-                  :suggestions="filterUlkeList"
-                  @complete="aramaUlke($event)"
-                  optionLabel="ulkeAdi"
-                  @item-select="ulkeDegisim"
-                  @change="ulkeChangeEvent($event)"
-                >
+            <div class="col-12" style="margin-bottom:15px;">
+              <span class="p-float-label">
+                <AutoComplete id="ulke" v-model="ulke" style="width:250px;" :suggestions="filterUlkeList" @complete="aramaUlke($event)" optionLabel="ulkeAdi"
+                  @item-select="ulkeDegisim" @change="ulkeChangeEvent($event)">
                   <template #items="slotProps">
                     <div class="p-clearfix p-autocomplete-brand-item">
                       <div>{{ slotProps.ulkeAdi }}</div>
                     </div>
                   </template>
                 </AutoComplete>
+                <label for="ulke">Ülke</label>
               </span>
             </div>
-            <div class="p-col-8">
-              <span>Adres</span>
-            </div>
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <i class="fas fa-map-marker"> </i>
-
-                <Textarea rows="5" cols="20" v-model="numune.adres" />
+            <div class="col-12" style="margin-bottom:15px;">
+              <span class="p-float-label">
+                <Textarea rows="5" cols="20" v-model="numune.adres" style="width:250px;" id="adress"/>
+                <label for="adress">
+                  Adres
+                </label>
               </span>
             </div>
-
-            <div class="p-col-8">
-              <span>Temsilci</span>
-            </div>
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <i class="pi pi-user"></i>
-
-                <AutoComplete
-                  v-model="temsilci"
-                  :suggestions="filterTemsilciList"
-                  @complete="aramaTemsilci($event)"
-                  optionLabel="name"
-                  @item-select="temsilciDegisim"
-                >
+            <div class="col-12" style="margin-bottom:15px;">
+              <span class="p-float-label">
+                <AutoComplete id="temsilci" v-model="temsilci" style="width:250px;" :suggestions="filterTemsilciList" @complete="aramaTemsilci($event)" optionLabel="name"
+                  @item-select="temsilciDegisim">
                   <template #items="slotProps">
                     <div class="p-clearfix p-autocomplete-brand-item">
                       <div>{{ slotProps.name }}</div>
                     </div>
                   </template>
                 </AutoComplete>
+              <label for="temsilci">Temsilci</label>
               </span>
             </div>
-          </div>
-        </template>
-      </Card>
-      <Card>
-        <template #content>
-          <div class="p-grid">
-            <div class="p-col-12"></div>
-          </div>
-          <div class="p-col-8">
-            <span>Tracking No</span>
-          </div>
-          <div class="p-col-8">
-            <InputText type="text" v-model="numune.takip_No" />
-          </div>
-          <div class="p-col p-lg-8">
-            <span>Parite</span>
-            <div class="p-col-12">
-              <InputText
-                v-model="numune.parite"
-              />
-              
+
+            <div class="col-12">
+                <span class="p-float-label">
+                  <InputText type="text" id="takip_no" style="width:250px;" v-model="numune.takip_No" />
+                  <label for="takip_no">Takip No</label>
+                </span>
+
             </div>
-          </div>
-        </template>
-      </Card>
+            <div class="col-12">
+              <span class="p-float-label">
+                <InputText v-model="numune.parite" id="parite" style="width:250px;"/>
+                <label for="parite">Parite</label>
+              </span>
+            
+            </div>
+
+        </div>
     </div>
   </div>
+  
 </template>
 
 <script>

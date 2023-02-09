@@ -32,7 +32,7 @@ export default {
   font-size: 12px;
   font-weight: bold;
   margin-right: 2px;
-  height: 50px;
+  height: 35px;
   width: 150px;
 }
 

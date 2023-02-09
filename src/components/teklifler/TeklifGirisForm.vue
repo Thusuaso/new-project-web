@@ -1,653 +1,366 @@
 <template>
 
-  <div class="columns">
-    <div class="column">
-      <Card style="height: 250px">
-        <template #content>
-          <div style="margin-top: -10px">
-            <span class="p-float-label">
-              <Calendar
-                id="teklifTarih"
-                v-model="teklifTarihi"
-                @date-select="teklifTarihiDegisim"
-                dateFormat="dd.mm.yy"
-                :class="{ 'p-invalid': v$.teklifTarihi.$invalid && submitted }"
-              />
-              <label for="teklifTarih">Tarih</label>
-            </span>
-            <br />
-            <span class="p-float-label">
-              <AutoComplete
-                id="musteriAdi"
-                v-model="musteri"
-                :suggestions="filterMusteriList"
-                @complete="aramaMusteri($event)"
-                optionLabel="musteriAdi"
-                @item-select="musteriDegisim"
-                @change="musteriChangeEvent($event)"
-                :class="{ 'p-invalid': v$.musteri.$invalid && submitted }"
-              />
-              <label for="musteriAdi">Müşteri Adı</label>
-            </span>
-            <br />
-
-            <span class="p-float-label">
-              <AutoComplete
-                id="ulke"
-                v-model="ulke"
-                :suggestions="filterUlkeList"
-                @complete="aramaUlke($event)"
-                optionLabel="ulkeAdi"
-                @item-select="ulkeDegisim"
-                @change="ulkeChangeEvent($event)"
-                :class="{ 'p-invalid': v$.ulke.$invalid && submitted }"
-              />
-              <label for="ulke">Ülke</label>
-            </span>
+  <div class="grid">
+    <div class="col">
+      <div class="grid">
+        <div class=col>
+          <span class="p-float-label">
+            <Calendar id="teklifTarih" v-model="teklifTarihi" @date-select="teklifTarihiDegisim" dateFormat="dd.mm.yy"
+              :class="{ 'p-invalid': v$.teklifTarihi.$invalid && submitted }" />
+            <label for="teklifTarih">Tarih</label>
+          </span>
+        </div>
+      </div>
+      <div class="grid">
+        <div class=col>
+          <span class="p-float-label">
+            <AutoComplete id="musteriAdi" v-model="musteri" :suggestions="filterMusteriList" @complete="aramaMusteri($event)"
+              optionLabel="musteriAdi" @item-select="musteriDegisim" @change="musteriChangeEvent($event)"
+              :class="{ 'p-invalid': v$.musteri.$invalid && submitted }" />
+            <label for="musteriAdi">Müşteri Adı</label>
+          </span>
+        </div>
+      </div>
+      <div class="grid">
+        <div class=col>
+          <span class="p-float-label">
+            <AutoComplete id="ulke" v-model="ulke" :suggestions="filterUlkeList" @complete="aramaUlke($event)"
+              optionLabel="ulkeAdi" @item-select="ulkeDegisim" @change="ulkeChangeEvent($event)"
+              :class="{ 'p-invalid': v$.ulke.$invalid && submitted }" />
+            <label for="ulke">Ülke</label>
+          </span>
+        </div>
+      </div>
+      <div class="grid">
+        <div class=col>
+      
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="grid">
+        <div class="col">
+          <span class="p-float-label">
+            <Dropdown id="kaynak" v-model="selectKaynak" :options="kaynakList" optionLabel="name" class="dropdown" :class="{
+              'p-invalid': v$.selectKaynak.$invalid && submitted,
+            }" />
+            <label for="kaynak">Kaynak</label>
+          </span>
+        </div>
+      </div>
+      <div class="grid">
+        <div class=col>
+          <span class="p-float-label">
+            <Dropdown id="teklifYeri" v-model="selectTeklifYeri" :options="teklifYeriList" optionLabel="name" class="dropdown"
+              :class="{
+                'p-invalid': v$.selectTeklifYeri.$invalid && submitted,
+              }" />
+            <label for="teklifYeri">Teklif Yeri</label>
+          </span>
+        </div>
+      </div>
+      <div class="grid">
+        <div class=col>
+          <span class="p-float-label">
+            <Dropdown id="teklifOnceligi" v-model="selectOncelik" :options="oncelikList" optionLabel="name" class="dropdown"
+              :class="{
+                'p-invalid': v$.selectOncelik.$invalid && submitted,
+              }" />
+            <label for="teklifOnceligi">Teklif Önceliği</label>
+          </span>
+        </div>
+      </div>
+      
+    </div>
+    <div class="col">
+      <TabView>
+        <TabPanel header="Teklif Açıklama">
+          <div class="grid" style="text-align:center;">
+            <div class="col">
+              <Textarea v-model="teklif.aciklama" rows="2" cols="46" />
+            </div>
           </div>
-        </template>
-      </Card>
+        </TabPanel>
+        <TabPanel header="Hatırlatma Belge">
+          <div class="grid" style="text-align:center;">
+            <div class="col">
+              <Calendar v-model="hatirlatmaTarihi" @date-select="hatirlatmaTarihiDegisim" placeholder="Hatırlatma Tarihi"
+                dateFormat="dd.mm.yy" />
+            </div>
+            <div class="col">
+              <custom-file-input baslik="Gönder" @sunucuDosyaYolla="teklifDosyaGonder($event)" />
+            </div>
+            <div class="col">
+              <a :href="teklifDosyaLink" target="_blank">
+                <Button :disabled="dis_teklifDosyaAc" iconPos="left" icon="fas fa-cloud-download-alt" class="p-button-success" />
+              </a>
+            </div>
+            <div class="col">
+              <Button :disabled="dis_teklifDosyaSil" iconPost="left" icon="fas fa-trash-alt" @click="teklifDosyaSil" />
+            </div>
+          </div>
+          <div class="grid" style="text-align:center;">
+            <div class="col">
+              <Textarea v-model="teklif.hatirlatmaAciklama" rows="1" cols="46" />
+            </div>
+          </div>
+        </TabPanel>
+        <TabPanel header="Proforma - Numune">
+          <div class="grid" style="text-align:center;">
+            <div class="col">
+              <!--dis_proforma-->
+              <Button :disabled="dis_proforma" style="background-color: #67a5c2; color: #fff" label="Proforma" conPos="left"
+                icon="fas fa-file-invoice-dollar" @click="proformaVisible = true" />
+            </div>
+            <div class="col">
+              <!--dis_numune-->
+
+              <Button :disabled="dis_numune" style="background-color: #67c2ad" label="Numune" iconPos="left"
+                icon="fas fa-file-invoice" @click="numuneVisible = true" />
+            </div>
+          </div>
+        </TabPanel>
+      </TabView>
     </div>
-    <!-- <div class="column">
-      <Card style="height: 250px">
-        <template #content>
-          <ul style="margin-top: -10px">
-            <li>
-              <RadioButton
-                inputId="tip1"
-                name="tip1"
-                v-model="tip"
-                value="Fca"
-                @change="yuklemeTipKontrol"
-              />
-              <label for="input" class="p-radiobutton-label">Fca</label>
-            </li>
-            <br />
-            <li>
-              <RadioButton
-                inputId="tip2"
-                name="tip2"
-                v-model="tip"
-                value="Fob"
-                @change="yuklemeTipKontrol"
-              />
-              <label for="input" class="p-radiobutton-label">Fob</label>
-            </li>
-            <br />
-
-            <li>
-              <RadioButton
-                inputId="tip3"
-                name="tip3"
-                v-model="tip"
-                value="C"
-                @change="yuklemeTipKontrol"
-              />
-              <label for="input" class="p-radiobutton-label">C</label>
-            </li>
-            <br />
-
-            <li>
-              <RadioButton
-                inputId="tip4"
-                name="tip4"
-                v-model="tip"
-                value="D"
-                @change="yuklemeTipKontrol"
-              />
-              <label for="input" class="p-radiobutton-label">D</label>
-            </li>
-          </ul>
-        </template>
-      </Card>
-    </div> -->
-    <div class="column">
-      <Card style="height: 250px">
-        <template #content>
-          <ul style="margin-top: -10px">
-            <li>
-              <span class="p-float-label">
-                <Dropdown
-                  id="kaynak"
-                  v-model="selectKaynak"
-                  :options="kaynakList"
-                  optionLabel="name"
-                  class="dropdown"
-                  :class="{
-                    'p-invalid': v$.selectKaynak.$invalid && submitted,
-                  }"
-                />
-                <label for="kaynak">Kaynak</label>
-              </span>
-            </li>
-            <br />
-
-            <li>
-              <span class="p-float-label">
-                <Dropdown
-                  id="teklifYeri"
-                  v-model="selectTeklifYeri"
-                  :options="teklifYeriList"
-                  optionLabel="name"
-                  class="dropdown"
-                  :class="{
-                    'p-invalid': v$.selectTeklifYeri.$invalid && submitted,
-                  }"
-                />
-                <label for="teklifYeri">Teklif Yeri</label>
-              </span>
-            </li>
-            <br />
-
-            <li>
-              <span class="p-float-label">
-                <Dropdown
-                  id="teklifOnceligi"
-                  v-model="selectOncelik"
-                  :options="oncelikList"
-                  optionLabel="name"
-                  class="dropdown"
-                  :class="{
-                    'p-invalid': v$.selectOncelik.$invalid && submitted,
-                  }"
-                />
-                <label for="teklifOnceligi">Teklif Önceliği</label>
-              </span>
-            </li>
-          </ul>
-        </template>
-      </Card>
-    </div>
-    <div class="column">
-      <Card style="height: 250px">
-        <template #content>
-          <TabView style="margin-top: -10px">
-            <TabPanel header="Teklif Açıklama">
-              <Textarea v-model="teklif.aciklama" rows="5" cols="46" />
-            </TabPanel>
-            <TabPanel header="Hatırlatma Belge">
-              <div class="columns">
-                <div class="column">
-                  <Calendar
-                    v-model="hatirlatmaTarihi"
-                    @date-select="hatirlatmaTarihiDegisim"
-                    placeholder="Hatırlatma Tarihi"
-                    dateFormat="dd.mm.yy"
-                  />
-                </div>
-                <div class="column">
-                  <custom-file-input
-                    baslik="Gönder"
-                    @sunucuDosyaYolla="teklifDosyaGonder($event)"
-                  />
-                </div>
-                <div class="column">
-                  <a :href="teklifDosyaLink" target="_blank">
-                    <Button
-                      :disabled="dis_teklifDosyaAc"
-                      iconPos="left"
-                      icon="fas fa-cloud-download-alt"
-                      class="p-button-success"
-                    />
-                  </a>
-                </div>
-                <div class="column">
-                  <Button
-                    :disabled="dis_teklifDosyaSil"
-                    iconPost="left"
-                    icon="fas fa-trash-alt"
-                    @click="teklifDosyaSil"
-                  />
-                </div>
-              </div>
-              <div class="columns">
-                <div class="column">
-                  <Textarea
-                    v-model="teklif.hatirlatmaAciklama"
-                    rows="1"
-                    cols="46"
-                  />
-                </div>
-              </div>
-            </TabPanel>
-            <TabPanel header="Proforma - Numune">
-              <Card>
-                <template #content>
-                  <div class="columns">
-                    <div class="column">
-                      <Button :disabled="dis_proforma" style="background-color: #67a5c2; color: #fff" label="Proforma" conPos="left"
-                        icon="fas fa-file-invoice-dollar" @click="proformaVisible = true" />
-                    </div>
-                    <div class="column">
-                      <Button :disabled="dis_numune" style="background-color: #67c2ad" label="Numune" iconPos="left"
-                        icon="fas fa-file-invoice" @click="numuneVisible = true" />
-                    </div>
-                  </div>
-                </template>
-              </Card>
-            </TabPanel>
-          </TabView>
-        </template>
-      </Card>
-    </div>
-    <div class="column">
-      <Card style="height: 250px">
-        <template #content>
-          <ul>
-            <li>
-              <Button
-                :disabled="dis_teklifkaydet"
-                label="T.Kaydet"
-                iconPos="left"
-                icon="fas fa-save"
-                class="p-button-success"
-                @click="teklifKayitIslemi"
-                style="width: 200px"
-              />
-            </li>
-            <br />
-            <li>
-              <Button
-                @click="teklifSilmeIslemi"
-                :disabled="dis_teklifSil"
-                label="T.Sil"
-                iconPos="left"
-                icon="fas fa-trash-alt"
-                class="p-button-warning"
-                style="width: 200px"
-              />
-            </li>
-            <br />
-
-            <li>
-              <Checkbox
-                style="margin-left: 60px"
-                :disabled="dis_takipEt"
-                id="takip"
-                v-model="teklif.takipEt"
-                :binary="true"
-              />
-              Takip Et
-            </li>
-          </ul>
-        </template>
-      </Card>
+    <div class="col">
+      <div class="grid" style="text-align:center;">
+        <div class="col">
+          <Button :disabled="dis_teklifkaydet" label="T.Kaydet" iconPos="left" icon="fas fa-save" class="p-button-success"
+            @click="teklifKayitIslemi" />
+        </div>
+        <div class="col">
+          <Button @click="teklifSilmeIslemi" :disabled="dis_teklifSil" label="T.Sil" iconPos="left" icon="fas fa-trash-alt"
+            class="p-button-warning" />
+        </div>
+      </div>
+      <div class="grid" style="text-align:center;">
+        <div class="col">
+          <Checkbox :disabled="dis_takipEt" id="takip" v-model="teklif.takipEt" :binary="true" />
+          Takip Et
+        </div>
+      </div>
     </div>
   </div>
-  <div class="columns">
-    <div class="column">
-      <Card>
-        <template #content>
-          <div class="columns">
-            <div class="column">
-              <span class="p-float-label">
-                <InputText id="sirket" type="text" v-model="teklif.company" style="width:450px;"/>
-                <label for="sirket">Şirket</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <InputText type="email" id="email" v-model="teklif.email" style="width:450px;" />
-                <label for="email">Email</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <InputText id="phone" v-model="teklif.phone" style="width:450px;" />
-                <label for="phone">Telefon</label>
-              </span>
-            </div>
-            
-          </div>
-          <br/>
-          <div class="columns">
-            <div class="column">
-                <span class="p-float-label">
-                  <Textarea id="adress" v-model="teklif.adress" row="8" cols="57" />
-                  <label for="adress">Adres</label>
-                </span>
-            </div>
-          </div>
-        </template>
-      </Card>
+  <div class="grid">
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="sirket" type="text" v-model="teklif.company" />
+        <label for="sirket">Şirket</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText type="email" id="email" v-model="teklif.email" />
+        <label for="email">Email</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="phone" v-model="teklif.phone" />
+        <label for="phone">Telefon</label>
+      </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <Textarea id="adress" v-model="teklif.adress" row="8" cols="57" />
+        <label for="adress">Adres</label>
+      </span>
     </div>
   </div>
-  <div class="columns">
-    <div class="column">
-      <Card>
-        <template #content>
-          <div class="columns is-gapless">
-            <div class="column">
-              <span class="p-float-label">
-                <Calendar
-                  id="uruntarihi"
-                  v-model="urunTarihi"
-                  dateFormat="dd.mm.yy"
-                />
-                <label for="uruntarihi">Tarih</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <AutoComplete
-                  id="kategori"
-                  v-model="kategori"
-                  :suggestions="filterKategoriList"
-                  @complete="aramaKategori($event)"
-                  optionLabel="name"
-                  @item-select="degisimKategori"
-                />
-                <label for="kategori">Kategori</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <AutoComplete
-                  id="urun"
-                  v-model="urunL"
-                  :suggestions="filterUrunList"
-                  @complete="aramaUrun($event)"
-                  optionLabel="name"
-                  @item-select="degisimUrun"
-                />
-                <label for="urun">Ürün</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <AutoComplete
-                  id="enBoy"
-                  v-model="enBoy"
-                  :suggestions="filterEnBoyList"
-                  @complete="aramaEnBoy($event)"
-                  optionLabel="name"
-                  @item-select="degisimEnBoy"
-                />
-                <label for="enBoy">En x Boy</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <AutoComplete
-                  id="kalinlik"
-                  v-model="kalinlik"
-                  :suggestions="filterKalinlikList"
-                  @complete="aramaKalinlik($event)"
-                  optionLabel="name"
-                  @item-select="degisimKalinlik"
-                />
-                <label for="kalinlik">Kalınlık</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <AutoComplete
-                  id="yuzey"
-                  v-model="yuzey"
-                  :suggestions="filterYuzeyList"
-                  @complete="aramaYuzey($event)"
-                  optionLabel="name"
-                  @item-select="degisimYuzey"
-                />
-                <label for="yuzey">Yüzey</label>
-              </span>
-            </div>
+  <br/>
+  <div class="grid" style="text-align:center;">
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <Calendar id="uruntarihi" v-model="urunTarihi" dateFormat="dd.mm.yy" />
+        <label for="uruntarihi">Tarih</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="kategori" v-model="kategori" :suggestions="filterKategoriList" @complete="aramaKategori($event)"
+          optionLabel="name" @item-select="degisimKategori" />
+        <label for="kategori">Kategori</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="urun" v-model="urunL" :suggestions="filterUrunList" @complete="aramaUrun($event)" optionLabel="name"
+          @item-select="degisimUrun" />
+        <label for="urun">Ürün</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="enBoy" v-model="enBoy" :suggestions="filterEnBoyList" @complete="aramaEnBoy($event)"
+          optionLabel="name" @item-select="degisimEnBoy" />
+        <label for="enBoy">En x Boy</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="kalinlik" v-model="kalinlik" :suggestions="filterKalinlikList" @complete="aramaKalinlik($event)"
+          optionLabel="name" @item-select="degisimKalinlik" />
+        <label for="kalinlik">Kalınlık</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="yuzey" v-model="yuzey" :suggestions="filterYuzeyList" @complete="aramaYuzey($event)"
+          optionLabel="name" @item-select="degisimYuzey" />
+        <label for="yuzey">Yüzey</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <AutoComplete id="birim" v-model="birim" :suggestions="filterBirimList" @complete="aramaBirim($event)"
+          optionLabel="name" @item-select="degisimBirim" />
+      
+        <label for="birim">Birim</label>
+      </span>
+    </div>
+    
+  </div>
+  <br/>
+  <div class="grid">
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <InputNumber id="fobFiyat" v-model="fobFiyat" mode="currency" @input="urun.fobFiyat = $event.value"
+          currency="USD" />
+        <label for="fobFiyat">Fob Fiyat</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <InputNumber id="fob" v-model="fcaFiyat" mode="currency" @input="urun.fcaFiyat = $event.value" currency="USD" />
+        <label for="fob">Fca</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <InputNumber id="fob" v-model="cFiyat" mode="currency" @input="urun.cFiyat = $event.value" currency="USD" />
+        <label for="fob">C</label>
+      </span>
+    </div>
+    <div class="col" style="margin-bottom:10px;">
+      <span class="p-float-label">
+        <InputNumber id="fob" v-model="dFiyat" mode="currency" @input="urun.dFiyat = $event.value" currency="USD" />
+        <label for="fob">D</label>
+      </span>
+    </div>
+  </div>
+  <br/>
+  <div class="grid" style="text-align:center;">
+    <div class="col">
+      <Button label="Ekle" iconPos="left" icon="fas fa-plus-circle" class="p-button" style="background-color: #dbc276"
+        @click="teklifYeniUrunIslem" />
+    </div>
+    <div class="col">
+      <Button :disabled="dis_urunSil" label="Sil" iconPos="left" icon="fas fa-trash-alt" @click="teklifUrunSilmeIslemi"
+        class="p-button-danger" />
+    </div>
+    <div class="col">
+      <Button label="vazgeç" iconPos="left" icon="fas fa-minus-circle" @click="vazgecButonu" class="p-button-secondary" />
+    </div>
+    <div class="col">
+      <Button label="EnxBoy Ekle" iconPos="left" icon="fa-solid fa-asterisk" @click="enBoyEkleme" class="p-button-primary" />
+      <OverlayPanel ref="op" appendTo="body" :showCloseIcon="true" :dismissable="true" style="width: 500px">
+        <div class="grid" style="text-align:center;">
+          <div class="col">
+          <InputText v-model="en" placeholder="En" @input="isEn"></InputText>
 
-            <div class="column">
-              <span class="p-float-label">
-                <AutoComplete
-                  id="birim"
-                  v-model="birim"
-                  :suggestions="filterBirimList"
-                  @complete="aramaBirim($event)"
-                  optionLabel="name"
-                  @item-select="degisimBirim"
-                />
+          </div>
+          <div class="col"> 
+          <InputText v-model="boy" placeholder="Boy" @input="isBoy"></InputText>
 
-                <label for="birim">Birim</label>
-              </span>
-            </div>
           </div>
-          <div class="columns is-gapless">
-            <div class="column">
-              <span class="p-float-label">
-                <InputNumber
-                  id="fobFiyat"
-                  v-model="fobFiyat"
-                  
-                  mode="currency"
-                  @input="urun.fobFiyat = $event.value"
-                  currency="USD"
-                />
-                <label for="fobFiyat">Fob Fiyat</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <InputNumber
-                  id="fob"
-                  v-model="fcaFiyat"
-                  
-                  mode="currency"
-                  @input="urun.fcaFiyat = $event.value"
-                  currency="USD"
-                />
-                <label for="fob">Fca</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <InputNumber id="fob" v-model="cFiyat"  mode="currency" @input="urun.cFiyat = $event.value"
-                   currency="USD" />
-                <label for="fob">C</label>
-              </span>
-            </div>
-            <div class="column">
-              <span class="p-float-label">
-                <InputNumber id="fob" v-model="dFiyat"  mode="currency" @input="urun.dFiyat = $event.value"
-                   currency="USD" />
-                <label for="fob">D</label>
-              </span>
-            </div>
+          <div class="col">
+          <Button @click="addEbat" :disabled="isEnBoyButton" label="Kaydet"></Button>
+
           </div>
-        </template>
-      </Card>
+        </div>
+      </OverlayPanel>
+    </div>
+  </div>
+  <div class="grid" style="text-align:center;">
+    <div class="col-9">
+      <DataTable class="p-datatable-responsive" :value="urunListesi" selectionMode="single" v-model:selection="selectUrun"
+        @row-select="teklifUrunSec" v-if="urunListesi.length > 0">
+        <Column field="tarih" header="Tarih" headerStyle="width:10%" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.tarih }}
+          </template>
+        </Column>
+        <Column field="kategoriAdi" header="Kategori" headerStyle="width:10%">
+          <template #body="slotProps">
+            {{ slotProps.data.kategoriAdi }}
+          </template>
+        </Column>
+        <Column field="urunAdi" header="Ürün" headerStyle="width:10%">
+          <template #body="slotProps">
+            {{ slotProps.data.urunAdi }}
+          </template>
+        </Column>
+        <Column field="enBoy" header="En Boy" headerStyle="width:10%">
+          <template #body="slotProps">
+            {{ slotProps.data.enBoy }}
+          </template>
+        </Column>
+        <Column field="kalinlik" header="K" headerStyle="width:5%" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.kalinlik }}
+          </template>
+        </Column>
+        <Column field="yuzeyIslem" header="Yüzey" headerStyle="width:15%">
+          <template #body="slotProps">
+            {{ slotProps.data.yuzeyIslem }}
+          </template>
+        </Column>
+        <Column field="fobFiyat" header="Fob" headerStyle="width:7%" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.fobFiyat }}
+          </template>
+        </Column>
+        <Column field="fcaFiyat" header="Fca" headerStyle="width:7%" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.fcaFiyat }}
+          </template>
+        </Column>
+        <Column field="cFiyat" header="C" headerStyle="width:7%" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.cFiyat }}
+          </template>
+        </Column>
+        <Column field="dFiyat" header="D" headerStyle="width:7%" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.dFiyat }}
+          </template>
+        </Column>
+        <Column field="birim" header="Birim" headerStyle="width:7%" bodyStyle="text-align:center;">
+          <template #body="slotProps">
+            {{ slotProps.data.birim }}
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+    <div class="col-3">
+      <div class="grid" style="text-align:left;">
+        <div class="col">
+                        <Checkbox v-model="teklif.goruldu" :binary="true" />Görüldü
+
+        </div>
+        <div class="col">
+                        <Checkbox v-model="teklif.blist" :binary="true" />B Liste
+
+        </div>
+      </div>
+      <div class="grid" style="text-align:center;">
+        <div class="col-3">
+            <Textarea id="saritasNot" :disabled="dis_saritasNot" rows="7" cols="30" v-model="teklif.saritasNot" placeholder="S.Not"/>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="columns">
-
-    <div class="column is-9">
-      <Card>
-        <template #content>
-          <div class="columns">
-            <div class="column">
-              <Button
-                label="Ekle"
-                iconPos="left"
-                icon="fas fa-plus-circle"
-                class="p-button"
-                style="background-color: #dbc276"
-                @click="teklifYeniUrunIslem"
-              />
-            </div>
-            <div class="column">
-              <Button
-                :disabled="dis_urunSil"
-                label="Sil"
-                iconPos="left"
-                icon="fas fa-trash-alt"
-                @click="teklifUrunSilmeIslemi"
-                class="p-button-danger"
-              />
-            </div>
-            <div class="column">
-              <Button
-                label="vazgeç"
-                iconPos="left"
-                icon="fas fa-minus-circle"
-                @click="vazgecButonu"
-                class="p-button-secondary"
-              />
-            </div>
-            <div class="column">
-              <Button
-                label="EnxBoy Ekle"
-                iconPos="left"
-                icon="fa-solid fa-asterisk"
-                @click="enBoyEkleme"
-                class="p-button-primary"
-              />
-              <OverlayPanel
-                ref="op"
-                appendTo="body"
-                :showCloseIcon="true"
-                :dismissable="true"
-                style="width: 500px"
-              >
-                <div class="columns">
-                  <InputText
-                    v-model="en"
-                    placeholder="En"
-                    @input="isEn"
-                  ></InputText>
-                  <InputText
-                    v-model="boy"
-                    placeholder="Boy"
-                    @input="isBoy"
-                  ></InputText>
-                  <Button
-                    @click="addEbat"
-                    :disabled="isEnBoyButton"
-                    label="Kaydet"
-                  ></Button>
-                </div>
-              </OverlayPanel>
-            </div>
-          </div>
-        </template>
-      </Card>
-    </div>
-  </div>
-  <div class="columns">
-    <div class="column">
-      <Card >
-        <template #header>
-          <div class="columns">
-            <div class="column is-9" >
-              <DataTable
-                class="p-datatable-responsive"
-                :value="urunListesi"
-                selectionMode="single"
-                v-model:selection="selectUrun"
-                @row-select="teklifUrunSec"
-                v-if="urunListesi.length > 0"
-              >
-                <Column
-                  field="tarih"
-                  header="Tarih"
-                  headerStyle="width:10%"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.tarih }}
-                  </template>
-                </Column>
-                <Column
-                  field="kategoriAdi"
-                  header="Kategori"
-                  headerStyle="width:10%"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.kategoriAdi }}
-                  </template>
-                </Column>
-                <Column field="urunAdi" header="Ürün" headerStyle="width:10%">
-                  <template #body="slotProps">
-                    {{ slotProps.data.urunAdi }}
-                  </template>
-                </Column>
-                <Column field="enBoy" header="En Boy" headerStyle="width:10%">
-                  <template #body="slotProps">
-                    {{ slotProps.data.enBoy }}
-                  </template>
-                </Column>
-                <Column
-                  field="kalinlik"
-                  header="K"
-                  headerStyle="width:5%"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.kalinlik }}
-                  </template>
-                </Column>
-                <Column
-                  field="yuzeyIslem"
-                  header="Yüzey"
-                  headerStyle="width:15%"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.yuzeyIslem }}
-                  </template>
-                </Column>
-                <Column
-                  field="fobFiyat"
-                  header="Fob"
-                  headerStyle="width:7%"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.fobFiyat }}
-                  </template>
-                </Column>
-                <Column field="fcaFiyat" header="Fca" headerStyle="width:7%" bodyStyle="text-align:center;">
-                  <template #body="slotProps">
-                    {{ slotProps.data.fcaFiyat }}
-                  </template>
-                </Column>
-                <Column field="cFiyat" header="C" headerStyle="width:7%" bodyStyle="text-align:center;">
-                  <template #body="slotProps">
-                    {{ slotProps.data.cFiyat }}
-                  </template>
-                </Column>
-                <Column field="dFiyat" header="D" headerStyle="width:7%" bodyStyle="text-align:center;">
-                  <template #body="slotProps">
-                    {{ slotProps.data.dFiyat }}
-                  </template>
-                </Column>
-                <Column
-                  field="birim"
-                  header="Birim"
-                  headerStyle="width:7%"
-                  bodyStyle="text-align:center;"
-                >
-                  <template #body="slotProps">
-                    {{ slotProps.data.birim }}
-                  </template>
-                </Column>
-              </DataTable>
-            </div>
-            <div class="column is-3">
-              <Checkbox v-model="teklif.goruldu" :binary="true" />Görüldü
-              <Checkbox v-model="teklif.blist" :binary="true" />B Liste
-              <br />
-              <span class="p-float-label">
-                <Textarea
-                  id="saritasNot"
-                  :disabled="dis_saritasNot"
-                  rows="7"
-                  cols="30"
-                  v-model="teklif.saritasNot"
-                />
-                <label for="saritasNot" class="p-checkbox-label">S.Not</label>
-              </span>
-            </div>
-          </div>
-        </template>
-      </Card>
-    </div>
-  </div>
 
   <Dialog
     v-model:visible="proformaVisible"
@@ -655,55 +368,57 @@
     header="Proforma"
     position="top"
   >
-    <div class="p-cardialog-content" style="background-color: #f4f4f4">
-      <div class="p-grid">
-        <div class="p-col-12 p-lg-12">
-          <div class="card">
-            <div class="p-grid">
-              <div class="p-col-4">
-                <label forHtml="input">Po :</label>
-              </div>
-              <div class="p-col-8">
-                <InputText type="text" v-model="teklif.proformaPoNo" />
-              </div>
-              <div class="p-col-4">
-                <label forHtml="input">Tarih :</label>
-              </div>
-              <div class="p-col-8">
-                <Calendar
-                  v-model="proformaTarihi"
-                  @date-select="proformaTarihiDegisim"
-                  dateFormat="dd.mm.yy"
-                />
-              </div>
-              <div class="p-col-4">
-                <label forHtml="input">Tutar ($) : </label>
-              </div>
-              <div class="p-col-8">
-                <currency-input type="text" v-model="teklif.proformaTutar" @input="teklif.proformaTutar = $event.target.value.replace(',','.')"/>
-              </div>
-              <div class="p-col-4">
-                <label forHtml="input">Not : </label>
-              </div>
-              <div class="p-col-8">
-                <InputText type="text" v-model="teklif.proformaNot" />
-              </div>
-              <div class="p-col-6">
-                <custom-file-input
-                  baslik="Proforma Yukle"
-                  @sunucuDosyaYolla="proformaDosyaGonder($event)"
-                />
-              </div>
-              <div class="p-col-6">
-                <a :href="proformaLink" target="_blank">
-                  <Button label="Proforma Aç" :disabled="dis_proformaAc" />
-                </a>
-              </div>
-            </div>
+    <div class="grid" >
+      <div class="col-2">
+        <span class="tag">
+            PO
+        </span>
+        <InputText type="text" v-model="teklif.proformaPoNo" />
+      </div>
+      <div class="col-2">
+
+        <span class="tag">
+          Tarih
+        </span>
+        <Calendar v-model="proformaTarihi" @date-select="proformaTarihiDegisim" dateFormat="dd.mm.yy" />
+
+      </div>
+      <div class="col-2">
+        <span class="tag">
+          Tutar ($)
+        </span>
+        <currency-input type="text" v-model="teklif.proformaTutar"
+          @input="teklif.proformaTutar = $event.target.value.replace(',','.')" />
+      </div>
+      <div class="col-2">
+          <span class="tag">
+            Not
+          </span>
+          <InputText type="text" v-model="teklif.proformaNot" />
+      </div>
+      <div class="col-2">
+        <div class="grid">
+          <div class="col">
+          <custom-file-input baslik="Proforma Yukle" @sunucuDosyaYolla="proformaDosyaGonder($event)" />
+
+          </div>
+          <div class="col">
+            <a :href="proformaLink" target="_blank">
+              <Button label="Proforma Aç" :disabled="dis_proformaAc" />
+            </a>
+
           </div>
         </div>
       </div>
+
+        
     </div>
+
+
+
+
+
+
   </Dialog>
   <Dialog
     v-model:visible="numuneVisible"
@@ -711,77 +426,61 @@
     header="Numune Takip"
     position="top"
   >
-    <div class="p-cardialog-content" style="background-color: #f4f4f4">
-      <div class="p-grid">
-        <div class="p-col-12">
-          <div class="card">
-            <div class="p-grid">
-              <div class="p-col-12 p-md-4">
-                <label forHtml="input">Giriş Tarihi</label>
-              </div>
-              <div class="p-col-12 p-md-8">
-                <Calendar
-                  v-model="numuneGirisTarihi"
-                  @date-select="numuneTarihiDegisim"
-                  dateFormat="dd.mm.yy"
-                />
-              </div>
-              <div class="p-col-12 p-md-4">
-                <label forHtml="input">Tracking No</label>
-              </div>
-              <div class="p-col-12 p-md-8">
-                <InputText type="text" v-model="teklif.numuneTrackingNo" />
-              </div>
-              <div class="p-col-12 p-md-4">
-                <label forHtml="input">Ödenen</label>
-              </div>
-              <div class="p-col-12 p-md-8">
-                <currency-input
-                  type="text"
-                  v-model="teklif.numuneOdenenTutar"
-                />
-              </div>
-              <div class="p-col-12 p-md-4">
-                <label forHtml="input">Alınan</label>
-              </div>
-              <div class="p-col-12 p-md-8">
-                <currency-input
-                  type="text"
-                  v-model="teklif.numuneAlinanTutar"
-                />
-              </div>
-              <div class="p-col-12 p-md-4">
-                <label forHtml="input">Not</label>
-              </div>
-              <div class="p-col-12 p-md-8">
-                <InputText type="text" v-model="teklif.numuneNot" />
-              </div>
-              <div class="p-col-12 p-md-4">
-                <label forHtml="input">H.Tarihi</label>
-              </div>
-              <div class="p-col-12 p-md-8">
-                <Calendar
-                  v-model="numuneHatirlatmaTarihi"
-                  @date-select="numuneHatirlatmaTarihiDegisim"
-                  dateFormat="dd.mm.yy"
-                />
-              </div>
-              <div class="p-col-6">
-                <custom-file-input
-                  baslik="Dosya Gönder"
-                  @sunucuDosyaYolla="numuneDosyaGonder($event)"
-                />
-              </div>
-              <div class="p-col-6">
-                <a :href="numuneLink" target="_blank">
-                  <Button label="Dosya Aç" :disabled="dis_numuneDosyaAc" />
-                </a>
-              </div>
-            </div>
+    <div class="grid">
+      <div class="col">
+        <span class="tag">
+          Giriş Tarihi
+        </span>
+        <Calendar v-model="numuneGirisTarihi" @date-select="numuneTarihiDegisim" dateFormat="dd.mm.yy" />
+      </div>
+      <div class="col">
+        <span class="tag">
+          Tracking No
+        </span>
+        <InputText type="text" v-model="teklif.numuneTrackingNo" />
+      </div>
+      <div class="col">
+        <span class="tag">
+          Ödenen
+        </span>
+        <currency-input type="text" v-model="teklif.numuneOdenenTutar" />
+      </div>
+      <div class="col"> 
+        <span class="tag">
+          Alınan
+        </span>
+        <currency-input type="text" v-model="teklif.numuneAlinanTutar" />
+      </div>
+      <div class="col">
+        <span class="tag">
+          Not
+        </span>
+        <InputText type="text" v-model="teklif.numuneNot" />
+      </div>
+      <div class="col">
+        <span class="tag">
+          H.Tarihi
+        </span>
+        <Calendar v-model="numuneHatirlatmaTarihi" @date-select="numuneHatirlatmaTarihiDegisim" dateFormat="dd.mm.yy" />
+      </div>
+      <div class="col">
+        <div class="grid">
+          <div class="col">
+            <custom-file-input baslik="Dosya Gönder" @sunucuDosyaYolla="numuneDosyaGonder($event)" />
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col"> 
+            <a :href="numuneLink" target="_blank">
+              <Button label="Dosya Aç" :disabled="dis_numuneDosyaAc" />
+            </a>
           </div>
         </div>
       </div>
     </div>
+  
+  
+  
   </Dialog>
 </template>
 <script>

@@ -732,7 +732,10 @@ const raporService = {
   stockFiyatliExcellCikti(data) {
     return axios.post('/raporlar/listeler/stokRaporuFiyatli',data).then(res=>res.data)
   },
-  
+  galleryAddVideo(videos) {
+    return axios.post('/panel/mekmarcom/gallery/videos',videos).then(res=>res.data)
+  },
+
   galleriaAddProduct(data) {
     return axios.post("panel/mekmarcom/galleria/add",data).then(res=>res.data)
   },
