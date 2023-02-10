@@ -1,9 +1,9 @@
 <template>
-
+  <br/>
   <div class="grid">
-    <div class="col">
+    <div class="col" >
       <div class="grid">
-        <div class=col>
+        <div class="col" >
           <span class="p-float-label">
             <Calendar id="teklifTarih" v-model="teklifTarihi" @date-select="teklifTarihiDegisim" dateFormat="dd.mm.yy"
               :class="{ 'p-invalid': v$.teklifTarihi.$invalid && submitted }" />
@@ -11,8 +11,9 @@
           </span>
         </div>
       </div>
+      <br/>
       <div class="grid">
-        <div class=col>
+        <div class="col">
           <span class="p-float-label">
             <AutoComplete id="musteriAdi" v-model="musteri" :suggestions="filterMusteriList" @complete="aramaMusteri($event)"
               optionLabel="musteriAdi" @item-select="musteriDegisim" @change="musteriChangeEvent($event)"
@@ -21,8 +22,10 @@
           </span>
         </div>
       </div>
+      <br />
+
       <div class="grid">
-        <div class=col>
+        <div class="col">
           <span class="p-float-label">
             <AutoComplete id="ulke" v-model="ulke" :suggestions="filterUlkeList" @complete="aramaUlke($event)"
               optionLabel="ulkeAdi" @item-select="ulkeDegisim" @change="ulkeChangeEvent($event)"
@@ -32,7 +35,7 @@
         </div>
       </div>
       <div class="grid">
-        <div class=col>
+        <div class="col">
       
         </div>
       </div>
@@ -48,6 +51,8 @@
           </span>
         </div>
       </div>
+      <br />
+
       <div class="grid">
         <div class=col>
           <span class="p-float-label">
@@ -59,6 +64,8 @@
           </span>
         </div>
       </div>
+      <br />
+
       <div class="grid">
         <div class=col>
           <span class="p-float-label">
@@ -75,9 +82,9 @@
     <div class="col">
       <TabView>
         <TabPanel header="Teklif Açıklama">
-          <div class="grid" style="text-align:center;">
+          <div class="grid" style="text-align:left;">
             <div class="col">
-              <Textarea v-model="teklif.aciklama" rows="2" cols="46" />
+              <Textarea v-model="teklif.aciklama" rows="4" cols="59" />
             </div>
           </div>
         </TabPanel>
@@ -99,9 +106,9 @@
               <Button :disabled="dis_teklifDosyaSil" iconPost="left" icon="fas fa-trash-alt" @click="teklifDosyaSil" />
             </div>
           </div>
-          <div class="grid" style="text-align:center;">
+          <div class="grid" style="text-align:left;">
             <div class="col">
-              <Textarea v-model="teklif.hatirlatmaAciklama" rows="1" cols="46" />
+              <Textarea v-model="teklif.hatirlatmaAciklama" rows="2" cols="59" />
             </div>
           </div>
         </TabPanel>
@@ -141,8 +148,10 @@
       </div>
     </div>
   </div>
+      <br />
+
   <div class="grid">
-    <div class="col">
+    <div class="col" >
       <span class="p-float-label">
         <InputText id="sirket" type="text" v-model="teklif.company" />
         <label for="sirket">Şirket</label>

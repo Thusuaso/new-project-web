@@ -59,6 +59,10 @@
       <Button class="p-button-success" @click="urunKartKayitIslemi" label="Kaydet"/>
 
     </div>
+    <div class="col">
+      <Button class="p-button-danger" @click="urunKartSil" label="Sil" />
+    
+    </div>
   </div>
   <br/>
   <div class="grid">

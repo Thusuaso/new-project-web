@@ -118,7 +118,7 @@
                     </DataTable>
                 </div>
             </div>
-            <div class="columns is-12" style="margin-left: 235px">
+            <div class="columns is-12 bilgiButton" >
                 <div class="column is-12">
                     <Button class="p-button p-button-warning" label="Bilgileri Kaydet" :disabled="kaydetVisible1"
                         @click="kaydetIslemi" icon="fas fa-check" iconPos="left" />
@@ -575,5 +575,13 @@ export default {
 <style scoped>
 .card {
   font-size: 20px;
+}
+.bilgiButton{
+  margin-left: 235px
+}
+@media screen and (max-width:576px){
+  .bilgiButton{
+    margin-left:0px;
+  }
 }
 </style>

@@ -38,7 +38,7 @@
               <div class="column is-3" size="is-small">
                 <span class="p-float-label">
                   <Dropdown
-                    style="width: 350px"
+                  style="width:194.5px;"
                     :disabled="kaydetVisible1"
                     v-model="selectFaturaTur"
                     :options="FaturaTurList"
@@ -52,8 +52,6 @@
                 <Button
                   label="+ Yeni Firma"
                   style="
-                    margin-left: 65px;
-                    width: 120px;
                     background-color: green;
                     font-weight: bold;
                   "
@@ -121,7 +119,7 @@
                 </span>
               </div>
             </div>
-            <div class="columns is-12" style="margin-left: 235px">
+            <div class="columns is-12 bilgiButton" >
               <div class="column is-12">
                 <Button
                   class="p-button-rounded p-button-warning"
@@ -550,5 +548,13 @@ export default {
 <style scoped>
 .card {
   font-size: 20px;
+}
+.bilgiButton{
+  margin-left: 235px
+}
+@media screen and (max-width:576px){
+  .bilgiButton{
+    margin-left:0px;
+  }
 }
 </style>

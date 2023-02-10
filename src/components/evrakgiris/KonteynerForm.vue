@@ -1,88 +1,61 @@
 <template>
-  <div style="margin-left: 32px">
-    <div class="columns">
-      <div class="column">
-        <label for="lastname" class="p-col-fixed" style="width: 100px"
-          >Firma</label
-        >
-        <div class="p-field p-col-12 p-md-12">
-          <AutoComplete
-            v-model="firma_adi"
-            :suggestions="filterFaturaList"
-            @complete="aramaFirma($event)"
-            :dropdown="true"
-            field="firma_adi"
-            @item-select="firmaDegisim"
-          >
-          </AutoComplete>
-        </div>
-      </div>
-      <div class="column">
-        <label for="lastname" class="p-col-fixed" style="width: 100px"
-          >Sipariş Numarası</label
-        >
-        <div class="p-col">
-          <AutoComplete
-            v-model="siparis_no"
-            :suggestions="filterSiparisList"
-            @complete="aramaSiparis($event)"
-            :dropdown="true"
-            field="siparisno"
-            @item-select="siparisDegisim"
-          >
-          </AutoComplete>
-        </div>
-      </div>
-      <div class="column">
-        <label for="firstname" class="p-col-fixed" style="width: 100px"
-          >Fatura Numarası</label
-        >
-        <div class="p-col">
-          <InputText id="firstname" v-model="data.faturaNo" type="text" />
-        </div>
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column">
-        <label for="firstname" class="p-col-fixed" style="width: 100px"
-          >Kur</label
-        >
-        <div class="p-col">
-          <InputText id="firstname" v-model="data.kur" type="text" />
-        </div>
-      </div>
-      <div class="column">
-        <label for="lastname" class="p-col-fixed" style="width: 100px"
-          >Tutar- USD</label
-        >
-        <div class="p-col">
-          <InputText id="lastname" v-model="data.Tutar_dolar" type="text" />
-        </div>
-      </div>
-      <div class="column">
-        <label for="lastname" class="p-col-fixed" style="width: 100px"
-          >Tutar- TRY</label
-        >
-        <div class="p-col">
-          <InputText id="lastname" v-model="data.Tutar_tl" type="text" />
-        </div>
-      </div>
-    </div>
+  <br/>
+  <div class="grid">
+    <div class="col">
+      <span class="p-float-label">
+        <AutoComplete id="firma_adi" v-model="firma_adi" :suggestions="filterFaturaList" @complete="aramaFirma($event)" :dropdown="true"
+          field="firma_adi" @item-select="firmaDegisim" />
+        <label for="firma_adi">Firma</label>
+      </span>
 
-    <div class="columns" style="margin-left: 190px">
-      <div class="column">
-        <Button
-          class="p-button-secondary"
-          @click="dataKayitIslem"
-          label="Kaydet"
-        />
-      </div>
-      <div class="column">
-        <custom-file-input
-          baslik="Dosya Gönder"
-          @sunucuDosyaYolla="konteynerDosyaGonder($event)"
-        />
-      </div>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <AutoComplete id="sip_no" v-model="siparis_no" :suggestions="filterSiparisList" @complete="aramaSiparis($event)" :dropdown="true"
+          field="siparisno" @item-select="siparisDegisim" />
+        <label for="sip_no">Sipariş No</label>
+      </span>
+        
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="fatura_no" v-model="data.faturaNo" type="text" />
+        <label for="fatura_no">Fatura No</label>
+      </span>
+    </div>
+  </div>
+  <br />
+
+  <div class="grid">
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="kur" v-model="data.kur" type="text" />
+        <label for="kur">Kur</label>
+      </span>
+    </div>
+      <div class="col">
+        <span class="p-float-label">
+          <InputText id="tutar_dolar" v-model="data.Tutar_dolar" type="text" />
+          <label for="tutar_dolar">Tutar ($)</label>
+        </span>
+    </div>
+    <div class="col">
+      <span class="p-float-label">
+        <InputText id="lastname" v-model="data.Tutar_tl" type="text" />
+        <label for="tutar_tl">
+          Tutar (₺)
+        </label>
+      </span>
+    </div>
+  </div>
+  <br />
+
+  <div class="grid">
+    <div class="col">
+      <Button class="p-button-secondary" @click="dataKayitIslem" label="Kaydet" />
+    </div>
+    <div class="col">
+      <custom-file-input baslik="Dosya Gönder" @sunucuDosyaYolla="konteynerDosyaGonder($event)" />
     </div>
   </div>
 </template>

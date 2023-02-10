@@ -220,6 +220,9 @@ const OperasyonService = {
   },
   setContainerAmount(data) {
     return axios.post("/operasyon/containeramount",data).then(res=>res.data)
+  },
+  getTedarikciFatura(id,siparis_no) {
+    return axios.get(`/operasyon/fatura/tedarikciFaturaEvrak/${id}/${siparis_no}`).then(res=>res.data)
   }
 };
 

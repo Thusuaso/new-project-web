@@ -1,25 +1,13 @@
 <template>
-  <div class="columns">
-    <div class="column">
-      <custom-file-input
-        multiple
-        v-model="files"
-        :state="Boolean(files)"
-        baslik="Upload2"
-        @sunucuDosyaYolla="faturaDosyaGonder($event)"
-      />
+  <div class="grid">
+    <div class="col">
+      <custom-file-input multiple v-model="files" :state="Boolean(files)" baslik="Upload2"
+        @sunucuDosyaYolla="faturaDosyaGonder($event)" />
     </div>
-
-    <div class="column">
+    <div class="col">
       <a :href="evrakLink" target="_blank">
-        <Button
-          :disabled="dis_download"
-          iconPos="left"
-          icon="fas fa-download"
-          class="p-button-success"
-          v-tooltip="'Aç'"
-          label="Aç"
-        />
+        <Button :disabled="dis_download" iconPos="left" icon="fas fa-download" class="p-button-success" v-tooltip="'Aç'"
+          label="Aç" />
       </a>
     </div>
   </div>

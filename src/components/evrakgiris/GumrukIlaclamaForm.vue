@@ -196,6 +196,10 @@
       </section>
     </Dialog>
   </section>
+  
+
+
+
 </template>
 <script>
 import service from "../../service/OperasyonService";

@@ -36,6 +36,14 @@
     </div>
   </div>
   <div class="columns">
+    <div class="column">
+      <a :href="tedarikci_link" ref="download" target="_blank">
+
+      </a>
+      <Button type="button" icon="pi pi-download" @click="$refs.download.click()" :disabled="tedarikci_link_form"/>
+    </div>
+  </div>
+  <div class="columns">
     <div class="column is-12">
       <Button
         @click="urunKaydet"
@@ -81,7 +89,6 @@ export default {
     } else {
       this.dis_download = true;
     }
-    console.log(this.SiparisEvrakList.siparisno);
     service
       .getEvrakTedarikciFaturaList(this.SiparisEvrakList.siparisno)
       .then((data) => {
@@ -91,6 +98,8 @@ export default {
   },
   data() {
     return {
+      tedarikci_link_form:true,
+      tedarikci_link:"",
       tedarikciList: [],
       tedarikci: "",
       tedarikci_adi: "",
@@ -108,6 +117,7 @@ export default {
 
   mounted() {},
   methods: {
+
     faturaDosyaGonder(event) {
       if (event.size > 1000000) {
         alert("Evrak Boyutunu Kontrol Ediniz.");
@@ -169,6 +179,9 @@ export default {
       } else {
         this.urun_kaydet_form = false
       }
+      this.tedarikci_link = `https://file-service.mekmar.com/file/tedarikci/download/30/${this.SiparisEvrakList.siparisno
+        }/${this.TedarikciTur.tedarikci + ".pdf"}`
+      this.tedarikci_link_form = false
     },
     aramaTedarikciTur(event) {
       setTimeout(() => {

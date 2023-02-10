@@ -94,7 +94,7 @@
     <EvrakDenizcilikForm />
   </Dialog>
   <Dialog v-model:visible="is_gumruk_ilaclama" v-model:header="evrakFormBaslik" position="top" :modal="true" maximizable
-    :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    >
     <GumrukIlaclamaForm />
   </Dialog>
   <Dialog v-model:visible="is_ozeliscilik" v-model:header="evrakFormBaslik" position="top" :modal="true" maximizable

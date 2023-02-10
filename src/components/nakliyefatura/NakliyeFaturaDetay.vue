@@ -1,5 +1,4 @@
 <template>
-  <div class="container">
     <div class="columns is-vcentered">
       <div class="column is-12" :style="{ width: '350px', height: '400px' }">
         <div class="p-field p-col-12 p-md-12">
@@ -44,7 +43,6 @@
           </div>
         </div>
     </div>
-  </div>
   
 </template>
 <script>

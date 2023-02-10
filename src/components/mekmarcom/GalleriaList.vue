@@ -6,7 +6,7 @@
 
             </div>
             <div class="column">
-                <FileUpload mode="basic" @select="fotoGonder($event)" v-model="file" :maxFileSize="5000000" :multiple="true" :disabled="image_upload_form"/>
+                <FileUpload mode="basic" @select="fotoGonder($event)" chooseLabel="Fotoğraf Ekle" v-model="file" :maxFileSize="5000000" :multiple="true" :disabled="image_upload_form"/>
 
             </div>
             <div class="column">

@@ -76,20 +76,20 @@
                     <el-sub-menu index="7-7">
                         <template #title>Faturalar</template>
         
-                        <router-link to="/operasyon/mekmerdisfatura">
+                        <!-- <router-link to="/operasyon/mekmerdisfatura">
                             <el-menu-item index="7-7-1"> İç Piyasa Fatura Giriş </el-menu-item>
-                        </router-link>
+                        </router-link> -->
                         <router-link to="/operasyon/nakliyeFaturaGiris">
-                            <el-menu-item index="7-7-2"> Nakliye Fatura Giriş </el-menu-item>
+                            <el-menu-item index="7-7-1"> Nakliye Fatura Giriş </el-menu-item>
                         </router-link>
                         <router-link to="/operasyon/nakliyeFaturaListesi">
-                            <el-menu-item index="7-7-3"> Nakliye Fatura Listesi </el-menu-item>
+                            <el-menu-item index="7-7-2"> Nakliye Fatura Listesi </el-menu-item>
                         </router-link>
                         <router-link to="/operasyon/konteynerFaturaGiris">
-                            <el-menu-item index="7-7-4"> Konteynır Fatura Girişi </el-menu-item>
+                            <el-menu-item index="7-7-3"> Konteynır Fatura Girişi </el-menu-item>
                         </router-link>
                         <router-link to="/operasyon/konteynerFaturaListesi">
-                            <el-menu-item index="7-7-5"> Konteynır Fatura Listesi </el-menu-item>
+                            <el-menu-item index="7-7-4"> Konteynır Fatura Listesi </el-menu-item>
                         </router-link>
                     </el-sub-menu>
                 </el-sub-menu>

@@ -1,4 +1,5 @@
 <template>
+  <br/>
   <section>
     <div class="columns is-centered">
       <div class="column is-4">
