@@ -354,11 +354,17 @@
     <div class="col-3">
       <div class="grid" style="text-align:left;">
         <div class="col">
-                        <Checkbox v-model="teklif.goruldu" :binary="true" />Görüldü
+                        <div class="field-checkbox">
+                          <Checkbox v-model="teklif.goruldu" :binary="true" />
+                          <label for="city3">Görüldü</label>
+                        </div>
 
         </div>
         <div class="col">
-                        <Checkbox v-model="teklif.blist" :binary="true" />B Liste
+                        <div class="field-checkbox">
+                          <Checkbox v-model="teklif.blist" :binary="true" />
+                          <label for="city3">B Liste</label>
+                        </div>
 
         </div>
       </div>

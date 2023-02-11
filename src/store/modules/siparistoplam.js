@@ -4,6 +4,7 @@ const state = {
   uretimToplami: 0,
   satisToplami: 0,
   tonToplami: 0,
+  siparisToplamiAdet:0
 };
 
 const actions = {
@@ -19,6 +20,7 @@ const mutations = {
     state.uretimToplami = data.uretimToplami;
     state.satisToplami = data.satisToplami;
     state.tonToplami = data.tonToplami;
+    state.siparisToplamiAdet = data.siparisToplamiAdet
   },
 };
 
@@ -39,6 +41,9 @@ const getters = {
   tonToplami(state) {
     return state.tonToplami;
   },
+  siparisToplamiAdet(state) {
+    return state.siparisToplamiAdet
+  }
 };
 
 export default {

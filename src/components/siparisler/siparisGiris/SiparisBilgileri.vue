@@ -22,7 +22,7 @@
             <div class="column">
               
               <MoneyInput @money_input_text_change="siparis.alisFiyati = $event" :text_value="siparis.alisFiyati"
-                :disAktif="dis_urun_giris" label="Alış Fiyatı ($)" v-model="alis_Fiyati" />
+                :disAktif="dis_urun_giris" label="Alış Fiyatı ($)" v-model="alis_Fiyati" @input="isf_change_event"/>
             </div>
           </div>
           <div class="columns is-gapless">
@@ -177,6 +177,7 @@
                     'p-invalid':
                       v$.siparis.musteriAciklama.$invalid && submitted,
                   }"
+                  @input="isf_change_event"
                 />
                 <label for="musteriAciklama">En-Açıklama</label>
               </span>
@@ -197,6 +198,8 @@
                     'p-invalid':
                       v$.siparis.uretimAciklama.$invalid && submitted,
                   }"
+                  @input="isf_change_event"
+
                 />
                 <label for="uretimAciklama">Tr-Açıklama</label>
               </span>
@@ -460,6 +463,9 @@ export default {
     MoneyInput
   },
   methods: {
+    isf_change_event() {
+      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+    },
     is_satis(event) {
       this.siparis.satisFiyati = event.value
       this.satisFiyati = this.siparis.satisFiyati.replace('.',',')
@@ -474,7 +480,7 @@ export default {
     },
     sec() {},
     miktar_input_event(event) {
-      
+      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
 
 
 
@@ -1156,7 +1162,7 @@ export default {
     btn_degistir_click() {
       this.urunIslemleri();
       let index = this.indexBul(this.siparis.id, this.siparisUrunler);
-      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      
       this.siparisUrunler[index] = this.siparis;
       if (!this.yeniSiparis) this.degisen_urun_islem();
       this.dataSatirTopla(this.siparisUrunler);

@@ -1,5 +1,4 @@
 <template>
-  <section>
     <div class="card">
       <DataTable
         :value="siparisler"
@@ -20,10 +19,20 @@
         @filter="siparisFilterDegisim"
         :paginator="true"
          :rows="1099"
-         :globalFilterFields="['musteriAdi', 'siparisNo', 'urunAdi', 'en', 'boy', 'kenar','tedarikciAdi']"
+         :globalFilterFields="['musteriAdi', 'siparisNo', 'urunAdi', 'en', 'boy', 'kenar', 'tedarikciAdi','operasyon']"
       >
       <template #header>
+        <div class="grid">
+          <div class="col">
+            
+          </div>
+        </div>
         <div class="flex justify-content-between">
+
+          <div class="field-checkbox">
+            <Checkbox id="city3" v-model="detayli_form" :binary="true" style="margin-right:5px;" value="Detaylı" />
+            <label for="city3">Detaylı</label>
+          </div>
           <Button type="button" icon="pi pi-filter-slash" label="Clear" class="p-button-outlined" @click="clearFilter1()" />
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
@@ -67,7 +76,22 @@
             />
           </template>
         </Column>
-
+        <Column field="temsilci" header="S.S" v-if="detayli_form">
+          <template #body="slotProps">
+            {{ capitalize(slotProps.data.temsilci) }}
+          </template>
+            <template #filter="{ filterModel }">
+              <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by S.S" />
+            </template>
+        </Column>
+        <Column field="operasyon" header="O" v-if="detayli_form">
+          <template #body="slotProps">
+            {{ capitalize(slotProps.data.operasyon) }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by O" />
+          </template>
+        </Column>
         <Column
           :key="1"
           field="musteriAdi"
@@ -285,6 +309,14 @@
             {{ formatDecimal(siparisToplami) }}
           </template>
         </Column>
+        <Column field="adet" header="Adet">
+          <template #body="slotProps">
+            {{ slotProps.data.adet }}
+          </template>
+          <template #footer>
+            {{ formatDecimal(siparisToplamiAdet) }}
+          </template>
+        </Column>
         <Column field="birim" header="B" headerStyle="width: 5%" bodyStyle="">
           <template #body="slotProps">
             <span class="p-column-title">B</span>
@@ -353,15 +385,16 @@
       </DataTable>
 
     </div>
-  </section>
 </template>
 <script>
 import { mapGetters } from "vuex";
 import { FilterMatchMode } from "primevue/api";
 
 export default {
+
   data() {
     return {
+      detayli_form: false,
       filters: {
         musteriAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         siparisNo: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -370,14 +403,17 @@ export default {
         boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         tedarikciAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        temsilci: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        operasyon: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+
       },
       selectedSiparis: null,
       dtSiparisler: null,
       yil_listesi: null,
       select_yil: 0,
       kontrol: 0,
-      groups: ["sira", "siparisNo", "musteriAdi", "temsilci", "tarih", "link"],
+      groups: ["sira", "siparisNo", "musteriAdi", "temsilci", "tarih", "link","operasyon"],
     };
   },
   props: [
@@ -400,7 +436,9 @@ export default {
       "tonToplami",
       "getMobilWidth",
       "datatableLoading",
-    ]),
+      "siparisToplamiAdet"
+    ])
+    
     
   },
   mounted() {},
@@ -413,6 +451,11 @@ export default {
     }, 15000)
   },
   methods: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    },
     onRowGroupExpand(event) {
       this.$toast.add({
         severity: "info",
@@ -495,6 +538,7 @@ export default {
       let uretimToplami = 0;
       let satisToplami = 0;
       let tonToplami = 0;
+      let siparisToplamiAdet = 0;
       for (let key in liste) {
         const data = liste[key];
 
@@ -503,6 +547,7 @@ export default {
         uretimToplami += data.uretimMiktari;
         satisToplami += data.satisToplam;
         tonToplami += data.ton;
+        siparisToplamiAdet += data.adet;
       }
 
       const data = {
@@ -511,6 +556,7 @@ export default {
         uretimToplami: uretimToplami,
         satisToplami: satisToplami,
         tonToplami: tonToplami,
+        siparisToplamiAdet: siparisToplamiAdet
       };
 
       this.$store.dispatch("loadToplamGuncelleAct", data);

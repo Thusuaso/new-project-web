@@ -2,113 +2,112 @@
 
     <div class="grid">
       <div class="col">
-        <DataTable :value="seleksiyon_uretimozetlist">
-          <Column field="tanim" header="Üretici" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ slotProps.data.tanim }}
-            </template>
-            <template #footer>
-              Toplam
-              <p style="font-size: 10px">(Mekmar + Mekmoz)</p>
-            </template>
-          </Column>
-          <Column field="gun" header="Bugün" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ formatDecimal(slotProps.data.gun) }}
-            </template>
-            <template #footer>
-              {{ formatDecimal(toplam_gun) }}
-            </template>
-          </Column>
-          <Column field="ay" header="Ay" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ formatDecimal(slotProps.data.ay) }}
-            </template>
-            <template #footer>
-              {{ formatDecimal(toplam_ay) }} ({{ formatDecimal(toplam_m_mek) }})
-            </template>
-          </Column>
-          <Column field="yil" header="Yıl" bodyStyle="text-align:center;">
-            <template #body="slotProps">
-              {{ formatDecimal(slotProps.data.yil) }}
-            </template>
-            <template #footer>
-              {{ formatDecimal(toplam_yil) }}
-            </template>
-          </Column>
-        </DataTable>
-
-      </div>
-      <div class="col-1">
-                <Button @click="btn_yeni_click" class="p-button-success" label="Yeni" />
-
+          <DataTable :value="seleksiyon_uretimozetlist">
+            <Column field="tanim" header="Üretici" bodyStyle="text-align:center;">
+              <template #body="slotProps">
+                {{ slotProps.data.tanim }}
+              </template>
+              <template #footer>
+                Toplam
+                <p style="font-size: 10px">(Mekmar + Mekmoz)</p>
+              </template>
+            </Column>
+            <Column field="gun" header="Bugün" bodyStyle="text-align:center;">
+              <template #body="slotProps">
+                {{ formatDecimal(slotProps.data.gun) }}
+              </template>
+              <template #footer>
+                {{ formatDecimal(toplam_gun) }}
+              </template>
+            </Column>
+            <Column field="ay" header="Ay" bodyStyle="text-align:center;">
+              <template #body="slotProps">
+                {{ formatDecimal(slotProps.data.ay) }}
+              </template>
+              <template #footer>
+                {{ formatDecimal(toplam_ay) }} ({{ formatDecimal(toplam_m_mek) }})
+              </template>
+            </Column>
+            <Column field="yil" header="Yıl" bodyStyle="text-align:center;">
+              <template #body="slotProps">
+                {{ formatDecimal(slotProps.data.yil) }}
+              </template>
+              <template #footer>
+                {{ formatDecimal(toplam_yil) }}
+              </template>
+            </Column>
+          </DataTable>
       </div>
       <div class="col">
         <div class="grid">
           <div class="col">
-            <Button :disabled="slk_enb_mekmar" @click="btn_mekmar_click" label="Mekmer" class="p-button-primary p-button-sm"
-              style="width: 100px" />
-          </div>
-        </div>
-        <div class="grid">
-          <div class="col">
-            <Button :disabled="slk_enb_dis" @click="btn_dis_click" label="Dış" class="p-button-secondary p-button-sm"
-              style="width: 100px" />
-          </div>
-        </div>
-        <div class="grid">
-          <div class="col">
-            <Button :disabled="slk_enb_mekmer_dis" @click="btn_mekmer_dis_click" label="Mekmer Dış"
-              class="p-button-info p-button-sm" style="width: 100px" />
-          </div>
-        </div>
-        <div class="grid">
-          <div class="col">
-            <Button label="Toplu Kasa" @click="getAllCrateDialog" style="width: 100px" />
-          </div>
-        </div>
-        
-        
-        
-        
-        
-        
+              <Button @click="btn_yeni_click" class="p-button-success" label="Yeni" />
 
-      </div>
-      <div class="col-1">
-        <Button @click="excel_cikti_click" label="Excel" class="p-button-dark" />
+          </div>
+          <div class="col">
+            <div class="grid">
+              <div class="col">
+                <Button :disabled="slk_enb_mekmar" @click="btn_mekmar_click" label="Mekmer" class="p-button-primary p-button-sm"
+                  style="width: 100px" />
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col">
+                <Button :disabled="slk_enb_dis" @click="btn_dis_click" label="Dış" class="p-button-secondary p-button-sm"
+                  style="width: 100px" />
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col"> 
+                <Button :disabled="slk_enb_mekmer_dis" @click="btn_mekmer_dis_click" label="Mekmer Dış"
+                  class="p-button-info p-button-sm" style="width: 100px" />
+              </div>
+
+            </div>
+            <div class="grid">
+              <div class="col">
+                  <Button label="Toplu Kasa" @click="getAllCrateDialog" style="width: 100px" />
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="grid">
+              <div class="col">
+                <Button @click="excel_cikti_click" label="Excel" class="p-button-dark" />
+
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col">
+                <Calendar size="is-small" icon="calendar-today" v-model="son_tarih" placeholder="Tarih Giriniz ! ">
+                  <button class="button is-danger">
+                    <span>Temizle</span>
+                  </button>
+                </Calendar>
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col">
+                <Button @click="etiket_cikti_click" label="Etiket Çıkart" class="p-button-info" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
       <div class="col">
-        <div class="grid">
+        <div class="grid" style="text-align:center;">
           <div class="col">
-            <Calendar size="is-small" icon="calendar-today" v-model="son_tarih" placeholder="Tarih Giriniz ! ">
-              <button class="button is-danger">
-                <span>Temizle</span>
-              </button>
-            </Calendar>
-          </div>
-        </div>
-        <div class="grid">
-          <div class="col">
-        <Button @click="etiket_cikti_click" label="Etiket Çıkart" class="p-button-info" />
-            
-          </div>
-        </div>
-        
-      </div>
-      <div class="col-3">
-        <div class="grid">
-          <div class=col>
-              <Dropdown v-model="codeSelected" style="width: 150px" :options="etiketlerVeikKutu" optionLabel="urun"
-                @change="isDropDownChange" placeholder="Veik Kutu Etiketi" />
-
+            <Dropdown v-model="codeSelected" style="width: 150px" :options="etiketlerVeikKutu" optionLabel="urun"
+              @change="isDropDownChange" placeholder="Veik Kutu Etiketi" />
           </div>
           <div class="col">
             <Dropdown v-model="codeSelectedKasa" style="width: 150px" :options="etiketlerVeikKasa" optionLabel="urun"
               @change="isDropDownChangeTwo" placeholder="Veik Kasa Etiketi" />
           </div>
         </div>
-        <div class="grid">
+        <div class="grid" style="text-align:center;">
           <div class="col">
             <Dropdown v-model="codeSelected" style="width: 150px" :options="etiketlerNovaKutu" optionLabel="urun"
               @change="isDropDownChangeThree" placeholder="Nova Kutu Etiketi" />
@@ -118,15 +117,16 @@
               @change="isDropDownChangeFour" placeholder="Nova Kasa Etiketi" />
           </div>
         </div>
-        <div class="grid">
-          <div class="col" style="text-align:center;">
-            <Button type="button" @click="etiketDowload()" icon="fas fa-download" label="Indir"
-               />
-          </div>
+        <div class="grid" style="text-align:center;">
+          <div class="col">
+            <Button type="button" @click="etiketDowload()" icon="fas fa-download" label="Indir" />
+          </div>  
         </div>
       </div>
-
     </div>
+
+
+
 
 
 

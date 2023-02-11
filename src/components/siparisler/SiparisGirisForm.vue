@@ -633,6 +633,7 @@ export default {
     },
     faturaBilgileriGuncelle() {
       //ürün toplamı alma
+      console.log("siparis",this.siparis)
       this.siparis.malBedeli = 0;
 
       for (let key in this.siparisUrunler) {
@@ -642,7 +643,8 @@ export default {
       this.siparis.digerTutarToplam =
         this.siparis.detayTutar_1 +
         this.siparis.detayTutar_2 +
-        this.siparis.detayTutar_3;
+        this.siparis.detayTutar_3 +
+      this.siparis.sigorta_tutar_satis
 
       this.siparis.genelToplam =
         this.siparis.malBedeli +
@@ -894,6 +896,7 @@ export default {
       }
     },
     maliyetYenile() {
+
       this.maliyet.fobMasraf = 0;
       this.maliyet.uretici = 0;
       //    if (parseFloat(this.iscilikData) != 0) {
@@ -923,7 +926,9 @@ export default {
       this.maliyet.digerTutar =
         this.siparis.detayAlis_1 +
         this.siparis.detayAlis_2 +
-        this.siparis.detayAlis_3;
+        this.siparis.detayAlis_3 +
+      this.siparis.evrakGideri +
+          this.siparis.sigorta_tutar
       this.maliyet.mekus_masraf = this.siparis.mekus_masraf;
       //    this.maliyet.genelToplam = this.maliyet.fobMasraf + this.maliyet.uretici + this.maliyet.navlun + this.maliyet.digerTutar + this.maliyet.iscilik +this.maliyet.mekus_masraf ;
       this.$store.dispatch("iscilik_act", this.maliyet.iscilik);

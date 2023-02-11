@@ -128,31 +128,20 @@
           <br />
 
           <span class="p-float-label">
-            <InputNumber
-              id="evrakGideri"
-              v-model="profData.evrakGideri"
-              @change="veriDegisim"
-              class="inputs"
-              mode="currency"
-              currency="USD"
-              locale="jp-JP"
-            />
-            <label for="evrakGideri">Evrak Gideri</label>
+            <span class="tag">
+              Evrak Gideri
+            </span>
+            <input class="input" v-model="profData.evrakGideri" @input="profData.evrakGideri = $event.target.value.replace(',','.')"
+              @change="currencyDegisim('evrakGideri', $event)" />
           </span>
           <br />
 
           <span class="p-float-label">
-            <InputNumber
-              id="komisyon"
-              v-model="profData.komisyon"
-              @blur="komisyonInput"
-              @change="veriDegisim"
-              class="inputs"
-              mode="currency"
-              currency="USD"
-              locale="jp-JP"
-            />
-            <label for="komisyon">Komisyon</label>
+            <span class="tag">
+              Komisyon
+            </span>
+            <input class="input" id="komisyon" v-model="profData.komisyon" @input="profData.komisyon = $event.target.value.replace(',','.')"
+              @change="currencyDegisim('komisyon', $event)" />            
           </span>
           <br />
           <span class="p-float-label">
@@ -191,22 +180,24 @@
             <label for="faturaKesimTur">Fatura</label>
           </span>
           <br />
-
-          <Checkbox
-            :disabled="dis_takipEt"
-            id="takip"
-            v-model="profData.depo"
-            @change="DepoDegisim"
-            :binary="true"
-          />
-          <span style="margin-right: 30px">Atlanta SM</span>
-          <Checkbox
-            :disabled="dis_sigorta"
-            v-model="profData.sigorta_id"
-            @change="SigortaDegisim"
-            :binary="true"
-          />
-          <span>Sigorta</span>
+          <div class="grid">
+            <div class="col">
+              <div class="field-checkbox">
+                <Checkbox :disabled="dis_takipEt" id="takip" v-model="profData.depo" @change="DepoDegisim" :binary="true" />
+                <label for="city3">Atlanta SM</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="field-checkbox">
+                <Checkbox :disabled="dis_sigorta" v-model="profData.sigorta_id" @change="SigortaDegisim" :binary="true" />
+                <label for="city3">Sigorta</label>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          
         </template>
       </Card>
       <br />
@@ -294,7 +285,7 @@
                 Navlun Satış ($)
               </span>
               <input class="input" v-model="profData.navlunSatis"
-                @input="profData.navlunSatis = $event.target.value.replace(',','.')" @change="veriDegisim" />
+                @input="profData.navlunSatis = $event.target.value.replace(',','.')" @change="currencyDegisim('navlunSatis', $event)" />
             </div>
             <div class="column is-3">
               <span class="p-float-label">
@@ -315,7 +306,7 @@
                 Navlun Alış ($)
               </span>
               <input class="input" v-model="profData.navlunAlis"
-                @input="profData.navlunAlis = $event.target.value.replace(',','.')" @change="veriDegisim" />
+                @input="profData.navlunAlis = $event.target.value.replace(',','.')" @change="currencyDegisim('navlunAlis', $event)"/>
             </div>
             <div class="column is-3">
               <span class="p-float-label">
@@ -338,7 +329,7 @@
                 Diğer-1 Satış ($)
               </span>
               <input class="input" v-model="profData.detayTutar_1"
-                @input="profData.detayTutar_1 = $event.target.value.replace(',','.')" @change="veriDegisim" />
+                @input="profData.detayTutar_1 = $event.target.value.replace(',','.')" @change="currencyDegisim('detayTutar_1', $event)" />
 
 
 
@@ -364,7 +355,7 @@
                 Diğer-1 Alış ($)
               </span>
               <input class="input" v-model="profData.detayAlis_1"
-                @input="profData.detayAlis_1 = $event.target.value.replace(',','.')" @change="veriDegisim" />
+                @input="profData.detayAlis_1 = $event.target.value.replace(',','.')" @change="currencyDegisim('detayAlis_1', $event)" />
             </div>
             <div class="column">
               <span class="p-float-label">
@@ -388,7 +379,7 @@
                 Diğer-2 Satış ($)
               </span>
               <input class="input" v-model="profData.detayTutar_2"
-                @input="profData.detayTutar_2 = $event.target.value.replace(',','.')" @change="veriDegisim" />
+                @input="profData.detayTutar_2 = $event.target.value.replace(',','.')" @change="currencyDegisim('detayTutar_2', $event)" />
             </div>
             <div class="column">
               <span class="p-float-label">
@@ -410,7 +401,7 @@
               Diğer-2 Alış ($)
               </span>
               <input class="input" v-model="profData.detayAlis_2"
-                @input="profData.detayAlis_2 = $event.target.value.replace(',','.')" @change="veriDegisim" />
+                @input="profData.detayAlis_2 = $event.target.value.replace(',','.')" @change="currencyDegisim('detayAlis_2', $event)" />
             </div>
             <div class="column">
               <span class="p-float-label">
@@ -434,7 +425,7 @@
                 Diğer-3 Satış ($)
               </span>
               <input class="input" v-model="profData.detayTutar_3"
-                @input="profData.detayTutar_3 = $event.target.value.replace(',','.')"  @change="veriDegisim"/>
+                @input="profData.detayTutar_3 = $event.target.value.replace(',','.')" @change="currencyDegisim('detayTutar_3', $event)"/>
             </div>
             <div class="column">
               <span class="p-float-label">
@@ -456,7 +447,7 @@
                 Diğer-3 Alış ($)
               </span>
               <input class="input" v-model="profData.detayAlis_3"
-                @input="profData.detayAlis_3 = $event.target.value.replace(',','.')" @change="veriDegisim" />
+                @input="profData.detayAlis_3 = $event.target.value.replace(',','.')" @change="currencyDegisim('detayAlis_3', $event)" />
             </div>
             <div class="column">
               <span class="p-float-label">
@@ -480,7 +471,7 @@
                 Mekus Masrafı ($)
               </span>
               <input class="input" v-model="profData.detayTutar_4"
-                @input="profData.detayTutar_4 =$event.target.value.replace(',','.')" @change="veriDegisim" />
+                @input="profData.detayTutar_4 =$event.target.value.replace(',','.')" @change="currencyDegisim('detayTutar_4', $event)" />
             </div>
             
 
@@ -491,7 +482,7 @@
                 Sigorta Satış ($)
               </span>
               <input class="input" v-model="profData.sigorta_tutar_satis"
-                @input="profData.sigorta_tutar_satis = $event.target.value.replace(',','.')" @change="veriDegisim"/>
+                @input="profData.sigorta_tutar_satis = $event.target.value.replace(',','.')" @change="currencyDegisim('sigorta_tutar_satis', $event)" />
 
             </div>
             <div class="column is-6">
@@ -499,7 +490,7 @@
                 <span class="tag">
                   Sigorta Alış ($)
                 </span>
-                <input  class="input" v-model="profData.sigorta_tutar" @input="profData.sigorta_tutar = $event.target.value.replace(',','.')"/>
+                <input  class="input" v-model="profData.sigorta_tutar" @input="profData.sigorta_tutar = $event.target.value.replace(',','.')" @change="currencyDegisim('sigorta_tutar', $event)"/>
                 
             </div>
           </div>
@@ -643,9 +634,7 @@ export default {
         );
         this.ulke = this.ulkeList.find((x) => x.id == this.profData.ulkeId);
     },
-    komisyonInput(event) {
-      console.log("komisyonInput", event);
-    },
+
     scaleValueFunc() {
       this.scaleValue = "transform:scale(0.5)";
     },
@@ -1085,10 +1074,13 @@ export default {
 
     },
     currencyDegisim(property, _value) {
-      let value = parseFloat(_value.value);
+
+      let value = parseFloat(_value.target.value);
       if (property == "navlunSatis") {
         this.profData.navlunSatis = value;
         this.dis_urun_giris = true;
+        this.emitter.emit("navlunSatis", true);
+
       }
       if (property == "navlunAlis") {
         this.profData.navlunAlis = value;
@@ -1098,8 +1090,15 @@ export default {
       if (property == "detayTutar_2") this.profData.detayTutar_2 = value;
       if (property == "detayAlis_2") this.profData.detayAlis_2 = value;
       if (property == "detayTutar_3") this.profData.detayTutar_3 = value;
-      if (property == "detayTutar_4") this.profData.detayTutar_4 = value;
+      if (property == "detayTutar_4") {
+        this.profData.detayTutar_4 = value;
+        this.profData.mekus_masraf = value;
+      }
       if (property == "detayAlis_3") this.profData.detayAlis_3 = value;
+      if (property == "komisyon") this.profData.komisyon = value;
+      if (property == "evrakGideri") this.profData.evrakGideri = value;
+      if (property == "sigorta_tutar_satis") this.profData.sigorta_tutar_satis = value;
+      if (property == "sigorta_tutar") this.profData.sigorta_tutar = value;
 
       this.kayitKontrol();
       this.$emit("navlunDigerTutarDegisim");
