@@ -248,6 +248,7 @@
   </div>
 </template>
 <script>
+import socket from '@/service/SocketService'
 import service from "../../../service/SeleksiyonService";
 import siparisService from "../../../service/SiparisService";
 import LocalService from "../../../service/LocalService";
@@ -553,7 +554,6 @@ export default {
             service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
               if (veri.Status) {
                 alert("Başarılı şekilde yuklendi.");
-
                 this.IcSiparisDosyaGonder();
               } else {
                 alert("Ops! Tekrar Deneyiniz. Yüklenemedi.");
@@ -598,11 +598,12 @@ export default {
               service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
                 if (veri.Status) {
                   this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
+                socket.siparis.emit('isf_form_load_event')
 
                   this.IcSiparisDosyaGonder();
                 } else {
                   this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'ISF kaydedilemedi, Lütfen tekrar deneyiniz.', life: 3000 });
-
+                  
                 }
               });
             });

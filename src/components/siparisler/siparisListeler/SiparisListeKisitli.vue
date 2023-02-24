@@ -317,6 +317,14 @@
             {{ formatDecimal(siparisToplamiAdet) }}
           </template>
         </Column>
+        <Column field="mt2" header="M2">
+          <template #body="slotProps">
+              {{ slotProps.data.mt2 }}
+            </template>
+          <template #footer>
+            {{ formatDecimal(siparisToplamiM2) }}
+          </template>
+        </Column>
         <Column field="birim" header="B" headerStyle="width: 5%" bodyStyle="">
           <template #body="slotProps">
             <span class="p-column-title">B</span>
@@ -436,7 +444,8 @@ export default {
       "tonToplami",
       "getMobilWidth",
       "datatableLoading",
-      "siparisToplamiAdet"
+      "siparisToplamiAdet",
+      "siparisToplamiM2"
     ])
     
     
@@ -539,15 +548,18 @@ export default {
       let satisToplami = 0;
       let tonToplami = 0;
       let siparisToplamiAdet = 0;
+      let siparisToplamiM2 = 0;
+
       for (let key in liste) {
         const data = liste[key];
-
+        console.log(data)
         kasaToplami += data.kasa;
         siparisToplami += data.siparisMiktari;
         uretimToplami += data.uretimMiktari;
         satisToplami += data.satisToplam;
         tonToplami += data.ton;
         siparisToplamiAdet += data.adet;
+        siparisToplamiM2 += data.mt2
       }
 
       const data = {
@@ -556,7 +568,8 @@ export default {
         uretimToplami: uretimToplami,
         satisToplami: satisToplami,
         tonToplami: tonToplami,
-        siparisToplamiAdet: siparisToplamiAdet
+        siparisToplamiAdet: siparisToplamiAdet,
+        siparisToplamiM2: siparisToplamiM2
       };
 
       this.$store.dispatch("loadToplamGuncelleAct", data);

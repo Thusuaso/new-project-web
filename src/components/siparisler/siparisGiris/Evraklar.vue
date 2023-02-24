@@ -67,6 +67,7 @@
 <script>
 import service from "../../../service/OperasyonService";
 import { mapGetters } from "vuex";
+import socket from '@/service/SocketService'
 export default {
   computed: {
     ...mapGetters(["yuklemeList"]),
@@ -79,8 +80,16 @@ export default {
 
   props: ["siparisNo"],
   created() {
+
+    
+
+    this.$store.dispatch('fullscreenLoadingAct', true)
+
     service.getEvrakFaturaList(this.siparisNo).then((data) => {
       this.$store.dispatch("siparis_evrak_list_load", data.fatura_listesi);
+    this.$store.dispatch('fullscreenLoadingAct', false)
+
+
     });
   },
   methods: {
@@ -134,6 +143,18 @@ export default {
       window.open(this.yuklemeList[id].Draft, "_blank");
     },
   },
+  mounted() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
+    socket.siparis.on('isf_form_load_emit', () => {
+      service.getEvrakFaturaList(this.siparisNo).then((data) => {
+        this.$store.dispatch("siparis_evrak_list_load", data.fatura_listesi);
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
+
+      });
+    })
+  }
 };
 </script>
 <style scoped>
