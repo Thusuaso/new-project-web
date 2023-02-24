@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="columns">
     <div class="column is-6">
@@ -1107,6 +1108,7 @@ export default {
       this.form_btn_reset();
     },
     btn_ekle_click() {
+      console.log(this.siparis)
       this.submitted = true;
       if (this.v$.$invalid) {
         this.$toast.add({
@@ -1126,7 +1128,6 @@ export default {
           ) {
             this.urunIslemleri();
             this.siparisUrunler.push({ ...this.siparis });
-            this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
             if (!this.yeniSiparis) this.yeni_urun_islem();
             this.dataSatirTopla(this.siparisUrunler);
             this.form_btn_reset();
@@ -1143,7 +1144,7 @@ export default {
         } else {
           this.urunIslemleri();
           this.siparisUrunler.push({ ...this.siparis });
-          // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+          this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
           if (!this.yeniSiparis) this.yeni_urun_islem();
           this.dataSatirTopla(this.siparisUrunler);
           this.form_btn_reset();
@@ -1181,6 +1182,7 @@ export default {
       let index = this.indexBul(this.siparis.id, this.siparisUrunler);
       this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
       if (!this.yeniSiparis) this.silinen_urun_islem();
+      // eslint-disable-next-line vue/no-mutating-props
       this.siparisUrunler.splice(index, 1);
       this.dataSatirTopla(this.siparisUrunler);
       this.form_btn_reset();
@@ -1193,7 +1195,7 @@ export default {
       this.$emit("siparisUrunDegisim");
     },
     isfDelete(tedarikciId, siparisNo) {
-      if (tedarikciId != "" && siparisNo != "") {
+      if (tedarikciId != "" && siparisNo != "" || tedarikciId != null && siparisNo != null) {
         tedarikciService
           .getDeleteFormControl(tedarikciId, siparisNo)
           .then((status) => {

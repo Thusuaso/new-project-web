@@ -5,7 +5,7 @@
         <DataTable
           :value="yuklemeList"
           class="p-datatable-customers"
-          :loading="$store.getters.datatableLoading"
+          :loading="ted_dataTable_loading"
         >
           <Column
             field="faturano"
@@ -75,6 +75,7 @@ export default {
   data() {
     return {
       select_row: null,
+      ted_dataTable_loading:false
     };
   },
 
@@ -83,11 +84,12 @@ export default {
 
     
 
-    this.$store.dispatch('fullscreenLoadingAct', true)
+    this.ted_dataTable_loading = true
 
     service.getEvrakFaturaList(this.siparisNo).then((data) => {
       this.$store.dispatch("siparis_evrak_list_load", data.fatura_listesi);
-    this.$store.dispatch('fullscreenLoadingAct', false)
+        this.ted_dataTable_loading = false
+
 
 
     });
@@ -97,8 +99,9 @@ export default {
       if (confirm("Gerçekten silmek istiyor musunuz?")) {
         service.setDeleteFaturaEvrak(event, this.siparisNo).then((data) => {
           if (data) {
-            this.$store.dispatch("datatableLoadingBeginAct");
+            this.$store.dispatch('fullscreenLoadingAct',true)
             service.getEvrakFaturaList(this.siparisNo).then((data) => {
+              this.$store.dispatch('fullscreenLoadingAct', false)
               this.$toast.add({
                 severity: "success",
                 summary: "Evrak Silme",
@@ -110,7 +113,6 @@ export default {
                 data.fatura_listesi
               );
 
-              this.$store.dispatch("datatableLoadingEndAct");
             });
           } else {
             this.$toast.add({
@@ -144,12 +146,15 @@ export default {
     },
   },
   mounted() {
-        this.$store.dispatch('fullscreenLoadingAct', true)
+            
+
 
     socket.siparis.on('isf_form_load_emit', () => {
+      this.ted_dataTable_loading = true
       service.getEvrakFaturaList(this.siparisNo).then((data) => {
         this.$store.dispatch("siparis_evrak_list_load", data.fatura_listesi);
-        this.$store.dispatch('fullscreenLoadingAct', false)
+                this.ted_dataTable_loading = false
+
 
 
       });

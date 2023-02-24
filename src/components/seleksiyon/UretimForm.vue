@@ -647,65 +647,124 @@ export default {
       if (event) this.detail.sqm_miktar = event.replace(",", ".");
     },
     m2_hesaplama() {
-
-
-
-
-      if (this.urunbirim == "M2") {
-        if (this.en == "ANT" && this.boy == "PAT") {
-          this.detail.miktar = this.detail.kutuadet * 0.74338688;
-          this.detail.miktar = this.formatdecimal(this.detail.miktar);
-          this.detail.sqm_miktar = this.detail.miktar;
-        } else if (this.en == "20,3" && this.boy == "SET") {
-          this.detail.miktar = this.detail.kutuadet * 0.494914;
-          this.detail.miktar = this.formatdecimal(this.detail.miktar);
-          this.detail.sqm_miktar = this.detail.miktar;
-        } else if (
-          this.boy == "FREE" ||
-          this.boy == "SLAB" ||
-          this.boy == "VAR" ||
-          this.boy == "Free" ||
-          this.boy == "Various" ||
-          this.boy == "Random"
-        ) {
-          this.detail.miktar = 0;
-          this.detail.sqm_miktar = this.detail.miktar;
-        } else {
-          this.en = this.en.replace(",", ".");
-          this.boy = this.boy.replace(",", ".");
-          this.detail.miktar = this.formatdecimal(
-            (this.detail.adet * this.en * this.boy) / 10000
-          );
-          this.detail.sqm_miktar = this.detail.miktar;
+      if (this.kayitstatu) {
+          if (this.urunbirim == "M2") {
+          if (this.en == "ANT" && this.boy == "PAT") {
+            this.detail.miktar = this.detail.kutuadet * 0.74338688;
+            this.detail.miktar = this.formatdecimal(this.detail.miktar);
+            this.detail.sqm_miktar = this.detail.miktar;
+          } else if (this.en == "20,3" && this.boy == "SET") {
+            this.detail.miktar = this.detail.kutuadet * 0.494914;
+            this.detail.miktar = this.formatdecimal(this.detail.miktar);
+            this.detail.sqm_miktar = this.detail.miktar;
+          } else if (
+            this.boy == "FREE" ||
+            this.boy == "SLAB" ||
+            this.boy == "VAR" ||
+            this.boy == "Free" ||
+            this.boy == "Various" ||
+            this.boy == "Random"
+          ) {
+            this.detail.miktar = 0;
+            this.detail.sqm_miktar = this.detail.miktar;
+          } else {
+            this.en = this.en.replace(",", ".");
+            this.boy = this.boy.replace(",", ".");
+            this.detail.miktar = this.formatdecimal(
+              (this.detail.adet * this.en * this.boy) / 10000
+            );
+            this.detail.sqm_miktar = this.detail.miktar;
+          }
+        } else if (this.urunbirim == "Adet") {
+          this.detail.miktar = this.detail.adet;
+          if (this.en == "ANT" && this.boy == "PAT") {
+            this.detail.sqm_miktar = this.detail.kutuadet * 0.74338688;
+            this.detail.sqm_miktar = this.formatdecimal(this.detail.sqm_miktar);
+            this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
+          } else if (this.en == "20,3" && this.boy == "SET") {
+            this.detail.sqm_miktar = this.detail.kutuadet * 0.494914;
+            this.detail.sqm_miktar = this.formatdecimal(this.detail.sqm_miktar);
+            this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
+          } else if (
+            this.boy == "FREE" ||
+            this.boy == "SLAB" ||
+            this.boy == "VAR" ||
+            this.boy == "Free" ||
+            this.boy == "Various" ||
+            this.boy == "Random"
+          ) {
+            this.detail.sqm_miktar = 0;
+            this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
+          } else {
+            this.en = this.en.replace(",", ".");
+            this.boy = this.boy.replace(",", ".");
+            this.detail.sqm_miktar = this.formatdecimal(
+              (this.detail.adet * this.en * this.boy) / 10000
+            );
+          }
         }
-      } else if (this.urunbirim == "Adet") {
-        this.detail.miktar = this.detail.adet;
-        if (this.en == "ANT" && this.boy == "PAT") {
-          this.detail.sqm_miktar = this.detail.kutuadet * 0.74338688;
-          this.detail.sqm_miktar = this.formatdecimal(this.detail.sqm_miktar);
-          this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
-        } else if (this.en == "20,3" && this.boy == "SET") {
-          this.detail.sqm_miktar = this.detail.kutuadet * 0.494914;
-          this.detail.sqm_miktar = this.formatdecimal(this.detail.sqm_miktar);
-          this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
-        } else if (
-          this.boy == "FREE" ||
-          this.boy == "SLAB" ||
-          this.boy == "VAR" ||
-          this.boy == "Free" ||
-          this.boy == "Various" ||
-          this.boy == "Random"
-        ) {
-          this.detail.sqm_miktar = 0;
-          this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
-        } else {
-          this.en = this.en.replace(",", ".");
-          this.boy = this.boy.replace(",", ".");
-          this.detail.sqm_miktar = this.formatdecimal(
-            (this.detail.adet * this.en * this.boy) / 10000
-          );
+      } else {
+        if (this.detail.urunbirimid == 1) {
+          const urunKart = this.getUrunKartMenuList.find(x => x.id == this.detail.urunkartid)
+          console.log("urunKart ilk",urunKart)
+          if (urunKart.en == "ANT" && urunKart.boy == "PAT") {
+            this.detail.miktar = this.detail.kutuadet * 0.74338688;
+            this.detail.miktar = this.formatdecimal(this.detail.miktar);
+            this.detail.sqm_miktar = this.detail.miktar;
+          } else if (urunKart.en == "20,3" && urunKart.boy == "SET") {
+            this.detail.miktar = this.detail.kutuadet * 0.494914;
+            this.detail.miktar = this.formatdecimal(this.detail.miktar);
+            this.detail.sqm_miktar = this.detail.miktar;
+          } else if (
+            urunKart.boy == "FREE" ||
+            urunKart.boy == "SLAB" ||
+            urunKart.boy == "VAR" ||
+            urunKart.boy == "Free" ||
+            urunKart.boy == "Various" ||
+            urunKart.boy == "Random"
+          ) {
+            this.detail.miktar = 0;
+            this.detail.sqm_miktar = this.detail.miktar;
+          } else {
+            const en = parseFloat(urunKart.en.replace(",", "."));
+            const boy = parseFloat(urunKart.boy.replace(",", "."));
+            this.detail.miktar = this.formatdecimal(
+              (this.detail.adet * en * boy) / 10000
+            );
+            this.detail.sqm_miktar = this.detail.miktar;
+          }
+        } else if (this.detail.urunbirimid == 2) {
+          const urunKart = this.getUrunKartMenuList.find(x => x.id == this.detail.urunkartid)
+
+          this.detail.miktar = this.detail.adet;
+          if (urunKart.en == "ANT" && urunKart.boy == "PAT") {
+            this.detail.sqm_miktar = this.detail.kutuadet * 0.74338688;
+            this.detail.sqm_miktar = this.formatdecimal(this.detail.sqm_miktar);
+            this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
+          } else if (urunKart.en == "20,3" && urunKart.boy == "SET") {
+            this.detail.sqm_miktar = this.detail.kutuadet * 0.494914;
+            this.detail.sqm_miktar = this.formatdecimal(this.detail.sqm_miktar);
+            this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
+          } else if (
+            urunKart.boy == "FREE" ||
+            urunKart.boy == "SLAB" ||
+            urunKart.boy == "VAR" ||
+            urunKart.boy == "Free" ||
+            urunKart.boy == "Various" ||
+            urunKart.boy == "Random"
+          ) {
+            this.detail.sqm_miktar = 0;
+            this.detail.miktar = this.detail.kutuadet * this.detail.kutuiciadet;
+          } else {
+            const en = urunKart.en.replace(",", ".");
+            const boy = urunKart.boy.replace(",", ".");
+            this.detail.sqm_miktar = this.formatdecimal(
+              (this.detail.adet * en * boy) / 10000
+            );
+          }
         }
       }
+      
     },
     formatdecimal(value) {
       return (value / 1).toFixed(2).replace(",", ".");

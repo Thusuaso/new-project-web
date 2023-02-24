@@ -509,7 +509,7 @@ import CustomInputFile from "../../../components/shared/CustomInputFile";
 import fileService from "../../../service/FileService";
 import { required } from "@vuelidate/validators";
 import { mapGetters } from "vuex";
-
+import socket from '@/service/SocketService'
 export default {
   computed: {
     ...mapGetters([
@@ -680,6 +680,7 @@ export default {
           Opservice.setEvrakFaturaKayit(this.evrak).then((veri) => {
             if (veri.status) {
               alert("Evrak başarılı şekilde yüklendi!");
+              socket.siparis.emit('isf_form_load_event')
             } else {
               alert("Ops! Lütfen Tekrar Deneyiniz!");
             }
