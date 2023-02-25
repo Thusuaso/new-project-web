@@ -75,6 +75,13 @@
         <label for="teslimTur">Teslim Tür</label>
       </span>
     </div>
+    <div class="column">
+      <div class="field-checkbox">
+              <Checkbox inputId="city1" name="city" v-model="is_two_isf_form" :binary="true" />
+
+              <label for="city1">ISF 2</label>
+          </div>
+    </div>
   </div>
   <div class="columns">
     <div class="column">
@@ -268,6 +275,7 @@ export default {
   },
   data() {
     return {
+      is_two_isf_form:false,
       isISFForm:true,
       file: null,
       urunList: null,
@@ -583,35 +591,67 @@ export default {
           return;
         }
         this.urunList[0].kullaniciAdi = this.$store.getters.__getUsername;
-        const evrak =
-          this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
-        service.getIsfControl(evrak).then(data => {
-          if (data) {
-            fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
-              console.log(data);
-              const bilgi = {
-                evrak: this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf",
-                siparisno: this.siparisNo,
-                kullaniciAdi: this.$store.getters.__getUsername,
-              };
-              this.bilgi = bilgi;
-              service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
-                if (veri.Status) {
-                  this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
-                socket.siparis.emit('isf_form_load_event')
+        if (this.is_two_isf_form == false) {
+          const evrak =
+            this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
+            service.getIsfControl(evrak).then(data => {
+            if (data) {
+              fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
+                console.log(data);
+                const bilgi = {
+                  evrak: this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf",
+                  siparisno: this.siparisNo,
+                  kullaniciAdi: this.$store.getters.__getUsername,
+                };
+                this.bilgi = bilgi;
+                service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
+                  if (veri.Status) {
+                    this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
+                    socket.siparis.emit('isf_form_load_event')
 
-                  this.IcSiparisDosyaGonder();
-                } else {
-                  this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'ISF kaydedilemedi, Lütfen tekrar deneyiniz.', life: 3000 });
-                  
-                }
+                    this.IcSiparisDosyaGonder();
+                  } else {
+                    this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'ISF kaydedilemedi, Lütfen tekrar deneyiniz.', life: 3000 });
+
+                  }
+                });
               });
-            });
-          } else {
-            this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'Zaten kayıtlı bir ISF belgesi', life: 3000 });
-          }
-        })
-        
+            } else {
+              this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'Zaten kayıtlı bir ISF belgesi', life: 3000 });
+            }
+          })
+
+        } else {
+          const evrak =
+            this.tedarikci.tedarikciadi + "-" + this.siparisNo + " -2"  +".pdf";
+          service.getIsfControl(evrak).then(data => {
+            if (data) {
+              fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
+                console.log(data);
+                const bilgi = {
+                  evrak: this.tedarikci.tedarikciadi + "-" + this.siparisNo + " -2" + ".pdf",
+                  siparisno: this.siparisNo,
+                  kullaniciAdi: this.$store.getters.__getUsername,
+                };
+                this.bilgi = bilgi;
+                service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
+                  if (veri.Status) {
+                    this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
+                    socket.siparis.emit('isf_form_load_event')
+
+                    this.IcSiparisDosyaGonder();
+                  } else {
+                    this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'ISF kaydedilemedi, Lütfen tekrar deneyiniz.', life: 3000 });
+
+                  }
+                });
+              });
+            } else {
+              this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'Zaten kayıtlı bir ISF belgesi', life: 3000 });
+            }
+          })
+
+        }
       }
     },
     formatDecimal(value) {

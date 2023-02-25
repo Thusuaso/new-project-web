@@ -128,6 +128,19 @@
             <Button type="button" @click="etiketDowload()" icon="fas fa-download" label="Indir" />
           </div>  
         </div>
+        <br/>
+        <div class="grid" style="text-align:center;">
+          <div class="col">
+          
+          <Button type="button" label="Efe Etiketleri" class="p-button-danger" @click="$refs.op.toggle($event)" />
+
+          <OverlayPanel ref="op">
+            <Dropdown v-model="selectedEfeEtiket" :options="efeEtiketleri" optionLabel="etiketAdi" placeholder="Etiket Seç" @change="downloadClick"/>
+            
+            <a :href="etiketLinki" download class="button" v-if="!is_efe_etiket_form">İndir</a>
+          </OverlayPanel>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -274,6 +287,17 @@ export default {
   },
   data() {
     return {
+      is_efe_etiket_form:true,
+      etiketLinki:"",
+      selectedEfeEtiket:null,
+      efeEtiketleri:[
+        {"etiketAdi":'12x24',"etiketLink":'https://trackit-dosyalama.fra1.digitaloceanspaces.com/efe%2012x24.docx'},
+        {"etiketAdi":'16x16',"etiketLink":'https://trackit-dosyalama.fra1.digitaloceanspaces.com/efe%2016x16.docx'},
+        {"etiketAdi":'16x24',"etiketLink":'https://trackit-dosyalama.fra1.digitaloceanspaces.com/efe%2016x24.docx'},
+        {"etiketAdi":'18x18',"etiketLink":'https://trackit-dosyalama.fra1.digitaloceanspaces.com/efe%2018x18.docx'},
+        { "etiketAdi": 'Pattern Set', "etiketLink": 'https://trackit-dosyalama.fra1.digitaloceanspaces.com/efe%20set.docx' }
+
+      ],
       crateAllDisabled:true,
       productList:[],
       selectedProduct:null,
@@ -426,6 +450,15 @@ export default {
     });
   },
   methods: {
+    downloadClick() {
+      this.is_efe_etiket_form = false
+      this.etiketLinki = this.selectedEfeEtiket.etiketLink
+    },
+    download_efe_etiketi() {
+      
+      
+      
+    },
     // is_selected_product() {
     //   if (this.selectedProduct && this.selectedPo && this.selectedProducts) {
     //     this.crateAllDisabled = false
@@ -659,6 +692,26 @@ export default {
 </script>
 
 <style scoped>
+.button{
+  width:100px;
+  height:40px;
+  border:1px solid gray;
+  background-color:white;
+  color:black;
+  margin-left:10px;
+  text-align:center;
+  text-decoration: none;
+  transition: all 0.5s 0s ease-in;
+
+}
+.button:hover{
+border:1px solid black;
+background-color:black;
+color:white;
+}
+.button:active{
+  border:1px solid greenyellow;
+}
 .yeniButton {
   background-color: #61b8a3;
   color: #fff;
