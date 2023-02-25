@@ -11,7 +11,7 @@
         <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim" value="Mek-Moz" />Mek-Moz
       </div>
       <div class="col">
-        <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim" value="Mek-Moz" />Mek-Moz
+        <RadioButton v-model="FirmaAdi" name="name" @change="statuSecim" value="Hepsi" />Hepsi
       </div>
     </div>
     <div class="grid">
@@ -171,6 +171,7 @@ import service from "../service/RaporService";
 import StokAyrintiListesi from "../components/stokraporu/StokAyrintiListesi";
 import { FilterMatchMode } from "primevue/api";
 import socket from "@/service/SocketService"
+import { formItemValidateStates } from 'element-plus';
 export default {
   components: {
     StokAyrintiListesi,
@@ -395,33 +396,48 @@ export default {
 
         if (this.FirmaAdi == "Mekmer") {
           const tedarikci_id = 1;
+          this.$store.dispatch('fullscreenLoadingAct',true)
           service.StokRaporAnaListFilter(tedarikci_id).then((data) => {
             this.uretimKasalar = data;
             this.kasa_toplamı(data);
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           });
           this.kasa_toplamı(result);
         }
         if (this.FirmaAdi == "Mek-Moz") {
           const tedarikci_id = 123;
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
           service.StokRaporAnaListFilter(tedarikci_id).then((data) => {
             this.uretimKasalar = data;
             this.kasa_toplamı(data);
             this.m2_toplami(data);
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           });
           this.kasa_toplamı(result);
         }
         if (this.FirmaAdi == "Hepsi") {
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
           service.StokRaporAnaList().then((data) => {
             this.uretimKasalar = data;
             this.kasa_toplamı(data);
             this.m2_toplami(data);
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           });
         }
         if (this.FirmaAdi == "OnlyMekmer") {
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
           service.StokRaporAnaListOnlyMekmer().then((data) => {
             this.uretimKasalar = data;
             this.kasa_toplamı(data);
             this.m2_toplami(data);
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
           });
         }
         if (this.FirmaAdi == "Dis") {

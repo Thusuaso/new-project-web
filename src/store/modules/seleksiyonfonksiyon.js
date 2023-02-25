@@ -7,7 +7,8 @@ const state = {
     slk_dis_sil_btn : true,
     slk_enb_mekmar: true,
     slk_enb_dis: false,
-    slk_enb_mekmer_dis:false,
+    slk_enb_mekmer_dis: false,
+    slk_enb_bulunamadi:false,
     slk_form : false,
    
 }
@@ -55,6 +56,9 @@ const actions = {
      seleksiyonFormKapatActions({commit}){
 
         commit('seleksiyonFormKapatMut')
+    },
+    seleksiyonBulunamadiUretimSecActions({ commit }) {
+         commit('seleksiyonBulunamadiUretimSecMut')
      }
 }
 
@@ -119,16 +123,27 @@ const mutations = {
         state.slk_enb_mekmar = true;
         state.slk_enb_dis = false;
         state.slk_enb_mekmer_dis = false;
+        state.slk_enb_bulunamadi = false;
     },
     seleksiyonDisUretimSecMut(state){
         state.slk_enb_dis = true
         state.slk_enb_mekmar = false;
         state.slk_enb_mekmer_dis = false;
+        state.slk_enb_bulunamadi = false;
+
     },
     seleksiyonMekmerDisUretimSecMut(state) {
         state.slk_enb_dis = false
         state.slk_enb_mekmar = false;
         state.slk_enb_mekmer_dis = true;
+        state.slk_enb_bulunamadi = false;
+
+    },
+    seleksiyonBulunamadiUretimSecMut(state) {
+        state.slk_enb_dis = false
+        state.slk_enb_mekmar = false;
+        state.slk_enb_mekmer_dis = false;
+        state.slk_enb_bulunamadi = true;
     },
     seleksiyonFormAcMut(state){
 
@@ -176,6 +191,9 @@ const getters = {
     slk_form(state){
 
         return state.slk_form
+    },
+    slk_enb_bulunamadi(state) {
+        return state.slk_enb_bulunamadi
     }
 }
 

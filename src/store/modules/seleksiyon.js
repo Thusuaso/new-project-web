@@ -123,7 +123,7 @@ const getters = {
   },
   seleksiyon_mekmar_uretimlist(state) {
     return state.seleksiyon_uretimlist
-      .filter((x) => (x.tedarikci_id == 1) | (x.tedarikci_id == 123))
+      .filter((x) => ((x.tedarikci_id == 1) || (x.tedarikci_id == 123)) && x.bulunamayan != 1 )
       .sort((a, b) => {
         return a.kasano - b.kasano;
       });
@@ -132,10 +132,10 @@ const getters = {
     const data = state.seleksiyon_uretimlist.filter(
       (x) =>
         !(
-          (x.tedarikci_id == 1) |
-          (x.tedarikci_id == 123) |
-          (x.disarda == false)
-        )
+          (x.tedarikci_id == 1) ||
+          (x.tedarikci_id == 123)
+
+        ) && (x.disarda == true) && x.bulunamayan != 1
     );
     const slk_dis_kasa_top = data.length;
     const values = {
@@ -147,8 +147,11 @@ const getters = {
   seleksiyon_mekmer_dis_uretimlist(state) {
     return state.seleksiyon_uretimlist.filter(
       (x) =>
-        !((x.tedarikci_id == 1) | (x.tedarikci_id == 123) || x.disarda == true)
+        !((x.tedarikci_id == 1) | (x.tedarikci_id == 123) || x.disarda == true) && x.bulunamayan != 1
     );
+  },
+  seleksiyon_mekmer_bulunamayan_uretimlist(state) {
+    return state.seleksiyon_uretimlist.filter(x=>x.bulunamayan == 1)
   },
   seleksiyon_dis_top_kasa(state) {
     return state.seleksiyon_dis_top_kasa;

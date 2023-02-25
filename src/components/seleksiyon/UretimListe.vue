@@ -609,6 +609,205 @@
             </Column>
           </DataTable>
         </div>
+        <div class="column is-12 seleksiyon-list" v-else-if="slk_enb_bulunamadi">
+            <DataTable :value="seleksiyon_mekmer_bulunamayan_uretimlist" v-model:filters="filters" filterDisplay="row" :paginator="true"
+              :rows="20" dataKey="id" selectionMode="single" :selection="select_uretim" ref="seleksiyon_data"
+              @row-select="uretimSec($event)" :loading="datatableLoading" @filter="isFilters" class="p-datatable-sm">
+              <Column field="kasa_no" header="No" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  <div :class="slotProps.data.disarda == true ? 'disarda_css' : ''">
+                    {{ slotProps.data.kasa_no }}
+                  </div>
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+        
+              <Column field="tarih" header="Tarih" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.tarih }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="kategori" header="Kategori" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.kategori }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="ocak" header="Ocak" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.ocak }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="tedarikci" header="Kimden" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.tedarikci }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="urunadi" header="Ürün" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  <div v-if="slotProps.data.urunadi.includes('Vein Cut')" style="color: red">
+                    {{ slotProps.data.urunadi }}
+                  </div>
+                  <div v-else>
+                    {{ slotProps.data.urunadi }}
+                  </div>
+                </template>
+                <template #footer>
+                  {{ adet_kasa }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.kenarislem }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="en" header="E" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.en }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="boy" header="B" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.boy }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="kenar" header="K" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.kenar }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="kasaadet" header="K.Adet" bodyStyle="text-align:left">
+                <template #body="slotProps">
+                  {{ slotProps.data.kasaadet }}
+                </template>
+              </Column>
+              <Column field="kutuadet" header="Kutu" bodyStyle="text-align:left">
+                <template #body="slotProps">
+                  {{ slotProps.data.kutuadet }}
+                </template>
+              </Column>
+              <Column field="m2" header="M2" bodyStyle="text-align:left">
+                <template #body="slotProps">
+                  {{ slotProps.data.m2 }}
+                </template>
+                <template #footer>
+                  {{ formatDecimal(toplam_m2) }}
+                </template>
+              </Column>
+              <!-- <Column
+                    field="adet"
+                    header="Adet"
+                    bodyStyle="text-align:center"
+                    headerStyle="width:40px;"
+                  >
+                    <template #body="slotProps">
+                      {{ slotProps.data.adet }}
+                    </template>
+                    <template #footer>
+                      {{ formatDecimal(toplam_adet) }}
+                    </template>
+                  </Column>
+                  <Column
+                    field="mt"
+                    header="Mt"
+                    bodyStyle="text-align:center"
+                    headerStyle="width:40px;"
+                  >
+                    <template #body="slotProps">
+                      {{ slotProps.data.mt }}
+                    </template>
+                    <template #footer>
+                      {{ formatDecimal(toplam_mt) }}
+                    </template>
+                  </Column>
+                  <Column
+                    field="ton"
+                    header="Ton"
+                    bodyStyle="text-align:center"
+                    headerStyle="width:40px;"
+                  >
+                    <template #body="slotProps">
+                      {{ slotProps.data.ton }}
+                    </template>
+                    <template #footer>
+                      {{ formatDecimal(toplam_ton) }}
+                    </template>
+                  </Column> -->
+              <Column field="kutu" header="Kutu" bodyStyle="text-align:left">
+                <template #body="slotProps">
+                  <div v-if="slotProps.data.kutu == true" style="color:black">
+                    ✓
+                  </div>
+                  <div v-else style="color:black">X</div>
+                </template>
+              </Column>
+              <Column field="bagli" header="Baglı" bodyStyle="text-align:left">
+                <template #body="slotProps">
+                  <div v-if="slotProps.data.bagli == true" style="color:black">
+                    ✓
+                  </div>
+                  <div v-else style="color:black">X</div>
+                </template>
+              </Column>
+              <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.siparisaciklama }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+              <Column field="aciklama" header="Not" bodyStyle="text-align:left" :showFilterMenu="false">
+                <template #body="slotProps">
+                  {{ slotProps.data.aciklama }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by CrateNo" />
+                </template>
+              </Column>
+            </DataTable>
+
+        </div>
       </div>
     </div>
 
@@ -858,9 +1057,11 @@ export default {
       "seleksiyon_mekmar_uretimlist",
       "seleksiyon_dis_uretimlist",
       "seleksiyon_mekmer_dis_uretimlist",
+      "seleksiyon_mekmer_bulunamayan_uretimlist",
       "slk_enb_mekmar",
       "slk_enb_dis",
       "slk_enb_mekmer_dis",
+      "slk_enb_bulunamadi",
       "seleksiyon_dis_top_kasa",
       "datatableLoading",
     ]),

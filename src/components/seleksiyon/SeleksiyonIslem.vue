@@ -64,11 +64,17 @@
               </div>
 
             </div>
+            
             <div class="grid">
               <div class="col">
-                  <Button label="Toplu Kasa" @click="getAllCrateDialog" style="width: 100px" />
+                <Button @click="btn_bulunamadi_click" :disabled="slk_enb_bulunamadi" label="Bulunamadı" class="p-button-warning p-button-sm" style="width: 100px"/>
               </div>
             </div>
+            <div class="grid">
+                <div class="col">
+                    <Button label="Toplu Kasa" @click="getAllCrateDialog" style="width: 100px" />
+                </div>
+              </div>
           </div>
           <div class="col">
             <div class="grid">
@@ -255,6 +261,7 @@ export default {
       "slk_enb_mekmar",
       "slk_enb_dis",
       "slk_enb_mekmer_dis",
+      "slk_enb_bulunamadi",
       "seleksiyon_uretimozetlist",
       "seleksiyon_mekmar_uretimlist",
       "seleksiyon_dis_uretimlist",
@@ -594,6 +601,9 @@ export default {
     },
     btn_mekmer_dis_click() {
       this.$store.dispatch("seleksiyonMekmerDisUretimSecActions");
+    },
+    btn_bulunamadi_click() {
+      this.$store.dispatch("seleksiyonBulunamadiUretimSecActions")
     },
     ozetlist_topla() {
       this.toplam_gun = 0;

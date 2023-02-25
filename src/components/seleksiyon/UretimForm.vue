@@ -575,6 +575,7 @@ export default {
   props: ["kasano", "kayitstatu"],
   data() {
     return {
+      urunKartIdThen:0,
       filterSiparisList:[],
       submitted: false,
       isDisplay2: false,
@@ -1214,7 +1215,9 @@ export default {
         //ürün kartı bilgisini göndermek için
 
       this.urunkart_change_event(item.urunkart_id);
-        if (item.urunkart_id == this.detail.urunkartid) {
+
+
+        if (item.urunkart_id == this.urunKartIdThen) {
           if (item) {
             
 
@@ -1238,7 +1241,7 @@ export default {
               (x) => x.id == item.urunbirimid
             ).name;
             this.tedarikciSecim()
-            
+
           }
         } else {
           
@@ -1256,13 +1259,14 @@ export default {
 
               this.auto_ocak_selected(this.detail.urunadi, this.detail.tedarikciid)
               
-              
+              console.log("if çalıştı")
               
 
               this.isYinedeKaydet()
             } 
           } else {
-            
+              console.log("else çalıştı")
+
             this.isDisplay2 = true
             
 
@@ -1341,6 +1345,7 @@ export default {
         this.detail.kenarislem = urun_kart.yuzeyIslem;
         this.en = urun_kart.en;
         this.boy = urun_kart.boy;
+        this.urunKartIdThen = this.detail.urunkartid
         this.detail.urunkartid = event;
 
 
