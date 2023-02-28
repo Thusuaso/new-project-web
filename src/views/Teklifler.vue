@@ -109,6 +109,7 @@
                 icon="fas fa-file"
                 class="teklifButton"
                 @click="teklifFormAc"
+                style="margin-right:10px;"
               />
               <Button
                 label="Eski Teklifler"
@@ -116,6 +117,7 @@
                 icon="fas fa-paste"
                 class="p-button-warning"
                 @click="eskiTeklifAc"
+                style="margin-right:10px;"
               />
               <Button
                 @click="tumTekliflerAc"

@@ -75,7 +75,7 @@
           <Button
             class="p-button-danger"
             :disabled="dis_sil"
-            label="Kaydet"
+            label="Sil"
             @click="btn_sil_click"
           />
         </div>
@@ -88,7 +88,8 @@
         <div class="column">
           <DataTable
             :value="musteri_listesi"
-            :filters="filters"
+            v-model:filters="filters"
+            filterDisplay="row"
             selectionMode="single"
             v-model:selection="select_musteri"
             @row-select="musteriSec($event)"
@@ -102,16 +103,25 @@
               <template #body="slotProps">
                 {{ slotProps.data.id }}
               </template>
+              <template #filter="{ filterModel, filterCallback }">
+                    <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'"/>
+                </template>
             </Column>
             <Column field="kullaniciadi" header="Kullanıcı Adı">
               <template #body="slotProps">
                 {{ slotProps.data.kullaniciadi }}
               </template>
+              <template #filter="{ filterModel, filterCallback }">
+                      <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'"/>
+                  </template>
             </Column>
             <Column field="adi" header="Adı">
               <template #body="slotProps">
                 {{ slotProps.data.adi }}
               </template>
+              <template #filter="{ filterModel, filterCallback }">
+                      <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'"/>
+                  </template>
             </Column>
             <Column field="mailadres" header="Mail">
               <template #body="slotProps">
@@ -132,11 +142,18 @@
 <script>
 import service from "../service/MekmarDoktorService";
 // import store from "@/store";
+import { FilterMatchMode } from 'primevue/api';
 export default {
   data() {
     return {
+      filters: {
+        'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'kullaniciadi': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'adi': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+
+        
+      },
       musteri_listesi: null,
-      filters: {},
       select_musteri: null,
       dis_yeni: false,
       dis_vazgec: true,
@@ -202,6 +219,11 @@ export default {
           this.dis_form = true;
           this.select_musteri = null;
           this.listeYukle();
+          this.$toast.add({ severity: 'success', summary: 'Username Silme', detail: 'Username Başarıyla Silindi.', life: 3000 });
+
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'Username Silme', detail: 'Username Silme Başarısız.', life: 3000 });
+
         }
       });
     },
@@ -241,6 +263,10 @@ export default {
           this.listeYukle();
           this.yeniMusteriDetay();
           this.select_musteri = null;
+          this.$toast.add({ severity: 'success', summary: 'Username Kayıt', detail: 'Username Başarıyla Kaydedildi.', life: 3000 });
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'Username Kayıt', detail: 'Username Kayıt Başarısız', life: 3000 });
+
         }
       });
     },
@@ -255,6 +281,11 @@ export default {
           this.listeYukle();
           this.yeniMusteriDetay();
           this.select_musteri = null;
+          this.$toast.add({ severity: 'success', summary: 'Username Güncelleme', detail: 'Username Başarıyla Güncellendi.', life: 3000 });
+
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'Username Güncelleme', detail: 'Username Güncelleme Hata', life: 3000 });
+
         }
       });
     },

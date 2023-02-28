@@ -575,7 +575,6 @@ export default {
   props: ["kasano", "kayitstatu"],
   data() {
     return {
-      urunKartIdThen:0,
       filterSiparisList:[],
       submitted: false,
       isDisplay2: false,
@@ -1211,13 +1210,12 @@ export default {
         const item = this.seleksiyon_siparisdetay.find(
           (x) => x.tanim === this.siparis_detay.tanim
       );
+      console.log("item",item)
 
         //ürün kartı bilgisini göndermek için
 
       this.urunkart_change_event(item.urunkart_id);
-
-
-        if (item.urunkart_id == this.urunKartIdThen) {
+        if (item.urunkart_id == this.detail.urunkartid) {
           if (item) {
             
 
@@ -1227,7 +1225,6 @@ export default {
             this.detail.tedarikciid = this.seleksiyon_tedarikcilist.find(
               (x) => x.name == item.tedarikci
             ).id;
-            this.auto_ocak_selected(this.detail.urunadi, this.detail.tedarikciid)
 
 
 
@@ -1236,12 +1233,12 @@ export default {
 
 
 
-            
+            console.log("urunbirimid",item.urunbirimid)
             this.urunbirim = this.seleksiyon_urunbirimlist.find(
               (x) => x.id == item.urunbirimid
             ).name;
             this.tedarikciSecim()
-
+            
           }
         } else {
           
@@ -1255,18 +1252,17 @@ export default {
               );
               this.detail.tedarikciid = this.seleksiyon_tedarikcilist.find(
                 (x) => x.name == item.tedarikci
-              ).id;
-
-              this.auto_ocak_selected(this.detail.urunadi, this.detail.tedarikciid)
+              ).id;              
               
-              console.log("if çalıştı")
               
 
               this.isYinedeKaydet()
             } 
-          } else {
-              console.log("else çalıştı")
+             
+          
 
+          } else {
+            
             this.isDisplay2 = true
             
 
@@ -1345,7 +1341,6 @@ export default {
         this.detail.kenarislem = urun_kart.yuzeyIslem;
         this.en = urun_kart.en;
         this.boy = urun_kart.boy;
-        this.urunKartIdThen = this.detail.urunkartid
         this.detail.urunkartid = event;
 
 
@@ -1363,20 +1358,7 @@ export default {
 
 
     },
-    auto_ocak_selected(urun_adi, tedarikci_id) {
-      if (this.kayitstatu) {
-        if (tedarikci_id == 1 || tedarikci_id == 123) {
-          this.auto_ocak_list()
 
-        }
-
-      }
-    },
-    auto_ocak_list(ocak_id) {
-      this.ocak = this.seleksiyon_ocaklist.find(
-        (x) => x.id == ocak_id
-      );
-    }
   },
   created() {
     this.localService = new LocalService();
