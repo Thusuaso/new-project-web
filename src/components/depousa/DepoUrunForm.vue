@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   
   <TabView>
@@ -118,7 +119,7 @@
               <span class="p-float-label">
                 <Chips id="aciklama" v-model="keyLista" rows="5" cols="20" />
 
-                <label for="aciklama">Açıklama</label>
+                <label for="aciklama">Anahtarlar</label>
               </span>
             </div>
           </div>
@@ -238,12 +239,12 @@ export default {
     },
     urunGuncelle() {
       let anahtarlar = "";
-      let uzunluk = this.keyList.length;
+      let uzunluk = this.keyLista.length;
       let indeks = 1;
 
       if (uzunluk > 0) {
-        for (let key in this.keyList) {
-          anahtarlar += this.keyList[key];
+        for (let key in this.keyLista) {
+          anahtarlar += this.keyLista[key];
 
           indeks += 1;
 
@@ -253,6 +254,7 @@ export default {
         }
       }
 
+      // eslint-disable-next-line vue/no-mutating-props
       this.urunDetay.anahtarlar = anahtarlar;
       this.loading = true;
       depoService.urunGuncelle(this.urunDetay).then((data) => {
@@ -279,7 +281,7 @@ export default {
     urunBilgiGuncelle() {
       depoService.getUrunDetay(this.urunDetay.urunid).then((data) => {
         if (data.anahtarlar.length > 1) {
-          this.keyList = data.anahtarlar.split(",");
+          this.keyLista = data.anahtarlar.split(",");
         }
         this.loading = false;
         alert("Ürün Bilgileri  Değiştirildi.");

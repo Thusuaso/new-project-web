@@ -629,7 +629,15 @@ export default {
 
           this.urunkart_change_event(item.urunkart_id)
           this.tedarikci = item.tedarikci
-          this.urunbirim = item.urunbirimid
+          console.log("urunbirimid", item.urunbirimid)
+          if (item.urunbirimid == 1) {
+          this.urunbirim = 'M2'
+          } else if (item.urunbirimid == 2) {
+            this.urunbirim = 'Adet'
+          } else if (item.urunbirimid == 3) {
+          this.urunbirim = 'Mt'
+        }
+
           
         }
 
@@ -1210,12 +1218,12 @@ export default {
         const item = this.seleksiyon_siparisdetay.find(
           (x) => x.tanim === this.siparis_detay.tanim
       );
-      console.log("item",item)
 
         //ürün kartı bilgisini göndermek için
+      
+      if (item.urunkart_id == this.detail.urunkartid) {
+        this.urunkart_change_event(item.urunkart_id);
 
-      this.urunkart_change_event(item.urunkart_id);
-        if (item.urunkart_id == this.detail.urunkartid) {
           if (item) {
             
 
