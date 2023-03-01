@@ -989,10 +989,11 @@ export default {
       //   this.seleksiyon_ocaklist.find(
       //   (x) => x.name == this.ocak.name
       // ).id;
-      this.detail.tedarikciid = this.tedarikci.id;
-      //   this.seleksiyon_tedarikcilist.find(
-      //   (x) => x.name == this.tedarikci.name
-      // ).id;
+      this.detail.tedarikciid =   this.seleksiyon_tedarikcilist.find(
+        (x) => x.name == this.tedarikci
+      ).id;
+       
+      
 
       //üretim tür bilgisi
       this.detail.urundurumid = 1;
