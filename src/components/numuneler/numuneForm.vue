@@ -234,6 +234,13 @@
               </span>
             </div>
             <div class="col-12" style="margin-bottom:15px;">
+                <span class="p-float-label">
+                  <Calendar id="gTarihi" :touchUI="true" v-model="yukleme_tarihi" :value="numune.yukleme_tarihi" dateFormat="dd/mm/yy"
+                    @date-select="yuklemeTarihiDegisim" style="width:250px;"/>
+                  <label for="gTarihi">Yükleme Tarihi</label>
+                </span>
+              </div>
+            <div class="col-12" style="margin-bottom:15px;">
               <span class="p-float-label">
                 <AutoComplete id="musteri" style="width:250px;" v-model="musteri" :suggestions="filterMusteriList" @complete="aramaMusteri($event)"
                   optionLabel="musteriAdi" @item-select="musteriDegisim" @change="musteriChangeEvent($event)">
