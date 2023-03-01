@@ -5,7 +5,7 @@
         <!----2020 için sipariş özeti--->
 
         <DataTable v-model:value="siparis_list" selectionMode="single" v-model:selection="select_sip_oncekiyil"
-          :scrollable="true" scrollHeight="380px" @row-select="sip_onceki_yil_sec($event)">
+          :scrollable="true" scrollHeight="380px" @row-select="sip_onceki_yil_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -42,7 +42,7 @@
         <!----2021 için sipariş özeti--->
 
         <DataTable v-model:value="siparis_list" selectionMode="single" v-model:selection="select_sip_gecenyil"
-          :scrollable="true" scrollHeight="380px" @row-select="sip_gecen_yil_sec($event)">
+          :scrollable="true" scrollHeight="380px" @row-select="sip_gecen_yil_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -79,7 +79,7 @@
         <!----2022 için sipariş özeti--->
 
         <DataTable v-model:value="siparis_list" selectionMode="single" v-model:selection="select_sip_buyil"
-          :scrollable="true" scrollHeight="380px" @row-select="sip_bu_yil_sec($event)">
+          :scrollable="true" scrollHeight="380px" @row-select="sip_bu_yil_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -124,7 +124,7 @@
       <div class="columun" style="padding-right: 5px">
         <DataTable v-model:value="siparis_kullanici_gecen" selectionMode="single"
           v-model:selection="kullanici_sip_gecen" :scrollable="true" scrollHeight="380px" :loading="loading"
-          @row-select="sip_kullanici_gecen_sec($event)">
+          @row-select="sip_kullanici_gecen_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -160,7 +160,7 @@
 
       <div class="columun">
         <DataTable selectionMode="single" v-model:value="siparis_kullanici" v-model:selection="kullanici_sip"
-          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sip_kullanici_sec($event)">
+          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sip_kullanici_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -205,7 +205,7 @@
     <div class="columns">
       <div class="columun" style="width: 340px; padding-right: 5px">
         <DataTable v-model:value="sevk_list" selectionMode="single" v-model:selection="select_sev_oncekiyil"
-          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_onceki_yil_sec($event)">
+          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_onceki_yil_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -240,7 +240,7 @@
       </div>
       <div class="columun" style="width: 340px; padding-right: 5px">
         <DataTable v-model:value="sevk_list" selectionMode="single" v-model:selection="select_sev_gecenyil"
-          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_gecen_yil_sec($event)">
+          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_gecen_yil_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -276,7 +276,7 @@
 
       <div class="columun" style="width: 340px; padding-right: 5px">
         <DataTable selectionMode="single" v-model:value="sevk_list" v-model:selection="select_sev_buyil"
-          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_bu_yil_sec($event)">
+          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_bu_yil_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -319,7 +319,7 @@
       <div class="columun" style="width: 340px; padding-right: 5px">
         <DataTable v-model:value="sevkiyat_kullanici_gecen" selectionMode="single"
           v-model:selection="kullanici_sev_gecen" :scrollable="true" scrollHeight="380px" :loading="loading"
-          @row-select="sev_kullanici_gecen_sec($event)">
+          @row-select="sev_kullanici_gecen_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -355,7 +355,7 @@
 
       <div class="columun" style="width: 340px">
         <DataTable v-model:value="sevkiyat_kullanici" selectionMode="single" v-model:selection="kullanici_sev"
-          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_kullanici_sec($event)">
+          :scrollable="true" scrollHeight="380px" :loading="loading" @row-select="sev_kullanici_sec($event)" :resizableColumns="true" columnResizeMode="fit" showGridlines responsiveLayout="scroll">
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -405,12 +405,10 @@
     </div>
     <Dialog v-model:visible="is_form" header="Sipariş Özeti Ayrıntı" position="top" :modal="true" maximizable>
       <section>
-        <div class="container">
           <div class="columns">
             <div class="column is-12">
               <OzetAyrinti />
             </div>
-          </div>
         </div>
       </section>
     </Dialog>

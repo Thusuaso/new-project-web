@@ -38,7 +38,7 @@
 
         <div class="col-6" style="margin-top:10px;">
         <span class="p-float-label">
-          <InputText id="bakiye" type="text" :disabled="is_form" v-model="thmusteri.tutar" @input="changeFormat" />
+          <InputText id="bakiye" type="text" :disabled="is_form" v-model="thmusteri.tutar" @input="thmusteri.tutar = thmusteri.tutar.replace(',', '.')" />
           <label for="bakiye">Bakiye</label>
         </span>
         </div>
@@ -46,7 +46,7 @@
 
         <div class="col-6" style="margin-top:10px;">
         <span class="p-float-label">
-          <InputText id="masraf" type="text" :disabled="is_form" v-model="thmusteri.masraf" @input="changeFormat" />
+          <InputText id="masraf" type="text" :disabled="is_form" v-model="thmusteri.masraf" @input="thmusteri.masraf = thmusteri.masraf.replace(',', '.')" />
           <label for="masraf">Masraf</label>
         </span>
         </div>
@@ -128,6 +128,8 @@ import service from "../../service/FinansService";
 export default {
   data() {
     return {
+      masraf: 0,
+      tutar:0,
       is_form: false,
       date: new Date(),
       is_kaydet: false,
@@ -154,10 +156,7 @@ export default {
     ]),
   },
   methods: {
-    changeFormat() {
-      this.thmusteri.tutar = this.thmusteri.tutar.replace(",", ".")
-      this.thmusteri.masraf = this.thmusteri.masraf.replace(",", ".")
-    },
+
     formatPrice(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

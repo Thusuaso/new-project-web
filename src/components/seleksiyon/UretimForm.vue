@@ -628,8 +628,7 @@ export default {
 
 
           this.urunkart_change_event(item.urunkart_id)
-          this.tedarikci = item.tedarikci
-          console.log("urunbirimid", item.urunbirimid)
+          this.tedarikci = this.seleksiyon_tedarikcilist.find(x => x.name == item.tedarikci)
           if (item.urunbirimid == 1) {
           this.urunbirim = 'M2'
           } else if (item.urunbirimid == 2) {
@@ -989,9 +988,9 @@ export default {
       //   this.seleksiyon_ocaklist.find(
       //   (x) => x.name == this.ocak.name
       // ).id;
-      this.detail.tedarikciid =   this.seleksiyon_tedarikcilist.find(
-        (x) => x.name == this.tedarikci
-      ).id;
+
+      this.detail.tedarikciid = this.seleksiyon_tedarikcilist.find(x => x.name == this.tedarikci.name).id
+      
        
       
 
@@ -1227,7 +1226,7 @@ export default {
 
           if (item) {
             
-
+            console.log("tedarikci",item.tedarikci)
             this.tedarikci = this.seleksiyon_tedarikcilist.find(
               (x) => x.name == item.tedarikci
             );
@@ -1237,12 +1236,6 @@ export default {
 
 
 
-
-
-
-
-
-            console.log("urunbirimid",item.urunbirimid)
             this.urunbirim = this.seleksiyon_urunbirimlist.find(
               (x) => x.id == item.urunbirimid
             ).name;
