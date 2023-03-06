@@ -4,21 +4,13 @@
     <div class="col">
       <Dropdown v-model="select_yil" :options="yil_listesi" optionLabel="yil" @change="yil_degisim_event"
         placeholder="Select a Year" :disabled="is_form">
-        <template #value="slotProps">
-          <div class="p-dropdown-car-value">
-            <span>{{ slotProps.value }}</span>
-          </div>
-        </template>
+        
       </Dropdown>
     </div>
     <div class="col">
-      <Dropdown v-model="select_aystr" :options="ay_listesi" optionLabel="ay_str" @change="ay_degisim_event"
+      <Dropdown v-model="select_ay" :options="ay_listesi" optionLabel="ay_str" @change="ay_degisim_event"
         placeholder="Select a Month" :disabled="is_form">
-        <template #value="slotProps">
-          <div class="p-dropdown-car-value">
-            <span>{{ slotProps.value }}</span>
-          </div>
-        </template>
+        
       </Dropdown>
     </div>
     <div class="col">
@@ -99,16 +91,15 @@ export default {
   created() {
     service.getMusteriOdemeYilListesi().then((yil_list) => {
       this.yil_listesi = yil_list;
-      this.select_yil = yil_list[0].yil;
+      this.select_yil = yil_list[0];
       this.loading = true;
 
-      service.getMusteriOdemeAyListesi(this.select_yil).then((ay_list) => {
+      service.getMusteriOdemeAyListesi(this.select_yil.yil).then((ay_list) => {
         this.ay_listesi = ay_list;
-        this.select_aystr = ay_list[0].ay_str;
-        this.select_ay = ay_list[0].ay;
-
+        this.select_ay = ay_list[0]
+        this.select_aystr = ay_list[0]
         service
-          .getMusteriOdemeListesi(this.select_yil, this.select_ay)
+          .getMusteriOdemeListesi(this.select_yil.yil, this.select_ay.ay)
           .then((odeme_list) => {
             for (let key in odeme_list) {
               this.odeme_toplam += odeme_list[key].tutar;
@@ -134,23 +125,20 @@ export default {
       this.ay_listesi_yukle();
     },
     ay_degisim_event() {
-      this.select_ay = this.ay_listesi.find(
-        (x) => x.ay_str == this.select_aystr.ay_str
-      ).ay;
       this.loading = true;
       this.odeme_listesi_yukle();
     },
     ay_listesi_yukle() {
       service.getMusteriOdemeAyListesi(this.select_yil.yil).then((data) => {
         this.ay_listesi = data;
-        this.select_aystr = data[0].ay_str;
-        this.select_ay = data[0].ay;
+        this.select_aystr = data[0];
+        this.select_ay = data[0];
         this.odeme_listesi_yukle();
       });
     },
     odeme_listesi_yukle() {
       service
-        .getMusteriOdemeListesi(this.select_yil.yil, this.select_ay)
+        .getMusteriOdemeListesi(this.select_yil.yil, this.select_ay.ay)
         .then((data) => {
           this.odemeListesiTopla(data);
           this.odeme_listesi = data;

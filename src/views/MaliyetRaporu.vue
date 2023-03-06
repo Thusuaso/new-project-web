@@ -109,7 +109,7 @@
             showGridlines
           >
             <template #header>
-              <div class="columns is-multiline">
+              <div class="columns is-multiline">    
                 <div class="column is-12">
                   <span style="font-size: 15px">AYO RAPORU </span>
                 </div>
@@ -1444,6 +1444,11 @@
 
         </Dialog>
       </div>
+      <!-- <div class="columns">
+        <div class="column is-12">
+          <maliyetRaporuKar :maliyet_listesi_kar="maliyet_listesi_kar" :kar_toplam_guncelle="kar_toplam_guncelle" />
+        </div>
+      </div> -->
     </div>
   </section>
 </template>
@@ -1452,12 +1457,25 @@ import service from "../service/RaporService";
 import { mapGetters } from "vuex";
 import MaliyetAyrinti from "../components/maliyetraporlari/MaliyetAyrinti";
 import { FilterMatchMode } from "primevue/api";
+// import maliyetRaporuKar from "@/components/maliyetraporlari/MaliyetRaporuKar"
 export default {
   components: {
     MaliyetAyrinti, //maliyet ayrintiya git (yeni sayfa)
+    // maliyetRaporuKar
   },
   data() {
     return {
+      kar_toplam_guncelle: {
+        toplam_bedel_sum: 0,
+        toplam_masraflar_sum: 0,
+        odenen_usd_tutar_sum: 0,
+        odenen_try_tutar_sum: 0,
+        kar_zarar_usd_sum: 0,
+        kar_zarar_try_sum: 0,
+        kar_zarar_orani_sum:0
+      },
+
+      maliyet_listesi_kar:[],
       selected_quarter:null,
       maliyet_listesi_excel: [],
       is_quarter_dropdown: true,
@@ -1510,9 +1528,6 @@ export default {
       toplam_booking: 0,
       toplam_lashing: 0,
       toplam_spazlet: 0,
-
-
-
       toplam_navlun: 0,
       toplam_pazarlama: 0,
       toplam_banka_masrafi: 0,
@@ -1559,6 +1574,8 @@ export default {
         this.maliyet_listesi_yukle();
       });
     });
+
+
   },
   methods: {
     quarter_year_change(event) {
@@ -1656,6 +1673,16 @@ export default {
       let toplam_kar_zarar = (this.toplam_bedel_sum - this.toplam_masraf_sum)
       this.toplam_kar_zarar_orani = ((toplam_kar_zarar / this.toplam_bedel_sum) * 100).toFixed(2)
     },
+    toplam_kar_zar_orani_kar(data) {
+      this.kar_zarar_orani_kar.toplam_bedel_sum = 0
+      this.kar_zarar_orani_kar.toplam_masraf_sum = 0
+      for (let i of data) {
+        this.kar_zarar_orani_kar.toplam_bedel_sum += i.toplam_bedel
+        this.kar_zarar_orani_kar.toplam_masraf_sum += i.masraf_toplam
+      }
+      let toplam_kar_zarar = (this.kar_zarar_orani_kar.toplam_bedel_sum - this.kar_zarar_orani_kar.toplam_masraf_sum)
+      this.kar_zarar_orani_kar.toplam_kar_zarar_orani = ((toplam_kar_zarar / this.kar_zarar_orani_kar.toplam_bedel_sum) * 100).toFixed(2)
+    },
     maliyet_listesi_yukle() {
       this.select_faturalama = { fatura: "Hepsi" };
       this.$store.dispatch("datatableLoadingBeginAct");
@@ -1673,6 +1700,10 @@ export default {
 
           this.$store.dispatch("loadingEndAct");
         });
+      service.getMaliyetRaporKar(this.select_yil.yil, this.select_ay.ay).then(data => {
+        this.maliyet_listesi_kar = [...data]
+        this.tablo_toplam_guncelle_kar(data)
+      })
     },
     maliyet_yil_listesi_yukle(event) {
       this.isFilteredFaturalama = false;
@@ -1781,7 +1812,7 @@ export default {
       this.toplam_banka_masrafi = 0;
       this.toplam_kurye_masrafi = 0;
       this.toplam_kar_zarar = 0;
-      this.toplam_kar_zarar_tl = 0;
+      this.toplam_kar_zarar_tl = 0; 
       this.toplam_mekmar_alim = 0;
       this.toplam_diger_masraflar = 0;
       this.toplam_ozel_iscilik = 0;
@@ -1812,10 +1843,34 @@ export default {
         this.toplam_mekmar_alim += item.mekmar_alim;
         this.toplam_ozel_iscilik += item.ozel_iscilik;
         this.toplam_diger_masraflar += item.diger_masraflar;
-        this.toplam_try_profit +=
-          item.odenen_try_tutar - item.ortalama_kur * item.masraf_toplam;
+        this.toplam_try_profit += item.odenen_try_tutar - (item.ortalama_kur * item.masraf_toplam);
+        // this.toplam_try_profit += item.kar_zarar_tl
       }
     },
+    tablo_toplam_guncelle_kar(liste) {
+      this.kar_toplam_guncelle.toplam_bedel_sum = 0;
+      this.kar_toplam_guncelle.toplam_masraflar_sum = 0;
+      this.kar_toplam_guncelle.odenen_usd_tutar_sum = 0;
+      this.kar_toplam_guncelle.odenen_try_tutar_sum = 0;
+      this.kar_toplam_guncelle.kar_zarar_usd_sum = 0;
+      this.kar_toplam_guncelle.kar_zarar_try_sum = 0;
+      this.kar_toplam_guncelle.kar_zarar_orani_sum = 0;
+
+      for (let key in liste) {
+        const item = liste[key];
+        this.kar_toplam_guncelle.toplam_bedel_sum += item.toplam_bedel
+        this.kar_toplam_guncelle.toplam_masraflar_sum += item.masraf_toplam
+        this.kar_toplam_guncelle.odenen_usd_tutar_sum += item.odenen_usd_tutar
+        this.kar_toplam_guncelle.odenen_try_tutar_sum += item.odenen_try_tutar
+        this.kar_toplam_guncelle.kar_zarar_usd_sum += item.kar_zarar
+        this.kar_toplam_guncelle.kar_zarar_try_sum += item.kar_zarar_tl
+        
+
+      }
+      this.kar_toplam_guncelle.kar_zarar_orani_sum = (((this.kar_toplam_guncelle.odenen_usd_tutar_sum - this.kar_toplam_guncelle.toplam_masraflar_sum) / this.kar_toplam_guncelle.odenen_usd_tutar_sum) * 100).toFixed(2)
+    },
+
+
     maliyet_row_select(event) {
       this.select_maliyet = event.data;
 

@@ -42,9 +42,7 @@
         <div class="col-3">
           <RadioButton v-model="Fatura" name="name" @change="statuSecim3" value="Mekmar"  />Mekmar
         </div>
-        <div class="col-3">
-          <RadioButton v-model="Fatura" name="name" @change="statuSecim3" value="Efes"  />Efes
-        </div>
+
       </div>
     </div>
   </div>
@@ -197,6 +195,14 @@ export default {
   },
 
   mounted() {
+    this.emitter.on('siparisler_dialog_close', data => {
+      console.log(data)
+      this.dialogVisible = data
+    })
+
+
+
+
     this.loading = true;
     let siparisDurum = 2;
     const d = new Date();

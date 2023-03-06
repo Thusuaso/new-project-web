@@ -561,6 +561,8 @@ export default {
         { id: 5, name: "Email" },
         { id: 6, name: "BGP Network" },
         { id: 7, name: "Ziyaret" },
+        { id: 8, name: "Stone Add" },
+
 
       ],
       selectTeklifYeri: null,

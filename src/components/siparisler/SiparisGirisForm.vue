@@ -633,7 +633,6 @@ export default {
     },
     faturaBilgileriGuncelle() {
       //ürün toplamı alma
-      console.log("siparis",this.siparis)
       this.siparis.malBedeli = 0;
 
       for (let key in this.siparisUrunler) {
@@ -692,43 +691,54 @@ export default {
         siparisUrunler: this.siparisUrunler,
       };
       if (this.control(siparisVeri)) {
-      this.kayitDurum = true;
-      this.$store.dispatch('fullscreenLoadingAct', true)
-      
-      siparisService.setSiparisKaydet(siparisVeri).then((data) => {
-        if (data.status == true) {
-          this.$store.dispatch('fullscreenLoadingAct', false)
+        this.kayitDurum = true;
+        this.$store.dispatch('fullscreenLoadingAct', true)
+        siparisService.getSiparisKayitControl(this.siparis.siparisNo).then(data => {
+          if (data) {
+            siparisService.setSiparisKaydet(siparisVeri).then((data) => {
+              if (data.status == true) {
+                this.$store.dispatch('fullscreenLoadingAct', false)
 
-          this.$toast.add({
-            severity: "success",
-            summary: "Bilgi Ekranı",
-            detail: "Sipariş Kaydı Tamamlandı.",
-            life: 5000,
-          });
-          this.kayitDurum = true;
-          socket.siparis.emit("siparisler_list_event")
-          // eslint-disable-next-line vue/no-mutating-props
-          this.yeniSiparis = false;
-          socket.siparis.emit(
-            "anaSayfaDegisiklikEvent",
-            data.anaSayfaDegisiklikList
-          );
+                this.$toast.add({
+                  severity: "success",
+                  summary: "Bilgi Ekranı",
+                  detail: "Sipariş Kaydı Tamamlandı.",
+                  life: 5000,
+                });
+                this.kayitDurum = true;
+                this.emitter.emit('siparisler_dialog_close',false)
+                socket.siparis.emit("siparisler_list_event")
+                // eslint-disable-next-line vue/no-mutating-props
+                this.yeniSiparis = false;
+                socket.siparis.emit(
+                  "anaSayfaDegisiklikEvent",
+                  data.anaSayfaDegisiklikList
+                );
+                this.siparisUrunler = {}
 
-          return;
-        } else {
-          this.$store.dispatch('fullscreenLoadingAct', false)
+                return;
+              } else {
+                this.$store.dispatch('fullscreenLoadingAct', false)
 
-          this.$toast.add({
-            severity: "error",
-            summary: "Bilgi Ekranı",
-            detail: "Sipariş Kaydı Yapılamadı. Tekrar Deneyiniz",
-            life: 5000,
-          });
-          this.kayitDurum = false;
+                this.$toast.add({
+                  severity: "error",
+                  summary: "Bilgi Ekranı",
+                  detail: "Sipariş Kaydı Yapılamadı. Tekrar Deneyiniz",
+                  life: 5000,
+                });
+                this.kayitDurum = false;
 
-        }
-      });
+              }
+            });
+          } else {
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
+            this.$toast.add({ severity: 'error', summary: 'Sipariş Kayıt', detail: 'Sipariş Zaten Kayıtlı.', life: 3000 })
+            
+          }
+        })
       }
+      
       
     },
     control(siparisVeri) {
@@ -807,6 +817,8 @@ export default {
           // if (this.siparis.siparisDurumId == 2) siparisDurum = "üretim";
           // if (this.siparis.siparisDurumId == 3) siparisDurum = "sevk";
           socket.siparis.emit("siparisler_list_event")
+          this.emitter.emit('siparisler_dialog_close', false)
+
           socket.siparis.emit(
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklikList

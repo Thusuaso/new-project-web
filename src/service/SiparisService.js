@@ -108,6 +108,9 @@ const SiparisService ={
     return axios
       .post("siparis/opChangeMailSend", datas)
       .then((res) => res.data);
+  },
+  getSiparisKayitControl(siparis_no) {
+    return axios.get('siparis/kayitIslemControl/' + siparis_no).then(res=>res.data)
   }
 }
 export default SiparisService

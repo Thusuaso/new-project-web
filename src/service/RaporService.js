@@ -174,6 +174,13 @@ const raporService = {
       .get(`maliyet/listeler/maliyetListesi/${yil}/${ay}`)
       .then((res) => res.data);
   },
+
+  getMaliyetRaporKar(yil, ay) {
+    return axios
+      .get(`maliyet/listeler/maliyetListesiKar/${yil}/${ay}`)
+      .then((res) => res.data);
+  },
+
   getMaliyetRaporYil(yil) {
     return axios
       .get(`maliyet/listeler/maliyetListesi/${yil}`)

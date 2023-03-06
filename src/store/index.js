@@ -38,7 +38,7 @@ import bymarketingrapors from "./modules/bymarketingrapors";
 import efespesinat from "./modules/efespesinat";
 import efestahsilat from "./modules/efestahsilat";
 import mekmerDisFatura from "./modules/mekmerDisFatura";
-
+import siparis_masraflar_mail_control from "./modules/siparis_masraflar_mail_control";
 // import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
@@ -81,7 +81,8 @@ export default createStore({
     bymarketingrapors,
     efespesinat,
     efestahsilat,
-    mekmerDisFatura
+    mekmerDisFatura,
+    siparis_masraflar_mail_control
 
   },
   // plugins: [createPersistedState()],

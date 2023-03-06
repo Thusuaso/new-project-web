@@ -1081,25 +1081,58 @@ export default {
         this.profData.navlunSatis = value;
         this.dis_urun_giris = true;
         this.emitter.emit("navlunSatis", true);
-
       }
       if (property == "navlunAlis") {
         this.profData.navlunAlis = value;
       }
-      if (property == "detayTutar_1") this.profData.detayTutar_1 = value;
-      if (property == "detayAlis_1") this.profData.detayAlis_1 = value;
-      if (property == "detayTutar_2") this.profData.detayTutar_2 = value;
-      if (property == "detayAlis_2") this.profData.detayAlis_2 = value;
-      if (property == "detayTutar_3") this.profData.detayTutar_3 = value;
+      if (property == "detayTutar_1") {
+        this.profData.detayTutar_1 = value;
+
+      }
+        
+      if (property == "detayAlis_1") {
+        this.profData.detayAlis_1 = value;
+
+      }
+      if (property == "detayTutar_2") {
+        this.profData.detayTutar_2 = value;
+
+      }
+      if (property == "detayAlis_2") {
+        this.profData.detayAlis_2 = value;
+
+
+      }
+      if (property == "detayTutar_3") {
+        this.profData.detayTutar_3 = value;
+
+      }
+
       if (property == "detayTutar_4") {
         this.profData.detayTutar_4 = value;
         this.profData.mekus_masraf = value;
+
       }
-      if (property == "detayAlis_3") this.profData.detayAlis_3 = value;
-      if (property == "komisyon") this.profData.komisyon = value;
-      if (property == "evrakGideri") this.profData.evrakGideri = value;
-      if (property == "sigorta_tutar_satis") this.profData.sigorta_tutar_satis = value;
-      if (property == "sigorta_tutar") this.profData.sigorta_tutar = value;
+      if (property == "detayAlis_3") {
+        this.profData.detayAlis_3 = value;
+
+      }
+      if (property == "komisyon") {
+        this.profData.komisyon = value;
+
+      }
+      if (property == "evrakGideri") {
+        this.profData.evrakGideri = value;
+
+      }
+      if (property == "sigorta_tutar_satis") {
+        this.profData.sigorta_tutar_satis = value;
+
+      }
+      if (property == "sigorta_tutar") {
+        this.profData.sigorta_tutar = value;
+
+      }
 
       this.kayitKontrol();
       this.$emit("navlunDigerTutarDegisim");
