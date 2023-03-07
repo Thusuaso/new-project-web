@@ -175,9 +175,9 @@ const raporService = {
       .then((res) => res.data);
   },
 
-  getMaliyetRaporKar(yil, ay) {
+  getMaliyetRaporKar(yil) {
     return axios
-      .get(`maliyet/listeler/maliyetListesiKar/${yil}/${ay}`)
+      .get(`maliyet/listeler/maliyetListesiKar/${yil}`)
       .then((res) => res.data);
   },
 

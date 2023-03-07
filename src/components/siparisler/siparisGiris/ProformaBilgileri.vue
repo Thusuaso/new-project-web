@@ -1081,6 +1081,7 @@ export default {
         this.profData.navlunSatis = value;
         this.dis_urun_giris = true;
         this.emitter.emit("navlunSatis", true);
+        this.$store.dispatch('navlun_satis_change_act',value)
       }
       if (property == "navlunAlis") {
         this.profData.navlunAlis = value;

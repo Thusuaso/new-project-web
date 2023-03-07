@@ -1108,7 +1108,6 @@ export default {
       this.form_btn_reset();
     },
     btn_ekle_click() {
-      console.log(this.siparis)
       this.submitted = true;
       if (this.v$.$invalid) {
         this.$toast.add({

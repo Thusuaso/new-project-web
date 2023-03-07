@@ -6,7 +6,12 @@ import depoService from "../service/DepoService";
 import tedarikciService from "../service/TedarikciService";
 import siparisService from "../service/SiparisService";
 import raporService from "@/service/RaporService";
+
 const routes = [
+  {
+    path: "/maliyetAnalizi",
+    component:() =>import("@/components/maliyetraporlari/MaliyetRaporuKar.vue")
+  },
   {
     path: "/login",
     component: () => import("@/views/Login"),

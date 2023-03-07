@@ -154,26 +154,29 @@
                         <router-link to="/maliyet/maliyetRaporu" v-if="is_m_g">
                             <el-menu-item index="10-11-1"> Ayo Raporu </el-menu-item>
                         </router-link>
+                        <router-link to="/maliyetAnalizi" v-if="is_m_g"> 
+                            <el-menu-item index="10-11-2">Ayo Maliyet Analizi</el-menu-item>
+                        </router-link>
                         <router-link to="/raporlar/yeniYuklemeRaporlari">
-                            <el-menu-item index="10-11-2"> MK Raporu </el-menu-item>
+                            <el-menu-item index="10-11-3"> MK Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/yuklemeRapor">
-                            <el-menu-item index="10-11-3"> Yükleme Raporu </el-menu-item>
+                            <el-menu-item index="10-11-4"> Yükleme Raporu </el-menu-item>
                         </router-link>
                         <!-- <router-link to="/raporlar/sevkiyatRaporuMekmar">
                             <el-menu-item index="10-11-4"> Sevkiyat Raporu </el-menu-item>
                         </router-link> -->
                         <router-link to="/raporlar/sevkiyatRaporuAll">
-                            <el-menu-item index="10-11-4"> Sevkiyat Raporu </el-menu-item>
+                            <el-menu-item index="10-11-5"> Sevkiyat Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/siparisOzetRapor">
-                            <el-menu-item index="10-11-5"> Sipariş Özet Raporu </el-menu-item>
+                            <el-menu-item index="10-11-6"> Sipariş Özet Raporu </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/mekusMasraflari">
-                            <el-menu-item index="10-11-6"> Mekus Masrafları </el-menu-item>
+                            <el-menu-item index="10-11-7"> Mekus Masrafları </el-menu-item>
                         </router-link>
                         <router-link to="/raporlar/mekmarRaporlari">
-                            <el-menu-item index="10-11-7"> Mekmar Raporları </el-menu-item>
+                            <el-menu-item index="10-11-8"> Mekmar Raporları </el-menu-item>
                         </router-link>
                     </el-sub-menu>
                 </el-sub-menu>

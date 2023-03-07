@@ -1444,11 +1444,7 @@
 
         </Dialog>
       </div>
-      <!-- <div class="columns">
-        <div class="column is-12">
-          <maliyetRaporuKar :maliyet_listesi_kar="maliyet_listesi_kar" :kar_toplam_guncelle="kar_toplam_guncelle" />
-        </div>
-      </div> -->
+      
     </div>
   </section>
 </template>
@@ -1457,11 +1453,9 @@ import service from "../service/RaporService";
 import { mapGetters } from "vuex";
 import MaliyetAyrinti from "../components/maliyetraporlari/MaliyetAyrinti";
 import { FilterMatchMode } from "primevue/api";
-// import maliyetRaporuKar from "@/components/maliyetraporlari/MaliyetRaporuKar"
 export default {
   components: {
     MaliyetAyrinti, //maliyet ayrintiya git (yeni sayfa)
-    // maliyetRaporuKar
   },
   data() {
     return {
@@ -1566,7 +1560,6 @@ export default {
       this.is_hepsi = false;
       this.select_yil = this.yil_listesi.find((x) => x.yil == year);
       service.getMaliyetAyListesi(this.select_yil.yil).then((ay_list) => {
-        console.log("ay_list",ay_list)
         this.ay_listesi = ay_list;
 
         this.select_ay = ay_list.find((x) => x.ay == month );
@@ -1700,10 +1693,7 @@ export default {
 
           this.$store.dispatch("loadingEndAct");
         });
-      service.getMaliyetRaporKar(this.select_yil.yil, this.select_ay.ay).then(data => {
-        this.maliyet_listesi_kar = [...data]
-        this.tablo_toplam_guncelle_kar(data)
-      })
+      
     },
     maliyet_yil_listesi_yukle(event) {
       this.isFilteredFaturalama = false;
@@ -1847,28 +1837,7 @@ export default {
         // this.toplam_try_profit += item.kar_zarar_tl
       }
     },
-    tablo_toplam_guncelle_kar(liste) {
-      this.kar_toplam_guncelle.toplam_bedel_sum = 0;
-      this.kar_toplam_guncelle.toplam_masraflar_sum = 0;
-      this.kar_toplam_guncelle.odenen_usd_tutar_sum = 0;
-      this.kar_toplam_guncelle.odenen_try_tutar_sum = 0;
-      this.kar_toplam_guncelle.kar_zarar_usd_sum = 0;
-      this.kar_toplam_guncelle.kar_zarar_try_sum = 0;
-      this.kar_toplam_guncelle.kar_zarar_orani_sum = 0;
-
-      for (let key in liste) {
-        const item = liste[key];
-        this.kar_toplam_guncelle.toplam_bedel_sum += item.toplam_bedel
-        this.kar_toplam_guncelle.toplam_masraflar_sum += item.masraf_toplam
-        this.kar_toplam_guncelle.odenen_usd_tutar_sum += item.odenen_usd_tutar
-        this.kar_toplam_guncelle.odenen_try_tutar_sum += item.odenen_try_tutar
-        this.kar_toplam_guncelle.kar_zarar_usd_sum += item.kar_zarar
-        this.kar_toplam_guncelle.kar_zarar_try_sum += item.kar_zarar_tl
-        
-
-      }
-      this.kar_toplam_guncelle.kar_zarar_orani_sum = (((this.kar_toplam_guncelle.odenen_usd_tutar_sum - this.kar_toplam_guncelle.toplam_masraflar_sum) / this.kar_toplam_guncelle.odenen_usd_tutar_sum) * 100).toFixed(2)
-    },
+    
 
 
     maliyet_row_select(event) {

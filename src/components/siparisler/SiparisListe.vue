@@ -196,7 +196,6 @@ export default {
 
   mounted() {
     this.emitter.on('siparisler_dialog_close', data => {
-      console.log(data)
       this.dialogVisible = data
     })
 

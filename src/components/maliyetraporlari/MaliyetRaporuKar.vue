@@ -1,5 +1,11 @@
 <template>
     <div class="columns">
+        <div class="column">
+            <Dropdown v-model="selectedYear" :options="yil_listesi" optionLabel="yil" placeholder="Select a Year" @change="is_selected_year($event)" />
+
+        </div>
+    </div>
+    <div class="columns">
             <div class="column is-4">
 
             </div>
@@ -33,7 +39,6 @@
 
         <DataTable
         :value="maliyet_listesi_kar"
-        :loading="$store.getters.datatableLoading"
         :scrollable="true"
         scrollHeight="400px"
         dataKey="id"
@@ -54,6 +59,23 @@
                 {{ slotProps.data.musteri_adi }}
             </template>
         </Column>
+        <Column field="toplam_bedel" header="Toplam Bedel">
+                        <template #body="slotProps">
+                            {{ formatPrice(slotProps.data.toplam_bedel) }}
+                        </template>
+                        <template #footer>
+                                        {{ formatPrice(kar_toplam_guncelle.toplam_bedel_sum) }}
+                                    </template>
+                    </Column>
+        <Column field="masraf_toplam" header="Masraf Toplamı">
+                    <template #body="slotProps">
+                        {{ formatPrice(slotProps.data.masraf_toplam) }}
+                    </template>
+                    <template #footer>
+                                {{ formatPrice(kar_toplam_guncelle.toplam_masraflar_sum) }}
+                            </template>
+                </Column>
+                
         <Column field="odenen_usd_tutar" header="Ödenen ($)">
                 <template #body="slotProps">
                     {{ formatPrice(slotProps.data.odenen_usd_tutar) }}
@@ -70,22 +92,7 @@
                         {{ formatPrice(kar_toplam_guncelle.odenen_try_tutar_sum) }}
                     </template>
             </Column>
-            <Column field="masraf_toplam" header="Masraf Toplamı">
-                <template #body="slotProps">
-                    {{ formatPrice(slotProps.data.masraf_toplam) }}
-                </template>
-                <template #footer>
-                            {{ formatPrice(kar_toplam_guncelle.toplam_masraflar_sum) }}
-                        </template>
-            </Column>
-            <Column field="toplam_bedel" header="Toplam Bedel">
-                <template #body="slotProps">
-                    {{ formatPrice(slotProps.data.toplam_bedel) }}
-                </template>
-                <template #footer>
-                                {{ formatPrice(kar_toplam_guncelle.toplam_bedel_sum) }}
-                            </template>
-            </Column>
+            
             <Column field="kar_zarar" header="Profit($)">
                 <template #body="slotProps">
                     {{ formatPrice(slotProps.data.kar_zarar) }}
@@ -104,34 +111,76 @@
                 </Column>
             <Column field="kar_zarar_orani" header="Kar Zarar Orani(%)">
                 <template #body="slotProps">
-                    {{ formatPrice(slotProps.data.kar_zarar_orani) }}
+                    % {{ formatDecimal(slotProps.data.kar_zarar_orani) }}
                 </template>
                 <template #footer>
-                                            {{ formatPrice(kar_toplam_guncelle.kar_zarar_orani_sum) }}
+                                            % {{ formatDecimal(kar_toplam_guncelle.kar_zarar_orani_sum) }}
                                         </template>
             </Column>
 
         </DataTable>
     </div>
-    <Dialog
-        v-model:visible="is_maliyet_form"
-        :header="maliyet_form_baslik"
-        :modal="true"
-        maximizable
-        position="top"
-        :breakpoints="{ '960px': '75vw', '640px': '100vw' }" 
-        :style="{ width: '100%' }"
-    >
-            <MaliyetAyrinti />
-
-    </Dialog>
+    
     </div>
 </template>
 
 <script>
+import service from "@/service/RaporService";
+
 export default {
-    props: ['maliyet_listesi_kar','kar_toplam_guncelle'],
+    data() {
+        return {
+            maliyet_listesi_kar: [],
+            kar_toplam_guncelle: {
+                toplam_bedel_sum: 0,
+                toplam_masraflar_sum: 0,
+                odenen_usd_tutar_sum: 0,
+                odenen_try_tutar_sum: 0,
+                kar_zarar_usd_sum: 0,
+                kar_zarar_try_sum: 0,
+                kar_zarar_orani_sum: 0
+            },
+            yil_listesi: [],
+            selectedYear:[]
+        }
+    },
     methods: {
+        is_selected_year(event) {
+            const year = event.value.yil
+            this.maliyet_analiz_tablo_load(year)
+        },
+        maliyet_analiz_tablo_load(yil) {
+          service.getMaliyetRaporKar(yil).then(data => {
+                this.maliyet_listesi_kar = [...data]
+                this.tablo_toplam_guncelle_kar(data)
+            })  
+        },
+        tablo_toplam_guncelle_kar(liste) {
+            this.kar_toplam_guncelle.toplam_bedel_sum = 0;
+            this.kar_toplam_guncelle.toplam_masraflar_sum = 0;
+            this.kar_toplam_guncelle.odenen_usd_tutar_sum = 0;
+            this.kar_toplam_guncelle.odenen_try_tutar_sum = 0;
+            this.kar_toplam_guncelle.kar_zarar_usd_sum = 0;
+            this.kar_toplam_guncelle.kar_zarar_try_sum = 0;
+            this.kar_toplam_guncelle.kar_zarar_orani_sum = 0;
+
+            for (let key in liste) {
+                const item = liste[key];
+                this.kar_toplam_guncelle.toplam_bedel_sum += item.toplam_bedel
+                this.kar_toplam_guncelle.toplam_masraflar_sum += item.masraf_toplam
+                this.kar_toplam_guncelle.odenen_usd_tutar_sum += item.odenen_usd_tutar
+                this.kar_toplam_guncelle.odenen_try_tutar_sum += item.odenen_try_tutar
+                this.kar_toplam_guncelle.kar_zarar_usd_sum += item.kar_zarar
+                this.kar_toplam_guncelle.kar_zarar_try_sum += item.kar_zarar_tl
+
+
+            }
+            this.kar_toplam_guncelle.kar_zarar_orani_sum = (((this.kar_toplam_guncelle.odenen_usd_tutar_sum - this.kar_toplam_guncelle.toplam_masraflar_sum) / this.kar_toplam_guncelle.odenen_usd_tutar_sum) * 100).toFixed(2)
+        },
+        formatDecimal(value) {
+            let val = (value / 1).toFixed(2).replace(".", ",");
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
        formatPrice(value) {
             let val = (value / 1).toFixed(2).replace(".", ",");
             return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -140,6 +189,18 @@ export default {
             let val = (value / 1).toFixed(2).replace(".", ",");
             return "₺" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
+    },
+
+    created() {
+        const date = new Date()
+        const year = date.getFullYear()
+        service.getMaliyetYilListesi().then(data => {
+            this.yil_listesi = data
+            this.selectedYear = data.find(x => x.yil == year)
+
+        })
+        this.maliyet_analiz_tablo_load(year)
+        
     }
 }
 </script>

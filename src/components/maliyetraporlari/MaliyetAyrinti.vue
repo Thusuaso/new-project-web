@@ -520,7 +520,7 @@ export default {
     isAlisFiyatiControlChange() {
       const data = {
         'siparisno': this.siparisno,
-        'alisFiyatiControl': this.masraf_list[0].alisFiyatiControl
+        'alisFiyatiControl': this.alisFiyatiDurum
       }
       service.setAlisFiyatiControl(data).then(data => {
         if (data) {
