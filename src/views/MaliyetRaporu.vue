@@ -1833,7 +1833,9 @@ export default {
         this.toplam_mekmar_alim += item.mekmar_alim;
         this.toplam_ozel_iscilik += item.ozel_iscilik;
         this.toplam_diger_masraflar += item.diger_masraflar;
+
         this.toplam_try_profit += item.odenen_try_tutar - (item.ortalama_kur * item.masraf_toplam);
+        
         // this.toplam_try_profit += item.kar_zarar_tl
       }
     },

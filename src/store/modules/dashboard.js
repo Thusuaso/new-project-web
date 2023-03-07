@@ -29,7 +29,6 @@ const actions = {
     commit("tahmini_degisiklik_mut", data);
   },
   gelen_siparis_mekmar_load({ commit },data) {
-    console.log("gelen_siparis_mekmar_load",data)
     commit("gelen_siparis_mut", data.gelenSiparisMekmar[0]);
       commit("gelen_siparis_year_mut", data.gelenSiparisYearMekmar[0]);
       commit("gelen_siparis_yuklenen_mut", data.gelenSiparisMekmarYuklenen[0]);
@@ -89,8 +88,11 @@ const actions = {
       commit("gelen_siparis_grafik_mekmar_data_mut", data);
   },
   dashboard_sub_data_load({ commit }) {
+    store.dispatch('fullscreenLoadingAct',true)
     raporService.getDashboardSubData().then((data) => {
       commit("dashboard_sub_data_mut", data);
+      store.dispatch('fullscreenLoadingAct',false)
+
     });
   },
   dashboard_logs_all_load({ commit }, data) {

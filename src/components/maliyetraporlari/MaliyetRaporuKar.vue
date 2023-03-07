@@ -46,6 +46,8 @@
         :resizableColumns="true" 
         columnResizeMode="expand" 
         showGridlines
+        sortField="kar_zarar" :sortOrder="1"
+        @row-select="is_selected_maliyet_row($event)"
         >
         <template #header>
             <div class="columns is-multiline">
@@ -84,14 +86,6 @@
                     {{ formatPrice(kar_toplam_guncelle.odenen_usd_tutar_sum) }}
                 </template>
             </Column>
-            <Column field="odenen_try_tutar" header="Ödenen(TL)">
-                <template #body="slotProps">
-                    {{ formatPrice(slotProps.data.odenen_try_tutar) }}
-                </template>
-                <template #footer>
-                        {{ formatPrice(kar_toplam_guncelle.odenen_try_tutar_sum) }}
-                    </template>
-            </Column>
             
             <Column field="kar_zarar" header="Profit($)">
                 <template #body="slotProps">
@@ -122,6 +116,165 @@
     </div>
     
     </div>
+    <div class="columns">
+        <div class="column">
+            <Dialog v-model:visible="is_maliyet_ayrinti_form" :header="musteri_adi + ' Ayrıntı'" :modal="true">
+                <DataTable v-model:value="maliyet_ayrinti_load">
+                    <Column field="siparis_no" header="PO">
+                    </Column>
+                    <Column field="satis_toplami" header="Satış Toplamı">
+                                <template #body="slotProps">
+                                    {{ formatPrice(slotProps.data.satis_toplami) }}
+                                </template>
+    
+                                </Column>
+                    <Column field="navlun_satis" header="Navlun Satış">
+                            <template #body="slotProps">
+                                {{ formatPrice(slotProps.data.navlun_satis) }}
+                            </template>
+    
+                            </Column>
+                    <Column field="detay_1" header="Detay Satış 1">
+                                <template #body="slotProps">
+                                    {{ formatPrice(slotProps.data.detay_1) }}
+                                </template>
+    
+                                </Column>
+                    <Column field="detay_2" header="Detay Satış 2">
+                                    <template #body="slotProps">
+                                        {{ formatPrice(slotProps.data.detay_2) }}
+                                    </template>
+    
+                                    </Column>
+                    <Column field="detay_3" header="Detay Satış 3">
+                                        <template #body="slotProps">
+                                            {{ formatPrice(slotProps.data.detay_3) }}
+                                        </template>
+    
+                                        </Column>
+                    <Column field="sigorta_tutar_satis" header="Sigorta Satış">
+                                            <template #body="slotProps">
+                                                {{ formatPrice(slotProps.data.sigorta_tutar_satis) }}
+                                            </template>
+    
+                                            </Column>
+                    <Column field="toplam_bedel" header="Toplam Bedel ($)">
+                        <template #body="slotProps">
+                            {{ formatPrice(slotProps.data.toplam_bedel) }}
+                        </template>
+                        <template #footer>
+                            {{ formatPrice(kar_toplam_guncelle_ayrinti.toplam_bedel_sum) }}
+                        </template>
+                        </Column>
+                        <Column field="alis_toplami" header="Alış Toplamı">
+                                                    <template #body="slotProps">
+                                                        {{ formatPrice(slotProps.data.alis_toplami) }}
+                                                    </template>
+    
+                                                    </Column>
+                        <Column field="navlun_alis" header="Navlun Alış">
+                                                <template #body="slotProps">
+                                                    {{ formatPrice(slotProps.data.navlun_alis) }}
+                                                </template>
+    
+                                                </Column>
+                        <Column field="detay_alis_1" header="Detay Alış 1">
+                                                    <template #body="slotProps">
+                                                        {{ formatPrice(slotProps.data.detay_alis_1) }}
+                                                    </template>
+    
+                                                    </Column>
+                        <Column field="detay_alis_2" header="Detay Alış 2">
+                                                        <template #body="slotProps">
+                                                            {{ formatPrice(slotProps.data.detay_alis_2) }}
+                                                        </template>
+    
+                                                        </Column>
+                        <Column field="detay_alis_3" header="Detay Alış 3">
+                                                            <template #body="slotProps">
+                                                                {{ formatPrice(slotProps.data.detay_alis_3) }}
+                                                            </template>
+    
+                                                            </Column>
+                        <Column field="komisyon" header="Komisyon">
+                                                                <template #body="slotProps">
+                                                                    {{ formatPrice(slotProps.data.komisyon) }}
+                                                                </template>
+    
+                                                                </Column>
+                        <Column field="evrak_gideri" header="Evrak Gideri">
+                        <template #body="slotProps">
+                            {{ formatPrice(slotProps.data.evrak_gideri) }}
+                        </template>
+
+                        </Column>
+                        <Column field="banka_masrafi" header="Banka Masrafı">
+                            <template #body="slotProps">
+                                {{ formatPrice(slotProps.data.banka_masrafi) }}
+                            </template>
+
+                            </Column>
+                        <Column field="iscilik_masrafi" header="İşçilik">
+                                <template #body="slotProps">
+                                    {{ formatPrice(slotProps.data.iscilik_masrafi) }}
+                                </template>
+
+                                </Column>
+                        <Column field="sigorta_alis" header="Sigorta Alış">
+                                    <template #body="slotProps">
+                                        {{ formatPrice(slotProps.data.sigorta_alis) }}
+                                    </template>
+
+                                    </Column>
+                        <Column field="fatura_masraflari" header="Faturalar">
+                                    <template #body="slotProps">
+                                        {{ formatPrice(slotProps.data.fatura_masraflari) }}
+                                    </template>
+
+                                    </Column>
+
+
+                        <Column field="masraf_toplam" header="Masraf Toplamı">
+                            <template #body="slotProps">
+                                {{ formatPrice(slotProps.data.masraf_toplam) }}
+                            </template>
+                            <template #footer>
+                                {{ formatPrice(kar_toplam_guncelle_ayrinti.toplam_masraflar_sum) }}
+                            </template>
+                        </Column>
+                        <Column field="odenen_usd_tutar" header="Ödenen ($)">
+                            <template #body="slotProps">
+                                    {{ formatPrice(slotProps.data.odenen_usd_tutar) }}
+                                </template>
+                                <template #footer>
+                                    {{ formatPrice(kar_toplam_guncelle_ayrinti.odenen_usd_tutar_sum) }}
+                                </template>
+                        </Column>
+                        <Column field="kar_zarar" header="Profit ($)">
+                            <template #body="slotProps">
+                                        {{ formatPrice(slotProps.data.kar_zarar) }}
+                                    </template>
+                                <template #footer>
+                                        {{ formatPrice(kar_toplam_guncelle_ayrinti.kar_zarar_usd_sum) }}
+                                    </template>
+                        </Column>
+                        <Column field="kar_zarar_tl" header="Profit (TL)">
+                            <template #body="slotProps">
+                                            {{ formatPrice(slotProps.data.kar_zarar_tl) }}
+                                        </template>
+                            <template #footer>
+                                            {{ formatPrice(kar_toplam_guncelle_ayrinti.kar_zarar_try_sum) }}
+                                        </template>
+                        </Column>
+                        <Column field="kar_zarar_orani" header="Kar Zarar Oranı">
+                            <template #body="slotProps">
+                                                {{ formatPrice(slotProps.data.kar_zarar_orani) }}
+                                            </template>
+                        </Column>
+                </DataTable>
+            </Dialog>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -130,8 +283,21 @@ import service from "@/service/RaporService";
 export default {
     data() {
         return {
+            maliyet_ayrinti_load:[],
+            is_maliyet_ayrinti_form:false,
+            musteri_adi:"",
+            maliyet_ayrinti:[],
             maliyet_listesi_kar: [],
             kar_toplam_guncelle: {
+                toplam_bedel_sum: 0,
+                toplam_masraflar_sum: 0,
+                odenen_usd_tutar_sum: 0,
+                odenen_try_tutar_sum: 0,
+                kar_zarar_usd_sum: 0,
+                kar_zarar_try_sum: 0,
+                kar_zarar_orani_sum: 0
+            },
+            kar_toplam_guncelle_ayrinti: {
                 toplam_bedel_sum: 0,
                 toplam_masraflar_sum: 0,
                 odenen_usd_tutar_sum: 0,
@@ -145,14 +311,27 @@ export default {
         }
     },
     methods: {
+        is_selected_maliyet_row(event) {
+            this.musteri_adi = event.data.musteri_adi
+            this.maliyet_ayrinti_load = this.maliyet_ayrinti.filter(x => x.musteri_id == event.data.musteri_id)
+            this.tablo_toplam_guncelle_kar_ayrinti(this.maliyet_ayrinti_load)
+            this.is_maliyet_ayrinti_form = true
+        },
         is_selected_year(event) {
             const year = event.value.yil
             this.maliyet_analiz_tablo_load(year)
         },
         maliyet_analiz_tablo_load(yil) {
+            this.$store.dispatch('fullscreenLoadingAct',true)
           service.getMaliyetRaporKar(yil).then(data => {
                 this.maliyet_listesi_kar = [...data]
-                this.tablo_toplam_guncelle_kar(data)
+              this.tablo_toplam_guncelle_kar(data)
+              service.getMaliyetRaporKarAyrinti(yil).then(data => {
+                this.maliyet_ayrinti = data
+                this.$store.dispatch('fullscreenLoadingAct', false)
+
+              })
+
             })  
         },
         tablo_toplam_guncelle_kar(liste) {
@@ -176,6 +355,28 @@ export default {
 
             }
             this.kar_toplam_guncelle.kar_zarar_orani_sum = (((this.kar_toplam_guncelle.odenen_usd_tutar_sum - this.kar_toplam_guncelle.toplam_masraflar_sum) / this.kar_toplam_guncelle.odenen_usd_tutar_sum) * 100).toFixed(2)
+        },
+        tablo_toplam_guncelle_kar_ayrinti(liste) {
+            this.kar_toplam_guncelle_ayrinti.toplam_bedel_sum = 0;
+            this.kar_toplam_guncelle_ayrinti.toplam_masraflar_sum = 0;
+            this.kar_toplam_guncelle_ayrinti.odenen_usd_tutar_sum = 0;
+            this.kar_toplam_guncelle_ayrinti.odenen_try_tutar_sum = 0;
+            this.kar_toplam_guncelle_ayrinti.kar_zarar_usd_sum = 0;
+            this.kar_toplam_guncelle_ayrinti.kar_zarar_try_sum = 0;
+            this.kar_toplam_guncelle_ayrinti.kar_zarar_orani_sum = 0;
+
+            for (let key in liste) {
+                const item = liste[key];
+                this.kar_toplam_guncelle_ayrinti.toplam_bedel_sum += item.toplam_bedel
+                this.kar_toplam_guncelle_ayrinti.toplam_masraflar_sum += item.masraf_toplam
+                this.kar_toplam_guncelle_ayrinti.odenen_usd_tutar_sum += item.odenen_usd_tutar
+                this.kar_toplam_guncelle_ayrinti.odenen_try_tutar_sum += item.odenen_try_tutar
+                this.kar_toplam_guncelle_ayrinti.kar_zarar_usd_sum += item.kar_zarar
+                this.kar_toplam_guncelle_ayrinti.kar_zarar_try_sum += item.kar_zarar_tl
+
+
+            }
+            this.kar_toplam_guncelle_ayrinti.kar_zarar_orani_sum = (((this.kar_toplam_guncelle_ayrinti.odenen_usd_tutar_sum - this.kar_toplam_guncelle_ayrinti.toplam_masraflar_sum) / this.kar_toplam_guncelle_ayrinti.odenen_usd_tutar_sum) * 100).toFixed(2)
         },
         formatDecimal(value) {
             let val = (value / 1).toFixed(2).replace(".", ",");

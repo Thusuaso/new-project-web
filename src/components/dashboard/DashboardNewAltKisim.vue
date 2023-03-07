@@ -753,11 +753,14 @@ export default {
   },
   methods: {
     isSelectedTeklifUlke(event) {
+      this.$store.dispatch('fullscreenLoadingAct',true)
       raporService
         .getUlkeyeGoreTeklifAyrinti(this.selectedYear.year, event.data.ulkeId)
         .then((data) => {
           this.teklifUlkeAyrintiData = data;
           this.teklif_ulke_ayrinti_form = true;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
     },
     topUlkeTeklif(data) {
@@ -767,10 +770,14 @@ export default {
       }
     },
     isSelectedUlkeTeklif(event) {
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
       raporService.getUlkeTeklifler(event.value.year).then((data) => {
         this.topUlkeTeklif(data);
         this.$store.dispatch("dashboard_ulkeye_gore_load", data);
         this.isLoadTeklifler = false;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
     isSelectedYear() {
@@ -788,29 +795,43 @@ export default {
         day1: day1,
         day2: day2,
       };
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
       raporService.postLogsAyrinti(dates).then((data) => {
         this.$store.dispatch("dashboard_logs_all_load", data);
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
     tekliflerAyrintiYillik(event) {
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
       raporService
         .getTekliflerAyrintiData(event.data.teklifSahibiId)
         .then((data) => {
           this.tekliflerYillikData = data.yillikTeklifler;
           this.is_teklifler_ayrinti_form_yillik = true;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
     },
     tekliflerAyrintiAylik(event) {
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
       raporService
         .getTekliflerAyrintiData(event.data.teklifSahibiId)
         .then((data) => {
           this.tekliflerAylikData = data.aylikTeklifler;
           this.is_teklifler_ayrinti_form = true;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
     },
     firmaBazindaAyrintiSelected(event) {
       this.firmaBazindaAyrintiSipTop = 0;
       this.firmaBazindaAyrintiSipMiktari = 0;
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
       raporService
         .getFirmaBazindaAyrintiData(event.data.firmaId)
         .then((data) => {
@@ -820,11 +841,15 @@ export default {
             this.firmaBazindaAyrintiSipMiktari += i.satisMiktari;
           }
           this.is_firma_ayrinti_form = true;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
     },
     tedarikciAyrintiAllSelected(event) {
       this.tedarikciAyrintiMikTopAll = 0;
       this.tedarikciAyrintiSipTopAll = 0;
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
       raporService
         .getTedarikciAyrintiData(event.data.tedarikci_id)
         .then((data) => {
@@ -834,11 +859,15 @@ export default {
             this.tedarikciAyrintiSipTopAll += i.satisMiktari;
           }
           this.is_tedarikci_ayrinti_form_all = true;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
     },
     tedarikciAyrintiSelected(event) {
       this.tedarikciAyrintiMikTop = 0;
       this.tedarikciAyrintiSipTop = 0;
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
       raporService
         .getTedarikciAyrintiData(event.data.tedarikci_id)
         .then((data) => {
@@ -848,6 +877,8 @@ export default {
             this.tedarikciAyrintiMikTop += i.satisMiktari;
           }
           this.is_tedarikci_ayrinti_form = true;
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
     },
     evrak_indir(dosya_link, dosya_adi) {
@@ -888,8 +919,12 @@ export default {
       this.is_main_all_form = true;
     },
     degisiklikAnaSayfaList() {
+          this.$store.dispatch('fullscreenLoadingAct', true)
+
       raporService.getAnaSayfaDegisiklikList().then((data) => {
         this.$store.dispatch("dashboard_logs_load", data);
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
   },

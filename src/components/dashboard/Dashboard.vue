@@ -471,14 +471,13 @@
 
     <br />
     <Button
-      @click="isClickedButtonAlt"
-      v-if="is_click_form"
+      @click="is_form_dashboard = !is_form_dashboard"
       label="Daha Fazlasını Göster"
       class="subButton"
     ></Button>
     <hr />
-    <component :is="altComponent"> </component>
-
+    <!-- <component :is="altComponent"> </component> -->
+    <DashboardNewAltKisim v-if="is_form_dashboard"/>
     <Dialog
       v-model:visible="tahmini_form"
       maximizable
@@ -538,14 +537,12 @@
 </template>
 
 <script>
-import DashboardNewAltKisim from "./DashboardNewAltKisim";
 import { mapGetters } from "vuex";
 import service from "@/service/AnasayfaRapor";
-
+import { defineAsyncComponent } from "vue";
 export default {
-
   components: {
-    DashboardNewAltKisim,
+    DashboardNewAltKisim: defineAsyncComponent(() => import("./DashboardNewAltKisim"))
   },
   computed: {
     ...mapGetters([
@@ -565,6 +562,7 @@ export default {
 
   data() {
     return {
+      is_form_dashboard:false,
       rapor: "Mekmar",
       dis_detay: false,
       altComponent: "",
@@ -608,13 +606,6 @@ export default {
     formatDecimal(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
-    isClickedButtonAlt() {
-      this.altComponent = "DashboardNewAltKisim";
-      this.is_click_form = false;
-      setTimeout(() => {
-        this.emitter.emit("isClickedAlt", true);
-      }, 5000);
     },
   },
   mounted() {},

@@ -180,6 +180,9 @@ const raporService = {
       .get(`maliyet/listeler/maliyetListesiKar/${yil}`)
       .then((res) => res.data);
   },
+  getMaliyetRaporKarAyrinti(yil) {
+    return axios.get(`maliyet/listeler/maliyetListesiKarAyrinti/${yil}`).then(res=>res.data)
+  },
 
   getMaliyetRaporYil(yil) {
     return axios

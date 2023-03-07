@@ -28,7 +28,7 @@ const routes = [
   },
   {
     path: "/",
-    component: () => import("@/views/Home"),
+    component: () => import("@/components/dashboard/Dashboard"),
     beforeEnter(to, from, next) {
       if (store.getters.__isAuthentication) {
         store.dispatch("loadingBeginAct");

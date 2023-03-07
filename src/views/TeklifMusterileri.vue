@@ -198,13 +198,18 @@ export default {
 
   created() {
     this.userId = this.$store.getters.__getUserId;
+      this.$store.dispatch('fullscreenLoadingAct', true)
 
     service.getTeklifMusteriler().then((data) => {
       if (this.userId == 10 || this.userId == 47 || this.userId == 13) {
         this.$store.dispatch("teklif_musteri_load_act", data)
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
       } else {
         const result = data.filter((x) => x.user == this.userId);
         this.$store.dispatch("teklif_musteri_load_act", result)
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
       }
     }),
     this.kullaniciService = new KullaniciService();
@@ -284,8 +289,11 @@ export default {
     save() {
       this.newTeklifMusteri.country = this.select_ulke.id;
       this.newTeklifMusteri.user = this.userId;
+      this.$store.dispatch('fullscreenLoadingAct',true)
       service.setNewTeklifMusteriler(this.newTeklifMusteri).then((data) => {
         if (data.status) {
+        this.$store.dispatch('fullscreenLoadingAct', false)
+          this.teklifMusteriFormNew = false
           this.$toast.add({
             severity: "success",
             summary: "Kayıt",
@@ -303,12 +311,15 @@ export default {
           
 
         } else {
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
           this.$toast.add({
             severity: "error",
             summary: "Kayıt",
             detail: "Kayıt İşlemi Hatalı",
             life: 3000,
           });
+
         }
       });
     },

@@ -1,7 +1,7 @@
 const state = {
   loading: false,
   datatableLoading: false,
-  fullscreenLoading:null,
+  fullscreenLoading:false,
 };
 
 const actions = {
