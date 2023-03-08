@@ -571,7 +571,7 @@ export default {
     };
   },
   created() {
-
+    service.getEtaSuresiControl()
     
   },
 

@@ -137,13 +137,16 @@ const MusteriIslemService = {
   setCustomerSurfaceUpdate(customers) {
     return axios.put('listeler/musteriler/musteriSurface',customers).then(res=>res.data)
   },
-  setCustomerSurfaceDelete(id) {
-    return axios.delete('listeler/musteriler/musteriSurface/delete/' + id).then(res=>res.data)
+  setCustomerSurfaceDelete(id,user_id) {
+    return axios.delete('listeler/musteriler/musteriSurface/delete/' + id+'/' + user_id).then(res=>res.data)
   },
 
 
-  getCustomerSurfaceList() {
-    return axios.get('listeler/musteriler/musteriSurfaceList').then(res=>res.data)
+  getCustomerSurfaceList(user_id) {
+    return axios.get('listeler/musteriler/musteriSurfaceList/' + user_id).then(res=>res.data)
+  },
+  getAutoDatas() {
+    return axios.get('listeler/musteriler/teklifMusteriListesi').then(res=>res.data)
   }
 };
 

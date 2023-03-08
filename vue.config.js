@@ -15,9 +15,6 @@ module.exports = defineConfig({
     devServer: {
         //proxy: 'http://localhost:5000/'
         proxy: 'https://doktor-socket.mekmar.com/',
-        hot: false,
-        liveReload: false,
-        webSocketServer: false
         
     } 
   

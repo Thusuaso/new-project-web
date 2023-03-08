@@ -726,6 +726,7 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
+  
   const userId = localStorage.getItem("userId");
   const username = localStorage.getItem("username");
   store.commit("_setUserId", userId);

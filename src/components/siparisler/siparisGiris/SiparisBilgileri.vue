@@ -104,9 +104,7 @@
                   :disabled="dis_urun_giris"
                   id="kasaAdet"
                   v-model="siparis.kasaAdet"
-                  :class="{
-                    'p-invalid': v$.siparis.kasaAdet.$invalid && submitted,
-                  }"
+                  
                 />
                 <label for="kasaAdet">Kasa</label>
               </span>
@@ -445,7 +443,6 @@ export default {
         alisFiyati: { required },
         satisFiyati: { required },
         miktar: { required },
-        kasaAdet: { required },
         siraNo: { required },
         ozelMiktar: { required },
         ton: { required },
@@ -1103,6 +1100,8 @@ export default {
       this.dis_ozelIscilik = true;
 
       this.siparis = { ...this.urunModel };
+      const value = this.siparisUrunler.length + 1
+      this.siparis.siraNo = value
     },
     btn_iptal_click() {
       this.form_btn_reset();
@@ -1476,7 +1475,6 @@ export default {
     this.urunService.getUrunBirimList().then((data) => {
       this.urunBirimList = data;
     });
-
 
   },
 

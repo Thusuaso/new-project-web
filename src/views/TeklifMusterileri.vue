@@ -95,7 +95,7 @@
                 <Button class="p-button-danger" @click="deleteMust(teklifMusteriAyrinti.id)" label="Sil"></Button>
 
       </div>
-      <div class="col">
+      <div class="col" v-if="musteri_copy_button">
                 <Button class="p-button-primary" @click="copyToCustomers" label="Müşterilere Kopyala" />
 
       </div>
@@ -110,7 +110,7 @@
     <div class="grid">
       <div class="col">
         <span class="p-float-label">
-          <InputText id="musteri" type="text" v-model="newTeklifMusteri.customer" />
+          <InputText id="musteri" type="text" v-model="newTeklifMusteri.customer" @input="newTeklifMusteriInput(newTeklifMusteri.customer)"/>
           <label for="musteri">Müşteri Adı</label>
         </span>
       </div>
@@ -190,6 +190,7 @@ export default {
       kullaniciService: null,
       kullaniciList: null,
       userId: null,
+      musteri_copy_button: false
     };
   },
   computed: {
@@ -198,19 +199,17 @@ export default {
 
   created() {
     this.userId = this.$store.getters.__getUserId;
+    if (this.userId == 47 || this.userId == 10) {
+      this.musteri_copy_button = true
+    }
       this.$store.dispatch('fullscreenLoadingAct', true)
 
     service.getTeklifMusteriler().then((data) => {
-      if (this.userId == 10 || this.userId == 47 || this.userId == 13) {
         this.$store.dispatch("teklif_musteri_load_act", data)
       this.$store.dispatch('fullscreenLoadingAct', false)
 
-      } else {
-        const result = data.filter((x) => x.user == this.userId);
-        this.$store.dispatch("teklif_musteri_load_act", result)
-      this.$store.dispatch('fullscreenLoadingAct', false)
 
-      }
+
     }),
     this.kullaniciService = new KullaniciService();
     siparisService.getUlkeList().then((data) => {
@@ -221,14 +220,33 @@ export default {
     });
   },
   methods: {
+
+    newTeklifMusteriInput(value) {
+      if (value.length == 1) {
+        value = value.toUpperCase()
+      }
+      
+      
+      const istheremusteri = this.teklifMusteri.filter(x => x.customer == value)
+      if (istheremusteri.length>0) {
+        alert("Bu müşteri zaten mevcut!")
+      }
+      this.newTeklifMusteri.customer = value
+      
+
+
+
+
+
+    },
     copyToCustomers() {
       if (confirm('Müşterilere kopyalamak istediğinize emin misiniz ?')) {
 
-      service.setCustomersCopyTo(this.teklifMusteriAyrinti).then(data => {
-        if (data) {
-            this.$toast.add({ severity: 'success', summary: 'Kopyalama', detail: 'Müşterilere Başarıyla Kopayalandı', life: 3000 })
+        service.setCustomersCopyTo(this.teklifMusteriAyrinti).then(data => {
+          if (data) {
+              this.$toast.add({ severity: 'success', summary: 'Kopyalama', detail: 'Müşterilere Başarıyla Kopayalandı', life: 3000 })
 
-        }
+          }
       })
       }
 

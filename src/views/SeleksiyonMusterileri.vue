@@ -42,12 +42,6 @@
                                 :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
                         </template>
                     </Column>
-                    <Column field="lastName" header="Surname" :showFilterMenu="false">
-                        <template #filter="{filterModel,filterCallback}">
-                            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-                                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
-                        </template>
-                    </Column>
                     <Column field="adress" header="Adress"></Column>
                     <Column field="city" header="City"></Column>
                     <Column field="email" header="Email"></Column>
@@ -73,13 +67,6 @@
                                 v-tooltip.top.focus="'Hit enter key to filter'" />
                         </template>
                     </Column>
-                    <Column field="lastName" header="Surname" :showFilterMenu="false">
-                        <template #filter="{filterModel,filterCallback}">
-                            <InputText type="text" v-model="filterModel.value" @input="filterCallback()"
-                                class="p-column-filter" :placeholder="`Search by name - `"
-                                v-tooltip.top.focus="'Hit enter key to filter'" />
-                        </template>
-                    </Column>
                     <Column field="adress" header="Adress"></Column>
                     <Column field="city" header="City"></Column>
                     <Column field="email" header="Email"></Column>
@@ -95,12 +82,12 @@
         <div class="testbox">
                 <div class="colums">
                     <div class="item">
+                        
                         <label for="fname"> First Name<span>*</span></label>
-                        <input id="fname" type="text" name="fname" required  v-model="customers.name"/>
-                    </div>
-                    <div class="item">
-                        <label for="lname"> Last Name<span>*</span></label>
-                        <input id="lname" type="text" name="lname" v-model="customers.surname" />
+                        <br/>
+                        <AutoComplete id="fname" name="fname" v-model="selectedMusteri" :suggestions="filteredMusteriList"
+                    @complete="searchMusteri($event)" optionLabel="firstName"
+                    @item-select="isSelectedMusteri($event)" style="width:250px;"/>
                     </div>
                     <div class="item">
                         <label for="address1">Address<span>*</span></label>
@@ -119,12 +106,10 @@
                         <input id="phone" type="tel" name="phone" v-model="customers.phone"/>
                     </div>
                     <div class="item">
-                        
-                            <span class="p-float-label">
+                                <label for="surface">Surface<span>*</span></label>
+                            <br/>
                                 <AutoComplete id="surface" name="phone" v-model="selectedSurface" :suggestions="filteredSurfaceList"
                                     @complete="searchSurface($event)" optionLabel="surface" />
-                                <label for="surface">Surface</label>
-                            </span>
                     </div>
                 </div>
                 <div class="btn-block">
@@ -145,21 +130,23 @@ export default {
         ...mapGetters([
             'customerSurfaceList',
             'surfaceList',
-            'customerSurfaceListA'
+            'customerSurfaceListA',
+            '__getUserId'
         ])
     },
     data() { 
         return {
+            selectedMusteri: [],
+            filteredMusteriList:[],
             surfaceName:"",
             filteredSurface:[],
             isFilter:false,
             filteredSurfaceList: [],
-            
+            musteri_listesi:[],
             selectedSurface: "",
             selectedProduct1:[],
             filters: {
                 firstName: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                lastName: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                 surface: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
             },
             is_form: false,
@@ -171,14 +158,18 @@ export default {
                 city: "",
                 email: "",
                 phone: "",
-                surface:""
+                surface: "",
+                user_id:this.__getUserId
             },
             is_new:false
         }
     },
     created() { 
-        service.getCustomerSurfaceList().then(data => { 
+        this.$store.dispatch('fullscreenLoadingAct',true)
+        service.getCustomerSurfaceList(this.__getUserId).then(data => { 
             this.$store.dispatch('customers_surface_list_load_act', data)
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         })
     },
     methods: {
@@ -191,6 +182,13 @@ export default {
             this.isFilter = true
             this.surfaceName = event.value.surface
             this.filteredSurface = (this.customerSurfaceList.filter(x => x.surfaceId == event.value.id))
+        },
+        isSelectedMusteri(event) {
+            this.customers.name = event.value.firstName
+            this.customers.adress = event.value.adress
+            this.customers.city = event.value.city
+            this.customers.email = event.value.email
+            this.customers.phone = event.value.phone
         },
         searchSurface(event) {
                 let result;
@@ -206,17 +204,37 @@ export default {
 
                 this.filteredSurfaceList = result;
         },
+        searchMusteri(event) {
+            let result;
+            if (event.query.length === 0) {
+                result = [...this.musteri_listesi];
+            } else {
+                result = this.musteri_listesi.filter((ted) => {
+                    return ted.firstName
+                        .toLowerCase()
+                        .startsWith(event.query.toLowerCase());
+                });
+            }
+
+            this.filteredMusteriList = result;
+        },
 
         deleteCust() {
-            service.setCustomerSurfaceDelete(this.customers.id).then(data => {
+            this.$store.dispatch('fullscreenLoadingAct', true)
+
+            service.setCustomerSurfaceDelete(this.customers.id,this.__getUserId).then(data => {
                 if (data.status) {
                     this.$toast.add({ severity: 'success', summary: 'Silme', detail: 'Silme Başarılı', life: 3000 })
                     this.$store.dispatch('customers_surface_list_load_act', data.customerList)
                     this.is_form = false
+                    this.$store.dispatch('fullscreenLoadingAct', false)
+
 
                 } else {
                     this.$toast.add({ severity: 'error', summary: 'Silme', detail: 'Silme Hatalı', life: 3000 })
                     this.$store.dispatch('customers_surface_list_load_act', data.customerList)
+                    this.$store.dispatch('fullscreenLoadingAct', false)
+
                 }
             })
         },
@@ -224,12 +242,18 @@ export default {
             this.reset()
             this.is_form = true
             this.is_new = true
+            this.$store.dispatch('fullscreenLoadingAct', true)
+
+            service.getAutoDatas().then(data => {
+                this.musteri_listesi = data
+                this.$store.dispatch('fullscreenLoadingAct', false)
+
+            })
         },
         isSelectedCust(event) {
             this.customers = {
                 id:event.data.id,
                 name: event.data.firstName,
-                surname: event.data.lastName,
                 adress: event.data.adress,
                 city: event.data.city,
                 email: event.data.email,
@@ -265,15 +289,22 @@ export default {
                     this.customers.surface = this.selectedSurface
 
                 }
+                this.$store.dispatch('fullscreenLoadingAct', true)
+
+                this.customers.user_id = this.__getUserId
                 service.setCustomerSurface(this.customers).then(data => {
                     if (data.status) {
                         this.$toast.add({ severity: 'success', summary: 'Kayıt', detail: 'Kayıt Başarılı', life: 3000 })
                         this.$store.dispatch('customers_surface_list_load_act', data.customerList)
                         this.reset()
+                        this.$store.dispatch('fullscreenLoadingAct', false)
+
 
                     } else {
                         this.$toast.add({ severity: 'error', summary: 'Kayıt', detail: 'Kayıt Hatalı', life: 3000 })
                         this.$store.dispatch('customers_surface_list_load_act', data.customerList)
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
                     }
                 })
             }
@@ -283,14 +314,21 @@ export default {
                 } else {
                     this.customers.surface = this.selectedSurface
                 }
+            this.$store.dispatch('fullscreenLoadingAct', true)
+
+                this.customers.user_id = this.__getUserId
                 service.setCustomerSurfaceUpdate(this.customers).then(data => {
                     if (data.status) {
                         this.$toast.add({ severity: 'success', summary: 'Güncelleme', detail: 'Güncelleme Başarılı', life: 3000 })
                         this.$store.dispatch('customers_surface_list_load_act', data.customerList)
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
 
                     } else {
                         this.$toast.add({ severity: 'error', summary: 'Güncelleme', detail: 'Güncelleme Hatalı', life: 3000 })
                         this.$store.dispatch('customers_surface_list_load_act', data.customerList)
+            this.$store.dispatch('fullscreenLoadingAct', false)
+
                     }
                 })
             } 

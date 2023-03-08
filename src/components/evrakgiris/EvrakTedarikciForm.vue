@@ -26,6 +26,7 @@
       <custom-file-input
         baslik="  Dosya Yükle  "
         @sunucuDosyaYolla="faturaDosyaGonder($event)"
+        :isISFForm="tedarikci_dosya_form"
       />
     </div>
     <div class="column">
@@ -98,6 +99,7 @@ export default {
   },
   data() {
     return {
+      tedarikci_dosya_form:false,
       tedarikci_link_form:true,
       tedarikci_link:"",
       tedarikciList: [],
@@ -130,7 +132,6 @@ export default {
           siparisno: this.SiparisEvrakList.siparisno,
           kullaniciAdi: this.$store.getters.__getUsername,
         };
-
         fileService
           .TedarikciDosyaGonder(
             event,
@@ -173,15 +174,29 @@ export default {
     },
 
     siparisTurDegisim() {
-      this.id = this.TedarikciTur.ID;
-      if (this.TedarikciTur.ID == 1 || this.TedarikciTur.ID == 123) {
-        this.urun_kaydet_form = true
-      } else {
-        this.urun_kaydet_form = false
-      }
-      this.tedarikci_link = `https://file-service.mekmar.com/file/tedarikci/download/30/${this.SiparisEvrakList.siparisno
-        }/${this.TedarikciTur.tedarikci + ".pdf"}`
-      this.tedarikci_link_form = false
+      service.getTedarikciEvrakControl(this.TedarikciTur.tedarikci, this.SiparisEvrakList.siparisno).then(data => {
+        if (data.data) {
+          this.urun_kaydet_form = true
+          this.tedarikci_dosya_form = true
+          alert('Zaten bu siparişin tedarikçisi bulunmakta,lütfen siparişi kontrol ediniz.')
+        } else {
+          this.urun_kaydet_form = false
+          this.tedarikci_dosya_form = false
+
+
+          this.id = this.TedarikciTur.ID;
+          if (this.TedarikciTur.ID == 1 || this.TedarikciTur.ID == 123) {
+            this.urun_kaydet_form = true
+
+          } else {
+            this.urun_kaydet_form = false
+          }
+          this.tedarikci_link = `https://file-service.mekmar.com/file/tedarikci/download/30/${this.SiparisEvrakList.siparisno
+            }/${this.TedarikciTur.tedarikci + ".pdf"}`
+          this.tedarikci_link_form = false
+        }
+      })
+      
     },
     aramaTedarikciTur(event) {
       setTimeout(() => {

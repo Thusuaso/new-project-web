@@ -144,6 +144,9 @@ const OperasyonService = {
       .post("operasyon/islemler/tedarikci/tedarikciDosyaKaydet", tedarikci)
       .then((res) => res.data);
   },
+  getTedarikciEvrakControl(tedarikci, siparis_no) {
+    return axios.get(`operasyon/islemler/tedarikci/tedarikciKontrol/${tedarikci}/${siparis_no}`)
+  },
   setDenizcilikEvrakFaturaKayit(denizcilik) {
     return axios
       .post("operasyon/islemler/denizcilik/denizcilikKayit", denizcilik)

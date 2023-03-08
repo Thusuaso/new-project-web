@@ -337,7 +337,6 @@ export default {
           this.kasalistesi[key].kasa_secim = event;
         }
       }
-      this.is_all_form = true;
       this.is_kasa_form = false;
     },
     kasaCikisYap() {

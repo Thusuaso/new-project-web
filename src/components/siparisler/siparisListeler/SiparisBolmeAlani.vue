@@ -245,11 +245,11 @@ export default {
             if(result.length == 2){
                 
                 this.siparislerBilgisi.siparis.gidenSiparisNo = this.siparislerBilgisi.siparis.siparisNo
-                this.siparislerBilgisi.siparis.kalanSiparisNo = result[0] + '- ' + (parseInt(result[1]) + 1)
+                this.siparislerBilgisi.siparis.kalanSiparisNo = result[0] + '-' + (parseInt(result[1]) + 1)
             }
             else{
-                this.siparislerBilgisi.siparis.gidenSiparisNo = this.siparislerBilgisi.siparis.siparisNo + ' - ' + '1'
-                this.siparislerBilgisi.siparis.kalanSiparisNo = this.siparislerBilgisi.siparis.siparisNo + ' - ' + '2'
+                this.siparislerBilgisi.siparis.gidenSiparisNo = this.siparislerBilgisi.siparis.siparisNo + '-' + '1'
+                this.siparislerBilgisi.siparis.kalanSiparisNo = this.siparislerBilgisi.siparis.siparisNo + '-' + '2'
             }
 
         },
