@@ -2,7 +2,7 @@
     <div class="card">
       <DataTable
         :value="siparisler"
-        style="font-size: 50%"
+        style="font-size: 48%"
         rowGroupMode="rowspan"
         :groupRowsBy="groups"
         sortMode="single"
@@ -63,7 +63,7 @@
             {{ capitalize(slotProps.data.temsilci) }}
           </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by S.S" style="width:40px;" />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" placeholder="Search by S.S" />
             </template>
         </Column>
         <Column field="operasyon" header="O" v-if="detayli_form" :showFilterMenu="true">
@@ -71,7 +71,7 @@
             {{ capitalize(slotProps.data.operasyon) }}
           </template>
           <template #filter="{ filterModel , filterCallback }">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by O" style="width:40px;" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()"  placeholder="Search by O" />
           </template>
         </Column>
         <Column
@@ -103,10 +103,8 @@
             <InputText
               type="text"
               v-model="filterModel.value"
-              class="p-column-filter"
               placeholder="Search by Customers"
               @input="filterCallback()"
-              style="width:40px;"
               :showClear="false"
             />
           </template>
@@ -114,8 +112,8 @@
         <Column
           field="link"
           :header="siparisTur == 'sevk' ? 'CI' : 'PI'"
-          bodyStyle="text-align:center;width:5px;"
-          headerStyle="width:5px;"
+          bodyStyle="text-align:center;width:1%;"
+          headerStyle="width:1%;"
           
         >
           <template #body="slotProps">
@@ -162,7 +160,6 @@
               class="p-column-filter"
               placeholder="Search by Po"
               @input="filterCallback()"
-              style="width:40px;"
               
             />
           </template>
@@ -184,7 +181,6 @@
               class="p-column-filter"
               placeholder="Search by Product"
               @input="filterCallback()"
-              style="width:40px;"
             />
           </template>
         </Column>
@@ -218,7 +214,6 @@
               class="p-column-filter"
               placeholder="Search by Width"
               @input="filterCallback()"
-              style="width:40px;"
               
             />
           </template>
@@ -238,10 +233,8 @@
             <InputText
               type="text"
               v-model="filterModel.value"
-              class="p-column-filter"
               placeholder="Search by Height"
               @input="filterCallback()"
-              style="width:40px;"
             />
           </template>
         </Column>
@@ -260,10 +253,8 @@
             <InputText
               type="text"
               v-model="filterModel.value"
-              class="p-column-filter"
               placeholder="Search by Edge"
               @input="filterCallback()"
-              style="width:40px;"
             />
           </template>
         </Column>
@@ -292,7 +283,6 @@
               type="text"
               v-model="filterModel.value"
               placeholder="Search by Supplier"
-              style="width:40px;"
               @input="filterCallback()"
               
             />
@@ -301,8 +291,8 @@
         <Column
           field="siparisMiktari"
           header="Miktar"
-          style="min-width: 30px"
-          bodyStyle=""
+          
+
         >
           <template #body="slotProps">
             <span class="p-column-title">Miktar</span>
@@ -328,7 +318,8 @@
             {{ formatDecimal(siparisToplamiM2) }}
           </template>
         </Column>
-        <Column field="birim" header="B" headerStyle="width: 5%" bodyStyle="">
+        <Column field="birim" header="B" bodyStyle="width:15px;"
+            headerStyle="width:15px;">
           <template #body="slotProps">
             <span class="p-column-title">B</span>
             {{ slotProps.data.birim }}
@@ -337,8 +328,8 @@
         <Column
           field="uretimMiktari"
           header="Üretim"
-          style="min-width: 30px"
-          bodyStyle="text-align:center;"
+          bodyStyle="width:20px;text-align:center;"
+          headerStyle="width:20px;"
         >
           <template #body="slotProps">
             <span class="p-column-title">Üretim</span>
@@ -359,7 +350,8 @@
             {{ formatDecimal(uretimToplami) }}
           </template>
         </Column>
-        <Column field="ton" header="Ton" style="min-width: 20px" bodyStyle="">
+        <Column field="ton" header="Ton" bodyStyle="width:2%;text-align:center;"
+            headerStyle="width:2%;">
           <template #body="slotProps">
             <span class="p-column-title">Ton</span>
             {{ slotProps.data.ton }}
@@ -371,8 +363,8 @@
         <Column
           field="birimFiyat"
           header="Satis"
-          headerStyle="width: 7%"
-          bodyStyle="text-align:center;"
+          bodyStyle="width:15px;text-align:center;"
+              headerStyle="width:15px;"
         >
           <template #body="slotProps">
             <span class="p-column-title">Satış</span>
@@ -382,8 +374,8 @@
         <Column
           field="satisToplam"
           header="Toplam"
-          style="min-width: 30px"
-          bodyStyle="text-align: center;"
+          bodyStyle="width:15px;"
+              headerStyle="width:15px;"
         >
           <template #body="slotProps">
             <span class="p-column-title">Toplam</span>
