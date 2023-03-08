@@ -12,7 +12,7 @@
         selectionMode="single"
         @row-select="siparisSecim($event)"
         v-model:filters="filters"
-        filterDisplay="row"
+        filterDisplay="menu"
         :loading="datatableLoading"
         @filter="siparisFilterDegisim"
         :paginator="true"
@@ -58,7 +58,7 @@
             {{ slotProps.data.tarih }}
           </template>
         </Column>
-        <Column field="temsilci" header="S.S" v-if="detayli_form" :showFilterMenu="false">
+        <Column field="temsilci" header="S.S" v-if="detayli_form" :showFilterMenu="true">
           <template #body="slotProps">
             {{ capitalize(slotProps.data.temsilci) }}
           </template>
@@ -66,7 +66,7 @@
               <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by S.S" style="width:40px;" />
             </template>
         </Column>
-        <Column field="operasyon" header="O" v-if="detayli_form" :showFilterMenu="false">
+        <Column field="operasyon" header="O" v-if="detayli_form" :showFilterMenu="true">
           <template #body="slotProps">
             {{ capitalize(slotProps.data.operasyon) }}
           </template>
@@ -78,7 +78,7 @@
           :key="1"
           field="musteriAdi"
           header="Kime"
-          :showFilterMenu="false"
+          :showFilterMenu="true"
           :showFilterMatchModes="false"
           :showClear="false"
         >
@@ -142,7 +142,7 @@
           field="siparisNo"
           header="Po"
           style="min-width: 30px"
-          :showFilterMenu="false"
+          :showFilterMenu="true"
         >
           <template #body="slotProps">
             <span class="p-column-title"> Po</span>
@@ -171,7 +171,7 @@
           field="urunAdi"
           header="Ürün Adı"
           style="min-width: 35px"
-          :showFilterMenu="false"
+          :showFilterMenu="true"
         >
           <template #body="slotProps">
             <span class="p-column-title">Ürün Adı</span>
@@ -205,7 +205,7 @@
           header="E"
           style="min-width: 50px"
           bodyStyle="text-align: left;font-size: 10px;"
-          :showFilterMenu="false"
+          :showFilterMenu="true"
         >
           <template #body="slotProps">
             <span class="p-column-title">E</span>
@@ -228,7 +228,7 @@
           header="B"
           style="min-width: 50px"
           bodyStyle="text-align: left;font-size: 10px;"
-          :showFilterMenu="false"
+          :showFilterMenu="true"
         >
           <template #body="slotProps">
             <span class="p-column-title">B</span>
@@ -250,7 +250,7 @@
           header="K"
           style="min-width: 50px"
           bodyStyle="text-align: left;font-size: 10px;"
-          :showFilterMenu="false"
+          :showFilterMenu="true"
         >
           <template #body="slotProps">
             <span class="p-column-title">K</span>
@@ -270,7 +270,7 @@
         <Column
           field="tedarikciAdi"
           header="Kimden"
-          :showFilterMenu="false"
+          :showFilterMenu="true"
         >
           <template #body="slotProps">
             <span class="p-column-title">Kimden</span>
@@ -291,7 +291,6 @@
             <InputText
               type="text"
               v-model="filterModel.value"
-              class="p-column-filter"
               placeholder="Search by Supplier"
               style="width:40px;"
               @input="filterCallback()"
