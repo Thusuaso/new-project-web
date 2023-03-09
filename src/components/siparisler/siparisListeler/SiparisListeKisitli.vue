@@ -63,7 +63,7 @@
             {{ capitalize(slotProps.data.temsilci) }}
           </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by S.S" style="width:40px;" />
+              <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter" placeholder="Search by S.S" style="width:40px;" />
             </template>
         </Column>
         <Column field="operasyon" header="O" v-if="detayli_form" :showFilterMenu="false">
@@ -71,7 +71,7 @@
             {{ capitalize(slotProps.data.operasyon) }}
           </template>
           <template #filter="{ filterModel , filterCallback }">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by O" style="width:40px;" />
+            <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter" placeholder="Search by O" style="width:40px;" />
           </template>
         </Column>
         <Column
@@ -105,7 +105,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Customers"
-              @input="filterCallback()"
+              @keydown.enter="filterCallback()"
               style="width:40px;"
               :showClear="false"
             />
@@ -161,7 +161,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Po"
-              @input="filterCallback()"
+              @keydown.enter="filterCallback()"
               style="width:40px;"
               
             />
@@ -183,7 +183,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Product"
-              @input="filterCallback()"
+              @keydown.enter="filterCallback()"
               style="width:40px;"
             />
           </template>
@@ -217,7 +217,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Width"
-              @input="filterCallback()"
+              @keydown.enter="filterCallback()"
               style="width:40px;"
               
             />
@@ -240,7 +240,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Height"
-              @input="filterCallback()"
+              @keydown.enter="filterCallback()"
               style="width:40px;"
             />
           </template>
@@ -262,7 +262,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Edge"
-              @input="filterCallback()"
+              @keydown.enter="filterCallback()"
               style="width:40px;"
             />
           </template>
@@ -294,7 +294,7 @@
               class="p-column-filter"
               placeholder="Search by Supplier"
               style="width:40px;"
-              @input="filterCallback()"
+              @keydown.enter="filterCallback()"
               
             />
           </template>
