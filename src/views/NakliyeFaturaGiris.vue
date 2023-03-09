@@ -537,6 +537,7 @@ export default {
             tarih: nakliye_data.tarih,
             kullaniciAdi: this.$store.getters.__getUsername,
           };
+          
           this.nakliye_data2 = nakliye_data2;
         });
 

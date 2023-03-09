@@ -483,9 +483,7 @@ export default {
                       isFalse: false
                   }
 
-                  teklifService.setHatirlatilmaDurum(veri).then(data =>
-                      console.log(data)
-                  )
+                  teklifService.setHatirlatilmaDurum(veri)
               }
           }
           

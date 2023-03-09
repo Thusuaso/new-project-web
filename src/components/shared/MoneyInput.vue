@@ -33,13 +33,7 @@ export default {
       value = value.replace(",", ".");
 
       this.emitter.emit("money_input_text_change", value);
-      // this.masraflar_mail_control(event)
-    },
-    // masraflar_mail_control(event) {
-    //   if (this.label == 'Satış Fiyati ($)') {
-    //     this.$store.dispatch('masraflar_change_act',{ 'name': 'Satış Fiyatı', 'new_value': event })
-    //   }
-    // }
+    }
   },
 };
 </script>

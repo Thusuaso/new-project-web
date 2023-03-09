@@ -14,12 +14,12 @@ export default {
     },
     methods: {
         input_change_() {
-            
             this.value = this.value.replace(",", ".")
             this.$emit('money_input_text_change', this.value)
             this.emitter.emit('save_button_activated', false)
 
-        }
+        },
+
     },
     watch: {
         text_value(){

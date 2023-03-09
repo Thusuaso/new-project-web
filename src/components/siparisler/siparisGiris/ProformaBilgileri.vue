@@ -1085,53 +1085,78 @@ export default {
       }
       if (property == "navlunAlis") {
         this.profData.navlunAlis = value;
+        this.$store.dispatch('navlun_alis_change_act', value)
+
       }
       if (property == "detayTutar_1") {
         this.profData.detayTutar_1 = value;
+        this.$store.dispatch('detay_tutar1_change_act', value)
+
 
       }
         
       if (property == "detayAlis_1") {
         this.profData.detayAlis_1 = value;
+        this.$store.dispatch('detay_alis1_change_act', value)
+
 
       }
       if (property == "detayTutar_2") {
         this.profData.detayTutar_2 = value;
+        this.$store.dispatch('detay_tutar2_change_act', value)
+
 
       }
       if (property == "detayAlis_2") {
         this.profData.detayAlis_2 = value;
+        this.$store.dispatch('detay_alis2_change_act', value)
+
 
 
       }
       if (property == "detayTutar_3") {
         this.profData.detayTutar_3 = value;
+        this.$store.dispatch('detay_tutar3_change_act', value)
+
 
       }
 
       if (property == "detayTutar_4") {
         this.profData.detayTutar_4 = value;
         this.profData.mekus_masraf = value;
+        this.$store.dispatch('mekus_masrafi_change_act', value)
+
+
 
       }
       if (property == "detayAlis_3") {
         this.profData.detayAlis_3 = value;
+        this.$store.dispatch('detay_alis3_change_act', value)
+
 
       }
       if (property == "komisyon") {
         this.profData.komisyon = value;
+        this.$store.dispatch('komisyon_change_act', value)
+
 
       }
       if (property == "evrakGideri") {
         this.profData.evrakGideri = value;
+        this.$store.dispatch('evrak_gideri_change_act', value)
+
 
       }
       if (property == "sigorta_tutar_satis") {
         this.profData.sigorta_tutar_satis = value;
+        this.$store.dispatch('sigorta_satis_change_act', value)
+
 
       }
       if (property == "sigorta_tutar") {
         this.profData.sigorta_tutar = value;
+        this.$store.dispatch('sigorta_alis_change_act', value)
+
 
       }
 

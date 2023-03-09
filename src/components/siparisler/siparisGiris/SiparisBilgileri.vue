@@ -9,7 +9,7 @@
             <div class="column">
               <AutoComplete
                 :disabled="dis_urun_giris"
-                @click="sec"
+                @change="sec"
                 v-model="tedarikci"
                 :suggestions="filterTedarikciList"
                 @complete="aramaTedarikci($event)"
@@ -476,11 +476,12 @@ export default {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    sec() {},
-    miktar_input_event(event) {
+    sec() {
       this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
 
-
+    },
+    miktar_input_event(event) {
+      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
 
       if (event) {
         this.siparis.miktar = event.toString();

@@ -252,7 +252,6 @@ export default {
         vm.siparisList = data;
         store.dispatch("loadingEndAct");
 
-        // console.log("vm.siparisList",vm.siparisList)
       });
     });
   },

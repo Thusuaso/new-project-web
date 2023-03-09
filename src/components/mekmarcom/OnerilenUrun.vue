@@ -17,22 +17,27 @@
           <div class="column is-12">
             <DataTable
               class="p-datatable-responsive"
-              :value="productlist"
+              :value="productsList"
               selectionMode="single"
               v-model:selection="product"
               v-model:filters="filters"
               @row-select="urunSec($event)"
               :scrollable="true"
               scrollHeight="450px"
+              filterDisplay="row"
             >
               <Column
                 field="urunid"
                 header="Id"
                 headerStyle="width:60px;"
                 bodyStyle="text-align:center;vertical-align:middle;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   {{ slotProps.data.urunid }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by Id" />
                 </template>
 
               </Column>
@@ -40,10 +45,14 @@
                 field="urunadi_en"
                 header="Ürün"
                 bodyStyle="text-align:center;vertical-align:middle;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   {{ slotProps.data.urunadi_en }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by Name" />
+                  </template>
 
               </Column>
               <Column
@@ -118,6 +127,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="column is-2" style="margin-top: 50px">
         <Button
           class="p-button-success"
@@ -128,18 +139,23 @@
       </div>
     </div>
   </section>
+
 </template>
 <script>
 //import { mapGetters } from 'vuex';
 //import mekmarService from '../../service/MekmarService';
 import service from "../../service/MekmarPanelService";
-
+import { FilterMatchMode } from 'primevue/api';
 export default {
   props: ["productlist", "urunid", "kategori_id"],
 
   data() {
     return {
-      filters: {},
+      filters: {
+
+        urunid: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        urunadi_en:{value:null,matchMode:FilterMatchMode.STARTS_WITH}
+      },
       product: null,
       loading: false,
       disekle: true,
@@ -149,6 +165,7 @@ export default {
       eklenenler: [],
       diskayit: true,
       onerilenUrunList: null,
+      productsList:[]
     };
   },
   methods: {
@@ -162,11 +179,11 @@ export default {
     },
     urunEkle() {
       if (this.product) {
-        let kontrol = this.onerilenUrunList.find(
-          (x) => x.urunid == this.product.urunid
+        let kontrol = this.onerilenUrunList.filter(
+          (x) => x.onerilenurunid == this.product.urunid
         );
-
-        if (!kontrol) {
+        console.log(kontrol)
+        if (kontrol.length == 0) {
           const data = this.product;
 
           this.onerilenUrunList.push({
@@ -186,7 +203,10 @@ export default {
 
           this.product = null;
           this.disekle = true;
+        } else {
+          alert('Eklenen Ürün Önceden Eklenmiştir!')
         }
+        // eslint-disable-next-line vue/no-mutating-props
 
         this.urunDegisiklikDurum();
       }
@@ -222,6 +242,9 @@ export default {
         this.silinenler.push(customData);
         this.onerilenUrunler = null;
 
+
+
+
         this.urunDegisiklikDurum();
       }
     },
@@ -251,7 +274,9 @@ export default {
   },
 
   created() {
+    
     this.onerilenUrunList = this.$store.getters.onerilenUrunler;
+    this.productsList = this.productlist
     },
 };
 </script>

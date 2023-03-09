@@ -216,8 +216,7 @@ export default {
         .getIscilikList(this.siparisNo, this.urunKartId)
         .then((data) => {
           this.giderListesi = data;
-          console.log("giderListesi", this.giderListesi)
-          console.log("giderToplam",this.giderToplam)
+
           for (let key in this.giderListesi) {
             this.giderToplam += this.giderListesi[key].tutar;
           }
@@ -253,7 +252,6 @@ export default {
   created() {
     this.localService = new LocalService();
     siparisService.getGiderModel().then((data) => {
-      console.log("getGiderModel", data)
       this.dataGiderModel = data;
       this.giderModel = { ...this.dataGiderModel };
     });
@@ -267,7 +265,6 @@ export default {
   },
   mounted() {
     siparisService.getGiderModel().then((data) => {
-      console.log("getGiderModel",data)
       this.dataGiderModel = data;
       this.giderModel = { ...this.dataGiderModel };
     });

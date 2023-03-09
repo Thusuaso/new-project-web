@@ -511,6 +511,7 @@ export default {
       "komisyon",
       "digerTutar",
       "mekus_masraf",
+      'masraflar'
     ]),
   },
   watch: {
@@ -797,11 +798,15 @@ export default {
         urunlerYeni: this.urunler_yeni,
         urunlerDegisenler: this.urunler_degisenler,
         urunlerSilinenler: this.urunler_silinenler,
+        degisimMasraflar: this.masraflar
       };
       this.$store.dispatch('fullscreenLoadingAct', true)
-
       siparisService.setSiparisGuncelle(siparisVeri).then((data) => {
         if (data.status == true) {
+
+          
+
+
           this.$store.dispatch('fullscreenLoadingAct', false)
 
           this.$toast.add({

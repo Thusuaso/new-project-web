@@ -680,7 +680,6 @@ export default {
       }
     },
     selectedProducts() {
-      console.log("selectedProducts",this.selectedProducts)
       if (this.selectedProduct && this.selectedPo && this.selectedProducts.length >0) {
         this.crateAllDisabled = false
       } else {

@@ -522,7 +522,7 @@ export default {
     siparisSecim(event) {
       //sipariş seçildiğinde
       this.$store.dispatch('fullscreenLoadingAct', true)
-
+      this.$store.dispatch('masraflarResetAct')
       this.selectedSiparis = event.data;
 
       this.selectSiparis = true;
