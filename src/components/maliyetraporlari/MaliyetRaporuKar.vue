@@ -48,6 +48,8 @@
         showGridlines
         sortField="kar_zarar" :sortOrder="1"
         @row-select="is_selected_maliyet_row($event)"
+        v-model:filters="filters"
+        filterDisplay="row"
         >
         <template #header>
             <div class="columns is-multiline">
@@ -60,6 +62,9 @@
             <template #body="slotProps">
                 {{ slotProps.data.musteri_adi }}
             </template>
+            <template #filter="{ filterModel, filterCallback }">
+                            <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+                        </template>
         </Column>
         <Column field="toplam_bedel" header="Toplam Bedel">
                         <template #body="slotProps">
@@ -68,6 +73,7 @@
                         <template #footer>
                                         {{ formatPrice(kar_toplam_guncelle.toplam_bedel_sum) }}
                                     </template>
+                        
                     </Column>
         <Column field="masraf_toplam" header="Masraf Toplamı">
                     <template #body="slotProps">
@@ -319,10 +325,13 @@
 
 <script>
 import service from "@/service/RaporService";
-
+import { FilterMatchMode } from 'primevue/api';
 export default {
     data() {
         return {
+            filters: {
+                'musteri_adi': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+            },
             maliyet_ayrinti_load:[],
             is_maliyet_ayrinti_form:false,
             musteri_adi:"",
