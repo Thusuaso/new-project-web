@@ -46,12 +46,17 @@ import Steps from 'primevue/steps';
 import "element-plus/dist/index.css";
 import "/node_modules/primeflex/primeflex.css";
 
+import TreeTable from 'primevue/treetable';
+
+
 import mitt from 'mitt'
 // var Emitter = require('tiny-emitter');
 // var emitter = new Emitter();
 
 const app = createApp(App)
 
+app.component("TreeTable", TreeTable);
+app.component("Dialog", Dialog);
 
 app.component("Dialog", Dialog);
 app.component("Button", Button);

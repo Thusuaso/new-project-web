@@ -779,6 +779,12 @@ const raporService = {
   },
   getMekmarTedarikciyeGoreAyrinti(tedarikci_id,year) {
     return axios.get(`/raporlar/mekmarraporlari/tedarikci/ayrinti/${tedarikci_id}/${year}`).then(res=>res.data)
+  },
+  getStokFilterList() {
+    return axios.get('/uretim/stokList/filter').then(res=>res.data)
+  },
+  getStokFilterListAyrinti(urun_kart_id) {
+    return axios.get('/uretim/stokList/filter/ayrinti/' + urun_kart_id).then(res=>res.data)
   }
 };
 

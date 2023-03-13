@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 
     <div class="grid">
       <div class="col">
@@ -504,4 +504,120 @@ export default {
     margin-top: -15px;
   }
 }
-</style>
+</style> -->
+
+<template>
+
+  <TreeTable v-model:value="stokList" v-model:filters="filters" :filterMode="filterMode.value" @node-select="onSelectedStokList($event)" v-model:selectionKeys="selectedKey" selectionMode="single" :metaKeySelection="metaKey">
+      <Column field="label" header="Ürün Adı" :expander="true" removableSort bodyStyle="font-weight:bold;">
+        <template #body="slotProps">
+          {{ slotProps.node.data.label }}
+        </template>
+       
+        <template #filter>
+              <InputText v-model="filters['label']" type="text" class="p-column-filter" placeholder="Filter by name" />
+          </template>
+      </Column>
+      <Column field="kasaSayisi" header="Kasa Sayısı" :expander="false" bodyStyle="text-align:center;" removableSort footerStyle="text-align:center;">
+         <template #footer>
+            {{ kasa_sayisi_total }}
+          </template>
+        </Column>
+        <Column field="miktar" header="Miktar" :expander="false" bodyStyle="text-align:center;" removableSort footerStyle="text-align:center;">
+          <template #footer>
+            {{ formatDecimal(miktar_total) }}
+          </template>
+        </Column>
+
+
+  </TreeTable>
+  <Dialog v-model:visible="stok_list_ayrinti_form" header="Ayrinti Listesi" :modal="true">
+    <DataTable :value="stokListAyrinti" tableStyle="min-width: 50rem" class="p-datatable-sm">
+      <Column field="sira" header="Sıra"></Column>
+
+      <Column field="tarih" header="Tarih"></Column>
+      <Column field="kasa_no" header="Kasa No"></Column>
+      <Column field="firma_adi" header="Tedarikçi"></Column>
+        <Column field="ocak_adi" header="Ocak Adı"></Column>
+        <Column field="urun_durum" header="Ürün Durum"></Column>
+
+
+        <Column field="kategori_adi" header="Kategori"></Column>
+        <Column field="urun_adi" header="Ürün Adı"></Column>
+        <Column field="yuzey_islem" header="Yüzey"></Column>
+        <Column field="olcu" header="Ölçü"></Column>
+
+        <Column field="miktar" header="Miktar"></Column>
+        <Column field="birim_adi" header="Birim"></Column>
+          <Column field="kutu_adet" header="Kutu"></Column>
+          <Column field="kutu_ici_adet" header="Kutu İçi"></Column>
+          <Column field="adet" header="Adet"></Column>
+
+          <Column field="siparis_aciklama" header="Po"></Column>
+            <Column field="aciklama" header="Açıklama"></Column>
+
+
+
+
+
+
+
+
+    
+  </DataTable>
+  </Dialog>
+</template>
+
+<script>
+import service from '@/service/RaporService'
+export default {
+  data() {
+    return {
+      stokList: [],
+      filterMode: { label: 'Lenient', value: 'lenient' },
+      filters: {
+        
+      },
+      selectedKey: null,
+      stokListAyrinti: [],
+      stok_list_ayrinti_form: false,
+      kasa_sayisi_total: 0,
+      miktar_total:0,
+    }
+  },
+  created() {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
+    service.getStokFilterList().then(data => {
+      this.stokList = data
+      this.kasa_sayisi_total = 0;
+      this.miktar_total = 0;
+      for (let item of data) {
+        this.kasa_sayisi_total += item.data.kasaSayisi
+        this.miktar_total += item.data.miktar
+      }
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
+    })
+  },
+  methods: {
+    formatDecimal(value) {
+      let val = (value / 1).toFixed(2).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    onSelectedStokList(event) {
+      if (event.data.urunKartId) {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+        service.getStokFilterListAyrinti(event.data.urunKartId).then(data => {
+          this.stokListAyrinti = data
+          this.stok_list_ayrinti_form = true
+          this.$store.dispatch('fullscreenLoadingAct', false)
+
+        })
+      }
+      
+    }
+  }
+}
+</script>
+
