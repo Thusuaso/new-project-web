@@ -1194,7 +1194,9 @@ export default {
       this.$emit("siparisUrunDegisim");
     },
     isfDelete(tedarikciId, siparisNo) {
-      if (tedarikciId != "" && siparisNo != "" || tedarikciId != null && siparisNo != null) {
+      console.log("isfDelete")
+      if ((tedarikciId != "" && siparisNo != "") || (tedarikciId != null && siparisNo != null)) {
+        console.log("isfDelete")
         tedarikciService
           .getDeleteFormControl(tedarikciId, siparisNo)
           .then((status) => {
