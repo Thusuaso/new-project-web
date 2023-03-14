@@ -8,8 +8,8 @@ const actions = {
     commit("urunBaslikMut", data);
   },
   setServisAdresAct({ commit }) {
-   let url = "https://doktor-servis.mekmar.com/";
-   //let url = "http://localhost:5000/";
+   //let url = "https://doktor-servis.mekmar.com/";
+   let url = "http://localhost:5000/";
 
     commit("setServisAdresMut", url);
   },

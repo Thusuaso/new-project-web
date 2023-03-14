@@ -1085,7 +1085,7 @@ export default {
                     this.kayit_kontrol();
 
                     this.coklu_kayit();
- 
+                    socket.siparis.emit('send_message_home_event','Kasa girişi yapıldı.')
 
                     //kasa sayısı alınacak toplama göre hareket edilecek
                   }
@@ -1093,6 +1093,7 @@ export default {
                   if (this.kayit_kontrol()) {
                     this.kayit_kontrol();
                     this.coklu_kayit();
+                    socket.siparis.emit('send_message_home_event', 'Kasa girişi yapıldı.')
 
                   }
                 }
@@ -1107,6 +1108,7 @@ export default {
                   this.kayit_kontrol();
 
                   this.coklu_kayit();
+                  socket.siparis.emit('send_message_home_event', 'Kasa girişi yapıldı.')
                   
 
                   //kasa sayısı alınacak toplama göre hareket edilecek
@@ -1115,6 +1117,7 @@ export default {
                 if (this.kayit_kontrol()) {
                   this.kayit_kontrol();
                   this.coklu_kayit();
+                  socket.siparis.emit('send_message_home_event', 'Kasa girişi yapıldı.')
                   
 
                 }

@@ -33,6 +33,7 @@ import appNavbar from "@/components/shared/appNavbar.vue";
 import { mapGetters } from "vuex";
 import { LoopingRhombusesSpinner } from "epic-spinners";
 import { ref } from "vue";
+import socket from "@/service/SocketService";
 export default {
   data() {
     return {
@@ -52,6 +53,12 @@ export default {
 
   },
   methods: {},
+  mounted() {
+    socket.siparis.on('send_message_home_emit', data => {
+      console.log('send_message_home_emit')
+      this.$toast.add({severity:'success',summary:data,life:5000})
+    })
+  }
 };
 </script>
 <style>
