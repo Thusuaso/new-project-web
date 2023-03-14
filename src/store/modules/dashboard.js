@@ -12,8 +12,6 @@ const state = {
   gelenSiparislerGrafik: [],
   gelenSiparislerGrafikDataMekmar: [],
   dashboardSubData: [],
-  dashboardLogsAll: [],
-  dashboardLogs: [],
   dashboardUlkeyeGoreTeklif: [],
   kontAlacakTop: 0,
   finansAlacakTop: 0,
@@ -95,12 +93,7 @@ const actions = {
 
     });
   },
-  dashboard_logs_all_load({ commit }, data) {
-    commit("dashboard_logs_all_mut", data);
-  },
-  dashboard_logs_load({ commit }, data) {
-    commit("dashboard_logs_mut", data);
-  },
+
   dashboard_ulkeye_gore_load({ commit }, data) {
     commit("dashboard_ulkeye_gore_mut", data);
   },
@@ -169,12 +162,8 @@ const mutations = {
       state.musteriPriceProductSum += item.satisMiktar;
     }
   },
-  dashboard_logs_all_mut(state, data) {
-    state.dashboardLogsAll = data;
-  },
-  dashboard_logs_mut(state, data) {
-    state.dashboardLogs = data;
-  },
+
+
   dashboard_ulkeye_gore_mut(state, data) {
     state.dashboardUlkeyeGoreTeklif = data;
   },
@@ -214,12 +203,8 @@ const getters = {
   dashboardSubData(state) {
     return state.dashboardSubData;
   },
-  dashboardLogsAll(state) {
-    return state.dashboardLogsAll;
-  },
-  dashboardLogs(state) {
-    return state.dashboardLogs;
-  },
+
+
   dashboardUlkeyeGoreTeklif(state) {
     return state.dashboardUlkeyeGoreTeklif;
   },

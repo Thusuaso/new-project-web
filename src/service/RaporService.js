@@ -55,18 +55,6 @@ const raporService = {
       .then((res) => res.data);
   },
 
-  getAnaSayfaDegisiklikList() {
-    return axios
-      .get("raporlar/anaSayfa/anaSayfaDegisiklikList")
-      .then((res) => res.data);
-  },
-
-  getAnaSayfaDegisiklikListAll() {
-    return axios
-      .get("raporlar/anaSayfa/anaSayfaDegisiklikListAll")
-      .then((res) => res.data);
-  },
-
   getMusteriBazindaAyrinti(yil, ay) {
     return axios
       .get("raporlar/siparis/musteriBazindaAyrinti/" + yil + "/" + ay)
@@ -785,6 +773,9 @@ const raporService = {
   },
   getStokFilterListAyrinti(urun_kart_id) {
     return axios.get('/uretim/stokList/filter/ayrinti/' + urun_kart_id).then(res=>res.data)
+  },
+  getLogs(year) {
+    return axios.get(`/raporlar/mekmar/logs/${year}`).then(res=>res.data)
   }
 };
 

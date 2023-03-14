@@ -26,7 +26,7 @@
     <div class="col">
           <DataTable :value="uretimStok" responsiveLayout="scroll" @row-select="mekmerMekmozSelected($event)"
             v-if="status == 'Mekmer+Mekmoz'" v-model:selection="mekmerMekmozData" selectionMode="single"
-            v-model:filters="filters1" filterDisplay="row">
+            v-model:filters="filters1" filterDisplay="row" @filter="is_filters($event)">
             <Column field="en" header="En" :showFilterMenu="false">
               <template #filter="{filterModel,filterCallback}">
                 <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
@@ -86,7 +86,7 @@
           
           </DataTable>
           <DataTable :value="uretimStok" responsiveLayout="scroll" @row-select="disSelected($event)" v-model:selection="disData"
-            selectionMode="single" v-model:filters="filters2" filterDisplay="row" v-else-if="status == 'Dis'">
+            selectionMode="single" v-model:filters="filters2" filterDisplay="row" v-else-if="status == 'Dis'" @filter="is_filters($event)">
             <Column field="en" header="En" :showFilterMenu="false">
               <template #filter="{filterModel,filterCallback}">
                 <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
@@ -147,7 +147,7 @@
           </DataTable>
           <DataTable :value="uretimStok" responsiveLayout="scroll" @row-select="disMekmerSelected($event)"
             v-model:selection="disMekmerData" v-model:filters="filters3" filterDisplay="row" selectionMode="single"
-            v-else-if="status == 'MekmerDis'">
+            v-else-if="status == 'MekmerDis'" @filter="is_filters($event)">
             <Column field="en" header="En" :showFilterMenu="false">
               <template #filter="{filterModel,filterCallback}">
                 <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
@@ -349,6 +349,9 @@ export default {
     })
   },
   methods: {
+    is_filters(event) {
+      this.anaListToplami(event.filteredValue)
+    },
     cikti_al() {
       service.stockFiyatliExcellCikti(this.uretimStok).then((res) => {
         if (res.status) {

@@ -462,7 +462,7 @@ export default {
   },
   methods: {
     isf_change_event() {
-      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
     },
     is_satis(event) {
       this.siparis.satisFiyati = event.value
@@ -477,11 +477,11 @@ export default {
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     sec() {
-      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
 
     },
     miktar_input_event(event) {
-      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
 
       if (event) {
         this.siparis.miktar = event.toString();
@@ -1143,7 +1143,7 @@ export default {
         } else {
           this.urunIslemleri();
           this.siparisUrunler.push({ ...this.siparis });
-          this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+          // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
           if (!this.yeniSiparis) this.yeni_urun_islem();
           this.dataSatirTopla(this.siparisUrunler);
           this.form_btn_reset();
@@ -1179,7 +1179,7 @@ export default {
     },
     btn_sil_click() {
       let index = this.indexBul(this.siparis.id, this.siparisUrunler);
-      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
       if (!this.yeniSiparis) this.silinen_urun_islem();
       // eslint-disable-next-line vue/no-mutating-props
       this.siparisUrunler.splice(index, 1);
@@ -1194,7 +1194,6 @@ export default {
       this.$emit("siparisUrunDegisim");
     },
     isfDelete(tedarikciId, siparisNo) {
-      console.log("isfDelete")
       if ((tedarikciId != "" && siparisNo != "") || (tedarikciId != null && siparisNo != null)) {
         console.log("isfDelete")
         tedarikciService

@@ -27,6 +27,10 @@ const routes = [
     },
   },
   {
+    path: "/logs",
+    component:() =>import("@/views/Logs.vue")
+  },
+  {
     path: "/",
     component: () => import("@/components/dashboard/Dashboard"),
     beforeEnter(to, from, next) {

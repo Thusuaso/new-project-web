@@ -1289,10 +1289,7 @@ export default {
               life: 5000,
             });
             socket.siparis.emit('teklif_degisim_event');
-            socket.siparis.emit(
-              "anaSayfaDegisiklikEvent",
-              data.anaSayfaDegisiklikList
-            );
+
             this.teklif.id = data.teklifId;
             this.urunkayit = false;
             this.dis_numune = false;
@@ -1356,10 +1353,7 @@ export default {
               life: 1000,
             });
 
-            socket.siparis.emit(
-              "anaSayfaDegisiklikEvent",
-              data.anaSayfaDegisiklikList
-            );
+
             this.dis_teklifkaydet = false;
             this.$store.dispatch('fullscreenLoadingAct', false)
 

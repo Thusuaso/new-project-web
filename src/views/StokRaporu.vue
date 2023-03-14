@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
 
     <div class="grid">
       <div class="col">
@@ -504,9 +504,9 @@ export default {
     margin-top: -15px;
   }
 }
-</style> -->
+</style>
 
-<template>
+<!-- <template>
 
   <TreeTable v-model:value="stokList" v-model:filters="filters" :filterMode="filterMode.value" @node-select="onSelectedStokList($event)" v-model:selectionKeys="selectedKey" selectionMode="single" :metaKeySelection="metaKey">
       <Column field="label" header="Ürün Adı" :expander="true" removableSort bodyStyle="font-weight:bold;">
@@ -620,4 +620,4 @@ export default {
   }
 }
 </script>
-
+ -->

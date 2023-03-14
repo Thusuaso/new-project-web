@@ -816,10 +816,7 @@ export default {
             life: 5000,
           });
           socket.siparis.emit('numunetahsilat_kayitdegisim_event');
-          socket.siparis.emit(
-            "anaSayfaDegisiklikEvent",
-            data.anaSayfaDegisiklikList
-          );
+
           this.numune.id = data.Id;
           this.urunkayit = false;
 
@@ -868,10 +865,7 @@ export default {
           //socket.siparis.emit('teklif_guncelleme_event',veri.kullaniciAdi);
           socket.siparis.emit('numunetahsilat_kayitdegisim_event');
 
-          socket.siparis.emit(
-            "anaSayfaDegisiklikEvent",
-            data.anaSayfaDegisiklikList
-          );
+
         } else {
           this.$store.dispatch('fullscreenLoadingAct', false)
 

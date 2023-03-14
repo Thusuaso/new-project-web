@@ -216,10 +216,7 @@ export default {
       service.tahsilatKaydetme(data).then((res) => {
         if (res.status) {
           socket.siparis.emit("tahsilat_kayitdegisim_event", data.siparisno);
-          socket.siparis.emit(
-            "anaSayfaDegisiklikEvent",
-            res.anaSayfaDegisiklikList
-          );
+
           this.default_data();
 
         }
@@ -243,10 +240,7 @@ export default {
       service.tahsilatGuncelleme(data).then((res) => {
         if (res.status) {
           socket.siparis.emit("tahsilat_kayitdegisim_event", data.siparisno);
-          socket.siparis.emit(
-            "anaSayfaDegisiklikEvent",
-            res.anaSayfaDegisiklikList
-          );
+
           this.default_data();
 
 

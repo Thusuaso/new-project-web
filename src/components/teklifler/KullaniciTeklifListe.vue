@@ -84,30 +84,44 @@
                   {{ toplam_teklif_sayisi }}
                 </template>
               </Column>
-              <Column field="ulkeAdi" header="Ülke" headerStyle="width:12%;">
+              <Column field="ulkeAdi" header="Ülke" headerStyle="width:12%;" :showFilterMenu="false">
                 <template #body="slotProps">
                   {{ slotProps.data.ulkeAdi }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                      :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                  </template>
               </Column>
               <Column
                 field="temsilciAdi"
                 header="T"
                 headerStyle="width:6%;"
                 bodyStyle="text-align:center;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   {{ slotProps.data.temsilciAdi }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                      :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                  </template>
               </Column>
               <Column
                 field="teklifOncelik"
                 header="S"
                 headerStyle="width:6%;"
                 bodyStyle="text-align:center;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   {{ slotProps.data.teklifOncelik }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                      :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                  </template>
               </Column>
             </DataTable>
           </div>
@@ -192,30 +206,44 @@
                   {{ toplam_teklif_sayisi_blist }}
                 </template>
               </Column>
-              <Column field="ulkeAdi" header="Ülke" headerStyle="width:12%;">
+              <Column field="ulkeAdi" header="Ülke" headerStyle="width:12%;" :showFilterMenu="false">
                 <template #body="slotProps">
                   {{ slotProps.data.ulkeAdi }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                      <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                        :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                    </template>
               </Column>
               <Column
                 field="temsilciAdi"
                 header="T"
                 headerStyle="width:6%;"
                 bodyStyle="text-align:center;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   {{ slotProps.data.temsilciAdi }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                      <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                        :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                    </template>
               </Column>
               <Column
                 field="teklifOncelik"
                 header="S"
                 headerStyle="width:6%;"
                 bodyStyle="text-align:center;"
+                :showFilterMenu="false"
               >
                 <template #body="slotProps">
                   {{ slotProps.data.teklifOncelik }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                      <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                        :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                    </template>
               </Column>
             </DataTable>
           </div>
@@ -252,13 +280,20 @@ export default {
       teklifId: 0,
       filters: {
         'sira': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'musteriAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+        'musteriAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'temsilciAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'teklifOncelik': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'ulkeAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+
 
 
       },
       filtersBlist: {
         'sira': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'musteriAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+        'musteriAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'temsilciAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'teklifOncelik': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'ulkeAdi': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
       },
       grafikData: null,
       oncelik_grafikData: null,

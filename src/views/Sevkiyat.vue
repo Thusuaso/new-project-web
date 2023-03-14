@@ -438,10 +438,7 @@ export default {
             service.siparisKayitIslem(sevk_data).then((data) => {
               if (data.status) {
                 alert("Kayıt İşlemi Yapıldı.");
-                socket.siparis.emit(
-                  "anaSayfaDegisiklikEvent",
-                  data.anaSayfaDegisiklikList
-                );
+
                 this.siparis = "";
                 this.sipariskalemlist = null;
                 this.kasalistesi = null;
@@ -484,10 +481,7 @@ export default {
           service.siparisKayitIslem(sevk_data).then((data) => {
             if (data.status) {
               alert("Kayıt İşlemi Yapıldı.");
-              socket.siparis.emit(
-                "anaSayfaDegisiklikEvent",
-                data.anaSayfaDegisiklikList
-              );
+
               this.siparis = "";
               this.sipariskalemlist = null;
               this.kasalistesi = null;

@@ -711,10 +711,7 @@ export default {
                 socket.siparis.emit("siparisler_list_event")
                 // eslint-disable-next-line vue/no-mutating-props
                 this.yeniSiparis = false;
-                socket.siparis.emit(
-                  "anaSayfaDegisiklikEvent",
-                  data.anaSayfaDegisiklikList
-                );
+
                 this.siparisUrunler = {}
 
                 return;
@@ -824,10 +821,7 @@ export default {
           socket.siparis.emit("siparisler_list_event")
           this.emitter.emit('siparisler_dialog_close', false)
 
-          socket.siparis.emit(
-            "anaSayfaDegisiklikEvent",
-            data.anaSayfaDegisiklikList
-          );
+
 
         } else {
           this.$store.dispatch('fullscreenLoadingAct', false)

@@ -116,6 +116,9 @@
                     <router-link to="/musteriler/seleksiyonaGoreMusteriler">
                         <el-menu-item index="8-7"> Seleksiyon Müşterileri </el-menu-item>
                     </router-link>
+                    <router-link to="/logs">
+                            <el-menu-item index="8-8"> Logs </el-menu-item>
+                        </router-link>
                 </el-sub-menu>
                 <el-sub-menu index="9" v-if="isOthers" v-show="is_h">
                     <template #title>Atlanta SM</template>

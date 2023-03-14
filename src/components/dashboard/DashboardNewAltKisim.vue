@@ -376,77 +376,9 @@
         </Card>
       </div>
     </div>
-    <div class="columns">
-      <div class="column">
-        <Card>
-          <template #header>
-            <h2 style="text-align: center">R22: Son Yapılan Değişiklikler</h2>
-          </template>
-          <template #content>
-            <DataTable
-              :value="dashboardLogs"
-              responsiveLayout="scroll"
-              dataKey="id"
-              :paginator="true"
-              :rows="10"
-            >
-              <Column
-                field="degisiklikTarihi"
-                header="Degişiklik Tarihi"
-              ></Column>
-              <Column field="degisiklikYapan" header="Degişiklik Yapan">
-              </Column>
-              <Column
-                field="yapilanDegisiklik"
-                header="Yapılan Değişiklik"
-              ></Column>
-            </DataTable>
-            <Button @click="anaSayfaDegisiklikAll" label="All"></Button>
-          </template>
-        </Card>
-      </div>
-    </div>
+
   </div>
 
-  <Dialog
-    header="Tüm Hareketler"
-    v-model:visible="is_main_all_form"
-    :modal="true"
-    maximizable
-    position="top"
-  >
-    <div class="card">
-      <div class="columns">
-        <div class="column is-4">
-          <Calendar
-            v-model="selectionDate"
-            selectionMode="range"
-            @hide="isSelectedYear"
-          />
-        </div>
-      </div>
-      <DataTable
-        :value="dashboardLogsAll"
-        :resizableColumns="true"
-        columnResizeMode="fit"
-        showGridlines
-        responsiveLayout="scroll"
-        :rows="20"
-        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        :paginator="true"
-      >
-        <Column field="degisiklikTarihi" header="Degişiklik Tarihi"></Column>
-        <Column
-          field="degisiklikYapan"
-          header="Degişiklik Yapan"
-          headerStyle="width:26%;"
-          bodyStyle="text-align:center;"
-        >
-        </Column>
-        <Column field="yapilanDegisiklik" header="Yapılan Değişiklik"></Column>
-      </DataTable>
-    </div>
-  </Dialog>
 
   <Dialog
     v-model:visible="is_tedarikci_ayrinti_form"
@@ -736,7 +668,6 @@ export default {
     const d = new Date();
     this.year = d.getFullYear();
     this.month = this.months[d.getMonth() + 1];
-    this.degisiklikAnaSayfaList();
     raporService.getUlkeTeklifler(this.selectedYear.year).then((data) => {
       this.topUlkeTeklif(data);
       this.$store.dispatch("dashboard_ulkeye_gore_load", data);
@@ -917,15 +848,6 @@ export default {
         this.$store.dispatch("dashboard_logs_all_load", data);
       });
       this.is_main_all_form = true;
-    },
-    degisiklikAnaSayfaList() {
-          this.$store.dispatch('fullscreenLoadingAct', true)
-
-      raporService.getAnaSayfaDegisiklikList().then((data) => {
-        this.$store.dispatch("dashboard_logs_load", data);
-          this.$store.dispatch('fullscreenLoadingAct', false)
-
-      });
     },
   },
 };

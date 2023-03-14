@@ -39,10 +39,12 @@ import efespesinat from "./modules/efespesinat";
 import efestahsilat from "./modules/efestahsilat";
 import mekmerDisFatura from "./modules/mekmerDisFatura";
 import siparis_masraflar_mail_control from "./modules/siparis_masraflar_mail_control";
+import logs from "./modules/logs";
 // import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   modules: {
+    logs,
     loginAuth,
     dashboard,
     musteri,
