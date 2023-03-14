@@ -56,7 +56,7 @@ export default {
   mounted() {
     socket.siparis.on('send_message_home_emit', data => {
       console.log('send_message_home_emit')
-      this.$toast.add({severity:'success',summary:data,life:5000})
+      this.$toast.add({severity:'success',summary:data})
     })
   }
 };

@@ -802,8 +802,8 @@ export default {
         if (data.status == true) {
 
           
-
-
+          const item = this.ad + ' ' + this.siparis.siparisNo + ' bilgilerini değiştirdi.'
+          socket.siparis.emit('send_message_home_event', item)
           this.$store.dispatch('fullscreenLoadingAct', false)
 
           this.$toast.add({
