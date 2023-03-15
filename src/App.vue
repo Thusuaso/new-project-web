@@ -55,6 +55,7 @@ export default {
   methods: {},
   mounted() {
     socket.siparis.on('send_message_home_emit', data => {
+      if(this.$store.getters.__getUserId == 10 || this.$store.getters.__getUserId == 47)
        this.$toast.add({ severity: 'warn', summary: 'Logs', detail:data })
     })
   }
