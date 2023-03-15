@@ -563,6 +563,7 @@ export default {
               if (veri.Status) {
                 alert("Başarılı şekilde yuklendi.");
                 this.IcSiparisDosyaGonder();
+                socket.siparis.emit('siparisler_list_event')
               } else {
                 alert("Ops! Tekrar Deneyiniz. Yüklenemedi.");
               }

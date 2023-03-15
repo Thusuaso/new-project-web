@@ -792,6 +792,7 @@ export default {
 
         if (status) {
           socket.siparis.emit("seleksiyon_kayitsil_event", this.detail.id);
+          socket.siparis.emit('siparisler_list_event')
           if (this.kayit_tur == "Sipariş") {
             siparisService
               .getSiparisUrun(this.siparis.name)
@@ -800,9 +801,9 @@ export default {
                 this.dataSifirla();
                 this.$emit("seleksiyon_form_kapat");
                 this.$store.dispatch('fullscreenLoadingAct', false)
-
+                
                 this.$toast.add({
-                  severity: "error",
+                  severity: "success",
                   summary: "Üretim Kasa Silme",
                   detail: "Kasa Silme Başarılı",
                   life: 3000,
@@ -848,6 +849,8 @@ export default {
                   "seleksiyon_kayitguncelle_event",
                   uretim_data
                 );
+                  socket.siparis.emit('siparisler_list_event')
+
 
 
                 if (this.detail.uretimturid == 2) {
@@ -858,6 +861,8 @@ export default {
                         "seleksiyon_siparisdegisim_event",
                         siparis_data
                       );
+                    socket.siparis.emit('siparisler_list_event')
+
 
                       this.dataSifirla();
                       this.$store.dispatch("seleksiyonGuncelleClickActions");
@@ -873,7 +878,7 @@ export default {
                   this.emitter.emit('kaydet_emit')
                   this.$emit("seleksiyon_form_kapat");
                   this.$store.dispatch('fullscreenLoadingAct', false)
-
+                  
 
                 }
 
@@ -1085,15 +1090,15 @@ export default {
                     this.kayit_kontrol();
 
                     this.coklu_kayit();
-                    socket.siparis.emit('send_message_home_event','Kasa girişi yapıldı.')
-
+                    socket.siparis.emit('siparisler_list_event')
                     //kasa sayısı alınacak toplama göre hareket edilecek
                   }
                 } else {
                   if (this.kayit_kontrol()) {
                     this.kayit_kontrol();
                     this.coklu_kayit();
-                    socket.siparis.emit('send_message_home_event', 'Kasa girişi yapıldı.')
+                    socket.siparis.emit('siparisler_list_event')
+
 
                   }
                 }
@@ -1108,8 +1113,8 @@ export default {
                   this.kayit_kontrol();
 
                   this.coklu_kayit();
-                  socket.siparis.emit('send_message_home_event', 'Kasa girişi yapıldı.')
-                  
+                    socket.siparis.emit('siparisler_list_event')
+
 
                   //kasa sayısı alınacak toplama göre hareket edilecek
                 }
@@ -1117,7 +1122,8 @@ export default {
                 if (this.kayit_kontrol()) {
                   this.kayit_kontrol();
                   this.coklu_kayit();
-                  socket.siparis.emit('send_message_home_event', 'Kasa girişi yapıldı.')
+                    socket.siparis.emit('siparisler_list_event')
+
                   
 
                 }

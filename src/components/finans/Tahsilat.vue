@@ -216,7 +216,8 @@ export default {
       service.tahsilatKaydetme(data).then((res) => {
         if (res.status) {
           socket.siparis.emit("tahsilat_kayitdegisim_event", data.siparisno);
-
+          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişine $' + this.thmusteri.tutar +   ' tahsilat girdi.'
+          socket.siparis.emit("send_message_home_event", info)
           this.default_data();
 
         }
@@ -240,7 +241,8 @@ export default {
       service.tahsilatGuncelleme(data).then((res) => {
         if (res.status) {
           socket.siparis.emit("tahsilat_kayitdegisim_event", data.siparisno);
-
+          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişinin $' + this.thmusteri.tutar + ' tahsilatını değiştirdi.'
+          socket.siparis.emit("send_message_home_event", info)
           this.default_data();
 
 
@@ -261,6 +263,8 @@ export default {
             "tahsilat_kayitdegisim_event",
             this.thmusteri.siparisno
           );
+          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişinin ' + ' tahsilatını sildi.'
+          socket.siparis.emit("send_message_home_event", info)
           this.default_data();
 
 

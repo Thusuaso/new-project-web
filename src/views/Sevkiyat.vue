@@ -482,7 +482,8 @@ export default {
           service.siparisKayitIslem(sevk_data).then((data) => {
             if (data.status) {
               alert("Kayıt İşlemi Yapıldı.");
-
+              let info = this.user + ' ' + this.siparis.siparisno + ' siparişini sevk etti.'
+              socket.siparis.emit('send_message_home_event', info)
               this.siparis = "";
               this.sipariskalemlist = null;
               this.kasalistesi = null;

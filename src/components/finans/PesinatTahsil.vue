@@ -141,7 +141,7 @@ export default {
       };
       const users = this.$store.getters.__getUsername
       store_data.kullaniciadi = users;
-
+      this.$store.dispatch('fullscreenLoadingAct',true)
       service
         .finansPesinatKaydet(store_data)
         .then((res) => {
@@ -151,13 +151,19 @@ export default {
                 "tahsilat_kayitdegisim_event",
                 this.pesinat_model.siparis_no
               );
+              let info = users + ' ' + this.pesinat_model.siparis_no + ' siparişine ' + ' peşinat girdi.'
+              socket.siparis.emit("send_message_home_event",info)
               this.$store.dispatch("new_pesinat_model_act");
               this.$store.dispatch("pesinat_listesi_yukle_act", data);
               this.loading_pesinat = false;
+              this.$store.dispatch('fullscreenLoadingAct', false)
+
             });
           } else {
             this.is_kaydet = false;
             this.is_vazgec = false;
+            this.$store.dispatch('fullscreenLoadingAct', true)
+
           }
         })
         .catch(() => {
