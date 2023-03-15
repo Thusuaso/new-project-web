@@ -556,7 +556,6 @@ export default {
 
       for (let key in liste) {
         const data = liste[key];
-        console.log(data)
         kasaToplami += data.kasa;
         siparisToplami += data.siparisMiktari;
         uretimToplami += data.uretimMiktari;

@@ -699,7 +699,8 @@ export default {
             siparisService.setSiparisKaydet(siparisVeri).then((data) => {
               if (data.status == true) {
                 this.$store.dispatch('fullscreenLoadingAct', false)
-
+                let info = this.siparis.kayit_kisi + ' ' + this.siparis.siparisNo + ' siparişini sisteme girdi.'
+                socket.siparis.emit('send_message_home_event',info)
                 this.$toast.add({
                   severity: "success",
                   summary: "Bilgi Ekranı",
@@ -800,10 +801,32 @@ export default {
       this.$store.dispatch('fullscreenLoadingAct', true)
       siparisService.setSiparisGuncelle(siparisVeri).then((data) => {
         if (data.status == true) {
+          const masraflarList = []
+          for (let item of this.masraflar) {
+            if (item.isChange == 1) {
 
-          
-          const item = this.ad + ' ' + this.siparis.siparisNo + ' bilgilerini değiştirdi.'
-          socket.siparis.emit('send_message_home_event', item)
+              masraflarList.push(item)
+            } else {
+                continue
+            }
+          }
+          if (masraflarList.length > 0) {
+            let info = ""
+            for (let item of masraflarList) {
+              info = this.siparis.siparisNo + ' Po ya sahip ' + item.label + ' ' +  this.siparis.kayit_kisi +' tarafından degiştirildi.'
+              socket.siparis.emit('send_message_home_event', info)
+            }
+          } else {
+            if (this.urunler_degisenler.length > 0) {
+              let info = "";
+              for (let item of this.urunler_degisenler) {
+                info = this.siparis.kayit_kisi + ' ' + this.siparis.siparisNo + ' po ya ait ' + item.musteriAciklama + ' ürününde değişiklik yaptı.'
+                socket.siparis.emit('send_message_home_event', info)
+
+              }
+            }
+            
+          }
           this.$store.dispatch('fullscreenLoadingAct', false)
 
           this.$toast.add({

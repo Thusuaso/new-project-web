@@ -9,7 +9,7 @@
             Maliyet Logları
         </template>
         <template #content>
-            <DataTable :value="logs_maliyet" v-model:filters="filters" filterDisplay="row">
+            <DataTable :value="logs_maliyet" v-model:filters="filters" filterDisplay="row" paginator :rows="15">
                 <Column field="yil" header="Yıl">
                     <template #filter="{ filterModel, filterCallback }">
                         <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
@@ -37,7 +37,7 @@
             Diğer Loglar
         </template>
         <template #content>
-            <DataTable :value="logs_degisimler" v-model:filters="filters2" filterDisplay="row">
+            <DataTable :value="logs_degisimler" v-model:filters="filters2" filterDisplay="row" paginator :rows="15">
             <Column field="year" header="Yıl">
                 <template #filter="{ filterModel, filterCallback }">
                             <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
