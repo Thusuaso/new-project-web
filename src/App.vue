@@ -27,6 +27,7 @@
       </div>
     </div>
   </div>
+
 </template>
 <script>
 import appNavbar from "@/components/shared/appNavbar.vue";
@@ -62,7 +63,10 @@ export default {
 };
 </script>
 <style>
+
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css";
+
+
 .container{
   top: 47%;
     left: 49%;
@@ -74,6 +78,7 @@ export default {
 .element{
   text-align:center;
 }
+
 .routerGeneral {
   width: 100%;
   height: 100%;

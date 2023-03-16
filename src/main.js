@@ -45,8 +45,17 @@ import Galleria from 'primevue/galleria';
 import Steps from 'primevue/steps';
 import "element-plus/dist/index.css";
 import "/node_modules/primeflex/primeflex.css";
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 
 import TreeTable from 'primevue/treetable';
+
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
+
 
 
 import mitt from 'mitt'
@@ -54,6 +63,10 @@ import mitt from 'mitt'
 // var emitter = new Emitter();
 
 const app = createApp(App)
+
+
+app.component("Accordion", Accordion);
+app.component("AccordionTab", AccordionTab);
 
 app.component("TreeTable", TreeTable);
 app.component("Dialog", Dialog);

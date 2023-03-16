@@ -1010,14 +1010,10 @@
 </template>
 
 <script>
-import Dropdown from "primevue/dropdown";
-import Dialog from "primevue/dialog";
 import service from "@/service/RaporService";
 import { mapGetters } from "vuex";
 export default {
   components: {
-    Dropdown,
-    Dialog,
   },
   data() {
     return {

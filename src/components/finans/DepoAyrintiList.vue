@@ -1,6 +1,5 @@
 <template>
   <section>
-    <Toast position="bottomright" />
     <TabView>
       <TabPanel header="Açık Siparişler">
         <Button

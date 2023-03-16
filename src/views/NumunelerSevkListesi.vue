@@ -189,7 +189,6 @@ export default {
 
       this.$store.dispatch("seleksiyonSelectItemActions");
       this.is_numuneform = true;
-      this.created();
     },
 
     formatPriceDolar(value) {

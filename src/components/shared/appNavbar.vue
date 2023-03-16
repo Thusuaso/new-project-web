@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
     <div>
-        <div style="position: fixed;top:0px;left:0px; z-index: 99; width: 100%">
+        <!-- <div style="position: fixed;top:0px;left:0px; z-index: 99; width: 100%">
             <el-menu class="el-menu-demo" mode="horizontal" style="position:sticky;top:0px;left:0px;z-index:99;">
                 <router-link class="navbar-item" to="/">
                     <el-menu-item index="1" style="width:10px;">
@@ -46,12 +46,12 @@
                     <router-link to="/finans/finansAnaListe">
                         <el-menu-item index="5-1"> Finans Ana Liste </el-menu-item>
                     </router-link>
-                    <!-- <router-link to="/finans/efesAnaListe">
+                    <router-link to="/finans/efesAnaListe">
                                 <el-menu-item index="5-1"> Efes Ana Liste </el-menu-item>
-                            </router-link> -->
-                    <!-- <router-link to="/finans/odemelerfinansAnaListesi">
+                            </router-link>
+                    <router-link to="/finans/odemelerfinansAnaListesi">
                                 <el-menu-item index="5-2"> Ödemeler Listesi </el-menu-item>
-                            </router-link> -->
+                            </router-link>
                 </el-sub-menu>
                 <el-sub-menu index="7">
                     <template #title>Operasyon</template>
@@ -76,9 +76,9 @@
                     <el-sub-menu index="7-7">
                         <template #title>Faturalar</template>
         
-                        <!-- <router-link to="/operasyon/mekmerdisfatura">
+                        <router-link to="/operasyon/mekmerdisfatura">
                             <el-menu-item index="7-7-1"> İç Piyasa Fatura Giriş </el-menu-item>
-                        </router-link> -->
+                        </router-link>
                         <router-link to="/operasyon/nakliyeFaturaGiris">
                             <el-menu-item index="7-7-1"> Nakliye Fatura Giriş </el-menu-item>
                         </router-link>
@@ -133,9 +133,9 @@
                         <router-link to="/raporlar/uretimRaporu">
                             <el-menu-item index="10-10-1"> Üretim Raporu </el-menu-item>
                         </router-link>
-                        <!-- <router-link to="/raporlar/sevkiyatRaporuMekmer">
+                        <router-link to="/raporlar/sevkiyatRaporuMekmer">
                             <el-menu-item index="10-10-2"> Sevkiyat Raporu </el-menu-item>
-                        </router-link> -->
+                        </router-link>
                         
                         <router-link to="/raporlar/stokRaporu">
                             <el-menu-item index="10-10-2"> Stok Raporu </el-menu-item>
@@ -164,9 +164,9 @@
                         <router-link to="/raporlar/yuklemeRapor">
                             <el-menu-item index="10-11-4"> Yükleme Raporu </el-menu-item>
                         </router-link>
-                        <!-- <router-link to="/raporlar/sevkiyatRaporuMekmar">
+                        <router-link to="/raporlar/sevkiyatRaporuMekmar">
                             <el-menu-item index="10-11-4"> Sevkiyat Raporu </el-menu-item>
-                        </router-link> -->
+                        </router-link>
                         <router-link to="/raporlar/sevkiyatRaporuAll">
                             <el-menu-item index="10-11-5"> Sevkiyat Raporu </el-menu-item>
                         </router-link>
@@ -195,11 +195,11 @@
                         <el-menu-item index="11-2"> Finans Listesi </el-menu-item>
                     </router-link>
                 </el-sub-menu>
-                <!-- <el-sub-menu index="12" v-if="is_h">
+                <el-sub-menu index="12" v-if="is_h">
                     <router-link to="/teklif/musteriListesi">
                                             <el-menu-item index="12-2"> Müşteri Listesi </el-menu-item>
                                         </router-link>
-                    </el-sub-menu> -->
+                    </el-sub-menu>
 
                         <el-menu-item index="12" style="margin-top:8px;"> 
 
@@ -304,8 +304,28 @@
                     </div>
                 </OverlayPanel>
                 <Button type="button" class="notificationButton" v-if="isNotification > 0" :label="isNotification" @click="toggle" />
+                
+                <OverlayPanel ref="notifOp" style="width:40%;">
+                        <Dropdown v-model="selectedMessageUser" :options="users" optionLabel="user" placeholder="Select a User" class="w-full md:w-10rem" style="margin-right:4px;" @change="is_input_disabled = false"/>
+
+                        <InputText v-model="message_text" placeholder="Lütfen Mesajınızı Yazınız" style="margin-right:4px;" :disabled="is_input_disabled"/>
+
+                        <Accordion v-model:activeIndex="active">
+                            <AccordionTab v-for="item of anlikNotificationData" :key="item" :header="item.data.message" >
+                                <p v-for="item2 of item.children" :key="item2">
+                                    {{ item2.message }}
+                                </p>
+                            </AccordionTab>
+                        </Accordion>
+
+    
+                        </OverlayPanel>
+                <i class="pi pi-eye" style="color: slateblue;cursor:pointer; width:25px;height:25px;margin-top:25px;margin-left:20px;" @click="overlayPanelEvent" ></i>
+
+
+
             </el-menu>
-        </div>
+        </div> -->
         
         
         
@@ -318,8 +338,6 @@
                 </div>
             </section>
         </Dialog>
-        
-        
         <Dialog v-model:visible="is_tekliform" style="z-index:99;" header="Teklif Listesi" :modal="true" position="top">
             <TeklifGirisForm :yeniKayit="teklifYeniKayit" :teklifId="teklifId"></TeklifGirisForm>
         </Dialog>
@@ -327,6 +345,292 @@
             <BgpNetworkDetailForm ></BgpNetworkDetailForm>
         </Dialog>
     </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" >
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item dropdown" v-if="is_h">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Satışçı
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/satisci">Takip</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/bgpNetwork">Bgp Project</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Siparişler
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/siparisler/uretim">Üretim</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/siparisler/sevk">Sevk</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/siparisler/bekleyen">Bekleyen</a></li>
+
+                  </ul>
+            </li>
+            <li class="nav-item dropdown" v-if="is_h">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Seleksiyon
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/seleksiyon/seleksiyonGiris">Seleksiyon Giriş</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/seleksiyon/kasaDetayOlculeri">Kasa Detay</a></li>
+
+                      </ul>
+            </li>
+            <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/finans/finansAnaListe">Finans Ana Liste</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Operasyon
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/urunKartListesi">Ürün Kart</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/operasyon/tedarikciListe">Tedarikçi</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/operasyon/sevkiyatForm">Sevkiyat</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/evrakYukleme">Yükleme Formu</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/operasyon/sevkTakipListesi">Konteynır Takip</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/operasyon/sevkTakipDusenListesi">Konteynır Takip Düşen</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/operasyon/nakliyeFaturaGiris">Nakliye Giriş</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/operasyon/nakliyeFaturaListesi">Nakliye Fatura</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/operasyon/konteynerFaturaGiris">Konteynır Giriş</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/operasyon/konteynerFaturaListesi">Konteynır Fatura</a></li> 
+
+
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Müşteriler
+                </a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/musteriler/musteriListesi">Müşteri Listesi</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/musteriler/teklifMusterileri">Teklif Müşterileri</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/musteriler/bgpMusterileri">Bgp Müşterileri</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/musteriler/fuarMusterileri">Fuar Müşterileri</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/musteriler/musteriSiparisListesi">Ülke Müşterileri</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/musteriler/seleksiyonaGoreMusteriler">Seleksiyon Müşterileri</a></li>
+
+                </ul>
+            </li>
+            <li class="nav-item dropdown" v-if="is_h">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Mekmer Raporları
+                    </a>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/raporlar/uretimRaporu">Üretim</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/raporlar/stokRaporu">Stok</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/raporlar/stokRaporuFiyatli">Stok Fiyatlı</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/raporlar/ocakListesi">Ocak</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/raporlar/uretilecekUrunler">Üretilecek</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li v-if="isOthers" v-show="is_h"><a class="dropdown-item" href="/atlanta/stokListesi">Atlanta</a></li>
+                    </ul>
+            </li>
+            <li class="nav-item dropdown" v-if="is_h">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Mekmar Raporları
+                        </a>
+                        <ul class="dropdown-menu">
+                        <li v-if="is_m_g"><a class="dropdown-item" href="/maliyet/maliyetRaporu">Ayo</a></li>
+                        <li v-if="is_m_g"><hr class="dropdown-divider"></li>
+                        <li v-if="is_m_g"><a class="dropdown-item" href="/maliyetAnalizi">Ayo Maliyet</a></li>
+                        <li v-if="is_m_g"><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/raporlar/yeniYuklemeRaporlari">MK Raporu</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/raporlar/yuklemeRapor">Yükleme</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/raporlar/sevkiyatRaporuAll">Sevkiyat</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/raporlar/siparisOzetRapor">Sipariş Özet</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/raporlar/mekusMasraflari">Mekus</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/raporlar/mekmarRaporlari">Mekmar</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/logs">Logs</a></li>
+
+                        </ul>
+            </li>
+            <li class="nav-item dropdown" v-if="is_h">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Numuneler
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/numune/numuneList">Takip</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/numune/finansList">Finans</a></li>
+                    
+                </ul>
+                
+            </li>
+            <li class="nav-item" v-if="is_h">
+                <a class="nav-link active" aria-current="page" href="/teklifListesi">Teklifler</a>
+                
+            </li>
+            <li class="nav-item dropdown" v-if="is_" v-show="is_h">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    USA
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/panel/mekmarusa/depoUrunList">Ürünler</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/panel/mekmarusa/urunYorumListesi">Yorumlar</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/panel/mekmarusa/depoTurkeyUrunList">Mekmar Ürünler</a></li>
+                    
+                    </ul>
+                
+            </li>
+            <li class="nav-item dropdown" v-if="is_" v-show="is_h">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Panel
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/panel/mekmarcom/urunListesi">Ürünler</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/panel/mekmarcom/urunSiraListesi">Sıra Değiştir</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/panel/mekmarcom/musteriListesi">Kullanıcılar</a></li>
+                    
+                        </ul>
+                
+            </li>
+            
+            <li class="nav-item">
+                <Button type="button" class="notificationButton" v-if="isNotification > 0" :label="isNotification" @click="toggle" />
+                <OverlayPanel ref="op" style="background-color:#FFD373;">
+                    <div class="main-container" v-for="item in notificationData" :key="item" v-show="notificationData.length > 0">
+                        <div class="cards">
+                            <div class="card card-1">
+                                <div class="card__icon"
+                                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding-left:5px;font-size:18px;">
+                                    {{ item.baslik }}</div>
+                                <h2 class="card__title">{{ item.hatirlatma_notu }}</h2>
+                                <p class="card__apply">
+                                <p class="card__link" style="margin-bottom:5px;">{{ item.hatirlatmaTarihi }} <i
+                                        class="fas fa-arrow-right"></i></p>
+                                </p>
+                                <Button @click="isRowSelected(item)" label="Show" id="isBorderButton">
+    
+                                </Button>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container" v-for="item in hatirlatmaTrueDatas" :key="item"
+                        v-show="hatirlatmaTrueDatas.length > 0">
+    
+                        <div class="cards">
+                            <div class="card card-1">
+                                <div class="card__icon"
+                                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; padding-left:10px;font-size:18px;">
+                                    {{ item.title }}</div>
+                                <h2 class="card__title">{{ item.hatirlatmaAciklama }}</h2>
+                                <p class="card__apply">
+                                <p class="card__link" style="margin-bottom:5px;">{{ item.end }} <i
+                                        class="fas fa-arrow-right"></i>
+                                </p>
+                                </p>
+                                <Button @click="isTeklifHatirlatmaSelected(item.id)" label="Show" id="isBorderButton">
+    
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container" v-for="item in bgpHatirlatmaList" :key="item"
+                        v-show="bgpHatirlatmaList.length > 0">
+    
+                        <div class="cards">
+                            <div class="card card-1">
+                                <div class="card__icon"
+                                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; padding-left:10px;font-size:18px;">
+                                    {{
+                                        item.firmaAdi
+                                    }}</div>
+                                <h2 class="card__title">{{ item.hatirlatmaAciklama }}</h2>
+                                <p class="card__apply">
+                                <p class="card__link" style="margin-bottom:5px;">{{ item.hatirlatmaTarihi }} <i
+                                        class="fas fa-arrow-right"></i></p>
+                                </p>
+                                <Button @click="isBgpHatirlatmaSelected(item.id)" label="Show" id="isBorderButton">
+    
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </OverlayPanel>
+            </li>
+
+
+
+
+
+
+          </ul>
+          <ul class="navbar-nav">
+            <!-- <li class="navbar-item">
+                <a class="nav-link">
+                                    <i class="pi pi-eye" style="color: slateblue;cursor:pointer; " @click="overlayPanelEvent" ></i>
+
+                </a>
+                <OverlayPanel ref="notifOp" style="width:40%;margin-top:50px;">
+                            <Dropdown v-model="selectedMessageUser" :options="users" optionLabel="user" placeholder="Select a User" class="w-full md:w-10rem" style="margin-right:4px;" @change="is_input_disabled = false"/>
+
+                            <InputText v-model="message_text" placeholder="Lütfen Mesajınızı Yazınız" style="margin-right:4px;" :disabled="is_input_disabled"/>
+
+                            <Accordion v-model:activeIndex="active">
+                                <AccordionTab v-for="item of anlikNotificationData" :key="item" :header="item.data.message" >
+                                    <p v-for="item2 of item.children" :key="item2">
+                                        {{ item2.message }}
+                                    </p>
+                                </AccordionTab>
+                            </Accordion>
+
+    
+                            </OverlayPanel>
+            </li> -->
+            <li class="navbar-item"><a class=" active button is-primary"  @click="logout"
+                    v-if="$store.getters.__isAuthentication">
+                    <strong><i class="pi pi-sign-out"></i></strong>
+                </a></li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+
 </template>
 
 <script>
@@ -338,6 +642,7 @@ import TeklifGirisForm from "../../components/teklifler/TeklifGirisForm";
 import socket from "@/service/SocketService";
 import bgpService from "@/service/BgpProjectService";
 import BgpNetworkDetailForm from "@/components/bgpproject/bgpNetworkDetailForm"
+import notificationService from "@/service/AnlikBildirimService"
 export default {
     components: {
         CustomersDetay,
@@ -349,6 +654,13 @@ export default {
   },
   data() {
       return {
+        anlikNotificationData:[],
+        is_input_disabled:true,
+          message_text:"",
+          selectedMessageUser: {},
+          users: [
+            
+             ],
       satisciDurum:"Musteri",
       teklifId:0,
       isOthers: true,
@@ -366,7 +678,49 @@ export default {
       is_m_g: false
     };
   },
-  created() {
+    created() {
+
+        if (this.__getUserId == 47) {
+            this.users = [
+                { 'id': 44, 'user': 'Hakan' },
+                { 'id': 10, 'user': 'Gizem' },
+                { 'id': 19, 'user': 'Özlem' },
+                { 'id': 12, 'user': 'Hüseyin' },
+            ]
+        } else if (this.__getUserId == 44) {
+            this.users = [
+                { 'id': 47, 'user': 'Semih' },
+                { 'id': 10, 'user': 'Gizem' },
+                { 'id': 19, 'user': 'Özlem' },
+                { 'id': 12, 'user': 'Hüseyin' },
+            ]
+        } else if (this.__getUserId == 10) {
+            this.users = [
+                { 'id': 47, 'user': 'Semih' },
+                { 'id': 44, 'user': 'Hakan' },
+                { 'id': 19, 'user': 'Özlem' },
+                { 'id': 12, 'user': 'Hüseyin' },
+            ]
+        } else if (this.__getUserId == 19) {
+            this.users = [
+                { 'id': 47, 'user': 'Semih' },
+                { 'id': 44, 'user': 'Hakan' },
+                { 'id': 10, 'user': 'Gizem' },
+                { 'id': 12, 'user': 'Hüseyin' },
+            ]
+        } else if (this.__getUserId == 12) {
+            this.users = [
+                { 'id': 47, 'user': 'Semih' },
+                { 'id': 44, 'user': 'Hakan' },
+                { 'id': 10, 'user': 'Gizem' },
+                { 'id': 19, 'user': 'Özlem' },
+            ]
+        }
+        notificationService.getNotification(this.__getUserId).then(data => {
+            this.anlikNotificationData = data.liste
+        })
+
+        
     if (
       this.__getUserId == 47 ||
       this.__getUserId == 10 ||
@@ -408,6 +762,31 @@ export default {
     });
   },
     methods: {
+        sendMessage() {
+            let who_send_id = this.$store.getters.__getUserId
+            let who_send_name = this.$store.getters.__getUsername
+            let data = {
+                'message': this.message_text,
+                'userId': this.selectedMessageUser.id,
+                'userName': this.selectedMessageUser.user,
+                'whoSendId': who_send_id,
+                'whoSendName':who_send_name
+            }
+            data.getUserId = this.getUserId
+            notificationService.setNotificationSave(data).then(status => {
+                if (status) {
+                this.$toast.add({ severity: 'success', summary: 'Bildirim Durum', detail: 'Mesajınız Başarıyla Gönderildi', life: 3500 })
+                socket.siparis.emit('get_notification_list_event', data)
+
+                } else {
+                this.$toast.add({ severity: 'danger', summary: 'Bildirim Durum', detail: 'Mesajınız Başarıyla Gönderildi', life: 3500 })
+
+                }
+            })
+        },
+        overlayPanelEvent(event) {
+            this.$refs.notifOp.toggle(event);
+        },
         bgpProjectHatirlatmaList(users) {
             service.getBgpProjectsHatirlatma(users).then(data => {
                 this.$store.dispatch('bgp_projects_hatirlatma_list_load', data.result)
@@ -513,25 +892,37 @@ export default {
                 this.bgpProjectHatirlatmaList(this.__getUserId)
             });
         })
+        socket.siparis.on('get_notification_list_emit', (datas) => {
+            notificationService.getNotification(this.__getUserId).then(data => {
+                this.anlikNotificationData = data.liste
+                if (datas.userId == this.__getUserId) {
+                    this.$toast.add({severity:'success',summary:datas.whoSendName + ' den bir mesajınız var',detail:datas.message })
+                }
+            })
+        })
   }
 };
 </script>
 <style scoped>
+.dropdown-menu{
+    width:250px;
+}
+.dropdown-item{
+    width:250px;
+}
+
 .notificationButton{
-    width: 30px;
-    height: 30px;
+    margin-left:10px;
+    margin-right:10px;
     padding: 10px;
-    margin-top:20px;
-    margin-left:20px;
     background-color: #0e0e0e;
     border-radius:5px;
 }
 .notificationButton:hover {
-    width: 30px;
-    height: 30px;
     padding: 10px;
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 10px;
+    margin-right:10px;
+
     background-color: black;
     transition:all 2s 0s linear;
     transform:scale(1.1);
