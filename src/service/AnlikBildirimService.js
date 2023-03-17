@@ -9,6 +9,9 @@ const notification = {
     },
     getNotification(userId) {
         return axios.get(`/notification/getList/${userId}`).then(res=>res.data)
+    },
+    setNotificationSaveSub(data) {
+        return axios.post('/notification/islemler/ansered',data).then(res=>res.data)
     }
 }
 

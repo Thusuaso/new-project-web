@@ -326,7 +326,36 @@
             </el-menu>
         </div> -->
         
-        
+        <div class="card flex justify-content-center">
+                        <Sidebar v-model:visible="visible" class="p-sidebar-md">
+                            <Accordion >
+                                <AccordionTab header="Kişiler">
+                                     <Listbox v-model="selectedMessageUser" :options="users" optionLabel="user" class="w-full md:w-14rem" @change="is_input_disabled = false"/>
+                                </AccordionTab>
+                            </Accordion>
+                            <br/>
+                            <div >
+                                <span>
+                                         <InputText v-model="message_text" placeholder="Lütfen Mesajınızı Yazınız" style="margin-right:4px;" :disabled="is_input_disabled"/>
+                                    </span>
+                                    <span>
+                                        <Button class="pi pi-send" style="height:40px;" @click="sendMessage" :disabled="message_text ? false : true"/>
+                                    </span>
+                            </div>
+                                <br/>
+                                <CommentBar v-for="item of anlikNotificationData" :key="item" :item="item"/>
+
+
+                                <!-- <Accordion v-model:activeIndex="active">
+                                    <AccordionTab v-for="item of anlikNotificationData" :key="item" :header="item.data.message" >
+                                        <p v-for="item2 of item.children" :key="item2">
+                                        <span>{{ item2.message }}</span> <span><Button label="Cevapla" @click="sendAnswer(item2)"/></span> 
+                                              
+                                        </p>
+                                    </AccordionTab>
+                                </Accordion> -->
+                        </Sidebar>
+                    </div>
         
     
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" >
@@ -520,12 +549,13 @@
 
           </ul>
           <ul class="navbar-nav"  style="width:10%;float:right">
-            <!-- <li class="navbar-item">
-                <a class="nav-link">
-                                    <i class="pi pi-eye" style="color: slateblue;cursor:pointer; " @click="overlayPanelEvent" ></i>
+            <li class="navbar-item">
+                <a class="nav-link"  @click="visible = true">
+                                    <i class="pi pi-eye" style="color: slateblue;cursor:pointer; "  ></i>
 
                 </a>
-                <OverlayPanel ref="notifOp" style="width:40%;margin-top:50px;">
+                
+                <!-- <OverlayPanel ref="notifOp" style="width:40%;margin-top:50px;">
                             <Dropdown v-model="selectedMessageUser" :options="users" optionLabel="user" placeholder="Select a User" class="w-full md:w-10rem" style="margin-right:4px;" @change="is_input_disabled = false"/>
 
                             <InputText v-model="message_text" placeholder="Lütfen Mesajınızı Yazınız" style="margin-right:4px;" :disabled="is_input_disabled"/>
@@ -533,14 +563,15 @@
                             <Accordion v-model:activeIndex="active">
                                 <AccordionTab v-for="item of anlikNotificationData" :key="item" :header="item.data.message" >
                                     <p v-for="item2 of item.children" :key="item2">
-                                        {{ item2.message }}
+                                    <span>{{ item2.message }}</span> <span><Button label="Cevapla" @click="sendAnswer(item2)"/></span> 
+                                              
                                     </p>
                                 </AccordionTab>
                             </Accordion>
 
     
-                            </OverlayPanel>
-            </li> -->
+                            </OverlayPanel> -->
+            </li>
             <li class="nav-item">
                     <Button type="button" class="notificationButton" v-if="isNotification > 0" :label="isNotification" @click="toggle" />
                     <OverlayPanel ref="op" style="background-color:#FFD373;">
@@ -643,17 +674,20 @@ import socket from "@/service/SocketService";
 import bgpService from "@/service/BgpProjectService";
 import BgpNetworkDetailForm from "@/components/bgpproject/bgpNetworkDetailForm"
 import notificationService from "@/service/AnlikBildirimService"
+import CommentBar from "@/components/shared/commentBar"
 export default {
     components: {
         CustomersDetay,
         TeklifGirisForm,
-        BgpNetworkDetailForm
+        BgpNetworkDetailForm,
+        CommentBar
     },
   computed: {
       ...mapGetters(["__getUserId","bgpHatirlatmaList"]),
   },
   data() {
       return {
+        visible:false,
         anlikNotificationData:[],
         is_input_disabled:true,
           message_text:"",
@@ -779,7 +813,7 @@ export default {
                 socket.siparis.emit('get_notification_list_event', data)
 
                 } else {
-                this.$toast.add({ severity: 'danger', summary: 'Bildirim Durum', detail: 'Mesajınız Başarıyla Gönderildi', life: 3500 })
+                this.$toast.add({ severity: 'danger', summary: 'Bildirim Durum', detail: 'Mesajınız Gönderimi Başarısız', life: 3500 })
 
                 }
             })
@@ -896,7 +930,7 @@ export default {
             notificationService.getNotification(this.__getUserId).then(data => {
                 this.anlikNotificationData = data.liste
                 if (datas.userId == this.__getUserId) {
-                    this.$toast.add({severity:'success',summary:datas.whoSendName + ' den bir mesajınız var',detail:datas.message })
+                    this.$toast.add({severity:'success',summary:datas.whoSendName + ' bir mesaj gönderdi.',detail:datas.message })
                 }
             })
         })
@@ -904,12 +938,6 @@ export default {
 };
 </script>
 <style scoped>
-.dropdown-menu{
-    width:250px;
-}
-.dropdown-item{
-    width:250px;
-}
 
 .notificationButton{
     margin-left:10px;

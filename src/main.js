@@ -47,8 +47,10 @@ import "element-plus/dist/index.css";
 import "/node_modules/primeflex/primeflex.css";
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
+import Sidebar from 'primevue/sidebar';
 
 import TreeTable from 'primevue/treetable';
+import Listbox from 'primevue/listbox';
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -64,6 +66,9 @@ import mitt from 'mitt'
 
 const app = createApp(App)
 
+app.component("Listbox", Listbox);
+
+app.component("Sidebar", Sidebar);
 
 app.component("Accordion", Accordion);
 app.component("AccordionTab", AccordionTab);
