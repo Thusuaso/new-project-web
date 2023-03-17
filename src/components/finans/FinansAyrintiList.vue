@@ -183,17 +183,21 @@ export default {
   },
   created() {
     socket.siparis.on("tahsilat_kayitdegisim_emit", () => {
+      this.$store.dispatch('fullscreenLoadingAct', true)
       this.secim_loading = true;
       this.ayrinti_loading = true;
       this.odeme_loading = true;
 
       let musteri_id = this.finans_ayrinti_list[0].musteri_id;
+      
       service.getFinansAyrintiListYukle(musteri_id).then((data) => {
         this.$store.dispatch("finansAyrintiListYukleAct", data);
 
         this.secim_loading = false;
         this.ayrinti_loading = false;
         this.odeme_loading = false;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     });
   },
@@ -239,6 +243,7 @@ export default {
     },
 
     odemeSecim(event) {
+      this.$store.dispatch('fullscreenLoadingAct', true)
       this.select_odeme = event.data;
       let tarih = event.data.tarih;
       let musteri_id = this.finans_ayrinti_list[0].musteri_id;
@@ -247,6 +252,7 @@ export default {
         this.$store.dispatch("finansOdemeSecimListYukleAct", data);
         this.is_ödeme_ayrinti_form = true;
         this.secim_loading = false;
+        this.$store.dispatch('fullscreenLoadingAct', false)
       });
     },
     select_ayrinti_sec(event) {
@@ -256,6 +262,8 @@ export default {
       this.tahsilat_form_ac();
     },
     tahsilat_form_ac() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
       this.ayrinti_loading = true;
       const item = this.finans_ayrinti_list[0];
       this.is_tahsilat = true;
@@ -268,17 +276,20 @@ export default {
           this.$store.dispatch("tahsilatLoadAct", result_data);
           this.ayrinti_loading = false;
           this.is_tahsilat_form = true;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
     },
     excel_cikti_click() {
       if (this.excel_cikti == "ayrinti_listesi") {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
         service
           .getKonteynerAyrintiListesi(this.finans_ayrinti_list)
           .then((res) => {
             //result status | True | False
             if (res.status) {
               this.is_excel = true;
-              this.ayrinti_loading = true;
               const link = document.createElement("a");
               link.href =
                 this.servis_adres +
@@ -288,16 +299,18 @@ export default {
               document.body.appendChild(link);
               link.click();
               this.is_excel = false;
-              this.ayrinti_loading = false;
+              this.$store.dispatch('fullscreenLoadingAct', false)
+
             }
           });
       } else {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
         service
           .getKonteynerOdemeListesi(this.finans_ayrinti_odeme_list)
           .then((res) => {
             if (res.status) {
               this.is_excel = true;
-              this.ayrinti_loading = true;
               const link = document.createElement("a");
               link.href =
                 this.servis_adres + "finans/dosyalar/konteynerOdemeExcelListe";
@@ -306,7 +319,8 @@ export default {
               document.body.appendChild(link);
               link.click();
               this.is_excel = false;
-              this.ayrinti_loading = false;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
             }
           });
       }

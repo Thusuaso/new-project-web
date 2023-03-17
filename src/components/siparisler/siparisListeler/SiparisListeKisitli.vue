@@ -13,7 +13,6 @@
         @row-select="siparisSecim($event)"
         v-model:filters="filters"
         filterDisplay="row"
-        :loading="datatableLoading"
         @filter="siparisFilterDegisim"
         :paginator="true"
          :rows="1099"
@@ -447,7 +446,6 @@ export default {
       "satisToplami",
       "tonToplami",
       "getMobilWidth",
-      "datatableLoading",
       "siparisToplamiAdet",
       "siparisToplamiM2"
     ])
@@ -457,9 +455,9 @@ export default {
   mounted() {},
   created() {
 
-    this.$store.dispatch("datatableLoadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     setTimeout(() => {
-      this.$store.dispatch("datatableLoadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
 
     }, 15000)
   },

@@ -19,7 +19,7 @@
   </div>
   <div class="grid">
     <div class="col">
-        <DataTable :value="odeme_listesi" :scrollable="true" scrollHeight="500px" :loading="loading" v-model:filters="filters"
+        <DataTable :value="odeme_listesi" :scrollable="true" scrollHeight="500px" v-model:filters="filters"
           filterDisplay="row" @filter="isFilterChange($event)">
           <Column header="Ödeme Tarihi" :showFilterMenu="false" field="tarih" headerStyle="width:10%">
             <template #body="slotProps">
@@ -89,10 +89,11 @@ export default {
     };
   },
   created() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
     service.getMusteriOdemeYilListesi().then((yil_list) => {
       this.yil_listesi = yil_list;
       this.select_yil = yil_list[0];
-      this.loading = true;
 
       service.getMusteriOdemeAyListesi(this.select_yil.yil).then((ay_list) => {
         this.ay_listesi = ay_list;
@@ -105,8 +106,9 @@ export default {
               this.odeme_toplam += odeme_list[key].tutar;
             }
             this.odeme_listesi = odeme_list;
-            this.loading = false;
             this.is_form = false;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
           });
       });
     });
@@ -152,6 +154,8 @@ export default {
       }
     },
     excel_cikti_click() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
       service.getOdemelerAyrintiTablosuExcel(this.odeme_listesi).then((res) => {
         if (res.status) {
           const link = document.createElement("a");
@@ -160,6 +164,8 @@ export default {
           link.setAttribute("download", "odemeler_listesi.xlsx");
           document.body.appendChild(link);
           link.click();
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         }
       });
     },

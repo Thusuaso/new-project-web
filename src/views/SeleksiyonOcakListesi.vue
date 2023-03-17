@@ -69,10 +69,10 @@ export default {
 
   localService: null,
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     service.getOcakListesiRapor().then((data) => {
       this.liste = data;
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
 
     });
   },
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     excel_cikti_click() {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       service.getOcakListesiRaporExcell(this.liste).then((responce) => {
         if (responce.status) {
@@ -92,7 +92,7 @@ export default {
           document.body.appendChild(link);
           link.click();
           this.is_excel = false;
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
 
         }
       });
@@ -102,6 +102,7 @@ export default {
       this.$store.dispatch("ocak_data_yukle_act", event.data);
 
       this.is_maliyet_form = true;
+
     },
   },
 };

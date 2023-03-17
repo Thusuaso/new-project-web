@@ -20,7 +20,7 @@
         <DataTable :value="uretimKasalar" :rows="30" v-model:filters="filters" filterDisplay="row" selectionMode="single"
           dataKey="id" @row-select="depo_item_sec($event)" v-model:selection="select_depo" groupRowsBy="ebat" sortField="ebat"
           @filter="stokKasaToplama($event)" rowGroupMode="rowspan" sortMode="many" :sortOrder="1" scrollable
-          scrollHeight="520px" :loading="datatableLoading" responsiveLayout="scroll">
+          scrollHeight="520px" responsiveLayout="scroll">
           <Column field="en" header="En" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false">
             <template style="display: sticky" #body="slotProps">
               {{ slotProps.data.en }}
@@ -171,17 +171,16 @@ import service from "../service/RaporService";
 import StokAyrintiListesi from "../components/stokraporu/StokAyrintiListesi";
 import { FilterMatchMode } from "primevue/api";
 import socket from "@/service/SocketService"
-import { formItemValidateStates } from 'element-plus';
 export default {
   components: {
     StokAyrintiListesi,
   },
   beforeRouteEnter(to, from, next) {
-    store.dispatch("loadingBeginAct");
+    store.dispatch("fullscreenLoadingAct",true);
     service.StokRaporRaporApi().then((data) => {
       store.dispatch("stok_ana_list_yukle_act", data);
       store.dispatch("stok_ayrinti_list_yukle_act", data);
-      store.dispatch("loadingEndAct");
+      store.dispatch("fullscreenLoadingAct",false);
 
       next();
     });
@@ -218,22 +217,25 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["stok_ana_list", "stok_ayrinti_list", "servis_adres","datatableLoading"]),
+    ...mapGetters(["stok_ana_list", "stok_ayrinti_list", "servis_adres"]),
   },
   mounted() {
     this.kasa_toplamı(this.uretimKasalar);
     socket.siparis.on('stock_list_emit', () => {
-      this.$store.dispatch("datatableLoadingBeginAct");
+        store.dispatch("fullscreenLoadingAct", true);
+
       service.StokRaporRaporApi().then((data) => {
         store.dispatch("stok_ana_list_yukle_act", data);
         store.dispatch("stok_ayrinti_list_yukle_act", data);
-        store.dispatch("loadingEndAct");
+        store.dispatch("fullscreenLoadingAct", false);
+
       });
       service.StokRaporAnaList().then((data) => {
         this.uretimKasalar = data;
         this.kasa_toplamı(data);
         this.m2_toplami(data);
-        this.$store.dispatch("datatableLoadingEndAct");
+        store.dispatch("fullscreenLoadingAct", false);
+
 
       });
     })
@@ -244,12 +246,12 @@ export default {
     service.StokRaporOlculeriApi().then((data) => {
       this.ebats = data;
     });
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     service.StokRaporAnaList().then((data) => {
       this.uretimKasalar = data;
       this.kasa_toplamı(data);
       this.m2_toplami(data);
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   methods: {
@@ -262,7 +264,7 @@ export default {
       this.m2_toplami2(event.filteredValue);
     },
     excel_cikti_click() {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       service.getStokExcelCikti(this.uretimKasalar).then((response) => {
         if (response.status) {
@@ -274,7 +276,7 @@ export default {
           link.setAttribute("download", "Stok_listesi.xlsx");
           document.body.appendChild(link);
           link.click();
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
         }
       });
     },
@@ -314,12 +316,14 @@ export default {
       this.$store.dispatch("loadToplamGuncelleAct", this.kasa_toplami2);
     },
     depo_item_sec(event) {
-      console.log("depo_item_sec",event)
+
       this.select_depo = {
         boyut: event.data,
         listDurum: this.listDurum,
       };
       if (this.FirmaAdi == "Hepsi") {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
         this.listDurum = 1;
         this.select_depo = {
           boyut: event.data,
@@ -333,8 +337,12 @@ export default {
             data.stok_ayrinti_listesi
           );
           this.is_form = true;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
       } else if (this.FirmaAdi == "Mekmer") {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
         this.listDurum = 2;
         this.select_depo = {
           boyut: event.data,
@@ -348,8 +356,12 @@ export default {
             data.stok_ayrinti_listesi
           );
           this.is_form = true;
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
       } else if (this.FirmaAdi == "Mek-Moz") {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
         this.listDurum = 3;
         this.select_depo = {
           boyut: event.data,
@@ -363,8 +375,11 @@ export default {
             data.stok_ayrinti_listesi
           );
           this.is_form = true;
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
       } else if (this.FirmaAdi == "OnlyMekmer") {
+      this.$store.dispatch('fullscreenLoadingAct', true)
 
         this.listDurum = 4;
         this.select_depo = {
@@ -379,6 +394,8 @@ export default {
             data.stok_ayrinti_listesi
           );
           this.is_form = true;
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
       }
 

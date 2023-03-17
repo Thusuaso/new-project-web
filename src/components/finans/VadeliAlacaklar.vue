@@ -53,6 +53,7 @@ export default {
     };
   },
   created() {
+    
     service.getVadeListesi().then((data) => {
       this.list = data;
       for (let key in this.list) {

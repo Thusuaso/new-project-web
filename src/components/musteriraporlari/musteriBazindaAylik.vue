@@ -1096,10 +1096,10 @@ export default {
   mounted() {},
   methods: {
     isSelectedMonth() {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       this.ifSelected();
       this.isSelectedMonthDropdown = false;
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
 
     },
     isSelectedYear() {

@@ -363,16 +363,21 @@ export default {
     },
     methods: {
         is_selected_maliyet_row(event) {
+          this.$store.dispatch("fullscreenLoadingAct", true);
+
             this.musteri_adi = event.data.musteri_adi
             this.maliyet_ayrinti_load = this.maliyet_ayrinti.filter(x => x.musteri_id == event.data.musteri_id)
             this.tablo_toplam_guncelle_kar_ayrinti(this.maliyet_ayrinti_load)
             this.is_maliyet_ayrinti_form = true
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
         },
         is_selected_year(event) {
             const year = event.value.yil
             this.maliyet_analiz_tablo_load(year)
         },
         maliyet_analiz_tablo_load(yil) {
+
             this.$store.dispatch('fullscreenLoadingAct',true)
           service.getMaliyetRaporKar(yil).then(data => {
                 this.maliyet_listesi_kar = [...data]

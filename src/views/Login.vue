@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       loginService.login(this.user.username, this.user.password).then((res) => {
         if (res.user.id > 0) {
           localStorage.setItem("userId", res.user.id);
@@ -34,10 +34,10 @@ export default {
           this.$store.commit("_setUsername", res.user.kullaniciAdi);
 
           this.$router.push("/");
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
         } else {
           alert("Kullanıcı bulunamadı!");
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
         }
       });
     },

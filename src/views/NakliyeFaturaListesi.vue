@@ -11,7 +11,6 @@
           selectionMode="single"
           :selection="selectFatura"
           @row-select="FaturaSec($event)"
-          :loading="$store.getters.datatableLoading"
         >
           <template #header>
             <div class="columns is-multiline">
@@ -190,11 +189,11 @@ export default {
     NakliyeFaturaDetay,
   },
   created() {
-    this.$store.dispatch("datatableLoadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
 
     service.getNakliyeListesi().then((data) => {
       this.$store.dispatch("nakliye_data_list_yukle_act", data);
-      this.$store.dispatch("datatableLoadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   methods: {

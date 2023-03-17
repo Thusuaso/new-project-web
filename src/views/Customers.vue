@@ -221,6 +221,20 @@ export default {
 };
 </script>
 <style scoped>
+.card{
+  margin-top:25px;
+}
+.card-footer-item{
+  display: inline-block;
+  float:left;
+  text-align:center;
+  border:none;
+  text-decoration: none;
+}
+footer{
+  background-color:#f8f8f8;
+  border:1px solid #e5e5e5;
+}
 .satisciAlanFlag {
   width: 50px;
   height: 50px;

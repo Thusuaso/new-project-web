@@ -563,7 +563,7 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     etiket_cikti_click() {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       let tarih = this.localService.getDateString(this.son_tarih);
       service.getSeleksiyonEtiketTarih(tarih).then((data) => {
@@ -576,7 +576,7 @@ export default {
             link.setAttribute("download", "Seleksiyon Üretim Etiket.xlsx");
             document.body.appendChild(link);
             link.click();
-            this.$store.dispatch("loadingEndAct");
+            this.$store.dispatch("fullscreenLoadingAct",false);
           }
         });
       });
@@ -593,7 +593,7 @@ export default {
           this.seleksiyonData = this.seleksiyon_dis_uretimlist.disUretim;
         }
       }
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       service.getSeleksiyonExcelList(this.seleksiyonData).then((responce) => {
         if (responce.status) {
@@ -605,7 +605,7 @@ export default {
           link.setAttribute("download", "seleksiyon_listesi.xlsx");
           document.body.appendChild(link);
           link.click();
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
         }
       });
     },

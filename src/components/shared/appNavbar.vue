@@ -1,6 +1,5 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
-    <div>
         <!-- <div style="position: fixed;top:0px;left:0px; z-index: 99; width: 100%">
             <el-menu class="el-menu-demo" mode="horizontal" style="position:sticky;top:0px;left:0px;z-index:99;">
                 <router-link class="navbar-item" to="/">
@@ -329,31 +328,16 @@
         
         
         
-        <Dialog v-model:visible="is_satisform" style="z-index:99;" header="Ayrıntı Listesi" :modal="true" position="top">
-            <section>
-                <div class="columns">
-                    <div class="column is-12">
-                        <CustomersDetay :select_satisci="select_satisci" :satisciDurum="satisciDurum" :select_musteri_id="select_musteri_id "/>
-                    </div>
-                </div>
-            </section>
-        </Dialog>
-        <Dialog v-model:visible="is_tekliform" style="z-index:99;" header="Teklif Listesi" :modal="true" position="top">
-            <TeklifGirisForm :yeniKayit="teklifYeniKayit" :teklifId="teklifId"></TeklifGirisForm>
-        </Dialog>
-        <Dialog v-model:visible="is_bgpform" style="z-index:99;" header="Bgp Listesi" :modal="true" position="top">
-            <BgpNetworkDetailForm ></BgpNetworkDetailForm>
-        </Dialog>
-    </div>
+    
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" >
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav" style="width:90%;float:left;">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a class="nav-link" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item dropdown" v-if="is_h">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -390,7 +374,7 @@
                       </ul>
             </li>
             <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/finans/finansAnaListe">Finans Ana Liste</a>
+                  <a class="nav-link" aria-current="page" href="/finans/finansAnaListe">Finans Ana Liste</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -495,7 +479,7 @@
                 
             </li>
             <li class="nav-item" v-if="is_h">
-                <a class="nav-link active" aria-current="page" href="/teklifListesi">Teklifler</a>
+                <a class="nav-link" aria-current="page" href="/teklifListesi">Teklifler</a>
                 
             </li>
             <li class="nav-item dropdown" v-if="is_" v-show="is_h">
@@ -527,70 +511,7 @@
                 
             </li>
             
-            <li class="nav-item">
-                <Button type="button" class="notificationButton" v-if="isNotification > 0" :label="isNotification" @click="toggle" />
-                <OverlayPanel ref="op" style="background-color:#FFD373;">
-                    <div class="main-container" v-for="item in notificationData" :key="item" v-show="notificationData.length > 0">
-                        <div class="cards">
-                            <div class="card card-1">
-                                <div class="card__icon"
-                                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding-left:5px;font-size:18px;">
-                                    {{ item.baslik }}</div>
-                                <h2 class="card__title">{{ item.hatirlatma_notu }}</h2>
-                                <p class="card__apply">
-                                <p class="card__link" style="margin-bottom:5px;">{{ item.hatirlatmaTarihi }} <i
-                                        class="fas fa-arrow-right"></i></p>
-                                </p>
-                                <Button @click="isRowSelected(item)" label="Show" id="isBorderButton">
-    
-                                </Button>
-    
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-container" v-for="item in hatirlatmaTrueDatas" :key="item"
-                        v-show="hatirlatmaTrueDatas.length > 0">
-    
-                        <div class="cards">
-                            <div class="card card-1">
-                                <div class="card__icon"
-                                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; padding-left:10px;font-size:18px;">
-                                    {{ item.title }}</div>
-                                <h2 class="card__title">{{ item.hatirlatmaAciklama }}</h2>
-                                <p class="card__apply">
-                                <p class="card__link" style="margin-bottom:5px;">{{ item.end }} <i
-                                        class="fas fa-arrow-right"></i>
-                                </p>
-                                </p>
-                                <Button @click="isTeklifHatirlatmaSelected(item.id)" label="Show" id="isBorderButton">
-    
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-container" v-for="item in bgpHatirlatmaList" :key="item"
-                        v-show="bgpHatirlatmaList.length > 0">
-    
-                        <div class="cards">
-                            <div class="card card-1">
-                                <div class="card__icon"
-                                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; padding-left:10px;font-size:18px;">
-                                    {{
-                                        item.firmaAdi
-                                    }}</div>
-                                <h2 class="card__title">{{ item.hatirlatmaAciklama }}</h2>
-                                <p class="card__apply">
-                                <p class="card__link" style="margin-bottom:5px;">{{ item.hatirlatmaTarihi }} <i
-                                        class="fas fa-arrow-right"></i></p>
-                                </p>
-                                <Button @click="isBgpHatirlatmaSelected(item.id)" label="Show" id="isBorderButton">
-    
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </OverlayPanel>
-            </li>
+            
 
 
 
@@ -598,7 +519,7 @@
 
 
           </ul>
-          <ul class="navbar-nav">
+          <ul class="navbar-nav"  style="width:10%;float:right">
             <!-- <li class="navbar-item">
                 <a class="nav-link">
                                     <i class="pi pi-eye" style="color: slateblue;cursor:pointer; " @click="overlayPanelEvent" ></i>
@@ -620,6 +541,70 @@
     
                             </OverlayPanel>
             </li> -->
+            <li class="nav-item">
+                    <Button type="button" class="notificationButton" v-if="isNotification > 0" :label="isNotification" @click="toggle" />
+                    <OverlayPanel ref="op" style="background-color:#FFD373;">
+                        <div class="main-container" v-for="item in notificationData" :key="item" v-show="notificationData.length > 0">
+                            <div class="cards">
+                                <div class="card card-1">
+                                    <div class="card__icon"
+                                        style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding-left:5px;font-size:18px;">
+                                        {{ item.baslik }}</div>
+                                    <h2 class="card__title">{{ item.hatirlatma_notu }}</h2>
+                                    <p class="card__apply">
+                                    <p class="card__link" style="margin-bottom:5px;">{{ item.hatirlatmaTarihi }} <i
+                                            class="fas fa-arrow-right"></i></p>
+                                    </p>
+                                    <Button @click="isRowSelected(item)" label="Show" id="isBorderButton">
+    
+                                    </Button>
+    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main-container" v-for="item in hatirlatmaTrueDatas" :key="item"
+                            v-show="hatirlatmaTrueDatas.length > 0">
+    
+                            <div class="cards">
+                                <div class="card card-1">
+                                    <div class="card__icon"
+                                        style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; padding-left:10px;font-size:18px;">
+                                        {{ item.title }}</div>
+                                    <h2 class="card__title">{{ item.hatirlatmaAciklama }}</h2>
+                                    <p class="card__apply">
+                                    <p class="card__link" style="margin-bottom:5px;">{{ item.end }} <i
+                                            class="fas fa-arrow-right"></i>
+                                    </p>
+                                    </p>
+                                    <Button @click="isTeklifHatirlatmaSelected(item.id)" label="Show" id="isBorderButton">
+    
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main-container" v-for="item in bgpHatirlatmaList" :key="item"
+                            v-show="bgpHatirlatmaList.length > 0">
+    
+                            <div class="cards">
+                                <div class="card card-1">
+                                    <div class="card__icon"
+                                        style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; padding-left:10px;font-size:18px;">
+                                        {{
+                                            item.firmaAdi
+                                        }}</div>
+                                    <h2 class="card__title">{{ item.hatirlatmaAciklama }}</h2>
+                                    <p class="card__apply">
+                                    <p class="card__link" style="margin-bottom:5px;">{{ item.hatirlatmaTarihi }} <i
+                                            class="fas fa-arrow-right"></i></p>
+                                    </p>
+                                    <Button @click="isBgpHatirlatmaSelected(item.id)" label="Show" id="isBorderButton">
+    
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </OverlayPanel>
+            </li>
             <li class="navbar-item"><a class=" active button is-primary"  @click="logout"
                     v-if="$store.getters.__isAuthentication">
                     <strong><i class="pi pi-sign-out"></i></strong>
@@ -629,6 +614,21 @@
         </div>
       </div>
     </nav>
+    <Dialog v-model:visible="is_satisform" style="z-index:99;" header="Ayrıntı Listesi" :modal="true" position="top">
+            <section>
+                <div class="columns">
+                    <div class="column is-12">
+                        <CustomersDetay :select_satisci="select_satisci" :satisciDurum="satisciDurum" :select_musteri_id="select_musteri_id"/>
+                    </div>
+                </div>
+            </section>
+        </Dialog>
+        <Dialog v-model:visible="is_tekliform" style="z-index:99;" header="Teklif Listesi" :modal="true" position="top">
+            <TeklifGirisForm :yeniKayit="teklifYeniKayit" :teklifId="teklifId"></TeklifGirisForm>
+        </Dialog>
+        <Dialog v-model:visible="is_bgpform" style="z-index:99;" header="Bgp Listesi" :modal="true" position="top">
+            <BgpNetworkDetailForm ></BgpNetworkDetailForm>
+        </Dialog>
 
 
 </template>

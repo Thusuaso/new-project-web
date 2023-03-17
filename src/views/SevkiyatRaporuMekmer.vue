@@ -70,7 +70,6 @@
           selectionMode="single"
           filterDisplay="menu"
           @filter="isSevkiyatList"
-          :loading="$store.getters.datatableLoading"
         >
           <Column
             field="tarih"
@@ -570,7 +569,7 @@ export default {
       this.isAll = false;
       this.localService = new LocalService();
       this.select_yil = "2022";
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       service.getSevkiyatRaporHepsiMekmer(this.select_yil).then((data) => {
         this.$store.dispatch("stok_rapor_list_load_act", data);
         this.ilk_tarih = false;
@@ -579,12 +578,12 @@ export default {
         this.is_islem = false;
         this.is_form = false;
         this.tablo_toplam_guncelle(data);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     isAllSelected() {
       if (this.isAll == true) {
-        this.$store.dispatch("datatableLoadingBeginAct")
+        this.$store.dispatch("fullscreenLoadingAct",true)
         service.getYuklemeAllMekmer().then((data) => {
           this.$store.dispatch("stok_rapor_list_load_act", data);
           this.ilk_tarih = false;
@@ -593,14 +592,14 @@ export default {
           this.is_islem = false;
           this.is_form = false;
           this.tablo_toplam_guncelle(data);
-          this.$store.dispatch("datatableLoadingEndAct")
+          this.$store.dispatch("fullscreenLoadingAct",false)
         });
       } else {
         this.allThisYearFirstLoad();
       }
     },
     excel_cikti_click() {
-      this.$store.dispatch("datatableLoadingBeginAct")
+      this.$store.dispatch("fullscreenLoadingAct",true)
 
 
       this.is_excel = true;
@@ -615,7 +614,7 @@ export default {
           link.setAttribute("download", "sevkiyat_rapor_listesi.xlsx");
           document.body.appendChild(link);
           link.click();
-          this.$store.dispatch("datatableLoadingEndAct")
+          this.$store.dispatch("fullscreenLoadingAct",false)
 
           this.is_excel = false;
         }
@@ -625,7 +624,7 @@ export default {
     YilSecim(select_yil) {
       this.isAll = false;
       this.localService = new LocalService();
-      this.$store.dispatch("datatableLoadingBeginAct")
+      this.$store.dispatch("fullscreenLoadingAct",true)
 
 
       service.getSevkiyatRaporTekTarihMekmer(select_yil).then((data) => {
@@ -637,7 +636,7 @@ export default {
         this.is_islem = false;
         this.is_form = false;
         this.tablo_toplam_guncelle(data);
-        this.$store.dispatch("datatableLoadingEndAct")
+        this.$store.dispatch("fullscreenLoadingAct",false)
 
       });
     },
@@ -658,12 +657,12 @@ export default {
       if (this.son_tarih && !this.ilk_tarih) {
         this.is_islem = true;
         let tarih = this.localService.getDateString(this.son_tarih);
-        this.$store.dispatch("datatableLoadingBeginAct")
+        this.$store.dispatch("fullscreenLoadingAct",true)
 
 
         service.getSevkiyatRaporTarihMekmer(tarih).then((data) => {
           this.$store.dispatch("stok_rapor_list_load_act", data);
-          this.$store.dispatch("datatableLoadingEndAct")
+          this.$store.dispatch("fullscreenLoadingAct",false)
 
 
           this.is_filter_sevkiyat = true;
@@ -688,19 +687,20 @@ export default {
 
         let son_tarih = this.localService.getDateString(this.son_tarih);
         let ilk_tarih = this.localService.getDateString(this.ilk_tarih);
-        this.$store.dispatch("datatableLoadingBeginAct")
+        this.$store.dispatch("fullscreenLoadingAct",true)
 
         service
           .getSevkiyatRaporIkiTarihMekmer(ilk_tarih, son_tarih)
           .then((data) => {
             this.is_filter_sevkiyat = true;
             this.$store.dispatch("stok_rapor_list_load_act", data);
-            this.$store.dispatch("datatableLoadingEndAct")
 
             this.$refs.sevkiyat_tablo.value = data;
             this.tablo_toplam_guncelle(data);
             this.loading = false;
             this.is_islem = false;
+            this.$store.dispatch("fullscreenLoadingAct", false)
+
           });
       }
     },

@@ -569,7 +569,7 @@ export default {
       this.isAll = false;
       this.localService = new LocalService();
       this.select_yil = "2022";
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       service.getSevkiyatRaporHepsiMekmar(this.select_yil).then((data) => {
         this.$store.dispatch("stok_rapor_list_load_act", data);
         this.ilk_tarih = false;
@@ -578,12 +578,12 @@ export default {
         this.is_islem = false;
         this.is_form = false;
         this.tablo_toplam_guncelle(data);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     isAllSelected() {
       if (this.isAll == true) {
-        this.$store.dispatch("loadingBeginAct");
+        this.$store.dispatch("fullscreenLoadingAct",true);
         service.getYuklemeAllMekmar().then((data) => {
           this.$store.dispatch("stok_rapor_list_load_act", data);
           this.ilk_tarih = false;
@@ -592,14 +592,14 @@ export default {
           this.is_islem = false;
           this.is_form = false;
           this.tablo_toplam_guncelle(data);
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
         });
       } else {
         this.allThisYearFirstLoad();
       }
     },
     excel_cikti_click() {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       this.is_excel = true;
       const data = this.$refs.sevkiyat_tablo.value;
@@ -613,7 +613,7 @@ export default {
           link.setAttribute("download", "sevkiyat_rapor_listesi.xlsx");
           document.body.appendChild(link);
           link.click();
-          this.$store.dispatch("loadingBeginAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
           this.is_excel = false;
         }
       });
@@ -622,7 +622,7 @@ export default {
     YilSecim(select_yil) {
       this.isAll = false;
       this.localService = new LocalService();
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       service.getSevkiyatRaporTekTarihMekmar(select_yil).then((data) => {
         this.$store.dispatch("stok_rapor_list_load_act", data);
@@ -633,7 +633,7 @@ export default {
         this.is_islem = false;
         this.is_form = false;
         this.tablo_toplam_guncelle(data);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
 
@@ -653,11 +653,11 @@ export default {
       if (this.son_tarih && !this.ilk_tarih) {
         this.is_islem = true;
         let tarih = this.localService.getDateString(this.son_tarih);
-        this.$store.dispatch("loadingBeginAct");
+        this.$store.dispatch("fullscreenLoadingAct",true);
 
         service.getSevkiyatRaporTarihMekmar(tarih).then((data) => {
           this.$store.dispatch("stok_rapor_list_load_act", data);
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
 
           this.is_filter_sevkiyat = true;
           this.$refs.sevkiyat_tablo.value = data;

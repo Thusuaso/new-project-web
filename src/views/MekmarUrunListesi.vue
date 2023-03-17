@@ -156,6 +156,7 @@ export default {
       });
     },
     urunSecim(event) {
+      this.$store.dispatch('fullscreenLoadingAct',true)
       this.$store.dispatch("setUrunBaslik", `ID : ${event.data.urunid}`);
       this.keyList = [];
       this.urunId = event.data.urunid
@@ -163,6 +164,8 @@ export default {
         this.$store.dispatch("loadUrun", data);
         this.yeniUrun = false;
         this.isUrunDetay = true;
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
     yeniUrunAc() {

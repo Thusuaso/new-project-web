@@ -64,8 +64,8 @@ export default {
   data() {
     return {
       mekusMasraflar: null,
-      selectedYear: 2022,
-      years: [{ year: 2022 }, { year: 2021 }, { year: 2020 }],
+      selectedYear: 2023,
+      years: [{ year: 2023 }, { year: 2022 }, { year: 2021 }, { year: 2020 }],
       topMekus: null,
       filters: {
         siparisNo: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -80,9 +80,12 @@ export default {
       this.miktarTopla(event.filteredValue)
     },
     MekusMasraflarService(year) {
+      this.$store.dispatch('fullscreenLoadingAct',true)
       service.getMekusMasraflar(year).then((data) => {
         this.mekusMasraflar = data;
         this.miktarTopla(data);
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
     isSelectedYear(event) {
@@ -104,6 +107,8 @@ export default {
       }
     },
     get_mekus_excell_cikti_btn() {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       service.getMekusMasraflarExcel(this.mekusMasraflar).then((response) => {
         if (response.status) {
           const link = document.createElement("a");
@@ -113,13 +118,15 @@ export default {
           document.body.appendChild(link);
           link.click();
           this.is_excel = false;
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
         }
       });
     },
   },
   created() {
     this.MekusMasraflarService(this.selectedYear);
-    this.selectedYear = { year: 2022 };
+    this.selectedYear = { year: 2023 };
   },
 };
 </script>

@@ -35,7 +35,7 @@ const routes = [
     component: () => import("@/components/dashboard/Dashboard"),
     beforeEnter(to, from, next) {
       if (store.getters.__isAuthentication) {
-        store.dispatch("loadingBeginAct");
+        store.dispatch("fullscreenLoadingAct",true);
 
         service.getTemsilciList().then((data) => {
           store.dispatch("customers_temsilci_yukle_act", data);
@@ -49,7 +49,7 @@ const routes = [
         });
         raporService.getDashboardSatislarGrafik().then((data) => {
           store.dispatch("gelen_siparis_grafik_load", data);
-          store.dispatch("loadingEndAct");
+          store.dispatch("fullscreenLoadingAct",false);
           store.dispatch("setServisAdresAct");
           next();
           
@@ -122,12 +122,12 @@ const routes = [
     component: () => import("@/views/UrunKart"),
     beforeEnter(to, from, next) {
       if (store.getters.__isAuthentication) {
-        store.dispatch("loadingBeginAct");
+        store.dispatch("fullscreenLoadingAct",true);
 
         urunKartService.getUrunKartMenuList().then((data) => {
           store.dispatch("isUrunKartLoad");
           store.dispatch("urunKartMenuAct", data);
-          store.dispatch("loadingEndAct");
+          store.dispatch("fullscreenLoadingAct",false);
 
           next();
         });
@@ -526,11 +526,11 @@ const routes = [
     component: () => import("@/views/DepoUsa"),
     beforeEnter(to, from, next) {
       if (store.getters.__isAuthentication) {
-        store.dispatch("loadingBeginAct");
+        store.dispatch("fullscreenLoadingAct",true);
 
         depoService.getDepoUrunListesi().then((data) => {
           store.dispatch("depoUrunListesiYukle", data);
-          store.dispatch("loadingEndAct");
+          store.dispatch("fullscreenLoadingAct",false);
 
           next();
         });
@@ -555,11 +555,11 @@ const routes = [
     component: () => import("@/views/DepoTurkeyUrunList"),
     beforeEnter(to, from, next) {
       if (store.getters.__isAuthentication) {
-        store.dispatch("loadingBeginAct");
+        store.dispatch("fullscreenLoadingAct",true);
 
         depoService.getTurkeyStockList().then((data) => {
           store.dispatch("depoUrunListesiYukle", data);
-          store.dispatch("loadingEndAct");
+          store.dispatch("fullscreenLoadingAct",false);
 
           next();
         });
@@ -574,11 +574,11 @@ const routes = [
     component: () => import("@/views/MekmarUrunListesi"),
     beforeEnter: (to, from, next) => {
       if (store.getters.__isAuthentication) {
-        store.dispatch("loadingBeginAct");
+        store.dispatch("fullscreenLoadingAct",true);
 
         depoService.getTurkeyStockList().then((data) => {
           store.dispatch("depoUrunListesiYukle", data);
-          store.dispatch("loadingEndAct");
+          store.dispatch("fullscreenLoadingAct",false);
 
           next();
         });

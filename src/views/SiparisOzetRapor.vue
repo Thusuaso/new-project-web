@@ -493,7 +493,7 @@ export default {
 
     this.gecen_yil = tarih.getFullYear() - 1;
     this.bu_yil = tarih.getFullYear();
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     service.getSiparisOzetRapor().then((data) => {
 
 
@@ -513,6 +513,7 @@ export default {
         100;
       this.siparis_fark =
         this.siparis_buyil_toplami - this.siparis_gecenyil_toplami;
+
     }),
       service.getKullaniciSiparisOzetRapor().then((data) => {
         this.siparis_kullanici = data.siparis_bu_yil_list;
@@ -526,7 +527,7 @@ export default {
           data.sevkiyat_gecen_yil_list
         );
         this.satisci_toplam_buyil_sevkiyat_guncelle(data.sevkiyat_bu_yil_list);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
 
 
       });

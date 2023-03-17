@@ -34,7 +34,6 @@
             @row-select="musteri_secim_event($event)"
             :scrollable="true" 
             scrollHeight="650px"
-            :loading="datatableLoading"
           >
             <Column
               field="id"
@@ -225,7 +224,7 @@ export default {
     MusteriDetay,
   },
   computed: {
-    ...mapGetters(["musteri_listesi", "servis_adres","datatableLoading"]),
+    ...mapGetters(["musteri_listesi", "servis_adres"]),
   },
   created() {
     const users = this.$store.getters.__getUsername;
@@ -270,7 +269,7 @@ export default {
       }
     },
     musteri_tablo_yukle(users) {
-      this.$store.dispatch("datatableLoadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       service.getMusteriListesi().then((data) => {
         this.musteri_data = data;
         if (users == "Semih" || users == "Gizem" || users == "Fatih") {
@@ -280,7 +279,7 @@ export default {
           this.$store.dispatch("musteri_listesi_yukle_act", result);
         }
 
-        this.$store.dispatch("datatableLoadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     yeni_musteri_click() {
@@ -292,11 +291,15 @@ export default {
       });
     },
     detay_ac_click() {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       service.getMusteriDetay(this.select_musteri.id).then((data) => {
         this.$store.dispatch("musteri_detay_yukle_act", data);
         this.is_musteri_yeni = false;
         this.musteri_form_baslik = this.select_musteri.musteriadi;
         this.is_musteri_form = true;
+      this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
     musteri_secim_event(event) {
@@ -306,7 +309,7 @@ export default {
     },
     excel_cikti_al_click() {
       const data = this.musteri_data;
-      this.$store.dispatch("datatableLoadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       service.getMusteriExcelListesi(data).then((response) => {
         if (response.status) {
@@ -319,7 +322,7 @@ export default {
           document.body.appendChild(link);
           link.click();
           this.is_excel = false;
-          this.$store.dispatch("datatableLoadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
 
         }
       });

@@ -170,6 +170,7 @@ export default {
     },
     depoUrunSecim(event) {
       if (event.data) {
+        this.$store.dispatch('fullscreenLoadingAct',true)
         this.urunFormBaslik =
           event.data.urunid +
           " - " +
@@ -189,6 +190,8 @@ export default {
           this.urunDetay = data;
 
           this.isUrunForm = true;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         });
       }
     },

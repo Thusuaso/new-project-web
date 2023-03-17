@@ -13,7 +13,6 @@
           selectionMode="single"
           :selection="selectFatura"
           @row-select="FaturaSec($event)"
-          :loading="$store.getters.datatableLoading"
         >
           <template #header>
             <div class="columns is-multiline">
@@ -211,11 +210,11 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("datatableLoadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
 
     service.getKonteynerListesi().then((data) => {
       this.konteyner_listesi = data;
-      this.$store.dispatch("datatableLoadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
 

@@ -45,9 +45,12 @@ export default {
     };
   },
   created() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
     service.getOdemelerAyrintiTablosu(this.musteriId).then((data) => {
       this.odemelerAyrintiList = data;
-      console.log(data);
+              this.$store.dispatch('fullscreenLoadingAct', false)
+
     });
   },
   methods: {

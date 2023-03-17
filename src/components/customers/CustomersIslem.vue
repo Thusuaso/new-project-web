@@ -49,6 +49,17 @@
           </span>
         </div>
     </div>
+    <div class="grid">
+      <div class="col">
+        <Button label="Kaydet" class="p-button-success" @click="kaydet_click"/>
+      </div>
+      <div class="col">
+          <Button label="Değiştir" class="p-button-warning" @click="degistir_click"/>
+        </div>
+        <div class="col">
+          <Button label="Sil" class="p-button-danger" @click="sil_click"/>
+        </div>
+    </div>
   
   
   </section>

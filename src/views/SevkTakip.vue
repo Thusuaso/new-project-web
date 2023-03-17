@@ -8,7 +8,7 @@
     <div class="col">
       <DataTable :value="takip_listesi" v-model:filters="filters" filterDisplay="row" dataKey="id" sortField="kalan_alacak"
         :sortOrder="-1" :scrollable="true" scrollHeight="510px" selectionMode="single" v-model:selection="select_takip"
-        @row-select="takipSec($event)" :loading="datatableLoading" :resizableColumns="true" columnResizeMode="fit"
+        @row-select="takipSec($event)" :resizableColumns="true" columnResizeMode="fit"
         showGridlines responsiveLayout="scroll">
         <Column field="sira" header="#" headerStyle="width:2px" :showFilterMenu="false">
           <template #body="slotProps">
@@ -108,13 +108,11 @@
 <script>
 import service from "../service/OperasyonService";
 import SevkTakipForm from "../components/sevktakip/SevkTakipForm";
-import { mapGetters } from "vuex";
 import store from "@/store";
 import { FilterMatchMode } from "primevue/api";
 
 export default {
   computed: {
-    ...mapGetters(["datatableLoading"]),
   },
   components: {
     SevkTakipForm,
@@ -136,11 +134,11 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    store.dispatch("datatableLoadingBeginAct");
+    store.dispatch("fullscreenLoadingAct",true);
     service.getSevkTakipListesi().then((data) => {
       next((vm) => {
         vm.takip_listesi = data;
-        store.dispatch("datatableLoadingEndAct");
+        store.dispatch("fullscreenLoadingAct",false);
       });
     });
   },

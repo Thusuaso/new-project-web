@@ -61,7 +61,7 @@
                       id="ortalama"
                     >
                       <div class="column">
-                        <h5 class="ortala">R1: Gelen Sipariş</h5>
+                        <h6 class="ortala">R1: Gelen Sipariş</h6>
                       </div>
                       <div class="column">
                         <Button
@@ -88,7 +88,7 @@
                       </div>
 
                       <div class="column" style="text-align: center">
-                        <h5 style="font-weight: bold">FOB</h5>
+                        <h6 style="font-weight: bold">FOB</h6>
                       </div>
                     </div>
                     <div
@@ -97,7 +97,7 @@
                       id="ortalama"
                     >
                       <div class="column">
-                        <h5 class="ortala">R2: Gelen Sipariş</h5>
+                        <h6 class="ortala">R2: Gelen Sipariş</h6>
                       </div>
                       <div class="column">
                         <Button
@@ -119,7 +119,7 @@
                   <div class="column is-6">
                     <div class="columns" id="ortalama">
                       <div class="column">
-                        <h5 class="ortala">R3: Aylık Ortalama</h5>
+                        <h6 class="ortala">R3: Aylık Ortalama</h6>
                       </div>
                       <div class="column">
                         <Button
@@ -137,7 +137,7 @@
                   <div class="column is-6">
                     <div class="columns" id="ortalama">
                       <div class="column">
-                        <h5 class="ortala">R4: Yıl Sonu Tahmini</h5>
+                        <h6 class="ortala">R4: Yıl Sonu Tahmini</h6>
                       </div>
                       <div class="column">
                         <Button
@@ -169,7 +169,7 @@
                     </div>
                     <div class="columns" id="ortalama">
                       <div class="column">
-                        <h5 class="ortala">R5: Yüklenen Sipariş</h5>
+                        <h6 class="ortala">R5: Yüklenen Sipariş</h6>
                       </div>
                       <div class="column">
                         <Button
@@ -201,7 +201,7 @@
                     </div>
                     <div class="columns" id="ortalama">
                       <div class="column">
-                        <h5 class="ortala">R6: Yüklenen Sipariş</h5>
+                        <h6 class="ortala">R6: Yüklenen Sipariş</h6>
                       </div>
                       <div class="column">
                         <Button
@@ -226,7 +226,7 @@
                   <div class="column is-6">
                     <div class="columns" id="ortalama">
                       <div class="column">
-                        <h5 class="ortala">R7: Aylık Ortalama</h5>
+                        <h6 class="ortala">R7: Aylık Ortalama</h6>
                       </div>
                       <div class="column">
                         <Button
@@ -244,7 +244,7 @@
                   <div class="column is-6">
                     <div class="columns" id="ortalama">
                       <div class="column">
-                        <h5 class="ortala">R8: Yıl Sonu Tahmini</h5>
+                        <h6 class="ortala">R8: Yıl Sonu Tahmini</h6>
                       </div>
                       <div class="column">
                         <Button
@@ -409,7 +409,7 @@
           <div class="column">
             <div id="dashboardUstSag">
               <div>
-                <h1>R13</h1>
+                <h3>R13</h3>
               </div>
               <div class="table-responsive">
                 <table table="class">

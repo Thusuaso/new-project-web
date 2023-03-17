@@ -175,7 +175,6 @@
         v-model:filters="filters"
         filterDisplay="menu"
         dataKey="id"
-        :loading="$store.getters.datatableLoading"
         @filter="isFilteredValue($event)"
       >
         <template #header>
@@ -247,7 +246,6 @@
         v-model:filters="filters3"
         filterDisplay="menu"
         dataKey="id"
-        :loading="$store.getters.datatableLoading"
         @filter="isSumYear"
       >
         <template #header>
@@ -297,7 +295,6 @@
     <div class="column">
       <DataTable
         :value="yillik_sayim_listesi"
-        :loading="$store.getters.datatableLoading"
         v-model:filters="filters2"
       >
         <template #header>
@@ -401,7 +398,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     service.getYuklemeYilListesi().then((yil_list) => {
       this.yil_listesi = yil_list;
       this.select_yil = yil_list[0].yil;
@@ -422,7 +419,7 @@ export default {
       this.aylik_sayim_listesi = data.aylik_sayim_listesi;
       this.yillik_sayim_listesi = data.yillik_sayim_listesi;
       this.musteribazinda_aylik = data.musteribazinda_aylik;
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   methods: {
@@ -456,7 +453,6 @@ export default {
     isFilteredValue(event) {
       this.fob_ay_top = 0;
       this.dtp_ay_top = 0;
-      console.log(event);
       for (let item in event.filteredValue) {
         this.fob_ay_top += event.filteredValue[item].fob;
         this.dtp_ay_top += event.filteredValue[item].dtp;
@@ -756,14 +752,14 @@ export default {
       this.ay_listesi_yukle();
     },
     ay_listesi_yukle() {
-      this.$store.dispatch("datatableLoadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       service.getYuklemeAyListesi(this.select_yil).then((data) => {
         this.ay_listesi = data;
         this.select_ay = data[0].ay;
         this.select_aystr = data[0].ay_str;
         this.ay_baslik = this.select_aystr;
         this.yukleme_listesi_yukle();
-        this.$store.dispatch("datatableLoadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     ay_degisim_event(event) {
@@ -777,7 +773,7 @@ export default {
       this.yukleme_listesi_yukle();
     },
     yukleme_listesi_yukle() {
-      this.$store.dispatch("datatableLoadingBeginAct");
+          this.$store.dispatch("fullscreenLoadingAct", true);
 
       service.getYuklemeRapor(this.select_yil, this.select_ay).then((data) => {
         this.aylik_yukleme_listesi = data.aylik_yukleme_listesi;
@@ -792,10 +788,13 @@ export default {
         this.toplam_yil(this.yillik_liste);
 
         this.toplam_yilsayimtablo(this.yillik_sayim_listesi);
-        this.$store.dispatch("datatableLoadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
       });
     },
     excel_cikti_click(data) {
+          this.$store.dispatch("fullscreenLoadingAct", true);
+
       service.getYuklemePoExcelCikti(data).then((response) => {
         if (response.status) {
           const link = document.createElement("a");
@@ -805,10 +804,14 @@ export default {
           link.setAttribute("download", "yukleme_po_bazında.xlsx");
           document.body.appendChild(link);
           link.click();
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
         }
       });
     },
     excel_Musteri_click(data) {
+          this.$store.dispatch("fullscreenLoadingAct", true);
+
       service.getYuklemeMuExcelCikti(data).then((response) => {
         if (response.status) {
           const link = document.createElement("a");
@@ -833,6 +836,8 @@ export default {
           link.setAttribute("download", "Yukleme-Yil.xlsx");
           document.body.appendChild(link);
           link.click();
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
         }
       });
     },

@@ -348,7 +348,7 @@ export default {
 
   created() {
 
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
 
     service.getNumuneYilListesi().then((data) => {
       this.yil_listesi = data.yil_listesi;
@@ -359,7 +359,7 @@ export default {
         this.banka_list = data.banka_list;
         this.genel_toplam(this.liste);
         this.banka_toplam(this.banka_list);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     });
   },
@@ -377,11 +377,14 @@ export default {
     },
     bank_account_selected(event) {
 
+      this.$store.dispatch("fullscreenLoadingAct", true);
 
       service.getNumuneBankayaGelenAyrinti(event.data.banka, this.select_yil.yil).then(data => {
         this.banka_gelen_bedel_list = data
         this.bank_account_detail_sum(data)
         this.is_bank_ayrinti_form = true
+        this.$store.dispatch("fullscreenLoadingAct", false);
+
       })
 
     },
@@ -398,14 +401,14 @@ export default {
       }
     },
     YilSecim(select_yil) {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       service.getNumuneFinansListesi(select_yil).then((data) => {
         this.liste = data.numune_list;
         this.banka_list = data.banka_list;
         this.genel_toplam(this.liste);
         this.banka_toplam(this.banka_list);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     genel_toplam(liste) {

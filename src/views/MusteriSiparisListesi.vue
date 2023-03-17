@@ -4,7 +4,6 @@
       <div class="column is-12">
         <DataTable
           :value="musteri_data"
-          :loading="$store.getters.datatableLoading"
           v-model:filters="filters"
           filterDisplay="row"
           :paginator="true"
@@ -231,12 +230,10 @@ export default {
 
   methods: {
     musteri_tablo_yukle() {
-      this.$store.dispatch("datatableLoadingBeginAct");
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       service.getMusteriSiparisListesi().then((data) => {
         this.musteri_data = data;
-        this.$store.dispatch("datatableLoadingEndAct");
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     formatDecimal(value) {

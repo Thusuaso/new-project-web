@@ -26,7 +26,7 @@
   <div class="grid">
     <div class="col"> 
       <DataTable :value="tedarikci_liste" :scrollable="true" scrollHeight="430px" v-model:filters="filters"
-        filterDisplay="menu" :loading="datatableLoading" dataKey="id" selectionMode="single"
+        filterDisplay="menu"  dataKey="id" selectionMode="single"
         v-model:selection="select_tedarikci" @row-select="tedarikci_secim($event)">
         <Column field="tedarikciadi" header="Tedarikçi Adı">
           <template #body="slotProps">
@@ -69,17 +69,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["thtedarikci", "tedarikci_liste", "datatableLoading"]),
+    ...mapGetters(["thtedarikci", "tedarikci_liste"]),
   },
   created() {
     this.tedarikci_tablo_yukle();
   },
   methods: {
     tedarikci_tablo_yukle() {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       service.getTedarikciListeYukle().then((data) => {
         this.$store.dispatch("tedarikci_liste_yukle_act", data);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     yeni_click() {
@@ -161,10 +161,10 @@ export default {
   },
   mounted() {
     socket.siparis.on('tedarikci_list_emit', () => {
-      this.$store.dispatch('datatableLoadingBeginAct')
+      this.$store.dispatch('fullscreenLoadingAct',true)
       service.getTedarikciListeYukle().then((data) => {
         this.$store.dispatch("tedarikci_liste_yukle_act", data);
-        this.$store.dispatch('datatableLoadingEndAct')
+        this.$store.dispatch('fullscreenLoadingAct',false)
 
       });
     })

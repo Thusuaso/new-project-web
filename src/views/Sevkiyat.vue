@@ -246,11 +246,11 @@ export default {
   },
   localService: null,
   beforeRouteEnter(to, from, next) {
-    store.dispatch("loadingBeginAct");
+    store.dispatch("fullscreenLoadingAct",true);
     service.getSiparisListe().then((data) => {
       next((vm) => {
         vm.siparisList = data;
-        store.dispatch("loadingEndAct");
+        store.dispatch("fullscreenLoadingAct",false);
 
       });
     });

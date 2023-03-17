@@ -44,7 +44,7 @@ export default {
   },
   created() {},
   beforeRouteEnter(to, from, next) {
-    store.dispatch("loadingBeginAct");
+    store.dispatch("fullscreenLoadingAct",true);
     urunKartService
       .getUrunKartMenuList()
       .then((data) => {
@@ -54,7 +54,7 @@ export default {
       .then(() => {
         seleksiyonService.getUretimList().then((data) => {
           store.dispatch("loadUretimList", data);
-          store.dispatch("loadingEndAct");
+          store.dispatch("fullscreenLoadingAct",false);
 
           next();
         });

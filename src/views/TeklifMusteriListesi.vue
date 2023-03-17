@@ -114,11 +114,11 @@ export default {
     ...mapGetters(["musteriTeklifList"]),
   },
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
 
     teklifMusteriService.getMusteriList().then((data) => {
       this.$store.dispatch("loadTeklifMusteriList", data);
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   methods: {

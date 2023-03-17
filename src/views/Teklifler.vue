@@ -19,7 +19,6 @@
               <DataTable
                 class="p-datatable-responsive"
                 :value="temsilciOzetList"
-                :loading="datatableLoading"
                 dataKey="id"
                 selectionMode="single"
                 v-model:selection="selectOzetList"
@@ -66,7 +65,6 @@
               <DataTable
                 class="p-datatable-responsive"
                 :value="hatirlatmaList"
-                :loading="datatableLoading"
               >
                 <Column field="tarih" header="Tarih" bodyStyle="text-align:center;">
                   <template #body="slotProps">
@@ -144,7 +142,6 @@
               <DataTable
                 class="p-datatable-responsive"
                 :value="musteriOzetList"
-                :loading="datatableLoading"
                 :scrollable="true"
                 scrollHeight="408px"
               >
@@ -280,7 +277,7 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
 
     teklifService.getTakvimList().then((data) => {
 
@@ -311,7 +308,7 @@ export default {
       this.hatirlatmaList = data.hatirlatmaList;
       this.musteriOzetList = data.musteriOzetList;
       this.tabloToplariYenile();
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
 
     
@@ -376,7 +373,7 @@ export default {
       this.teklifFormvisible = data
     })
     socket.siparis.on('teklif_degisim_emit', () => {
-      this.$store.dispatch('datatableLoadingBeginAct');
+      this.$store.dispatch('fullscreenLoadingAct',true);
       teklifService.getTakvimList().then((data) => {
 
         const takvimData = [];
@@ -406,7 +403,7 @@ export default {
         this.hatirlatmaList = data.hatirlatmaList;
         this.musteriOzetList = data.musteriOzetList;
         this.tabloToplariYenile();
-        this.$store.dispatch('datatableLoadingEndAct');
+        this.$store.dispatch('fullscreenLoadingAct',false);
 
       });
     })

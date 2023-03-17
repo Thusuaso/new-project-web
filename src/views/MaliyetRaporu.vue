@@ -96,7 +96,6 @@
             v-model:filters="filters"
             filterDisplay="menu"
             :value="quarterMaliyet"
-            :loading="$store.getters.datatableLoading"
             :scrollable="true"
             scrollHeight="400px"
             dataKey="id"
@@ -759,7 +758,6 @@
             v-model:filters="filters"
             filterDisplay="menu"
             :value="isFilteredFaturalama ? filteredFaturalama : maliyet_listesi"
-            :loading="$store.getters.datatableLoading"
             :scrollable="true"
             scrollHeight="400px"
             dataKey="id"
@@ -1551,7 +1549,7 @@ export default {
     ]),
   },
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",false);
     service.getMaliyetYilListesi().then((yil_list) => {
       this.yil_listesi = yil_list;
       const now = new Date();
@@ -1678,8 +1676,7 @@ export default {
     },
     maliyet_listesi_yukle() {
       this.select_faturalama = { fatura: "Hepsi" };
-      this.$store.dispatch("datatableLoadingBeginAct");
-      console.log(this.select_ay)
+      this.$store.dispatch("fullscreenLoadingAct",true);
       service
         .getMaliyetRapor(this.select_yil.yil, this.select_ay.ay)
         .then((data) => {
@@ -1689,15 +1686,14 @@ export default {
           this.local_maliyet_data = [...data];
           this.maliyet_listesi_excel = data;
           this.tablo_toplam_guncelle(data);
-          this.$store.dispatch("datatableLoadingEndAct");
 
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
         });
       
     },
     maliyet_yil_listesi_yukle(event) {
       this.isFilteredFaturalama = false;
-      this.$store.dispatch("datatableLoadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       if (!this.maliyet_yil_listesi) {
         service.getMaliyetRaporYil(event).then((data) => {
@@ -1706,14 +1702,14 @@ export default {
           this.maliyet_listesi_excel = data;
           this.tablo_toplam_guncelle(data);
           this.is_quarter_dropdown = false;
-          this.$store.dispatch("datatableLoadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
         });
       } else {
         this.maliyet_listesi = null;
         this.maliyet_listesi = this.maliyet_yil_listesi;
         this.tablo_toplam_guncelle();
         this.maliyet_listesi_excel = data;
-        this.$store.dispatch("datatableLoadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       }
     },
     yil_degisim_event() {

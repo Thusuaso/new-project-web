@@ -38,7 +38,6 @@
       <div class="column is-12">
         <DataTable
           :value="stok_listesi"
-          :loading="$store.getters.datatableLoading"
           :paginator="true"
           :rows="19"
           v-model:filters="filters"
@@ -383,12 +382,12 @@ export default {
   },
   localService: null,
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     service.getAtlantaStokListesi().then((data) => {
       this.stok_listesi = data;
       this.stok_tum_list = data;
       this.toplam_islem(data);
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   methods: {
@@ -425,6 +424,8 @@ export default {
       this.toplam_islem(this.stok_listesi);
     },
     item_sec(event) {
+          this.$store.dispatch("fullscreenLoadingAct", true);
+
       this.select_depo = event.data;
 
       this.FormBaslik =
@@ -439,6 +440,8 @@ export default {
           this.$store.dispatch("AtlantaMaliyetAct", data.maliyet);
 
           this.is_form = true;
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
         });
     },
     toplam_islem(liste) {
@@ -465,6 +468,8 @@ export default {
       return 1;
     },
     excel_cikti_click() {
+          this.$store.dispatch("fullscreenLoadingAct", true);
+
       const data = this.stok_listesi;
       service.getAtlantaStokExcelCikti(data).then((responce) => {
         if (responce.status) {
@@ -475,6 +480,8 @@ export default {
           link.setAttribute("download", "/Atlanta_SM_stock.xlsx");
           document.body.appendChild(link);
           link.click();
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
         }
       });
     },

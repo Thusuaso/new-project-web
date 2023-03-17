@@ -9,7 +9,7 @@
     <div class=col>
       <DataTable v-model:value="getUrunKartMenuList" v-model:selection="selectUrunKart" selectionMode="single" dataKey="id"
         :paginator="true" :rows="15" v-model:filters="filters" @row-select="urunKartDetayAc" filterDisplay="menu"
-        :scrollable="true" scrollHeight="700px" :loading="datatableLoading">
+        :scrollable="true" scrollHeight="700px">
         <Column field="id" header="No" headerStyle="width: 100px;" bodyStyle="text-align: center;">
           <template #body="slotProps">
             {{ slotProps.data.id }}
@@ -137,7 +137,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUrunKartMenuList","datatableLoading"]),
+    ...mapGetters(["getUrunKartMenuList"]),
   },
   methods: {
     urunKartSecim() {},

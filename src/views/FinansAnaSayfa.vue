@@ -41,7 +41,7 @@
                   " sortField="genel_bakiye" dataKey="id" :sortOrder="-1" :scrollable="true" scrollHeight="800px"
           v-model:filters="filters" filterDisplay="row" @filter="siparisFilterDegisim($event)" selectionMode="single"
           v-model:selection="select_konteyner" ref="finans_ana_liste" @row-select="konteyner_item_select($event)"
-          :loading="datatableLoading">
+          >
           <template #header>
             <div class="columns is-multiline">
               <div class="column is-12">
@@ -308,7 +308,7 @@ export default {
 
     const d = new Date();
     const year = d.getFullYear(); // 2021
-    store.dispatch("loadingBeginAct");
+    store.dispatch("fullscreenLoadingAct",true);
     service.getKonteynerAnaListe(year).then((data) => {
       if (ad == "Ozlem" || ad == "Hakan") {
         data.konteyner_list = [
@@ -322,20 +322,20 @@ export default {
 
       store.dispatch("finansAnaListeYukleAct", data);
       store.dispatch("depo_ana_list_yukle_act", data);
-      store.dispatch("loadingEndAct");
+      store.dispatch("fullscreenLoadingAct",false);
 
       next();
     });
   },
   created() {
     socket.siparis.on("tahsilat_kayitdegisim_emit", () => {
-      this.$store.dispatch('datatableLoadingBeginAct')
+      this.$store.dispatch('fullscreenLoadingAct',true)
 
       const d = new Date();
       const year = d.getFullYear(); // 2021
       service.getKonteynerAnaListe(year).then((data) => {
         store.dispatch("finansAnaListeYukleAct", data);
-        this.$store.dispatch('datatableLoadingEndAct')
+        this.$store.dispatch('fullscreenLoadingAct',false)
 
       });
     });
@@ -426,13 +426,14 @@ export default {
       "depo_ana_list",
       "servis_adres",
       "finans_toplam_eski_pesinat",
-      'datatableLoading',
       "maya_gelen_bedeller_sip_list",
       "maya_gelen_bedeller_num_list"
     ]),
   },
   methods: {
     cikti_al2() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
       service
         .getMayaListExcellCikti(this.excell_list)
         .then((res) => {
@@ -444,6 +445,8 @@ export default {
             link.setAttribute("download", "maya_numune_sip_odemeler.xlsx");
             document.body.appendChild(link);
             link.click();
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
           }
         });
     },
@@ -465,6 +468,7 @@ export default {
     },
     selectedYearMaya() {
       this.selected_month_maya = { 'month': 0, 'month_name': 'Hepsi' }
+        this.$store.dispatch('fullscreenLoadingAct', true)
 
       service.getMayaNumunevSiparisOdemeleriYear(this.selected_year_maya.year).then(data => {
         this.$store.dispatch('mayaGelenBedellerSipAct', data.siparis)
@@ -472,12 +476,18 @@ export default {
         this.numuneToplamaİslemi(data.numune)
         this.sipToplamaİslemi(data.siparis)
         this.excell_list = data
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
 
       })
     },
     selectedMonthMaya() {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
       if (this.selected_month_maya.month == 0) {
         this.selectedYearMaya()
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
       } else {
         service.getMayaNumunevSiparisOdemeleri(this.selected_month_maya.month, this.selected_year_maya.year).then(data => {
           this.$store.dispatch('mayaGelenBedellerSipAct', data.siparis)
@@ -485,6 +495,8 @@ export default {
           this.numuneToplamaİslemi(data.numune)
           this.sipToplamaİslemi(data.siparis)
           this.excell_list = data
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
 
 
 
@@ -494,6 +506,7 @@ export default {
       
     },
     maya_gelen_bedeller() {
+
       this.selected_month_maya = { 'month': 0, 'month_name': 'Hepsi' }
       service.getMayaNumunevSiparisOdemeleriYear(this.selected_year_maya.year).then(data => {
         this.$store.dispatch('mayaGelenBedellerSipAct', data.siparis)
@@ -546,27 +559,39 @@ export default {
       }
     },
     konteynerHepsiEvent() {
+        
+
       if (this.konteyner_list_hepsi) {
+        this.$store.dispatch('fullscreenLoadingAct', true)
         const data = [...this.konteyner_ana_list_all];
 
         store.dispatch("finansAnaListe_hepsiAct", data);
         this.tableToplamGuncelle(this.konteyner_list_all);
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         //this.$refs.finans_ana_liste.value = this.konteyner_ana_list_all
       } else {
+        this.$store.dispatch('fullscreenLoadingAct', true)
         const data = [...this.konteyner_ana_list_filter];
         store.dispatch("finansAnaListe_filterAct", data);
         this.tableToplamGuncelle(data);
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
 
         //this.$refs.finans_ana_liste.value = this.konteyner_ana_list_filter
       }
     },
     konteyner_item_select(event) {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
       this.select_konteyner = event.data;
       service.getFinansAyrintiListYukle(event.data.id).then((data) => {
         store.dispatch("finansAyrintiListYukleAct", data);
         store.dispatch("finansPoListLoadAct", data.po_list)
         this.konteynerBaslik = event.data.musteriadi;
         this.isKonteyner = true;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
     tableToplamGuncelle(data_list) {
@@ -579,6 +604,8 @@ export default {
       }
     },
     excel_cikti_click() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
       if (this.excel_cikti == "konteyner") {
         const data = !this.konteyner_list_hepsi
           ? this.konteyner_ana_list_filter
@@ -594,7 +621,8 @@ export default {
             document.body.appendChild(link);
             link.click();
             this.is_excel = false;
-            this.musteri_loading = false;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
           }
         });
       } else {
@@ -606,7 +634,8 @@ export default {
             document.body.appendChild(link);
             link.click();
             this.is_excel = false;
-            this.musteri_loading = false;
+                    this.$store.dispatch('fullscreenLoadingAct', false)
+
           }
         });
       }
@@ -615,10 +644,14 @@ export default {
       this.is_tahsilat = true;
     },
     pesinat_event_click() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
       this.$store.dispatch("new_pesinat_model_act");
       service.getPesinatIslemListesi().then((data) => {
         this.$store.dispatch("pesinat_listesi_yukle_act", data);
         this.is_pesinat = true;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
       });
     },
   },

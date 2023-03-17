@@ -223,7 +223,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     service.getYuklemeYilListesi().then((yil_list) => {
       this.yil_listesi = yil_list;
       this.select_yil = yil_list[0].yil;
@@ -280,7 +280,7 @@ export default {
         this.$store.dispatch("mekmarTotalLoadMonthsAct", this.toplamListe);
         this.yuklemeToplamList(data.data.marketingYuklemeAylik);
         this.bdToplamList(data.data.marketingBd);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     yuklemeToplamList(liste) {

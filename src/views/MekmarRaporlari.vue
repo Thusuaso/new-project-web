@@ -354,12 +354,12 @@ export default {
         }
     },
     created() {
+        this.$store.dispatch('fullscreenLoadingAct',true)
         raporService.getUlkeBazindaSevkiyatYears().then(data => {
             this.years = data
         })
         raporService.getMekmarUlkeyeGore(this.selectedYear.year).then(data => {
             this.ulkeyeGoreList = data
-            console.log(data)
             this.toplam_ulke_sayisi = data.length
             this.toplam_ulke(data)
 
@@ -374,11 +374,15 @@ export default {
             this.tedarikciyeGoreList = data
             this.toplam_tedarikci_sayisi = data.length
             this.toplam_tedarikci(data)
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
         })
 
     },
     methods: {
         tedarikciye_gore_selected(event) {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
             this.tedarikci_baslik = event.data.firma_adi
             raporService.getMekmarTedarikciyeGoreAyrinti(event.data.tedarikci_id, this.selectedYear.year).then(data => {
                 this.tedarikciye_gore_ayrinti_list = data
@@ -387,6 +391,8 @@ export default {
                     this.tedarikciye_gore_top_ayrinti.alis_toplami += item.alis_toplami
                 }
                 this.tedarikciye_gore_form = true
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
             })
         },
         musteriye_gore_ayrinti_toplami(data) {
@@ -414,11 +420,15 @@ export default {
             }
         },
         musteriye_gore_selected(event) {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
             this.musteri_baslik = event.data.firma_adi
             raporService.getMekmarMusteriyeGoreAyrinti(event.data.id, this.selectedYear.year).then(data => {
                 this.musteriye_gore_ayrinti_list = data
                 this.musteriye_gore_ayrinti_toplami(data)
-                this.musteriye_gore_form= true
+                this.musteriye_gore_form = true
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
             })  
         },
 
@@ -450,11 +460,15 @@ export default {
         },
 
         ulkeye_gore_selected(event) {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
             this.ulke_baslik = event.data.ulke_adi
             raporService.getMekmarUlkeyeGoreAyrinti(event.data.ulke_id, this.selectedYear.year).then(data => {
                 this.ulkeye_gore_ayrinti_list = data
                 this.ulkeye_gore_ayrinti_toplami(data)
                 this.ulkeye_gore_form = true
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
             })
         },
         tedarikciye_gore_filtered(event) {
@@ -467,6 +481,8 @@ export default {
             this.toplam_ulke(event.filteredValue)
         },
         ulkeye_gore_year(event) {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
             this.toplam_ulke_sayisi= 0
             this.toplam_tedarikci_sayisi= 0
             this.toplam_musteri_sayisi= 0
@@ -485,6 +501,8 @@ export default {
                 this.toplam_tedarikci_sayisi = data.length
 
                 this.toplam_tedarikci(data)
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
             })
         },
         formatPrice(value) {

@@ -167,7 +167,7 @@ export default {
 
   service: null,
   mounted() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
 
     service.getEvrakSiparisListe().then((data) => {
       this.SiparisList = data.siparis_liste;
@@ -175,7 +175,7 @@ export default {
 
       this.SiparisTur = this.SiparisList.find((x) => x.id == this.id);
       this.yeniKayitBaslangicIslemler();
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   created() {},

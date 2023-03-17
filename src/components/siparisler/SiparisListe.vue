@@ -208,7 +208,7 @@ export default {
     const year = d.getFullYear();
 
     socket.siparis.on("siparisler_list_emit", () => {
-      this.$store.dispatch('datatableLoadingBeginAct')
+      this.$store.dispatch('fullscreenLoadingAct',true)
 
       if (this.siparisTur == "bekleyen") siparisDurum = 1;
       if (this.siparisTur == "sevk") siparisDurum = 3;
@@ -218,7 +218,7 @@ export default {
         this.toplamGuncelle(this.siparisler);
         this.dtSiparisler = data;
         this.toplamGuncelle(data);
-        this.$store.dispatch('datatableLoadingEndAct')
+        this.$store.dispatch('fullscreenLoadingAct',false)
 
       });
     })
@@ -259,7 +259,7 @@ export default {
           this.siparisler = data;
           this.SiparislerEvent = data;
           setTimeout(() => {
-            this.$store.dispatch("datatableLoadingEndAct");
+            this.$store.dispatch("fullscreenLoadingAct",false);
 
           }, 2000);
 
@@ -269,7 +269,7 @@ export default {
           (x) => x.yil == this.select_yil.yil
         );
         this.yil_baslik = this.select_yil.yil;
-        this.$store.dispatch("datatableLoadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
 
 
 
@@ -281,7 +281,7 @@ export default {
 
       if (this.siparisTur == "bekleyen") siparisDurum = 1;
       if (this.siparisTur == "sevk") siparisDurum = 3;
-      this.$store.dispatch("datatableLoadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       if (this.select_yil.id == 0) {
 
@@ -296,7 +296,7 @@ export default {
             this.siparisler = data;
             this.SiparislerHepsi = data;
             setTimeout(() => {
-              this.$store.dispatch("datatableLoadingEndAct");
+              this.$store.dispatch("fullscreenLoadingAct",false);
 
             }, 2000);
             if (this.FirmaAdi != "Hepsi") {

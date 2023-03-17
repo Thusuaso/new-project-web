@@ -65,11 +65,11 @@ export default {
     kasaDetayOlculeriYeni: kasaDetayOlculeriYeni,
   },
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
 
     service.getKasaDetayOlculeri().then((data) => {
       this.$store.dispatch("kasa_ebatlari_list_load", data);
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   data() {

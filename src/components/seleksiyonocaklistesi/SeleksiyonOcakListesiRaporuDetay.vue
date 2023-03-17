@@ -297,6 +297,8 @@ export default {
     };
   },
   created() {
+      this.$store.dispatch("fullscreenLoadingAct", true);
+
     this.ocakAdi = this.ocak_data.ocakAdi;
     service.getOcakListesiDetaylari(this.ocakAdi).then((data) => {
       this.ocak_list = data.ocakDetay;
@@ -308,6 +310,8 @@ export default {
       for (let val in this.ocak_list_uretim) {
         this.toplam_toplam_bedel_urt += this.ocak_list_uretim[val].mt2;
       }
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
     });
   },
 

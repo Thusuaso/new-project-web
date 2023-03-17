@@ -2,17 +2,7 @@
   <div>
     <div v-loading.fullscreen.lock="fullscreenLoading">
     </div>
-    <div class="columns is-centered" v-if="loading" style="margin-top: 280px">
-
-      <div class="container">
-        <div class="element">
-        <looping-rhombuses-spinner :animation-duration="1200" :size="100" color="#ff1d5e" />
-
-        </div>
-      </div>
-
-    </div>
-    <appNavbar v-if="__isAuthentication" v-show="!loading" >
+    <appNavbar v-if="__isAuthentication">
     </appNavbar>
     <br/>
     <br />
@@ -49,6 +39,7 @@ export default {
     loopingRhombusesSpinner: LoopingRhombusesSpinner,
   },
   created() { 
+    console.log(this.loading)
     const data = ref(false)
     this.$store.dispatch('fullscreenLoadingAct', data)
 

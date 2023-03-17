@@ -57,7 +57,6 @@
           selectionMode="single"
           dataKey="id"
           @filter="isUretimList"
-          :loading="$store.getters.datatableLoading"
           responsiveLayout="scroll"
         >
           <Column
@@ -515,7 +514,7 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     getUretimRaporHepsi() {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       service.getUretimRaporuHepsi().then((data) => {
         this.$store.dispatch("uretim_rapor_list_load_act", data);
@@ -523,7 +522,7 @@ export default {
         this.is_excel = false;
         this.is_form = false;
         this.tablo_toplam_guncelle(this.uretim_listesi);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     guncelle() {
@@ -578,7 +577,7 @@ export default {
       this.emitter.emit("uretimRaporUrunKartShow");
     },
     excel_cikti_click() {
-      this.$store.dispatch("datatableLoadingBeginAct")
+      this.$store.dispatch("fullscreenLoadingAct",true)
 
       this.is_excel = true;
       const data = this.uretim_rapor_list_all;
@@ -593,7 +592,7 @@ export default {
           document.body.appendChild(link);
           link.click();
           this.is_excel = false;
-          this.$store.dispatch("datatableLoadingEndAct")
+          this.$store.dispatch("fullscreenLoadingAct",false)
         }
       });
     },
@@ -612,15 +611,16 @@ export default {
       if (this.son_tarih && !this.ilk_tarih) {
         this.is_islem = true;
         let tarih = this.localService.getDateString(this.son_tarih);
-        this.$store.dispatch("datatableLoadingBeginAct")
+        this.$store.dispatch("fullscreenLoadingAct",true)
         service.getUretimRaporTarih(tarih).then((data) => {
           this.$store.dispatch("uretim_rapor_list_load_act", data);
-          this.$store.dispatch("datatableLoadingEndAct")
+          
 
           this.is_filter_uretim = true;
           this.$refs.uretim_tablo.value = data;
           this.tablo_toplam_guncelle(data);
           this.is_islem = false;
+          this.$store.dispatch("fullscreenLoadingAct", false)
         });
       }
       if (!this.son_tarih && !this.ilk_tarih) {
@@ -638,16 +638,17 @@ export default {
 
         let son_tarih = this.localService.getDateString(this.son_tarih);
         let ilk_tarih = this.localService.getDateString(this.ilk_tarih);
-        this.$store.dispatch("datatableLoadingBeginAct")
+        this.$store.dispatch("fullscreenLoadingAct",true)
 
         service.getUretimRaporIkiTarih(ilk_tarih, son_tarih).then((data) => {
           this.is_filter_uretim = true;
           this.$store.dispatch("uretim_rapor_list_load_act", data);
-          this.$store.dispatch("datatableLoadingEndAct")
 
           this.$refs.uretim_tablo.value = data;
           this.tablo_toplam_guncelle(data);
           this.is_islem = false;
+          this.$store.dispatch("fullscreenLoadingAct", false)
+
         });
       }
     },

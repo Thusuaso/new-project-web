@@ -2,9 +2,9 @@
   <div>
     <Card>
       <template #header>
-        <h1 style="text-align: center; font-size: 20px; font-weight: bold">
+        <h4 style="text-align: center; font-size: 20px; font-weight: bold">
           R14 : Konteynır Takip Listesi
-        </h1>
+        </h4>
       </template>
       <template #content>
         <DataTable
@@ -115,9 +115,9 @@
       <div class="column">
         <Card>
           <template #header>
-            <h2 style="text-align: center">
+            <h4 style="text-align: center">
               R16: {{ year }} 'de Yapılan Sevkiyatın Üreticilere Göre Dağılımı (Mekmar)
-            </h2>
+            </h4>
           </template>
           <template #content>
             <DataTable
@@ -159,9 +159,9 @@
       <div class="column">
         <Card>
           <template #header>
-            <h2 style="text-align: center">
+            <h4 style="text-align: center">
               R17: {{ year }}'deki Ülkelere Göre Sevkiyat
-            </h2>
+            </h4>
           </template>
           <template #content>
             <countrySevkiyat></countrySevkiyat>
@@ -171,9 +171,9 @@
       <div class="column">
         <Card>
           <template #header>
-            <h2 style="text-align: center">
+            <h4 style="text-align: center">
               R18: {{ year }}'deki Mevcut Siparişlerin Müşterilere Göre Dağılımı
-            </h2>
+            </h4>
           </template>
           <template #content>
             <DataTable
@@ -217,9 +217,9 @@
       <div class="column">
         <Card>
           <template #header>
-            <h2 style="text-align: center">
+            <h4 style="text-align: center">
               R19: Takipteki {{ month }} Ayına Ait Teklifler
-            </h2>
+            </h4>
           </template>
           <template #content>
             <DataTable
@@ -262,9 +262,9 @@
         </Card>
         <Card style="margin-top: 10px">
           <template #header>
-            <h2 style="text-align: center">
+            <h4 style="text-align: center">
               R20: {{ year }} Yılına Ait Tüm Teklifler
-            </h2>
+            </h4>
           </template>
           <template #content>
             <DataTable
@@ -308,9 +308,9 @@
       <div class="column">
         <Card>
           <template #header>
-            <h2 style="text-align: center">
+            <h4 style="text-align: center">
               R22: {{ year }} Yeni Eklenen Siparişler
-            </h2>
+            </h4>
           </template>
           <template #content>
             <DataTable

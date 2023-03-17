@@ -15,7 +15,7 @@
         <div class="column is-12 seleksiyon-list" v-if="slk_enb_mekmar">
           <DataTable :value="seleksiyon_mekmar_uretimlist" v-model:filters="filters" filterDisplay="row" :paginator="true"
             :rows="20" dataKey="id" selectionMode="single" :selection="select_uretim" ref="seleksiyon_data"
-            @row-select="uretimSec($event)" class="p-datatable-sm" :loading="datatableLoading" @filter="isFilters">
+            @row-select="uretimSec($event)" class="p-datatable-sm" @filter="isFilters">
             <Column field="kasa_no" header="No" bodyStyle="text-align:left" :showFilterMatchModes="false" :showClear="false"
               :showFilterMenu="false">
               <template #body="slotProps">
@@ -215,7 +215,7 @@
         <div class="column is-12 seleksiyon-list" v-else-if="slk_enb_dis">
           <DataTable :value="seleksiyon_dis_uretimlist.disUretim" :paginator="true" :rows="20" dataKey="id"
             selectionMode="single" :selection="select_uretim" ref="seleksiyon_data" @row-select="uretimSec($event)"
-            v-model:filters="filters" filterDisplay="row" :loading="datatableLoading" @filter="isFilters"
+            v-model:filters="filters" filterDisplay="row" @filter="isFilters"
             class="p-datatable-sm">
             <Column field="kasa_no" header="No" bodyStyle="text-align:left" :showFilterMenu="false">
               <template #body="slotProps">
@@ -414,7 +414,7 @@
         <div class="column is-12 seleksiyon-list" v-else-if="slk_enb_mekmer_dis">
           <DataTable :value="seleksiyon_mekmer_dis_uretimlist" v-model:filters="filters" filterDisplay="row" :paginator="true"
             :rows="20" dataKey="id" selectionMode="single" :selection="select_uretim" ref="seleksiyon_data"
-            @row-select="uretimSec($event)" :loading="datatableLoading" @filter="isFilters" class="p-datatable-sm">
+            @row-select="uretimSec($event)"  @filter="isFilters" class="p-datatable-sm">
             <Column field="kasa_no" header="No" bodyStyle="text-align:left" :showFilterMenu="false">
               <template #body="slotProps">
                 <div :class="slotProps.data.disarda == true ? 'disarda_css' : ''">
@@ -612,7 +612,7 @@
         <div class="column is-12 seleksiyon-list" v-else-if="slk_enb_bulunamadi">
             <DataTable :value="seleksiyon_mekmer_bulunamayan_uretimlist" v-model:filters="filters" filterDisplay="row" :paginator="true"
               :rows="20" dataKey="id" selectionMode="single" :selection="select_uretim" ref="seleksiyon_data"
-              @row-select="uretimSec($event)" :loading="datatableLoading" @filter="isFilters" class="p-datatable-sm">
+              @row-select="uretimSec($event)"  @filter="isFilters" class="p-datatable-sm">
               <Column field="kasa_no" header="No" bodyStyle="text-align:left" :showFilterMenu="false">
                 <template #body="slotProps">
                   <div :class="slotProps.data.disarda == true ? 'disarda_css' : ''">
@@ -1063,7 +1063,6 @@ export default {
       "slk_enb_mekmer_dis",
       "slk_enb_bulunamadi",
       "seleksiyon_dis_top_kasa",
-      "datatableLoading",
     ]),
 
     sort_seleksiyon_uretimlist() {

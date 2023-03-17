@@ -12,7 +12,7 @@
     <div class="col">
       <DataTable :value="numune_listesi" v-model:filters="filters" filterDisplay="menu" :paginator="true" :rows="15"
         rowGroupMode="rowspan" :groupRowsBy="groups" @row-select="numuneSec($event)" selectionMode="single" dataKey="id"
-        @filter="isNumuneList" :loading="datatableLoading">
+        @filter="isNumuneList" >
         <template #header>
           <div class="columns is-multiline">
             <div class="column is-12">
@@ -103,7 +103,6 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters([
-      'datatableLoading'
     ])
   },
   data() {
@@ -132,7 +131,7 @@ export default {
     numuneForm,
   },
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     service.getNumuneYilListesi().then((data) => {
       this.yil_listesi = data.yil_listesi2;
 
@@ -142,7 +141,7 @@ export default {
         this.numune_listesi = data.numune_list;
 
         this.genel_toplam(this.numune_listesi);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     });
   },
@@ -151,13 +150,13 @@ export default {
       this.genel_toplam(event.filteredValue);
     },
     YilSecim(select_yil) {
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
 
       service.getNumuneAnaListesi(select_yil).then((data) => {
         this.numune_listesi = data.numune_list;
 
         this.genel_toplam(this.numune_listesi);
-        this.$store.dispatch("loadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
     genel_toplam(liste) {
@@ -198,7 +197,7 @@ export default {
   },
   mounted() {
     socket.siparis.on('numunetahsilat_kayitdegisim_emit', () => {
-      this.$store.dispatch('datatableLoadingBeginAct');
+      this.$store.dispatch('fullscreenLoadingAct',true);
       service.getNumuneYilListesi().then((data) => {
         this.yil_listesi = data.yil_listesi2;
 
@@ -208,7 +207,7 @@ export default {
           this.numune_listesi = data.numune_list;
 
           this.genel_toplam(this.numune_listesi);
-          this.$store.dispatch('datatableLoadingEndAct');
+          this.$store.dispatch('fullscreenLoadingAct',false);
 
         });
       });

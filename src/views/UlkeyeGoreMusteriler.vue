@@ -18,7 +18,6 @@
         dataKey="ulkeId"
         v-model:filters="filters1"
         filterDisplay="row"
-        :loading="$store.getters.datatableLoading"
       >
         <Column
           field="ulkeAdi"
@@ -165,17 +164,15 @@ export default {
   },
   created() {
     this.service = new MusteriService();
-    this.$store.dispatch("datatableLoadingBeginAct");
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     this.service.getUlkeyeGoreMusteriList(2022).then((data) => {
       this.$store.dispatch("ulkeye_gore_musteriler_act", data);
-      this.$store.dispatch("datatableLoadingEndAct");
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   methods: {
     isRowSelected(event) {
-      this.$store.dispatch("datatableLoadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       this.service
         .getUlkeyeGoreMusteriListAyrinti(
           this.selectedYear.year,
@@ -183,15 +180,15 @@ export default {
         )
         .then((data) => {
           this.$store.dispatch("ulkeye_gore_musteriler_ayrinti_act", data);
-          this.$store.dispatch("datatableLoadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
           this.is_form = true;
         });
     },
     isDropdownChange(event) {
-      this.$store.dispatch("datatableLoadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       this.service.getUlkeyeGoreMusteriList(event.value.year).then((data) => {
         this.$store.dispatch("ulkeye_gore_musteriler_act", data);
-        this.$store.dispatch("datatableLoadingEndAct");
+        this.$store.dispatch("fullscreenLoadingAct",false);
       });
     },
   },

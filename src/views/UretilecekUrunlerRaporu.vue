@@ -61,7 +61,6 @@
     @filter="uretilecekUrunlerToplam($event)"
     ref="uretimUrunler"
     @row-select="isSelectUrun($event)"
-    :loading="$store.getters.datatableLoading"
   >
     <Column
       field="kategori"
@@ -322,29 +321,29 @@ export default {
 
   methods: {
     changeMarketing() {
-      this.$store.dispatch("datatableLoadingBeginAct")
+      this.$store.dispatch("fullscreenLoadingAct",true)
       if (this.marketing == "Hepsi") {
         raporService.getUrunlerUretimList().then((data) => {
           this.uretimUrunler = data;
-          this.$store.dispatch("datatableLoadingEndAct")
+          this.$store.dispatch("fullscreenLoadingAct",false)
 
         });
       } else if (this.marketing == "Mekmar") {
         raporService.getUrunlerUretimListMekmar().then((data) => {
           this.uretimUrunler = data;
-          this.$store.dispatch("datatableLoadingEndAct")
+          this.$store.dispatch("fullscreenLoadingAct",false)
 
         });
       } else if (this.marketing == "Mekmer") {
         raporService.getUrunlerUretimListMekmer().then((data) => {
           this.uretimUrunler = data;
-          this.$store.dispatch("datatableLoadingEndAct")
+          this.$store.dispatch("fullscreenLoadingAct",false)
 
         });
       }
     },
     isSelectUrun(event) {
-      this.$store.dispatch("datatableLoadingBeginAct")
+      this.$store.dispatch("fullscreenLoadingAct",true)
 
       if (this.marketing == "Hepsi") {
         raporService
@@ -356,7 +355,7 @@ export default {
             for (let item of data) {
               this.sipToplamiAyrinti += item.sipMiktari;
             }
-            this.$store.dispatch("datatableLoadingEndAct")
+            this.$store.dispatch("fullscreenLoadingAct",false)
 
           });
       } else if (this.marketing == "Mekmar") {
@@ -369,7 +368,7 @@ export default {
             for (let item of data) {
               this.sipToplamiAyrinti += item.sipMiktari;
             }
-            this.$store.dispatch("datatableLoadingEndAct")
+            this.$store.dispatch("fullscreenLoadingAct",false)
 
           });
       } else if (this.marketing == "Mekmer") {
@@ -382,7 +381,7 @@ export default {
             for (let item of data) {
               this.sipToplamiAyrinti += item.sipMiktari;
             }
-            this.$store.dispatch("datatableLoadingEndAct")
+            this.$store.dispatch("fullscreenLoadingAct",false)
 
           });
       }
@@ -417,10 +416,10 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("loadingBeginAct");
+    this.$store.dispatch("fullscreenLoadingAct",true);
     raporService.getUrunlerUretimList().then((data) => {
       this.uretimUrunler = data;
-      this.$store.dispatch("loadingEndAct");
+      this.$store.dispatch("fullscreenLoadingAct",false);
     });
   },
   mounted() {},

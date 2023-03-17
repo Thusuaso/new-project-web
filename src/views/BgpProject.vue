@@ -211,14 +211,14 @@ export default {
     },
     is_change_country(event) {
       // this.countryAndReseptation = this.bgpProjectStatisticCountryandReseptation.filter(x => x.ulkeAdi == event.value.country)
-      this.$store.dispatch("loadingBeginAct");
+      this.$store.dispatch("fullscreenLoadingAct",true);
       if (this.selectedTemsilci.id == 0) {
         if (event.value.country == "Hepsi") {
           bgpService.getBgpProjectList(10).then((data) => {
             this.$store.dispatch("bgp_projects_list_load", data.result);
             this.countryName = null;
             this.countryCount = null;
-            this.$store.dispatch("loadingEndAct");
+            this.$store.dispatch("fullscreenLoadingAct",false);
 
           });
         } else {
@@ -235,7 +235,7 @@ export default {
             this.countryCount = result.length;
 
             this.$store.dispatch("bgp_projects_list_load", result);
-            this.$store.dispatch("loadingEndAct");
+            this.$store.dispatch("fullscreenLoadingAct",false);
 
           }, 2000);
         }
@@ -245,7 +245,7 @@ export default {
             .getBgpProjectList(this.selectedTemsilci.id)
             .then((data) => {
               this.$store.dispatch("bgp_projects_list_load", data.result);
-              this.$store.dispatch("loadingEndAct");
+              this.$store.dispatch("fullscreenLoadingAct",false);
 
             });
           this.countryName = null;
@@ -260,7 +260,7 @@ export default {
           this.countryCount = result.length;
 
           this.$store.dispatch("bgp_projects_list_load", result);
-          this.$store.dispatch("loadingEndAct");
+          this.$store.dispatch("fullscreenLoadingAct",false);
 
         }
       }

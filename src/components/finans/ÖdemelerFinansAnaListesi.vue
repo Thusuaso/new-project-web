@@ -56,8 +56,12 @@ export default {
     };
   },
   created() {
+        this.$store.dispatch('fullscreenLoadingAct', true)
+
     service.getOdemelerTablosu().then((data) => {
       this.odemeler = data;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
     });
   },
   methods: {

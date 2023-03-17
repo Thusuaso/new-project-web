@@ -10,7 +10,7 @@
     <div class="col">
       <DataTable :value="takip_listesi" v-model:filters="filters" filterDisplay="row" dataKey="id" sortField="kalan_alacak"
         :sortOrder="-1" selectionMode="single" :scrollable="true" scrollHeight="510px" v-model:selection="select_takip"
-        @row-select="takipSec($event)" :loading="$store.getters.datatableLoading">
+        @row-select="takipSec($event)">
         <Column field="sira" header="#" headerStyle="width:2px">
           <template #body="slotProps">
             {{ slotProps.data.sira }}
@@ -125,11 +125,11 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    store.dispatch("datatableLoadingBeginAct");
+    store.dispatch("fullscreenLoadingAct",true);
     service.getSevkTakipDusenListesi().then((data) => {
       next((vm) => {
         vm.takip_listesi = data;
-        store.dispatch("datatableLoadingEndAct");
+        store.dispatch("fullscreenLoadingAct",false);
       });
     });
   },

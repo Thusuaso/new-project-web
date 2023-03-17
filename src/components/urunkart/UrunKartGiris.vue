@@ -367,7 +367,7 @@ export default {
             "anaSayfaDegisiklikEvent",
             data.anaSayfaDegisiklik
           );
-          this.$store.dispatch('datatableLoadingEndAct')
+          this.$store.dispatch('fullscreenLoadingAct',false)
 
         } else {
           let mesaj =

@@ -256,6 +256,7 @@ export default {
       }
       const id = this.thmusteri.id;
 
+        this.$store.dispatch('fullscreenLoadingAct', true)
 
       service.tahsilatSilme(id).then((res) => {
         if (res) {
@@ -266,6 +267,8 @@ export default {
           let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişinin ' + ' tahsilatını sildi.'
           socket.siparis.emit("send_message_home_event", info)
           this.default_data();
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
 
 
         }
