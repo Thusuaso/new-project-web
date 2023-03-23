@@ -230,11 +230,8 @@ import "@fullcalendar/core/vdom"; // solves problem with Vite
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { mapGetters } from "vuex";
 export default {
-  computed: {
-    ...mapGetters([]),
-  },
+
   components: {
     TeklifGirisForm: TeklifGirisForm,
     kullaniciTeklifListe: KullaniciTeklifListe,

@@ -7,7 +7,7 @@ const state = {
   teslimTurList: [],
   odemeTurList: [],
   faturaKesimTurList: [],
-  ulkeList:[]
+  ulkeList2:[]
 };
 
 const actions = {
@@ -51,7 +51,7 @@ const mutations = {
     state.faturaKesimTurList = data
   },
   ulke_tur_load_mut(state, data) {
-    state.ulkeList = data
+    state.ulkeList2 = data
   },
   tedarikci_list_yukle_mut(state, data) {
     state.tedarikciList = data;
@@ -101,8 +101,8 @@ const getters = {
     return state.faturaKesimTurList
   }
   ,
-  ulkeList(state) {
-    return state.ulkeList
+  ulkeList2(state) {
+    return state.ulkeList2
   }
 };
 

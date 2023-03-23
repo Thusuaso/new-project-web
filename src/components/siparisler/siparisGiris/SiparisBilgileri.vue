@@ -1197,7 +1197,7 @@ export default {
       if ((tedarikciId != "" && siparisNo != "") || (tedarikciId != null && siparisNo != null)) {
         tedarikciService
           .getDeleteFormControl(tedarikciId, siparisNo)
-          .then((status) => {
+          .then((status) => { 
             if (status) {
               tedarikciService
                 .getDeleteForm(tedarikciId, siparisNo)

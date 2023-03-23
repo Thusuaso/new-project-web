@@ -4,6 +4,8 @@ const state = {
   benzerUrunler: null,
   keyList: null,
   keyListFr: null,
+  keyListEs: null,
+
   enRenkListesi: null,
   frRenkListesi: null,
   esRenkListesi: null,
@@ -31,8 +33,10 @@ const actions = {
 
 const mutations = {
   loadUrunMut(state, data) {
+    console.log("productdetail",data.productdetail)
     state.keyList = [];
     state.keyListFr = [];
+    state.keyListEs = [];
     state.urunDetay = data.productdetail;
     state.onerilenUrunler = data.onerilernUrunlerList;
     state.onerilernUrunlerList = data.onerilenUrunList;
@@ -55,6 +59,9 @@ const mutations = {
     if (state.urunDetay.anahtarlar_fr.length > 1) {
       state.keyListFr = state.urunDetay.anahtarlar_fr.split(",");
     }
+    if (state.urunDetay.anahtarlar_es.length > 1) {
+      state.keyListEs = state.urunDetay.anahtarlar_es.split(",")
+    }
   },
   loadUrunListMut(state, data) {
     state.urunList = data;
@@ -72,6 +79,9 @@ const getters = {
   },
   keyListFr(state) {
     return state.keyListFr;
+  },
+  keyListEs(state) {
+    return state.keyListEs;
   },
   onerilenUrunler(state) {
     return state.onerilenUrunler;

@@ -57,8 +57,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
-
-
+ 
 
 import mitt from 'mitt'
 // var Emitter = require('tiny-emitter');
@@ -74,8 +73,6 @@ app.component("Accordion", Accordion);
 app.component("AccordionTab", AccordionTab);
 
 app.component("TreeTable", TreeTable);
-app.component("Dialog", Dialog);
-
 app.component("Dialog", Dialog);
 app.component("Button", Button);
 app.component("InputText", InputText);
@@ -120,6 +117,9 @@ app.use(PrimeVue)
 app.use(ElementPlus)
 app.use(store)
 app.use(ToastService)
+
+
+
 
 app.use(router)
 

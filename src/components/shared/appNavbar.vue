@@ -330,16 +330,17 @@
                         <Sidebar v-model:visible="visible" class="p-sidebar-md">
                             <Accordion >
                                 <AccordionTab header="Kişiler">
-                                     <Listbox v-model="selectedMessageUser" :options="users" optionLabel="user" class="w-full md:w-14rem" @change="is_input_disabled = false"/>
+                                    <Listbox v-model="selectedMessageUser" :options="users" filter optionLabel="user" style="width:100%;" @change="is_input_disabled = false "/>
+
                                 </AccordionTab>
                             </Accordion>
                             <br/>
-                            <div >
+                            <div v-if="!is_input_disabled">
                                 <span>
-                                         <InputText v-model="message_text" placeholder="Lütfen Mesajınızı Yazınız" style="margin-right:4px;" :disabled="is_input_disabled"/>
+                                         <InputText v-model="message_text" placeholder="Lütfen Mesajınızı Yazınız" style="margin-right:4px;width:89%;" :disabled="is_input_disabled"/>
                                     </span>
                                     <span>
-                                        <Button class="pi pi-send" style="height:40px;" @click="sendMessage" :disabled="message_text ? false : true"/>
+                                        <Button class="pi pi-send" style="height:40px;width:10%;" @click="sendMessage" :disabled="message_text ? false : true"/>
                                     </span>
                             </div>
                                 <br/>
@@ -467,7 +468,7 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="/raporlar/uretilecekUrunler">Üretilecek</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li v-if="isOthers" v-show="is_h"><a class="dropdown-item" href="/atlanta/stokListesi">Atlanta</a></li>
+                    <li><a class="dropdown-item" href="/atlanta/stokListesi">Atlanta</a></li>
                     </ul>
             </li>
             <li class="nav-item dropdown" v-if="is_h">
@@ -551,8 +552,8 @@
           <ul class="navbar-nav"  style="width:10%;float:right">
             <li class="navbar-item">
                 <a class="nav-link"  @click="visible = true">
-                                    <i class="pi pi-eye" style="color: slateblue;cursor:pointer; "  ></i>
-
+                    <i v-badge.danger  class="pi pi-envelope p-overlay-badge" style="font-size: 1rem" v-if="follow_is_true"/>
+                    <i v-badge  class="pi pi-envelope p-overlay-badge" style="font-size: 1rem" v-else/>
                 </a>
                 
                 <!-- <OverlayPanel ref="notifOp" style="width:40%;margin-top:50px;">
@@ -636,10 +637,10 @@
                         </div>
                     </OverlayPanel>
             </li>
-            <li class="navbar-item"><a class=" active button is-primary"  @click="logout"
+            <!-- <li class="navbar-item"><a class=" active button is-primary"  @click="logout"
                     v-if="$store.getters.__isAuthentication">
                     <strong><i class="pi pi-sign-out"></i></strong>
-                </a></li>
+                </a></li> -->
           </ul>
 
         </div>
@@ -687,6 +688,7 @@ export default {
   },
   data() {
       return {
+        follow_is_true:false,
         visible:false,
         anlikNotificationData:[],
         is_input_disabled:true,
@@ -752,11 +754,26 @@ export default {
         }
         notificationService.getNotification(this.__getUserId).then(data => {
             this.anlikNotificationData = data.liste
+            
+            for (let item of data.liste) {
+                if (item.data.follow==true) {
+                    this.follow_is_true = true
+                    break
+                }
+            }
+            for (let item of data.liste) {
+                for (let item2 of item.children) {
+                    if (item2.data.follow == true) {
+                        this.follow_is_true = true
+                        break
+                    }
+                }
+                
+            }
         })
 
         
     if (
-      this.__getUserId == 47 ||
       this.__getUserId == 10 ||
       this.__getUserId == 13
     ) {
@@ -804,13 +821,14 @@ export default {
                 'userId': this.selectedMessageUser.id,
                 'userName': this.selectedMessageUser.user,
                 'whoSendId': who_send_id,
-                'whoSendName':who_send_name
+                'whoSendName': who_send_name
             }
             data.getUserId = this.getUserId
             notificationService.setNotificationSave(data).then(status => {
                 if (status) {
                 this.$toast.add({ severity: 'success', summary: 'Bildirim Durum', detail: 'Mesajınız Başarıyla Gönderildi', life: 3500 })
-                socket.siparis.emit('get_notification_list_event', data)
+                    socket.siparis.emit('get_notification_list_event', data)
+                socket.siparis.emit('get_notification_list_follow_event')
 
                 } else {
                 this.$toast.add({ severity: 'danger', summary: 'Bildirim Durum', detail: 'Mesajınız Gönderimi Başarısız', life: 3500 })
@@ -930,11 +948,56 @@ export default {
             notificationService.getNotification(this.__getUserId).then(data => {
                 this.anlikNotificationData = data.liste
                 if (datas.userId == this.__getUserId) {
-                    this.$toast.add({severity:'success',summary:datas.whoSendName + ' bir mesaj gönderdi.',detail:datas.message })
+                    this.$toast.add({severity:'success',summary:datas.userName + ' bir mesaj gönderdi.', detail: datas.message })
                 }
             })
         })
-  }
+        socket.siparis.on('get_notification_list_second_emit', datas => {
+            notificationService.getNotification(this.__getUserId).then(data => {
+                this.anlikNotificationData = data.liste
+
+                if (datas.data.receiver_id == this.__getUserId) {
+                    this.$toast.add({ severity: 'success', summary: datas.data.user_name + ' bir mesaj gönderdi.', detail: datas.data.newMessage })
+                }
+            })
+        })
+        socket.siparis.on('get_notification_list_answered_third_emit', datas => {
+            notificationService.getNotification(this.__getUserId).then(data => {
+                this.anlikNotificationData = data.liste
+
+                if (datas.data.receiver_id == this.__getUserId) {
+                    this.$toast.add({ severity: 'success', summary: datas.data.user_name + ' bir mesaj gönderdi.', detail: datas.data.newMessage })
+                }
+            })
+        })
+
+        socket.siparis.on('get_notification_list_follow_emit', () => {
+            notificationService.getNotification(this.__getUserId).then(data => {
+                for (let item of data.liste) {
+                    if (item.data.follow == true) {
+                        this.follow_is_true = true
+                        break
+                    } else {
+                        this.follow_is_true = false
+                    }
+                }
+                for (let item of data.liste) {
+                    for (let item2 of item.children) {
+                        if (item2.data.follow == true) {
+                            this.follow_is_true = true
+                            break
+                        } else {
+                            this.follow_is_true = false
+                        }
+                    }
+
+                }
+            })
+        })
+        
+        
+
+    }
 };
 </script>
 <style scoped>

@@ -12,6 +12,12 @@ const notification = {
     },
     setNotificationSaveSub(data) {
         return axios.post('/notification/islemler/ansered',data).then(res=>res.data)
+    },
+    setNotificationFollow(data) {
+        return axios.post('/notification/islemler/follow',data).then(res=>res.data)
+    },
+    setNotificationFollowAnswered(data) {
+        return axios.post('/notification/islemler/follow/answered',data).then(res=>res.data)
     }
 }
 

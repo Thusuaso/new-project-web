@@ -10,7 +10,7 @@
 
     
 
-    <div v-show="!loading" class="routerGeneral">
+    <div class="routerGeneral">
       <div class="routerLimitation">
         <Toast position="bottom-right"></Toast>
         <router-view />
@@ -22,7 +22,6 @@
 <script>
 import appNavbar from "@/components/shared/appNavbar.vue";
 import { mapGetters } from "vuex";
-import { LoopingRhombusesSpinner } from "epic-spinners";
 import { ref } from "vue";
 import socket from "@/service/SocketService";
 export default {
@@ -32,14 +31,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["__isAuthentication", "loading","fullscreenLoading"]),
+    ...mapGetters(["__isAuthentication","fullscreenLoading"]),
   },
   components: {
     appNavbar,
-    loopingRhombusesSpinner: LoopingRhombusesSpinner,
   },
   created() { 
-    console.log(this.loading)
     const data = ref(false)
     this.$store.dispatch('fullscreenLoadingAct', data)
 
@@ -56,7 +53,6 @@ export default {
 <style>
 
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css";
-
 
 .container{
   top: 47%;

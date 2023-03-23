@@ -25,7 +25,11 @@
                         <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
                     </template>
                 </Column>
-                <Column field="siparis_no" header="PO"></Column>
+                <Column field="siparis_no" header="PO">
+                    <template #filter="{ filterModel, filterCallback }">
+                            <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
+                        </template>
+                </Column>
                 <Column field="yukleme_tarihi" header="Yükleme Tarihi"></Column>
                 <Column field="info" header="Değişiklik"></Column>
                 <Column field="kayit_kisi" header="Değişimi Yapan"></Column>
@@ -59,6 +63,12 @@
         </DataTable>
         </template>
     </Card>
+    <vs-button
+    :active="active == 0"
+    @click="active = 0"
+    >
+    Active
+    </vs-button>
     
     
 </template>
@@ -67,6 +77,7 @@ import service from '@/service/RaporService';
 import { mapGetters } from 'vuex'
 import store from '@/store'
 import { FilterMatchMode } from 'primevue/api';
+
 export default {
     computed: {
       ...mapGetters([
@@ -92,6 +103,7 @@ export default {
     },
     data() {
         return {
+            active:0,
             filters: {
                 yil: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                ay: { value: null, matchMode: FilterMatchMode.STARTS_WITH },

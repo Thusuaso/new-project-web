@@ -1,20 +1,20 @@
 <template>
     <div class="panel">
-            <div class="panel-body">
+            <div class="panel-body" >
             <!-- Newsfeed Content -->
             <!--===================================================-->
-            <div class="media-block">
+            <div class="media-block" @mouseleave="followControl(item)">
             <a class="media-left" href="#"><img class="img-circle img-sm" style="margin-right:10px;" alt="Profile Picture" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
             <div class="media-body" >
-                <div class="mar-btm">
-                <a href="#" class="btn-link text-semibold media-heading box-inline">{{ item.data.who_send_name }}</a>
+                <div class="mar-btm" >
+                <a href="#" class="btn-link text-semibold media-heading box-inline"  style="text-decoration: none;" :style="{ 'color': item.data.follow ? 'red' : 'black' }">{{ item.data.who_send_name }}</a>
                 <p class="text-muted text-sm">{{ formatDate(item.data.tarih) }}</p>
                 </div>
                 <p>
                     {{ item.data.message }}
                 </p>
                 <div class="pad-ver">
-                <a class="btn btn-sm btn-default btn-hover-primary" @click="is_answer_selected_form = true" v-if="!is_answer_selected_form">Cevapla</a>
+                <a class="btn btn-sm btn-default btn-hover-primary" @click="is_answer_selected_form = true" v-if="!is_answer_selected_form" v-show="item.data.who_send_id != $store.getters.__getUserId">Cevapla</a>
                 <div>
                     <span>
                     <Textarea v-if="is_answer_selected_form" v-model="textArea" rows="3" cols="50"/>
@@ -48,6 +48,7 @@
 import notificationService from "@/service/AnlikBildirimService"
 import socket from "@/service/SocketService"
 import CommentBarAnswered from "@/components/shared/commentBarAnswered"
+import moment from 'moment'
 export default {
     components: {
       CommentBarAnswered  
@@ -65,21 +66,34 @@ export default {
         }
     },
     methods: {
+        followControl(item) {
+            if (item.data.follow) {
+                notificationService.setNotificationFollow(item.data).then(data => {
+                    if (data.status) {
+                        socket.siparis.emit('get_notification_list_event', data)
+                        socket.siparis.emit('get_notification_list_follow_event')
+                    }
+                })   
+            }
+            
+        },
         formatDate(value) {
-            const date = new Date(value)
-            const dateNow = new Date()
-            const dateAgo = new Date(date - dateNow)
-            console.log(dateAgo)
-            return value
+            return moment(value).fromNow()
+            
         },
         sendMessageAnswer(item) {
+            
             item.data.newMessage = this.textArea
+            item.data.receiver_name = item.data.who_send_name
+            item.data.receiver_id = item.data.who_send_id
             item.data.user_id = this.$store.getters.__getUserId
             item.data.user_name = this.$store.getters.__getUsername
             notificationService.setNotificationSaveSub(item.data).then(data => {
                 if (data) {
                     this.$toast.add({ severity: 'success', summary: 'Bildirim Durum', detail: 'Mesajınız Başarıyla Gönderildi', life: 3500 })
-                    socket.siparis.emit('get_notification_list_event', data)
+                    socket.siparis.emit('get_notification_list_second_event', item)
+                    socket.siparis.emit('get_notification_list_follow_event')
+
 
                 } else {
                 this.$toast.add({ severity: 'danger', summary: 'Bildirim Durum', detail: 'Mesajınız Gönderimi Başarısız', life: 3500 })

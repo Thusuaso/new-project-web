@@ -1,6 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
 const path = require(`path`);
-
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
@@ -12,6 +11,9 @@ module.exports = defineConfig({
             }
         }
     },
+    devServer:{
+      webSocketServer: false
+  } 
 
   
 })

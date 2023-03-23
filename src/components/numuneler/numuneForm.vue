@@ -806,6 +806,7 @@ export default {
       this.$store.dispatch('fullscreenLoadingAct', true)
 
       service.setNumuneKayit(veri).then((data) => {
+        console.log("setNumuneKayit",data)
         if (data.status) {
           this.$store.dispatch('fullscreenLoadingAct', false)
 
@@ -816,8 +817,8 @@ export default {
             life: 5000,
           });
           socket.siparis.emit('numunetahsilat_kayitdegisim_event');
-
-          this.numune.id = data.Id;
+          socket.siparis.emit('get_numune_form_event')
+          this.numune.id = data.id;
           this.urunkayit = false;
 
           this.urunLoading = false;

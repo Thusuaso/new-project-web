@@ -40,7 +40,7 @@
             </div>
           </template>
         </AutoComplete>
-        <label for="faturaTur">Fatura Tür</label>
+        <label for="faturaTur">Fatura Tür</label> 
       </span>
     </div>
     <div class="column">
@@ -595,7 +595,8 @@ export default {
         if (this.is_two_isf_form == false) {
           const evrak =
             this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
-            service.getIsfControl(evrak).then(data => {
+          service.getIsfControl(evrak).then(data => {
+            
             if (data) {
               fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
                 console.log(data);

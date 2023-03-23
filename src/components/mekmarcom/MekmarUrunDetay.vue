@@ -406,6 +406,7 @@ export default {
       "fotolist",
       "onerilernUrunlerList",
       "keyListFr",
+      "keyListEs",
       "ebatListNormal",
     ]),
     // filterEbatListesi() {

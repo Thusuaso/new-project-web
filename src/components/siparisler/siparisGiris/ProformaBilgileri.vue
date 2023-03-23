@@ -518,7 +518,7 @@ export default {
       "teslimTurList",
       "odemeTurList",
       "faturaKesimTurList",
-      "ulkeList"
+      "ulkeList2"
     ]),
   },
   components: {
@@ -632,7 +632,7 @@ export default {
         this.faturaTur = this.faturaKesimTurList.find(
           (x) => x.id == this.profData.faturaKesimTurId
         );
-        this.ulke = this.ulkeList.find((x) => x.id == this.profData.ulkeId);
+        this.ulke = this.ulkeList2.find((x) => x.id == this.profData.ulkeId);
     },
 
     scaleValueFunc() {
@@ -746,9 +746,9 @@ export default {
       setTimeout(() => {
         let result;
         if (event.query.length === 0) {
-          result = [...this.ulkeList];
+          result = [...this.ulkeList2];
         } else {
-          result = this.ulkeList.filter((ted) => {
+          result = this.ulkeList2.filter((ted) => {
             return ted.ulkeAdi
               .toLowerCase()
               .startsWith(event.query.toLowerCase());
