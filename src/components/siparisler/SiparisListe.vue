@@ -1,14 +1,22 @@
 <template>
   <div class="grid" style="text-align:center">
     <div class="col" >
-      <Button class="p-button-success" @click="yeniSiparisAc" outlined label="Yeni" />
-    </div>
-    <div class="col">
       <div class="grid">
         <div class="col">
-          <Dropdown v-model="select_yil" @change="yil_degisim_event" :options="yil_listesi" optionLabel="yil"
-            placeholder="Year" />
+        <Button class="p-button-success" @click="yeniSiparisAc" outlined label="Yeni" />
+
         </div>
+        <div class="col">
+  <Dropdown v-model="select_yil" @change="yil_degisim_event" :options="yil_listesi" optionLabel="yil"
+                  placeholder="Year" />
+        </div>
+      </div>
+      
+    </div>
+
+
+    <div class="col">
+      <div class="grid">
         <div class="col">
           <Button @click="excel_cikti_click" class="p-button-help p-button-sm" label="TR" icon="far fa-file-excel" />
         </div>
