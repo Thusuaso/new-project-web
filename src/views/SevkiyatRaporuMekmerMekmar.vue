@@ -689,10 +689,10 @@ export default {
         service
           .getSevkiyatRaporIkiTarihAll(ilk_tarih, son_tarih)
           .then((data) => {
+            console.log(data)
             this.is_filter_sevkiyat = true;
             this.$store.dispatch("stok_rapor_list_load_act", data);
 
-            this.$refs.sevkiyat_tablo.value = data;
             this.tablo_toplam_guncelle(data);
             this.loading = false;
             this.is_islem = false;

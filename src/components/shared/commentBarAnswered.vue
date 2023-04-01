@@ -1,6 +1,6 @@
 <template>
     <div class="media-block"  @mouseleave="followControl(item2)">
-    <a class="media-left" href="#" style="margin-right:10px;"><img class="img-circle img-sm" alt="Profile Picture" src="https://bootdey.com/img/Content/avatar/avatar2.png"></a>
+    <a class="media-left" href="#" style="margin-right:10px;"><img class="img-circle img-sm" alt="Profile Picture" :src="item2.data.who_send_image"></a>
     <div class="media-body">
     <div class="mar-btm">
         <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration:none;" :style="{'color':item2.data.follow ? 'red':'black'}">{{ item2.data.who_send_name }}</a>

@@ -4,7 +4,7 @@
             <!-- Newsfeed Content -->
             <!--===================================================-->
             <div class="media-block" @mouseleave="followControl(item)">
-            <a class="media-left" href="#"><img class="img-circle img-sm" style="margin-right:10px;" alt="Profile Picture" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
+            <a class="media-left" href="#"><img class="img-circle img-sm" style="margin-right:10px;" alt="Profile Picture" :src="item.data.who_send_image"></a>
             <div class="media-body" >
                 <div class="mar-btm" >
                 <a href="#" class="btn-link text-semibold media-heading box-inline"  style="text-decoration: none;" :style="{ 'color': item.data.follow ? 'red' : 'black' }">{{ item.data.who_send_name }}</a>

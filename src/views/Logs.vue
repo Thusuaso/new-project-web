@@ -32,7 +32,11 @@
                 </Column>
                 <Column field="yukleme_tarihi" header="Yükleme Tarihi"></Column>
                 <Column field="info" header="Değişiklik"></Column>
-                <Column field="kayit_kisi" header="Değişimi Yapan"></Column>
+                <Column field="kayit_kisi" header="Değişimi Yapan">
+                    <template #filter="{ filterModel, filterCallback }">
+                                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
+                            </template>
+                </Column>
         </DataTable>
         </template>
     </Card>
