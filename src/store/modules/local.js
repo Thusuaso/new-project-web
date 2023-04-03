@@ -9,7 +9,7 @@ const actions = {
   },
   setServisAdresAct({ commit }) {
    let url = "https://doktor-servis.mekmar.com/";
-   //let url = "http://localhost:5000/";
+   //rlet url = "http://localhost:5000/";
 
     commit("setServisAdresMut", url);
   },

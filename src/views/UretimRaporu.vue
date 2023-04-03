@@ -617,7 +617,6 @@ export default {
           
 
           this.is_filter_uretim = true;
-          this.$refs.uretim_tablo.value = data;
           this.tablo_toplam_guncelle(data);
           this.is_islem = false;
           this.$store.dispatch("fullscreenLoadingAct", false)
@@ -625,12 +624,10 @@ export default {
       }
       if (!this.son_tarih && !this.ilk_tarih) {
         this.is_filter_uretim = false;
-        this.$refs.uretim_tablo.value = this.uretim_listesi;
         this.tablo_toplam_guncelle(this.uretim_listesi);
       }
       if (this.ilk_tarih && !this.son_tarih) {
         this.is_filter_uretim = false;
-        this.$refs.uretim_tablo.value = this.uretim_listesi;
         this.tablo_toplam_guncelle(this.uretim_listesi);
       }
       if (this.ilk_tarih && this.son_tarih) {
@@ -644,7 +641,6 @@ export default {
           this.is_filter_uretim = true;
           this.$store.dispatch("uretim_rapor_list_load_act", data);
 
-          this.$refs.uretim_tablo.value = data;
           this.tablo_toplam_guncelle(data);
           this.is_islem = false;
           this.$store.dispatch("fullscreenLoadingAct", false)
