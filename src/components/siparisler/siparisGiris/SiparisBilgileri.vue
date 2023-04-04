@@ -156,7 +156,20 @@
                 <label for="ton">Ton</label>
               </span>
             </div>
+            <div class="column">
+                  <span class="p-float-label">
+                    <InputText
+                      class="p-inputtext-sm"
+                      style="width: 200px"
+                      :disabled="dis_urun_giris"
+                      id="ton"
+                      v-model="siparis.kasaOlcusu"
+                    />
+                    <label for="ton">Kasa Ölçüsü</label>
+                  </span>
+                </div>
           </div>
+
         </template>
       </Card>
     </div>

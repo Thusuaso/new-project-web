@@ -1,16 +1,14 @@
 <template>
-  <section>
-    <div class="columns">
-      <div class="column is-12">
-        <SeleksiyonIslem />
+  <div style="margin-left:-25px;">
+     <SeleksiyonIslem />
+     <div class="grid">
+      <div class="row">
+      <UretimListe />
+
       </div>
-    </div>
-    <div class="columns">
-      <div class="column is-12">
-        <UretimListe />
-      </div>
-    </div>
-  </section>
+     </div>
+  </div>
+       
 </template>
 <script>
 import UretimListe from "../components/seleksiyon/UretimListe";

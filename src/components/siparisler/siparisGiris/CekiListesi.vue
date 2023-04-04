@@ -150,6 +150,16 @@
             {{ slotProps.data.birimAdi }}
           </template>
         </Column>
+        <Column
+            field="kasaOlcusu"
+            header="Olcu"
+            headerStyle="width:5%;"
+            bodyStyle="text-align:left;"
+          >
+            <template #body="slotProps">
+              {{ slotProps.data.kasaOlcusu }}
+            </template>
+          </Column>
       </DataTable>
     </div>
   </div>
