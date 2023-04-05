@@ -102,6 +102,8 @@ export default {
             this.$store.dispatch('fullscreenLoadingAct',true)
             service.getEvrakFaturaList(this.siparisNo).then((data) => {
               this.$store.dispatch('fullscreenLoadingAct', false)
+                    socket.siparis.emit("siparisler_list_event")
+
               this.$toast.add({
                 severity: "success",
                 summary: "Evrak Silme",

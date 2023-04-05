@@ -113,7 +113,7 @@ app.directive("badge", BadgeDirective);
 app.directive("tooltip", Tooltip);
 const emitter = mitt();
 app.config.globalProperties.emitter = emitter 
-app.use(PrimeVue)
+app.use(PrimeVue,{ ripple: true },{ inputStyle: "filled" })
 app.use(ElementPlus)
 app.use(store)
 app.use(ToastService)

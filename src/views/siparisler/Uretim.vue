@@ -1,5 +1,5 @@
 <template>
-  <siparis-liste siparisTur="üretim" :hasPage="false" baslik="Üretim Listesi" />
+  <siparis-liste siparisTur="üretim" :hasPage="false" baslik="Üretim Listesi"/>
 </template>
 <script>
 import SiparisListe from "../../components/siparisler/SiparisListe";

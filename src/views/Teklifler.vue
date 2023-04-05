@@ -185,6 +185,7 @@
     maximizable
     position="top"
     :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '65vw'}"
+    :closeOnEscape="false"
   >
     <kullanici-teklif-liste :kullaniciAdi="selectKullaniciAdi" />
   </Dialog>
@@ -194,6 +195,7 @@
     :modal="true"
     maximizable
     position="top"
+    :closeOnEscape="false"
   >
     <teklif-giris-form :yeniKayit="teklifYeniKayit" :teklifId="teklifId" />
   </Dialog>
@@ -204,6 +206,7 @@
     maximizable
     position="top"
     style="width:100%;"
+    :closeOnEscape="false"
 
   >
     <eskiTeklifler :eskitekliflist="eskitekliflist" />
@@ -215,6 +218,7 @@
     maximizable
     position="top"
     style="width:100%;"
+    :closeOnEscape="false"
   >
     <tumTeklifler :tumtekliflist="tumtekliflist" />
   </Dialog>

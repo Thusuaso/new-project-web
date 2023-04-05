@@ -608,6 +608,8 @@ export default {
                 this.bilgi = bilgi;
                 service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
                   if (veri.Status) {
+                    socket.siparis.emit("siparisler_list_event")
+
                     this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
                     socket.siparis.emit('isf_form_load_event')
 
@@ -638,11 +640,14 @@ export default {
                 this.bilgi = bilgi;
                 service.setIcSiparisDosyaKayit(bilgi).then((veri) => {
                   if (veri.Status) {
+                    socket.siparis.emit("siparisler_list_event")
+
                     this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
                     socket.siparis.emit('isf_form_load_event')
 
                     this.IcSiparisDosyaGonder();
                   } else {
+
                     this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'ISF kaydedilemedi, Lütfen tekrar deneyiniz.', life: 3000 });
 
                   }

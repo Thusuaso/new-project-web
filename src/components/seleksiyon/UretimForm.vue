@@ -316,12 +316,14 @@
             <template #content>
               <div class="columns" style="margin-top:-35px;">
                 <div class="column">
-                  <Checkbox
-                    v-model="detail.kutu"
-                    :binary="true"
-                    :disabled="slk_form"
-                  />
-                  Kutu
+                    <Checkbox
+                      v-model="detail.kutu"
+                      :binary="true"
+                      :disabled="slk_form"
+                    />
+                    Kutu
+                  
+                  
                 </div>
                 <div class="column">
                   <Checkbox

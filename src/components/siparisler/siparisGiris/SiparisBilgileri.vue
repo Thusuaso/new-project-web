@@ -23,7 +23,7 @@
             <div class="column">
               
               <MoneyInput @money_input_text_change="siparis.alisFiyati = $event" :text_value="siparis.alisFiyati"
-                :disAktif="dis_urun_giris" label="Alış Fiyatı ($)" v-model="alis_Fiyati" @input="isf_change_event"/>
+                :disAktif="dis_urun_giris" label="Alış Fiyatı ($)" v-model="alis_Fiyati" />
             </div>
           </div>
           <div class="columns is-gapless">
@@ -189,7 +189,6 @@
                     'p-invalid':
                       v$.siparis.musteriAciklama.$invalid && submitted,
                   }"
-                  @input="isf_change_event"
                 />
                 <label for="musteriAciklama">En-Açıklama</label>
               </span>
@@ -210,7 +209,6 @@
                     'p-invalid':
                       v$.siparis.uretimAciklama.$invalid && submitted,
                   }"
-                  @input="isf_change_event"
 
                 />
                 <label for="uretimAciklama">Tr-Açıklama</label>
@@ -490,11 +488,11 @@ export default {
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     sec() {
-      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
 
     },
     miktar_input_event(event) {
-      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
 
       if (event) {
         this.siparis.miktar = event.toString();
@@ -946,7 +944,7 @@ export default {
       }
     },
     aciklamaAdd(urunKart) {
-      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+      // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
       this.siparis.musteriAciklama =
         urunKart.kategoriAdi +
         " - " +
@@ -1143,7 +1141,7 @@ export default {
             if (!this.yeniSiparis) this.yeni_urun_islem();
             this.dataSatirTopla(this.siparisUrunler);
             this.form_btn_reset();
-
+            this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
             this.$toast.add({
               severity: "success",
               summary: "Bilgi Ekranı",
@@ -1156,7 +1154,7 @@ export default {
         } else {
           this.urunIslemleri();
           this.siparisUrunler.push({ ...this.siparis });
-          this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
+          // this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
           if (!this.yeniSiparis) this.yeni_urun_islem();
           this.dataSatirTopla(this.siparisUrunler);
           this.form_btn_reset();
@@ -1175,7 +1173,7 @@ export default {
     btn_degistir_click() {
       this.urunIslemleri();
       let index = this.indexBul(this.siparis.id, this.siparisUrunler);
-      
+      this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
       this.siparisUrunler[index] = this.siparis;
       if (!this.yeniSiparis) this.degisen_urun_islem();
       this.dataSatirTopla(this.siparisUrunler);
@@ -1503,9 +1501,8 @@ export default {
     this.dataSatirTopla(this.siparisUrunler);
 
     this.emitter.on("urunKartSecim", (data) => {
-      if (this.$store.getters.__getUsername == 'Semih') {
+      if (this.$store.getters.__getUsername == 'Semih' || this.$store.getters.__getUsername == 'Hakan') {
         this.aciklamaAdd(data);
-
       }
       this.urunKartBilgisi = data;
     });

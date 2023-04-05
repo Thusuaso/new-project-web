@@ -1,5 +1,4 @@
 <template>
-    <div class="card">
       <DataTable
         :value="siparisler"
         style="font-size: 50%"
@@ -174,7 +173,10 @@
         >
           <template #body="slotProps">
             <span class="p-column-title">Ürün Adı</span>
+            <div :style="{'color': slotProps.data.isf_alis_fiyati_durum }">
             {{ slotProps.data.urunAdi }}
+
+            </div>  
           </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText
@@ -282,7 +284,7 @@
                     ? 'white'
                     : 'black',
               }"
-            >
+            > 
               {{ slotProps.data.tedarikciAdi }}
             </div>
           </template>
@@ -394,13 +396,10 @@
           </template>
         </Column>
       </DataTable>
-
-    </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
 import { FilterMatchMode } from "primevue/api";
-
 export default {
 
   data() {
@@ -437,7 +436,6 @@ export default {
     "user",
     "desktop",
   ],
-
   computed: {
     ...mapGetters([
       "kasaToplami",

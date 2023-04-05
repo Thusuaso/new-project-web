@@ -13,8 +13,6 @@
       </div>
       
     </div>
-
-
     <div class="col">
       <div class="grid">
         <div class="col">
@@ -54,13 +52,10 @@
       </div>
     </div>
   </div>
-  <div class="grid" >
-    <div class="col-12">
-      <SiparisListeKisitli :siparisler="siparisler" @siparisKisitliEmit="alan_gizle = $event"
-        @kisitliSiparisSecim="siparisSecim($event)" :siparisTur="siparisTur" :hasPage="hasPage" :baslik="baslik"
-        :arkaPlanRengi="backColor" :user="usrName" :tonTopla="tonToplami" :desktop="isDesktop" />
-    </div>
-  </div>
+  <SiparisListeKisitli :siparisler="siparisler" @siparisKisitliEmit="alan_gizle = $event"
+    @kisitliSiparisSecim="siparisSecim($event)" :siparisTur="siparisTur" :hasPage="hasPage" :baslik="baslik"
+    :arkaPlanRengi="backColor" :user="usrName" :tonTopla="tonToplami" :desktop="isDesktop"/>
+
 
   <Dialog v-model:visible="dialogVisible" v-model:header="siparisFormBaslik" :modal="true" maximizable position="top"
     style="width: 100%;">

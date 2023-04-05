@@ -6,6 +6,7 @@
       :modal="true"
       maximizable
       position="top"
+      :closeOnEscape="false"
     >
       <teklif-giris-form :yeniKayit="false" :teklifId="teklifId" />
     </Dialog>
@@ -319,6 +320,12 @@ export default {
     });
   },
   methods: {
+    isHideDialog() {
+      console.log('Hide')
+      if (confirm('Kaydetmeden Kapatmak İstiyor musunuz?')) {
+        console.log('hide')
+      }
+    },
     teklifSec() {
       this.$store.dispatch('fullscreenLoadingAct', true)
 
