@@ -59,6 +59,7 @@
           @filter="isUretimList"
           responsiveLayout="scroll"
         >
+        
           <Column
             field="tarih"
             header="Tarih"
@@ -501,6 +502,7 @@ export default {
     });
   },
   methods: {
+
     isUretimList(event) {
       this.tablo_toplam_guncelle(event.filteredValue);
     },

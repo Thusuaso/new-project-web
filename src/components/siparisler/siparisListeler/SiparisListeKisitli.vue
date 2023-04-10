@@ -22,7 +22,6 @@
       <template #header>
         <div class="grid">
           <div class="col">
-            
           </div>
         </div>
         <div class="flex justify-content-between">
@@ -31,6 +30,7 @@
             <Checkbox id="city3" v-model="detayli_form" :binary="true" style="margin-right:5px;" value="Detaylı" />
             <label for="city3">Detaylı</label>
           </div>
+            <Button type="button" icon="pi pi-filter-slash" label="Clear Filter" outlined @click="clearFilter()" />
           <Button type="button" icon="pi pi-filter-slash" label="Clear" class="p-button-outlined" @click="clearFilter1()" />
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
@@ -460,6 +460,21 @@ export default {
     }, 15000)
   },
   methods: {
+    clearFilter() {
+      this.filters= {
+        musteriAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        siparisNo: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        urunAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        en: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        tedarikciAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        temsilci: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        operasyon: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+
+      }
+    },
     capitalize: function (value) {
       if (!value) return ''
       value = value.toString()

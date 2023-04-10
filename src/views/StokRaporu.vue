@@ -21,6 +21,9 @@
           dataKey="id" @row-select="depo_item_sec($event)" v-model:selection="select_depo" groupRowsBy="ebat" sortField="ebat"
           @filter="stokKasaToplama($event)" rowGroupMode="rowspan" sortMode="many" :sortOrder="1" scrollable
           scrollHeight="520px" responsiveLayout="scroll">
+          <template #header>
+            <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
+          </template>
           <Column field="en" header="En" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false">
             <template style="display: sticky" #body="slotProps">
               {{ slotProps.data.en }}
@@ -255,6 +258,15 @@ export default {
     });
   },
   methods: {
+    clearFilter() {
+      this.filters= {
+        en: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        urunAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        yuzeyIslem: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+      }
+    },
     stokKasaToplama(event) {
       this.kasa_toplamı(event.filteredValue);
       this.m2_toplami(event.filteredValue);

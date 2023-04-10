@@ -549,10 +549,8 @@ export default {
 
       this.urunList[0].kullaniciAdi = this.$store.getters.__getUsername;
       const evrak = this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
-      service.getIsfControl(evrak).then(data => { 
-        if (data) {
           fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
-            console.log(data)
+            console.log(data) 
             const bilgi = {
               evrak: this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf",
               siparisno: this.siparisNo,
@@ -569,10 +567,7 @@ export default {
               }
             });
           });
-        } else {
-          this.$toast.add({ severity: 'danger', summary: 'ISF', detail: 'Zaten kayıtlı bir ISF belgesi', life: 3000 });
-         }
-      })
+        
       
     
     
@@ -595,9 +590,7 @@ export default {
         if (this.is_two_isf_form == false) {
           const evrak =
             this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
-          service.getIsfControl(evrak).then(data => {
             
-            if (data) {
               fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
                 console.log(data);
                 const bilgi = {
@@ -620,16 +613,11 @@ export default {
                   }
                 });
               });
-            } else {
-              this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'Zaten kayıtlı bir ISF belgesi', life: 3000 });
-            }
-          })
+            
 
         } else {
           const evrak =
             this.tedarikci.tedarikciadi + "-" + this.siparisNo + " -2"  +".pdf";
-          service.getIsfControl(evrak).then(data => {
-            if (data) {
               fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
                 console.log(data);
                 const bilgi = {
@@ -653,10 +641,7 @@ export default {
                   }
                 });
               });
-            } else {
-              this.$toast.add({ severity: 'error', summary: 'ISF', detail: 'Zaten kayıtlı bir ISF belgesi', life: 3000 });
-            }
-          })
+            
 
         }
       }

@@ -1192,6 +1192,8 @@ export default {
   },
   mounted() {},
   methods: {
+
+    
     isFilters(event) {
       this.toplam_islem(event.filteredValue);
     },

@@ -38,21 +38,18 @@
               
           </div>
           <div class="column is-12">
-              <div class="box">
-                  <div class="columns is-multiline">
-                       <div class="column is-12">
-                            <AutoComplete v-model="selectedSatisci" :dropdown="true" :suggestions="filteredSatisci" @item-select="satisciSelected" @complete="filterSatisciList($event)" field="kullaniciAdi" placeholder="Satışçı" />
+              <div class="box" style="color:red;">
+                <div>
+                  * Proforma bilgilerini kontrol etmeyi unutmayınız...
 
-                       </div>
-                       <div class="column is-12">
-                            <AutoComplete v-model="selectedOperasyon" :dropdown="true" :suggestions="filteredOperasyon" @item-select="operasyonSelected" @complete="filterOperasyonList($event)" field="kullaniciAdi" placeholder="Operasyon" />
+                </div>
+                <div>
+                  * Kasa ve M2 bilgilerini kontrol etmeyi unutmayınız...
 
-                       </div>
-                         <div class="column is-12">
-                            <AutoComplete v-model="selectedFinansman" :dropdown="true" :suggestions="filteredFinansman" @item-select="finansmanSelected" @complete="filterFinansList($event)" field="kullaniciAdi" placeholder="Finansman" />
-
-                       </div>
-                  </div>
+                </div>
+                <div>
+                    * Peşinat ve ödemelerini kontrol etmeyi unutmayınız...
+                </div>
               </div>
               
           </div>
@@ -128,7 +125,7 @@ export default {
             
             siparisService.setsiparisBolmeGuncelle(this.sipBilgiler).then(data => {
                 if (data) {
-                    this.$toast.add({ severity: 'success', summary: 'Sipariş Bölme', detail: 'Sipariş bölme başarıyla gerçekleştirildi.', life: 3000 })
+                    this.$toast.add({ severity: 'success', summary: 'Sipariş Bölme', detail: 'Sipariş bölme başarıyla gerçekleştirildi. Proforma bilgileri, kasa, m2, peşinat ve ödemeleri kontrol ediniz.', life: 3000 })
                 } else {
                     this.$toast.add({ severity: 'error', summary: 'Sipariş Bölme', detail: 'Sipariş bölme hatalı.', life: 3000 })
 
@@ -220,7 +217,6 @@ export default {
             this.finansmanId = this.kullaniciList.find(x=>x.kullaniciAdi == this.selectedFinansman.kullaniciAdi).id
             this.siparislerBilgisi.siparis.finansman = this.finansmanId
         },
-
         filterSatisciList(event){
             this.filteredSatisci = this.kullaniciList.filter((val)=>{
                 return val.kullaniciAdi.toLowerCase().startsWith(event.query.toLowerCase());
