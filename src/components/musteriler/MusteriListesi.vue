@@ -65,14 +65,15 @@
                 <template #body="slotProps">
                   {{ slotProps.data.id }}
                 </template>
-                <template #filter="{ filterModel }">
-                  <InputText
-                    type="text"
-                    v-model="filterModel.value"
-                    class="p-column-filter"
-                    placeholder="Search by Id"
-                  />
-                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                <InputText
+                  type="text"
+                  v-model="filterModel.value"
+                  class="p-column-filter"
+                  @input="filterCallback()"
+              
+                />
+              </template>
               </Column>
 
               <Column
@@ -86,14 +87,15 @@
                 <template #body="slotProps">
                   {{ slotProps.data.musteriadi }}
                 </template>
-                <template #filter="{ filterModel }">
-                  <InputText
-                    type="text"
-                    v-model="filterModel.value"
-                    class="p-column-filter"
-                    placeholder="Search by Customer"
-                  />
-                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                <InputText
+                  type="text"
+                  v-model="filterModel.value"
+                  class="p-column-filter"
+                  @input="filterCallback()"
+              
+                />
+              </template>
               </Column>
               <Column field="unvan" header="Firma Adi" 
                 :showFilterMatchModes="false"
@@ -105,14 +107,15 @@
                 <template #body="slotProps">
                   {{ slotProps.data.unvan }}
                 </template>
-                <template #filter="{ filterModel }">
-                  <InputText
-                    type="text"
-                    v-model="filterModel.value"
-                    class="p-column-filter"
-                    placeholder="Search by Title"
-                  />
-                </template>
+                <template #filter="{ filterModel, filterCallback }">
+              <InputText
+                type="text"
+                v-model="filterModel.value"
+                class="p-column-filter"
+                @input="filterCallback()"
+              
+              />
+            </template>
               </Column>
               <Column
                 field="adres"
@@ -135,14 +138,15 @@
                 <template #body="slotProps">
                   {{ slotProps.data.marketing }}
                 </template>
-                <template #filter="{ filterModel }">
-                  <InputText
-                    type="text"
-                    v-model="filterModel.value"
-                    class="p-column-filter"
-                    placeholder="Search by Marketing"
-                  />
-                </template>
+                <template #filter="{ filterModel, filterCallback }">
+              <InputText
+                type="text"
+                v-model="filterModel.value"
+                class="p-column-filter"
+                @input="filterCallback()"
+              
+              />
+            </template>
               </Column>
               <Column field="ulkeadi" header="Ülke Adı" 
                 :showFilterMatchModes="false"
@@ -153,14 +157,15 @@
                 <template #body="slotProps">
                   {{ slotProps.data.ulkeadi }}
                 </template>
-                <template #filter="{ filterModel }">
-                  <InputText
-                    type="text"
-                    v-model="filterModel.value"
-                    class="p-column-filter"
-                    placeholder="Search by Country"
-                  />
-                </template>
+                <template #filter="{ filterModel, filterCallback }">
+              <InputText
+                type="text"
+                v-model="filterModel.value"
+                class="p-column-filter"
+                @input="filterCallback()"
+              
+              />
+            </template>
               </Column>
               <Column field="logo" header="Logo">
                 <template #body="slotProps">
@@ -186,14 +191,15 @@
                 <template #body="slotProps">
                   {{ slotProps.data.temsilci }}
                 </template>
-                <template #filter="{ filterModel }">
-                  <InputText
-                    type="text"
-                    v-model="filterModel.value"
-                    class="p-column-filter"
-                    placeholder="Search by Represantative"
-                  />
-                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                <InputText
+                  type="text"
+                  v-model="filterModel.value"
+                  class="p-column-filter"
+                  @input="filterCallback()"
+              
+                />
+              </template>
               </Column>
               <Column
                 field="satisci"
@@ -207,14 +213,15 @@
                 <template #body="slotProps">
                   {{ slotProps.data.satisci }}
                 </template>
-                <template #filter="{ filterModel }">
-                  <InputText
-                    type="text"
-                    v-model="filterModel.value"
-                    class="p-column-filter"
-                    placeholder="Search by Sales Represantative"
-                  />
-                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                <InputText
+                  type="text"
+                  v-model="filterModel.value"
+                  class="p-column-filter"
+                  @input="filterCallback()"
+              
+                />
+              </template>
               </Column>
               <Column
                 field="devir"
