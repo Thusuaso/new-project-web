@@ -228,6 +228,10 @@ const OperasyonService = {
     return axios.get(`/operasyon/fatura/tedarikciFaturaEvrak/${id}/${siparis_no}`).then(res=>res.data)
   },
 
+  getProformaControl(siparisNo) {
+    return axios.get(`/controls/proforma/${siparisNo}`).then(res => res.data);
+  }
+
 };
 
 export default OperasyonService;

@@ -199,6 +199,8 @@ export default {
         });
     },
     kaydet_click() {
+      socket.siparis.emit("tahsilat_kayitdegisim_event", this.thmusteri.musteri_id);
+
       if (!this.date) {
         alert("Tarih Seçiniz..");
         return;
@@ -215,9 +217,9 @@ export default {
       data.kullaniciadi = users;
       service.tahsilatKaydetme(data).then((res) => {
         if (res.status) {
-          socket.siparis.emit("tahsilat_kayitdegisim_event", data.siparisno);
-          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişine $' + this.thmusteri.tutar +   ' tahsilat girdi.'
-          socket.siparis.emit("send_message_home_event", info)
+          socket.siparis.emit("tahsilat_kayitdegisim_event", data.musteri_id);
+          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişine $' + this.thmusteri.tutar + ' tahsilat girdi.';
+          socket.siparis.emit("send_message_home_event", info);
           this.default_data();
 
         }
@@ -241,7 +243,7 @@ export default {
       service.tahsilatGuncelleme(data).then((res) => {
         if (res.status) {
           socket.siparis.emit("tahsilat_kayitdegisim_event", data.siparisno);
-          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişinin $' + this.thmusteri.tutar + ' tahsilatını değiştirdi.'
+          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişinin $' + this.thmusteri.tutar + ' tahsilatını değiştirdi.';
           socket.siparis.emit("send_message_home_event", info)
           this.default_data();
 
@@ -254,9 +256,10 @@ export default {
         alert("Tarih Seçiniz..");
         return;
       }
+
       const id = this.thmusteri.id;
 
-        this.$store.dispatch('fullscreenLoadingAct', true)
+      this.$store.dispatch('fullscreenLoadingAct', true);
 
       service.tahsilatSilme(id).then((res) => {
         if (res) {
@@ -264,10 +267,10 @@ export default {
             "tahsilat_kayitdegisim_event",
             this.thmusteri.siparisno
           );
-          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişinin ' + ' tahsilatını sildi.'
-          socket.siparis.emit("send_message_home_event", info)
+          let info = this.$store.getters.__getUsername + ' ' + this.thmusteri.siparisno + ' siparişinin ' + ' tahsilatını sildi.';
+          socket.siparis.emit("send_message_home_event", info);
           this.default_data();
-        this.$store.dispatch('fullscreenLoadingAct', false)
+          this.$store.dispatch('fullscreenLoadingAct', false);
 
 
 

@@ -673,21 +673,28 @@ export default {
       if (event.size > 1000000) {
         alert("Lütfen Evrak Boyutunu Kontrol Ediniz.");
       } else {
-        const d = 2;
-        fileService.faturaDosyaGonder(event, d, this.siparisNo).then((data) => {
-          console.log("faturaDosyaGonder ", data);
+        Opservice.getProformaControl(this.siparisNo).then(data => {
+          if(data){
+            alert('Proforma Zaten Yüklü');
+            return;
+          }else{
+            const d = 2;
+            fileService.faturaDosyaGonder(event, d, this.siparisNo).then((data) => {
+              console.log("faturaDosyaGonder ", data);
+              Opservice.setEvrakFaturaKayit(this.evrak).then((veri) => {
+                if (veri.status) {
+                  alert("Evrak başarılı şekilde yüklendi!");
+                  socket.siparis.emit('isf_form_load_event', this.siparisNo);
+                } else {
+                  alert("Ops! Lütfen Tekrar Deneyiniz!");
+                }
+              });
+            });
+            this.KayitIslemi();
 
-          Opservice.setEvrakFaturaKayit(this.evrak).then((veri) => {
-            if (veri.status) {
-              alert("Evrak başarılı şekilde yüklendi!");
-              socket.siparis.emit('isf_form_load_event')
-            } else {
-              alert("Ops! Lütfen Tekrar Deneyiniz!");
-            }
-          });
-        });
-
-        this.KayitIslemi();
+          }
+        })
+        
       }
     },
     aramaTeslimTur(event) {

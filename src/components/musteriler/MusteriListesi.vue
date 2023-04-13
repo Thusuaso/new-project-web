@@ -23,181 +23,8 @@
         />
         <span style="margin-left: 10px">Hepsi</span>
       </div>
-      <div class="columns">
-        <div class="column is-12">
-          <DataTable
-            v-model:value="musteri_listesi"
-            v-model:filters="filters"
-            filterDisplay="menu"
-            selectionMode="single"
-            v-model:selection="select_musteri"
-            @row-select="musteri_secim_event($event)"
-            :scrollable="true" 
-            scrollHeight="650px"
-          >
-            <Column
-              field="id"
-              header="ID"
-              headerStyle="width:55px"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.id }}
-              </template>
-              <template #filter="{ filterModel }">
-                <InputText
-                  type="text"
-                  v-model="filterModel.value"
-                  class="p-column-filter"
-                  placeholder="Search by Id"
-                />
-              </template>
-            </Column>
 
-            <Column
-              field="musteriadi"
-              header="Müşteri Adı"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.musteriadi }}
-              </template>
-              <template #filter="{ filterModel }">
-                <InputText
-                  type="text"
-                  v-model="filterModel.value"
-                  class="p-column-filter"
-                  placeholder="Search by Customer"
-                />
-              </template>
-            </Column>
-            <Column field="unvan" header="Firma Adi">
-              <template #body="slotProps">
-                {{ slotProps.data.unvan }}
-              </template>
-              <template #filter="{ filterModel }">
-                <InputText
-                  type="text"
-                  v-model="filterModel.value"
-                  class="p-column-filter"
-                  placeholder="Search by Title"
-                />
-              </template>
-            </Column>
-            <Column
-              field="adres"
-              header="Adres"
-              headerStyle="width:400px;"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.adres }}
-              </template>
-            </Column>
-            <Column
-              field="marketing"
-              header="Marketing"
-              headerStyle="width:100px;"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.marketing }}
-              </template>
-              <template #filter="{ filterModel }">
-                <InputText
-                  type="text"
-                  v-model="filterModel.value"
-                  class="p-column-filter"
-                  placeholder="Search by Marketing"
-                />
-              </template>
-            </Column>
-            <Column field="ulkeadi" header="Ülke Adı" >
-              <template #body="slotProps">
-                {{ slotProps.data.ulkeadi }}
-              </template>
-              <template #filter="{ filterModel }">
-                <InputText
-                  type="text"
-                  v-model="filterModel.value"
-                  class="p-column-filter"
-                  placeholder="Search by Country"
-                />
-              </template>
-            </Column>
-            <Column field="logo" header="Logo">
-              <template #body="slotProps">
-                <img
-                  :src="
-                    'https://cdn.mekmarimage.com/countryLogo/' +
-                    slotProps.data.logo
-                  "
-                  width="50"
-                  height="50"
-                />
-              </template>
-            </Column>
-            <Column
-              field="temsilci"
-              header="Temsilci"
-              headerStyle="width:100px;"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.temsilci }}
-              </template>
-              <template #filter="{ filterModel }">
-                <InputText
-                  type="text"
-                  v-model="filterModel.value"
-                  class="p-column-filter"
-                  placeholder="Search by Represantative"
-                />
-              </template>
-            </Column>
-            <Column
-              field="satisci"
-              header="Satışçı"
-              headerStyle="width:100px;"
-            >
-              <template #body="slotProps">
-                {{ slotProps.data.satisci }}
-              </template>
-              <template #filter="{ filterModel }">
-                <InputText
-                  type="text"
-                  v-model="filterModel.value"
-                  class="p-column-filter"
-                  placeholder="Search by Sales Represantative"
-                />
-              </template>
-            </Column>
-            <Column
-              field="devir"
-              header="Devir"
-              headerStyle="width:50px;"
-              boydStyle="text-align:center;"
-            >
-              <template #body="slotProps">
-                <Checkbox
-                  v-model="slotProps.data.devir"
-                  :disabled="true"
-                  :binary="true"
-                />
-              </template>
-            </Column>
-            <Column
-              field="ozel"
-              header="Özel"
-              headerStyle="width:50px;"
-              boydStyle="text-align:center;"
-            >
-              <template #body="slotProps">
-                <Checkbox
-                  v-model="slotProps.data.ozel"
-                  :disabled="true"
-                  :binary="true"
-                />
-              </template>
-            </Column>
-          </DataTable>
-        </div>
-      </div>
+
 
       <Dialog
         :header="musteri_form_baslik"
@@ -211,6 +38,213 @@
 
       </Dialog>
     </div>
+    <DataTable
+              v-model:value="musteri_listesi"
+              v-model:filters="filters"
+              filterDisplay="row"
+              selectionMode="single"
+              v-model:selection="select_musteri"
+              @row-select="musteri_secim_event($event)"
+              :scrollable="true" 
+              scrollHeight="650px"
+              sortField="musteri_sira"
+              sortOrder="-1"
+            >
+            <Column field="musteri_sira" header="#">
+            
+            </Column>
+              <Column
+                field="id"
+                header="ID"
+                headerStyle="width:55px"
+                :showFilterMatchModes="false"
+                :showClear="false"
+                :showFilterMenu="false"
+                :showClearButton="false"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.id }}
+                </template>
+                <template #filter="{ filterModel }">
+                  <InputText
+                    type="text"
+                    v-model="filterModel.value"
+                    class="p-column-filter"
+                    placeholder="Search by Id"
+                  />
+                </template>
+              </Column>
+
+              <Column
+                field="musteriadi"
+                header="Müşteri Adı"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.musteriadi }}
+                </template>
+                <template #filter="{ filterModel }">
+                  <InputText
+                    type="text"
+                    v-model="filterModel.value"
+                    class="p-column-filter"
+                    placeholder="Search by Customer"
+                  />
+                </template>
+              </Column>
+              <Column field="unvan" header="Firma Adi" 
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+                  style="min-width:150px;"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.unvan }}
+                </template>
+                <template #filter="{ filterModel }">
+                  <InputText
+                    type="text"
+                    v-model="filterModel.value"
+                    class="p-column-filter"
+                    placeholder="Search by Title"
+                  />
+                </template>
+              </Column>
+              <Column
+                field="adres"
+                header="Adres"
+                headerStyle="width:400px;"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.adres }}
+                </template>
+              </Column>
+              <Column
+                field="marketing"
+                header="Marketing"
+                headerStyle="width:100px;"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.marketing }}
+                </template>
+                <template #filter="{ filterModel }">
+                  <InputText
+                    type="text"
+                    v-model="filterModel.value"
+                    class="p-column-filter"
+                    placeholder="Search by Marketing"
+                  />
+                </template>
+              </Column>
+              <Column field="ulkeadi" header="Ülke Adı" 
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.ulkeadi }}
+                </template>
+                <template #filter="{ filterModel }">
+                  <InputText
+                    type="text"
+                    v-model="filterModel.value"
+                    class="p-column-filter"
+                    placeholder="Search by Country"
+                  />
+                </template>
+              </Column>
+              <Column field="logo" header="Logo">
+                <template #body="slotProps">
+                  <img
+                    :src="
+                      'https://cdn.mekmarimage.com/countryLogo/' +
+                      slotProps.data.logo
+                    "
+                    width="50"
+                    height="50"
+                  />
+                </template>
+              </Column>
+              <Column
+                field="temsilci"
+                header="Temsilci"
+                headerStyle="width:100px;"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.temsilci }}
+                </template>
+                <template #filter="{ filterModel }">
+                  <InputText
+                    type="text"
+                    v-model="filterModel.value"
+                    class="p-column-filter"
+                    placeholder="Search by Represantative"
+                  />
+                </template>
+              </Column>
+              <Column
+                field="satisci"
+                header="Satışçı"
+                headerStyle="width:100px;"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.satisci }}
+                </template>
+                <template #filter="{ filterModel }">
+                  <InputText
+                    type="text"
+                    v-model="filterModel.value"
+                    class="p-column-filter"
+                    placeholder="Search by Sales Represantative"
+                  />
+                </template>
+              </Column>
+              <Column
+                field="devir"
+                header="Devir"
+                headerStyle="width:50px;"
+                boydStyle="text-align:center;"
+              >
+                <template #body="slotProps">
+                  <Checkbox
+                    v-model="slotProps.data.devir"
+                    :disabled="true"
+                    :binary="true"
+                  />
+                </template>
+              </Column>
+              <Column
+                field="ozel"
+                header="Özel"
+                headerStyle="width:50px;"
+                boydStyle="text-align:center;"
+              >
+                <template #body="slotProps">
+                  <Checkbox
+                    v-model="slotProps.data.ozel"
+                    :disabled="true"
+                    :binary="true"
+                  />
+                </template>
+              </Column>
+    </DataTable>
   </section>
 </template>
 <script>

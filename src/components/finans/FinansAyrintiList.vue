@@ -182,24 +182,7 @@ export default {
     FinansAyrintiMusteriOdeme,
   },
   created() {
-    socket.siparis.on("tahsilat_kayitdegisim_emit", () => {
-      this.$store.dispatch('fullscreenLoadingAct', true)
-      this.secim_loading = true;
-      this.ayrinti_loading = true;
-      this.odeme_loading = true;
-
-      let musteri_id = this.finans_ayrinti_list[0].musteri_id;
-      
-      service.getFinansAyrintiListYukle(musteri_id).then((data) => {
-        this.$store.dispatch("finansAyrintiListYukleAct", data);
-
-        this.secim_loading = false;
-        this.ayrinti_loading = false;
-        this.odeme_loading = false;
-        this.$store.dispatch('fullscreenLoadingAct', false)
-
-      });
-    });
+    
   },
   data() {
     return {
@@ -326,6 +309,23 @@ export default {
       }
     },
   },
+  mounted() {
+    socket.siparis.on("tahsilat_kayitdegisim_emit", (musteriId) => {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+      this.secim_loading = true;
+      this.ayrinti_loading = true;
+      this.odeme_loading = true;
+      service.getFinansAyrintiListYukle(musteriId).then((data) => {
+        this.$store.dispatch("finansAyrintiListYukleAct", data);
+
+        this.secim_loading = false;
+        this.ayrinti_loading = false;
+        this.odeme_loading = false;
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
+      });
+    });
+  }
 };
 </script>
 <style scoped>

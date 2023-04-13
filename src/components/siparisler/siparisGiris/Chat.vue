@@ -420,8 +420,7 @@ export default {
           alert("Ops! Tekrar Deneyiniz.");
         }
       });
-    },
-    deneme() {},
+    }
   },
 };
 </script>

@@ -9,17 +9,21 @@
       <div class="col-2">
         <Button class="urunSecmeDropdown" @click="isSelected" label="Göster" />
       </div>
-      <div class="col-2">
-        <Button class="p-button-secondary" label="Ayrıntı" @click="ayrıntı_form =!ayrıntı_form" />
-      </div>
+
     </div>
 
     <div  v-if="slk_enb_mekmar">
             <DataTable :value="seleksiyon_mekmar_uretimlist" tableStyle="width:100%;" v-model:filters="filters" filterDisplay="row" :paginator="true"
               :rows="20" dataKey="id" selectionMode="single" :selection="select_uretim" ref="seleksiyon_data"
               @row-select="uretimSec($event)" class="p-datatable-sm" @filter="isFilters">
-              <Column field="kasa_no" header="No" bodyStyle="text-align:left;" :showFilterMatchModes="false" :showClear="false"
-                :showFilterMenu="false" style="width:4%;">
+              <Column field="kasa_no" header="No" bodyStyle="text-align:left;" 
+               style="width:4%;"
+               :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+               
+               >
                 <template #body="slotProps">
                   <div :class="slotProps.data.disarda == true ? 'disarda_css' : ''">
                     {{ slotProps.data.kasa_no }}
@@ -31,7 +35,14 @@
                 </template>
               </Column>
         
-              <Column field="tarih" header="Tarih" bodyStyle="text-align:left" :showFilterMenu="false" v-if="ayrıntı_form" style="width:5%;">
+              <Column field="tarih" header="Tarih" bodyStyle="text-align:left" 
+                style="width:5%;"
+               :showFilterMatchModes="false"
+                :showClear="false"
+                :showFilterMenu="false"
+                :showClearButton="false"
+               
+               >
                 <template #body="{ data }">
                   {{ data.tarih }}
                 </template>
@@ -40,7 +51,12 @@
                     placeholder="Search by Date" style="width:70px;"/>
                 </template>
               </Column>
-              <Column field="kategori" header="Kategori" bodyStyle="text-align:left" :showFilterMenu="false" v-if="ayrıntı_form" style="width:5%;">
+              <Column field="kategori" header="Kategori" bodyStyle="text-align:left" 
+              :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              style="width:5%;">
                 <template #body="slotProps">
                   {{ slotProps.data.kategori }}
                 </template>
@@ -49,7 +65,14 @@
                     placeholder="Search by Category" style="width:70px;" />
                 </template>
               </Column>
-              <Column field="ocak" header="Ocak" bodyStyle="text-align:left" :showFilterMenu="false" style="width:4%;">
+              <Column field="ocak" header="Ocak" bodyStyle="text-align:left"
+               style="width:4%;"
+               :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+               
+               >
                 <template #body="slotProps">
                   {{ slotProps.data.ocak }}
                 </template>
@@ -58,7 +81,14 @@
                     placeholder="Search by Mine" style="width:70px;" />
                 </template>
               </Column>
-              <Column field="urunadi" header="Ürün" :showFilterMenu="false" bodyStyle="text-align:left" style="width:4%;">
+              <Column field="urunadi" header="Ürün"
+               bodyStyle="text-align:left" style="width:4%;"
+               :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+               
+               >
                 <template #body="slotProps">
                   <div v-if="slotProps.data.urunadi.includes('Vein Cut')" style="color: red">
                     {{ slotProps.data.urunadi }}
@@ -75,7 +105,15 @@
                   {{ adet_kasa }}
                 </template>
               </Column>
-              <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left" :showFilterMenu="false" style="width:5%;">
+              <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left" 
+              style="width:5%;"
+              :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              
+              
+              >
                 <template #body="slotProps">
                   {{ slotProps.data.kenarislem }}
                 </template>
@@ -84,7 +122,12 @@
                     placeholder="Search by Surface" style="width:70px;"/>
                 </template>
               </Column>
-              <Column field="en" header="E" bodyStyle="text-align:left" :showFilterMenu="false" style="width:4%;">
+              <Column field="en" header="E" bodyStyle="text-align:left" style="width:4%;"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
                 <template #body="slotProps">
                   {{ slotProps.data.en }}
                 </template>
@@ -93,7 +136,12 @@
                     placeholder="Search by Surface" style="width:70px;"/>
                 </template>
               </Column>
-              <Column field="boy" header="B" bodyStyle="text-align:left" :showFilterMenu="false" style="width:4%;">
+              <Column field="boy" header="B" bodyStyle="text-align:left" style="width:4%;"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
                 <template #body="slotProps">
                   {{ slotProps.data.boy }}
                 </template>
@@ -102,7 +150,12 @@
                     placeholder="Search by Surface" style="width:70px;"/>
                 </template>
               </Column>
-              <Column field="kenar" header="K" bodyStyle="text-align:left" :showFilterMenu="false" style="width:4%;">
+              <Column field="kenar" header="K" bodyStyle="text-align:left"  style="width:4%;"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
                 <template #body="slotProps">
                   {{ slotProps.data.kenar }}
                 </template>
@@ -115,6 +168,7 @@
                 <template #body="slotProps">
                   {{ slotProps.data.kasaadet }}
                 </template>
+
               </Column>
               <Column field="kutuadet" header="Kutu" bodyStyle="text-align:left" style="width:2%;">
                 <template #body="slotProps">
@@ -187,8 +241,12 @@
                   <div v-else style="color: black">X</div>
                 </template>
               </Column>
-              <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left" :showFilterMatchModes="false"
-                :showFilterMenu="false" style="width:4%;">
+              <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left"  style="width:4%;"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
                 <template #body="slotProps">
                   {{ slotProps.data.siparisaciklama }}
                 </template>
@@ -197,7 +255,12 @@
                     class="p-column-filter" placeholder="Search by PO" style="width:70px;"/>
                 </template>
               </Column>
-              <Column field="aciklama" header="Not" bodyStyle="text-align:left" :showFilterMenu="false" style="width:4%;">
+              <Column field="aciklama" header="Not" bodyStyle="text-align:left"  style="width:4%;"
+                :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+              >
                 <template #body="slotProps">
                   {{ slotProps.data.aciklama }}
                 </template>
@@ -213,7 +276,12 @@
         selectionMode="single" :selection="select_uretim" ref="seleksiyon_data" @row-select="uretimSec($event)"
         v-model:filters="filters" filterDisplay="row" @filter="isFilters"
         class="p-datatable-sm">
-        <Column field="kasa_no" header="No" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="kasa_no" header="No" bodyStyle="text-align:left"
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             <div :class="slotProps.data.disarda == true ? 'disarda_css' : ''">
               {{ slotProps.data.kasa_no }}
@@ -225,7 +293,12 @@
           </template>
         </Column>
   
-        <Column field="tarih" header="Tarih" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="tarih" header="Tarih" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.tarih }}
           </template>
@@ -234,7 +307,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="kategori" header="Kategori" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="kategori" header="Kategori" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.kategori }}
           </template>
@@ -243,7 +321,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="ocak" header="Ocak" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="ocak" header="Ocak" bodyStyle="text-align:left"
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.ocak }}
           </template>
@@ -252,7 +335,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="tedarikci" header="Kimden" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="tedarikci" header="Kimden" bodyStyle="text-align:left" 
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.tedarikci }}
           </template>
@@ -261,7 +349,13 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="urunadi" header="Ürün" :showFilterMenu="false" bodyStyle="text-align:left">
+        <Column field="urunadi" header="Ürün" bodyStyle="text-align:left"
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             <div v-if="slotProps.data.urunadi.includes('Vein Cut')" style="color: red">
               {{ slotProps.data.urunadi }}
@@ -278,7 +372,12 @@
             {{ seleksiyon_dis_uretimlist.slk_dis_kasa_top }}
           </template>
         </Column>
-        <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left"
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.kenarislem }}
           </template>
@@ -287,7 +386,13 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="en" header="E" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="en" header="E" bodyStyle="text-align:left" 
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             {{ slotProps.data.en }}
           </template>
@@ -296,7 +401,13 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="boy" header="B" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="boy" header="B" bodyStyle="text-align:left"
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             {{ slotProps.data.boy }}
           </template>
@@ -305,7 +416,13 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="kenar" header="K" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="kenar" header="K" bodyStyle="text-align:left" 
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             {{ slotProps.data.kenar }}
           </template>
@@ -387,7 +504,13 @@
             <div v-else style="color:black">X</div>
           </template>
         </Column>
-        <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left"
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             {{ slotProps.data.siparisaciklama }}
           </template>
@@ -396,7 +519,13 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="aciklama" header="Not" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="aciklama" header="Not" bodyStyle="text-align:left" 
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             {{ slotProps.data.aciklama }}
           </template>
@@ -411,7 +540,12 @@
       <DataTable :value="seleksiyon_mekmer_dis_uretimlist" v-model:filters="filters" filterDisplay="row" :paginator="true"
         :rows="20" dataKey="id" selectionMode="single" :selection="select_uretim" ref="seleksiyon_data"
         @row-select="uretimSec($event)"  @filter="isFilters" class="p-datatable-sm">
-        <Column field="kasa_no" header="No" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="kasa_no" header="No" bodyStyle="text-align:left" 
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             <div :class="slotProps.data.disarda == true ? 'disarda_css' : ''">
               {{ slotProps.data.kasa_no }}
@@ -423,7 +557,12 @@
           </template>
         </Column>
   
-        <Column field="tarih" header="Tarih" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="tarih" header="Tarih" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.tarih }}
           </template>
@@ -432,7 +571,13 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="kategori" header="Kategori" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="kategori" header="Kategori" bodyStyle="text-align:left" 
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             {{ slotProps.data.kategori }}
           </template>
@@ -441,7 +586,13 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="ocak" header="Ocak" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="ocak" header="Ocak" bodyStyle="text-align:left" 
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             {{ slotProps.data.ocak }}
           </template>
@@ -450,7 +601,13 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="tedarikci" header="Kimden" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="tedarikci" header="Kimden" bodyStyle="text-align:left" 
+        :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        
+        >
           <template #body="slotProps">
             {{ slotProps.data.tedarikci }}
           </template>
@@ -459,7 +616,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="urunadi" header="Ürün" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="urunadi" header="Ürün" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             <div v-if="slotProps.data.urunadi.includes('Vein Cut')" style="color: red">
               {{ slotProps.data.urunadi }}
@@ -476,7 +638,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.kenarislem }}
           </template>
@@ -485,7 +652,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="en" header="E" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="en" header="E" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.en }}
           </template>
@@ -494,7 +666,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="boy" header="B" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="boy" header="B" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.boy }}
           </template>
@@ -503,7 +680,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="kenar" header="K" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="kenar" header="K" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.kenar }}
           </template>
@@ -585,7 +767,12 @@
             <div v-else style="color:black">X</div>
           </template>
         </Column>
-        <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.siparisaciklama }}
           </template>
@@ -594,7 +781,12 @@
               placeholder="Search by CrateNo" />
           </template>
         </Column>
-        <Column field="aciklama" header="Not" bodyStyle="text-align:left" :showFilterMenu="false">
+        <Column field="aciklama" header="Not" bodyStyle="text-align:left" 
+          :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ slotProps.data.aciklama }}
           </template>
@@ -609,7 +801,12 @@
         <DataTable :value="seleksiyon_mekmer_bulunamayan_uretimlist" v-model:filters="filters" filterDisplay="row" :paginator="true"
           :rows="20" dataKey="id" selectionMode="single" :selection="select_uretim" ref="seleksiyon_data"
           @row-select="uretimSec($event)"  @filter="isFilters" class="p-datatable-sm">
-          <Column field="kasa_no" header="No" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="kasa_no" header="No" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               <div :class="slotProps.data.disarda == true ? 'disarda_css' : ''">
                 {{ slotProps.data.kasa_no }}
@@ -621,7 +818,12 @@
             </template>
           </Column>
   
-          <Column field="tarih" header="Tarih" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="tarih" header="Tarih" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.tarih }}
             </template>
@@ -630,7 +832,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="kategori" header="Kategori" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="kategori" header="Kategori" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.kategori }}
             </template>
@@ -639,7 +846,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="ocak" header="Ocak" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="ocak" header="Ocak" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.ocak }}
             </template>
@@ -648,7 +860,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="tedarikci" header="Kimden" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="tedarikci" header="Kimden" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.tedarikci }}
             </template>
@@ -657,7 +874,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="urunadi" header="Ürün" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="urunadi" header="Ürün" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               <div v-if="slotProps.data.urunadi.includes('Vein Cut')" style="color: red">
                 {{ slotProps.data.urunadi }}
@@ -674,7 +896,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="kenarislem" header="İşlem Adı" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.kenarislem }}
             </template>
@@ -683,7 +910,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="en" header="E" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="en" header="E" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.en }}
             </template>
@@ -692,7 +924,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="boy" header="B" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="boy" header="B" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.boy }}
             </template>
@@ -701,7 +938,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="kenar" header="K" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="kenar" header="K" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.kenar }}
             </template>
@@ -783,7 +1025,12 @@
               <div v-else style="color:black">X</div>
             </template>
           </Column>
-          <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="siparisaciklama" header="Po" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.siparisaciklama }}
             </template>
@@ -792,7 +1039,12 @@
                 placeholder="Search by CrateNo" />
             </template>
           </Column>
-          <Column field="aciklama" header="Not" bodyStyle="text-align:left" :showFilterMenu="false">
+          <Column field="aciklama" header="Not" bodyStyle="text-align:left" 
+            :showFilterMatchModes="false"
+                  :showClear="false"
+                  :showFilterMenu="false"
+                  :showClearButton="false"
+          >
             <template #body="slotProps">
               {{ slotProps.data.aciklama }}
             </template>
@@ -1065,7 +1317,6 @@ export default {
   },
   data() {
     return {
-      ayrıntı_form:false,
       isProductNew: false,
       isDesktop: true,
       filters: {

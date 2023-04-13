@@ -56,29 +56,40 @@
             {{ slotProps.data.tarih }}
           </template>
         </Column>
-        <Column field="temsilci" header="S.S" v-if="detayli_form" :showFilterMenu="false">
+        <Column field="temsilci" header="S.S" v-if="detayli_form" 
+          :showFilterMatchModes="false"
+                    :showClear="false"
+                    :showFilterMenu="false"
+                    :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ capitalize(slotProps.data.temsilci) }}
           </template>
             <template #filter="{ filterModel, filterCallback }">
-              <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter" placeholder="Search by S.S" style="width:40px;" />
+              <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by S.S" style="width:40px;" />
             </template>
         </Column>
-        <Column field="operasyon" header="O" v-if="detayli_form" :showFilterMenu="false">
+        <Column field="operasyon" header="O" v-if="detayli_form" 
+          :showFilterMatchModes="false"
+                    :showClear="false"
+                    :showFilterMenu="false"
+                    :showClearButton="false"
+        >
           <template #body="slotProps">
             {{ capitalize(slotProps.data.operasyon) }}
           </template>
           <template #filter="{ filterModel , filterCallback }">
-            <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter" placeholder="Search by O" style="width:40px;" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by O" style="width:40px;" />
           </template>
         </Column>
         <Column
           :key="1"
           field="musteriAdi"
           header="Kime"
-          :showFilterMenu="false"
           :showFilterMatchModes="false"
-          :showClear="false"
+                    :showClear="false"
+                    :showFilterMenu="false"
+                    :showClearButton="false"
         >
           <template #body="slotProps">
             <span class="p-column-title">Kime</span>
@@ -103,7 +114,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Customers"
-              @keydown.enter="filterCallback()"
+              @input="filterCallback()"
               style="width:40px;"
               :showClear="false"
             />
@@ -140,7 +151,10 @@
           field="siparisNo"
           header="Po"
           style="min-width: 30px"
-          :showFilterMenu="false"
+          :showFilterMatchModes="false"
+                    :showClear="false"
+                    :showFilterMenu="false"
+                    :showClearButton="false"
         >
           <template #body="slotProps">
             <span class="p-column-title"> Po</span>
@@ -159,7 +173,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Po"
-              @keydown.enter="filterCallback()"
+              @input="filterCallback()"
               style="width:40px;"
               
             />
@@ -169,7 +183,10 @@
           field="urunAdi"
           header="Ürün Adı"
           style="min-width: 35px"
-          :showFilterMenu="false"
+          :showFilterMatchModes="false"
+                    :showClear="false"
+                    :showFilterMenu="false"
+                    :showClearButton="false"
         >
           <template #body="slotProps">
             <span class="p-column-title">Ürün Adı</span>
@@ -184,7 +201,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Product"
-              @keydown.enter="filterCallback()"
+              @input="filterCallback()"
               style="width:40px;"
             />
           </template>
@@ -206,7 +223,10 @@
           header="E"
           style="min-width: 50px"
           bodyStyle="text-align: left;font-size: 10px;"
+          :showFilterMatchModes="false"
+          :showClear="false"
           :showFilterMenu="false"
+          :showClearButton="false"
         >
           <template #body="slotProps">
             <span class="p-column-title">E</span>
@@ -218,7 +238,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Width"
-              @keydown.enter="filterCallback()"
+              @input="filterCallback()"
               style="width:40px;"
               
             />
@@ -229,7 +249,10 @@
           header="B"
           style="min-width: 50px"
           bodyStyle="text-align: left;font-size: 10px;"
+          :showFilterMatchModes="false"
+          :showClear="false"
           :showFilterMenu="false"
+          :showClearButton="false"
         >
           <template #body="slotProps">
             <span class="p-column-title">B</span>
@@ -241,7 +264,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Height"
-              @keydown.enter="filterCallback()"
+              @input="filterCallback()"
               style="width:40px;"
             />
           </template>
@@ -251,7 +274,10 @@
           header="K"
           style="min-width: 50px"
           bodyStyle="text-align: left;font-size: 10px;"
+          :showFilterMatchModes="false"
+          :showClear="false"
           :showFilterMenu="false"
+          :showClearButton="false"
         >
           <template #body="slotProps">
             <span class="p-column-title">K</span>
@@ -263,7 +289,7 @@
               v-model="filterModel.value"
               class="p-column-filter"
               placeholder="Search by Edge"
-              @keydown.enter="filterCallback()"
+              @input="filterCallback()"
               style="width:40px;"
             />
           </template>
@@ -271,7 +297,10 @@
         <Column
           field="tedarikciAdi"
           header="Kimden"
+          :showFilterMatchModes="false"
+          :showClear="false"
           :showFilterMenu="false"
+          :showClearButton="false"
         >
           <template #body="slotProps">
             <span class="p-column-title">Kimden</span>
@@ -295,7 +324,7 @@
               class="p-column-filter"
               placeholder="Search by Supplier"
               style="width:40px;"
-              @keydown.enter="filterCallback()"
+              @input="filterCallback()"
               
             />
           </template>

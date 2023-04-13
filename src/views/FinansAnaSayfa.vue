@@ -328,17 +328,7 @@ export default {
     });
   },
   created() {
-    socket.siparis.on("tahsilat_kayitdegisim_emit", () => {
-      this.$store.dispatch('fullscreenLoadingAct',true)
-
-      const d = new Date();
-      const year = d.getFullYear(); // 2021
-      service.getKonteynerAnaListe(year).then((data) => {
-        store.dispatch("finansAnaListeYukleAct", data);
-        this.$store.dispatch('fullscreenLoadingAct',false)
-
-      });
-    });
+    
     if (window.innerWidth < 576) {
       this.isMobile = "8px";
     }
@@ -583,14 +573,14 @@ export default {
     },
     konteyner_item_select(event) {
         this.$store.dispatch('fullscreenLoadingAct', true)
-
       this.select_konteyner = event.data;
       service.getFinansAyrintiListYukle(event.data.id).then((data) => {
         store.dispatch("finansAyrintiListYukleAct", data);
         store.dispatch("finansPoListLoadAct", data.po_list)
         this.konteynerBaslik = event.data.musteriadi;
+        this.$store.dispatch('fullscreenLoadingAct', false);
         this.isKonteyner = true;
-        this.$store.dispatch('fullscreenLoadingAct', false)
+
 
       });
     },
@@ -655,6 +645,19 @@ export default {
       });
     },
   },
+  mounted() {
+    socket.siparis.on("tahsilat_kayitdegisim_emit", () => {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
+      const d = new Date();
+      const year = d.getFullYear(); // 2021
+      service.getKonteynerAnaListe(year).then((data) => {
+        store.dispatch("finansAnaListeYukleAct", data);
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
+      });
+    });
+  }
 };
 </script>
 <style scoped>

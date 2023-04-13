@@ -604,7 +604,7 @@ export default {
                     socket.siparis.emit("siparisler_list_event")
 
                     this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
-                    socket.siparis.emit('isf_form_load_event')
+                    socket.siparis.emit('isf_form_load_event', this.siparisNo);
 
                     this.IcSiparisDosyaGonder();
                   } else {
@@ -631,7 +631,7 @@ export default {
                     socket.siparis.emit("siparisler_list_event")
 
                     this.$toast.add({ severity: 'success', summary: 'ISF', detail: 'ISF başarıyla kaydedildi', life: 3000 });
-                    socket.siparis.emit('isf_form_load_event')
+                    socket.siparis.emit('isf_form_load_event', this.siparisNo);
 
                     this.IcSiparisDosyaGonder();
                   } else {

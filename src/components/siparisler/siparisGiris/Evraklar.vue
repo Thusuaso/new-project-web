@@ -82,7 +82,7 @@ export default {
   props: ["siparisNo"],
   created() {
 
-    
+    this.yuklemeList = [];
 
     this.ted_dataTable_loading = true
 
@@ -148,17 +148,12 @@ export default {
     },
   },
   mounted() {
-            
-
-
-    socket.siparis.on('isf_form_load_emit', () => {
+    socket.siparis.on('isf_form_load_emit', (siparisNo) => {
+      this.yuklemeList = [];
       this.ted_dataTable_loading = true
-      service.getEvrakFaturaList(this.siparisNo).then((data) => {
+      service.getEvrakFaturaList(siparisNo).then((data) => {
         this.$store.dispatch("siparis_evrak_list_load", data.fatura_listesi);
                 this.ted_dataTable_loading = false
-
-
-
       });
     })
   }

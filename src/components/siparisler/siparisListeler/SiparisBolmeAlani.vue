@@ -11,15 +11,10 @@
                               <label for="siparisNo"><b>Sipariş No</b></label>
                           </span>
                       </div>
-                      <div class="column is-12">
-                          <span class="p-float-label">
-                              <InputText id="pesinat" v-model="siparislerBilgisi.siparis.pesinat" @input="isChangePayment" :disabled="isPesinat"></InputText>
-                              <label for="pesinat"><b>Giden Sipariş Peşinatı</b></label>
-                          </span>
-                      </div>
+
                       <div class="column is-12">
                             <Dropdown v-model="selectedProduct" :options="products" optionLabel="aciklama" placeholder="Select a Products" style="width:500px;" @change="isProductChange" />
-                            <span><Button @click="isChangeProductsClick" label="Değiştir"></Button></span>
+                            <span><Button @click="isChangeProductsClick" label="Değiştir" :disabled="sip_bol_form"></Button></span>
                             <span class="p-float-label" v-if="isProduct" style="margin-top:25px;">
                               <InputText id="products" v-model="productAmount" @input="productAmountInput" style="width:50px;"></InputText> <span> {{productAmountDetail}}</span>
                               <label for="products"><b>Giden Ürün Miktarı</b></label>
@@ -28,7 +23,7 @@
                           <hr>
                           <h3 style="text-align:center;margin-bottom:8px;"><b>Kalan Ürün Miktarı</b></h3>
                           <ul >
-                              <li v-for="i in productsNewAmount" :key="i">Ürün Bilgisi - {{i.aciklama}} : {{formatDecimal(i.newAmount)}} {{productAmountDetail}}</li>
+                              <li v-for="i in productsNewAmount" :key="i">Ürün Bilgisi - {{i.aciklama}} : {{formatDecimal(i.newAmount)}} {{ i.unit }}</li>
                           </ul>
                           
                       </div>
@@ -60,7 +55,7 @@
               <div class="box">
                   <div class="columns is-multiline is-centered">
                       <div class="column is-12">
-                        <Button @click="siparisibol" label="Siparişi Böl"></Button>
+                        <Button @click="siparisibol" label="Siparişi Böl" ></Button>
                       </div>
                       
                        
@@ -104,7 +99,8 @@ export default {
             productsNewAmount:[],
             oldPayment:null,
             newPayment:null,
-            newInformation:[]
+            newInformation:[],
+            sip_bol_form:true,
 
 
         }
@@ -142,7 +138,9 @@ export default {
         ,
         isChangeProductsClick(){
             this.newAmount = this.formatInteger(this.oldAmount) - this.formatInteger(this.productAmount)
-            this.productsNewAmount.push({ 'aciklama': this.selectedProduct.aciklama, 'newAmount': this.newAmount })
+            this.productsNewAmount.push({ 'aciklama': this.selectedProduct.aciklama, 'newAmount': this.newAmount , 'unit': this.productAmountDetail
+            })
+            this.sip_bol_form = true;
             for (let i of this.sipBilgiler.siparisUrunler) {
                 if (i.musteriAciklama == this.selectedProduct.aciklama) {
                     if (i.m2 > 0) {
@@ -153,16 +151,19 @@ export default {
                         i.newAmountmt = this.newAmount
                         i.newAmountmiktar = this.newAmount
                         i.isChange = true
+
                     } else if (i.adet > 0) {
                         i.newAmountadet = this.newAmount
                         i.newAmountmiktar = this.newAmount
                         i.isChange = true
+
                     }
                 }
             }
         },
-        productAmountInput(event){
-            this.productAmount = event.replace(',','.')
+        productAmountInput(event) {
+            console.log("productAmountInput",event)
+            this.productAmount = event.target.value.replace(',','.')
             if(this.sipUrunBilgisi.m2>0){
                 for(let i of this.sipBilgiler.siparisUrunler){
                     if(i.musteriAciklama == this.selectedProduct.aciklama){
@@ -259,7 +260,8 @@ export default {
         isProductChange(){
             this.isProduct = true
             this.sipUrunBilgisi = this.sipBilgiler.siparisUrunler.find(x=>x.musteriAciklama == this.selectedProduct.aciklama)
-            
+            this.sip_bol_form = false;
+
             if(this.sipUrunBilgisi.m2>0){
                 this.productAmount = this.sipUrunBilgisi.m2
                 this.oldAmount = this.sipUrunBilgisi.m2

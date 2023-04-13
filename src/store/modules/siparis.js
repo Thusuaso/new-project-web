@@ -21,6 +21,7 @@ const actions = {
     commit("is_new_form_click_mut", data);
   },
   siparis_evrak_list_load({ commit }, data) {
+    this.yuklemeList = [];
     commit("siparis_evrak_list_mut", data);
   },
   profData_load_act({ commit }, data) {

@@ -561,12 +561,12 @@ export default {
     },
     siparisSecim(event) {
       //sipariş seçildiğinde
+      this.dtSiparisNo = event.siparisNo;
       this.selectedSiparis = event;
       this.selectSiparis = true;
       if (this.selectedSiparis) {
         this.selectSiparis = false;
       }
-      this.dtSiparisNo = event.siparisNo;
 
       this.siparisFormBaslik = event.musteriAdi + " - " + this.dtSiparisNo;
       this.yeniSiparis = false;

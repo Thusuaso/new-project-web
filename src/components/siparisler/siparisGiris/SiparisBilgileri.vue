@@ -1221,7 +1221,7 @@ export default {
                         "Iç sipariş form silindi. Lütfen tekrar yükleyiniz.",
                       life: 3000,
                     });
-                    socket.siparis.emit('isf_form_load_event')
+                    socket.siparis.emit('isf_form_load_event',siparisNo)
                       socket.siparis.emit('siparisler_list_event')
 
                   }

@@ -138,26 +138,7 @@ import service from "../../service/FinansService";
 import socket from "../../service/SocketService";
 export default {
   created() {
-    socket.siparis.on("tahsilat_kayitdegisim_emit", () => {
-        this.$store.dispatch('fullscreenLoadingAct', true)
-
-      let musteri_id = this.finans_ayrinti_list[0].musteri_id;
-      service.getFinansAyrintiListYukle(musteri_id).then((data) => {
-        this.$store.dispatch("finansAyrintiListYukleAct", data);
-
-        this.$store.dispatch('fullscreenLoadingAct', false)
-
-
-      });
-      this.odeme =  {
-
-        siparisno: "",
-        tutar: 0,
-        odemeId: 0,
-        aciklama: "",
-        kullanici: this.$store.getters.__getUsername
-      }
-    });
+    
   },
   data() {
     return {
@@ -234,6 +215,27 @@ export default {
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
   },
+  mounted() {
+    socket.siparis.on("tahsilat_kayitdegisim_emit", (musteriId) => {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
+      service.getFinansAyrintiListYukle(musteriId).then((data) => {
+        this.$store.dispatch("finansAyrintiListYukleAct", data);
+
+        this.$store.dispatch('fullscreenLoadingAct', false)
+
+
+      });
+      this.odeme = {
+
+        siparisno: "",
+        tutar: 0,
+        odemeId: 0,
+        aciklama: "",
+        kullanici: this.$store.getters.__getUsername
+      }
+    });
+  }
 };
 </script>
 <style scoped>
