@@ -685,6 +685,7 @@ export default {
                 if (veri.status) {
                   alert("Evrak başarılı şekilde yüklendi!");
                   socket.siparis.emit('isf_form_load_event', this.siparisNo);
+                  socket.siparis.emit('siparisler_list_event');
                 } else {
                   alert("Ops! Lütfen Tekrar Deneyiniz!");
                 }

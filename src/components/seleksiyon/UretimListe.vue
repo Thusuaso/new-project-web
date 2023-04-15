@@ -1,7 +1,7 @@
 <template>
 
     <br/>
-    <div class="grid">
+    <!-- <div class="grid">
       <div class="col-2">
         <Dropdown class="urunSecmeDropdown" v-model="selectedUrun" :options="urunler" :filter="true" optionLabel="name"
           placeholder="Ürün Seç" />
@@ -10,7 +10,7 @@
         <Button class="urunSecmeDropdown" @click="isSelected" label="Göster" />
       </div>
 
-    </div>
+    </div> -->
 
     <div  v-if="slk_enb_mekmar">
             <DataTable :value="seleksiyon_mekmar_uretimlist" tableStyle="width:100%;" v-model:filters="filters" filterDisplay="row" :paginator="true"
@@ -1325,7 +1325,7 @@ export default {
         kategori: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         ocak: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         tedarikci: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        urunadi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        urunadi: { value: null, matchMode: FilterMatchMode.EQUALS },
         en: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },

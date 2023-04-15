@@ -446,6 +446,9 @@ export default {
             .faturaDosyaGonder(file, this.evrakID, this.SiparisTur.siparisno)
             .then((data) => {
               console.log("faturaDosyaGonder ", data);
+              if(!data){
+                this.$toast.add({severity:'error',detail:'Dosya yükleme başarısız',life:3000})
+              }
               
             });
           this.KayitIslemi();

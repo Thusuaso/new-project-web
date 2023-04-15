@@ -1233,11 +1233,10 @@ export default {
         //ürün kartı bilgisini göndermek için
       
       if (item.urunkart_id == this.detail.urunkartid) {
-        this.urunkart_change_event(item.urunkart_id);
+          this.urunkart_change_event(item.urunkart_id);
 
           if (item) {
             
-            console.log("tedarikci",item.tedarikci)
             this.tedarikci = this.seleksiyon_tedarikcilist.find(
               (x) => x.name == item.tedarikci
             );
