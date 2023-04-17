@@ -1325,7 +1325,7 @@ export default {
         kategori: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         ocak: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         tedarikci: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        urunadi: { value: null, matchMode: FilterMatchMode.EQUALS },
+        urunadi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         en: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
