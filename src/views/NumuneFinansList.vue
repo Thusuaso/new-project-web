@@ -14,6 +14,9 @@
           </div>
         </template>
       </Dropdown>
+
+      <Button type="text" label="Excell" class="btn btn-success" @click="excel_cikti"/>
+
     </div>
     <div class="columns is-multiline is-centered">
       <div class="column is-9 is-centered">
@@ -305,7 +308,12 @@
 import service from "../service/NumuneService";
 import numuneMasraflar from "../components/numuneler/numuneMasraflar";
 import { FilterMatchMode } from "primevue/api";
+import raporService from '../service/RaporService';
+import { mapGetters } from 'vuex';
 export default {
+  computed: {
+    ...mapGetters(['servis_adres'])
+  },
   components: {
     numuneMasraflar,
   },
@@ -365,6 +373,23 @@ export default {
   },
   mounted() {},
   methods: {
+    excel_cikti() {
+      this.$store.dispatch("fullscreenLoadingAct", true);
+      raporService.getNumunelerExcelCikti(this.liste).then((responce) => {
+        if (responce.status) {
+          const link = document.createElement("a");
+          link.href =
+            this.servis_adres + "raporlar/listeler/numuneler/numuneExcellCikti";
+
+          link.setAttribute("download", "numuneler_excel.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
+        }
+      });
+
+    },
     bank_account_detail_sum(data) {
       this.dolar_sum= 0
       this.euro_sum= 0

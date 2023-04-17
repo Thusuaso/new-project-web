@@ -468,8 +468,7 @@ export default {
       return 1;
     },
     excel_cikti_click() {
-          this.$store.dispatch("fullscreenLoadingAct", true);
-
+      this.$store.dispatch("fullscreenLoadingAct", true);
       const data = this.stok_listesi;
       service.getAtlantaStokExcelCikti(data).then((responce) => {
         if (responce.status) {

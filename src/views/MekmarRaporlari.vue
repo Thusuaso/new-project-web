@@ -431,9 +431,6 @@ export default {
 
             })  
         },
-
-
-
         ulkeye_gore_ayrinti_toplami(data) {
             this.ulkeye_gore_top_ayrinti= {
                 fob: 0,
@@ -458,7 +455,6 @@ export default {
 
             }  
         },
-
         ulkeye_gore_selected(event) {
         this.$store.dispatch('fullscreenLoadingAct', true)
 

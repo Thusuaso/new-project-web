@@ -416,7 +416,12 @@ const raporService = {
       .post("/raporlar/listeler/atlanta/stokExcelCikti", data_list)
       .then((res) => res.data);
   },
-
+  getNumunelerExcelCikti(data) {
+    return axios.post("/raporlar/listeler/numuneler/numuneExcellCikti", data).then(res => res.data);
+  },
+  getNumunelerPoExcelCikti(data) {
+    return axios.post("/raporlar/listeler/numuneler/numunePoExcellCikti", data).then(res => res.data);
+  },
   getTedarikciPDFCikti(data_list) {
     return axios
       .post("/islemler/dosyalar/pdfciktim", data_list)

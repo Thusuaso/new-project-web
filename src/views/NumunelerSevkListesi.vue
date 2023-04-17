@@ -7,6 +7,9 @@
       <Dropdown v-model="select_yil" :options="yil_listesi" @change="YilSecim(select_yil.yil)" optionLabel="yil"
         placeholder="Select a Year" />
     </div>
+    <div class="col-1">
+            <Button type="text" label="Excell" class="btn btn-success" @click="excel_cikti"/>
+    </div>
   </div>
   <div class="grid">
     <div class="col">
@@ -34,7 +37,6 @@
             <img class="dairesel" :src="slotProps.data.link" bodyStyle="text-align:center" width="40" height="40" />
           </template>
         </Column>
-      
         <Column field="musteriadi" header="Müşteri" headerStyle="width:3%;" bodyStyle="text-align:left">
           <template #body="slotProps">
             {{ slotProps.data.musteriadi }}
@@ -62,13 +64,11 @@
               placeholder="Search by Category" v-tooltip.top.focus="'Filter as you type'" />
           </template>
         </Column>
-      
         <Column field="miktar" header="Miktar" headerStyle="width:3%;" bodyStyle="text-align:center"
           footerStyle="text-align:center">
           <template #body="slotProps">
             {{ slotProps.data.miktar + " / " + slotProps.data.birim }}
           </template>
-      
           <template #footer>
             {{ miktar_toplam }}
           </template>
@@ -81,18 +81,13 @@
         </Column>
       </DataTable>
     </div>
-
   </div>
-
   <Dialog v-model:visible="is_numuneform" v-model:header="siparisFormBaslik" :modal="true" position="top" maximizable>
     <numuneForm :select_numune="select_numune" :yeniSiparis="false" />
   </Dialog>
   <Dialog v-model:visible="is_numuneform2" v-model:header="siparisFormBaslik" :modal="true" position="top" maximizable>
     <numuneForm :select_numune="select_numune" :yeniSiparis="true" />
   </Dialog>
-
-
-
 </template>
 <script>
 import service from "../service/NumuneService";
@@ -100,9 +95,12 @@ import numuneForm from "../components/numuneler/numuneForm";
 import { FilterMatchMode } from "primevue/api";
 import socket from "../service/SocketService";
 import { mapGetters } from "vuex";
+import raporService from '../service/RaporService';
+
 export default {
   computed: {
     ...mapGetters([
+      'servis_adres'
     ])
   },
   data() {
@@ -113,7 +111,6 @@ export default {
         musteriadi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         numuneNo: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kategori: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-
       },
       satis_toplam: 0,
       miktar_toplam: 0,
@@ -146,6 +143,22 @@ export default {
     });
   },
   methods: {
+    excel_cikti() {
+      this.$store.dispatch("fullscreenLoadingAct", true);
+      raporService.getNumunelerPoExcelCikti(this.numune_listesi).then((responce) => {
+        if (responce.status) {
+          const link = document.createElement("a");
+          link.href =
+            this.servis_adres + "raporlar/listeler/numuneler/numunePoExcellCikti";
+
+          link.setAttribute("download", "numuneler_po_excel.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
+        }
+      });
+    },
     isNumuneList(event) {
       this.genel_toplam(event.filteredValue);
     },
@@ -178,7 +191,6 @@ export default {
 
       this.is_numuneform2 = true;
     },
-
     numuneSec(event) {
       this.$store.dispatch('fullscreenLoadingAct', true)
 
@@ -189,11 +201,11 @@ export default {
       this.$store.dispatch("seleksiyonSelectItemActions");
       this.is_numuneform = true;
     },
-
     formatPriceDolar(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
+
   },
   mounted() {
     socket.siparis.on('numunetahsilat_kayitdegisim_emit', () => {
