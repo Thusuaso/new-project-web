@@ -82,10 +82,9 @@
                 </template>
               </Column>
               <Column field="urunadi" header="Ürün"
-               bodyStyle="text-align:left" style="width:4%;"
+               bodyStyle="text-align:left" style="width:5%;"
                :showFilterMatchModes="false"
                   :showClear="false"
-                  :showFilterMenu="false"
                   :showClearButton="false"
                
                >
