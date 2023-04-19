@@ -268,30 +268,33 @@ export default {
       
     },
     deleteMust(event) {
-      service.setTeklifMusterilerSil(event).then((data) => {
-        if (data.status) {
-          this.$toast.add({
-            severity: "success",
-            summary: "Sil",
-            detail: "Silme İşlemi Başarılı",
-            life: 3000,
-          });
-          if (this.userId == 10 || this.userId == 47 || this.userId == 13) {
-            this.$store.dispatch("teklif_musteri_load_act", data.result)
-            
+      if (confirm('Silinmesi için onay veriniz.')) {
+        service.setTeklifMusterilerSil(event).then((data) => {
+          if (data.status) {
+            this.$toast.add({
+              severity: "success",
+              summary: "Sil",
+              detail: "Silme İşlemi Başarılı",
+              life: 3000,
+            });
+            if (this.userId == 10 || this.userId == 47 || this.userId == 13) {
+              this.$store.dispatch("teklif_musteri_load_act", data.result)
+
+            } else {
+              const result = data.result.filter((x) => x.user == this.userId);
+              this.$store.dispatch("teklif_musteri_load_act", result)
+            }
           } else {
-            const result = data.result.filter((x) => x.user == this.userId);
-            this.$store.dispatch("teklif_musteri_load_act", result)
+            this.$toast.add({
+              severity: "error",
+              summary: "Sil",
+              detail: "Silme İşlemi Hatalı",
+              life: 3000,
+            });
           }
-        } else {
-          this.$toast.add({
-            severity: "error",
-            summary: "Sil",
-            detail: "Silme İşlemi Hatalı",
-            life: 3000,
-          });
-        }
-      });
+        });
+      }
+      
     },
 
     ulke_complete_event(event) {

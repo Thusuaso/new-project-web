@@ -16,148 +16,156 @@
           :paginator="true"
           :rows="15"
           v-model:filters="filters2"
-          filterDisplay="menu"
+          filterDisplay="row"
           :scrollable="true"
           scrollHeight="500px"
           @row-select="urunKartSec"
         >
-          <Column field="id" header="Kart Id" headerStyle="width: 10%">
+          <Column field="id" header="Kart Id" headerStyle="width: 10%"
+            :showFilterMenu="false"
+            :showFilterOperator="false"
+            :showClearButton="false"
+            :showFilterMatchModes="false"
+            :showApplyButton="false"
+          >
             <template #body="slotProps">
               <div class="isMobile">
                 {{ slotProps.data.id }}
               </div>
             </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Id"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
           <Column
             field="kategoriAdi"
             header="Kategori"
             headerStyle="width: 15%"
+            :showFilterMenu="false"
+            :showFilterOperator="false"
+            :showClearButton="false"
+            :showFilterMatchModes="false"
+            :showApplyButton="false"
           >
             <template #body="slotProps">
               <div class="isMobile">
                 {{ slotProps.data.kategoriAdi }}
               </div>
             </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Category"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column field="urunAdi" header="Ürün" headerStyle="width: 15%">
+          <Column field="urunAdi" header="Ürün" headerStyle="width: 15%"
+            :showFilterMenu="false"
+              :showFilterOperator="false"
+              :showClearButton="false"
+              :showFilterMatchModes="false"
+              :showApplyButton="false"
+          >
             <template #body="slotProps">
               <div class="isMobile">
                 {{ slotProps.data.urunAdi }}
               </div>
             </template>
-            <template #filter="{ filterModel}">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Product"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column field="yuzey_1" header="Y1" headerStyle="width: 10%">
+          <Column field="yuzey_1" header="Y1" headerStyle="width: 10%"
+            :showFilterMenu="false"
+          :showFilterOperator="false"
+          :showClearButton="false"
+          :showFilterMatchModes="false"
+          :showApplyButton="false"
+          >
             <template #body="slotProps">
               <div class="isMobile">
                 {{ slotProps.data.yuzey_1 }}
               </div>
             </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Surface 1"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column field="yuzey_2" header="Y2" headerStyle="width: 10%">
+          <Column field="yuzey_2" header="Y2" headerStyle="width: 10%"
+            :showFilterMenu="false"
+            :showFilterOperator="false"
+            :showClearButton="false"
+            :showFilterMatchModes="false"
+            :showApplyButton="false"
+          >
             <template #body="slotProps">
               <div class="isMobile">
                 {{ slotProps.data.yuzey_2 }}
               </div>
             </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Surface 2"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column field="yuzey_3" header="Y3" headerStyle="width: 10%">
+          <Column field="yuzey_3" header="Y3" headerStyle="width: 10%"
+            :showFilterMenu="false"
+              :showFilterOperator="false"
+              :showClearButton="false"
+              :showFilterMatchModes="false"
+              :showApplyButton="false"
+          >
             <template #body="slotProps">
               <div class="isMobile">
                 {{ slotProps.data.yuzey_3 }}
               </div>
             </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Surface 3"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column field="en" header="En" headerStyle="width: 10%">
-            <template #body="slotProps" bodyStyle="text-align: center">
+          <Column field="en" header="En" headerStyle="width: 10%"
+            :showFilterMenu="false"
+          :showFilterOperator="false"
+          :showClearButton="false"
+          :showFilterMatchModes="false"
+          :showApplyButton="false"
+          >
+            <template #body="slotProps" >
               <div class="isMobile">
                 {{ slotProps.data.en }}
               </div>
             </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Width"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column field="boy" header="Boy" headerStyle="width: 10%">
+          <Column field="boy" header="Boy" headerStyle="width: 10%"
+            :showFilterMenu="false"
+          :showFilterOperator="false"
+          :showClearButton="false"
+          :showFilterMatchModes="false"
+          :showApplyButton="false"
+          >
             <template #body="slotProps">
               <div class="isMobile">
                 {{ slotProps.data.boy }}
               </div>
             </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Height"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column field="kenar" header="Kenar" headerStyle="width: 10%">
+          <Column field="kenar" header="Kenar" headerStyle="width: 10%"
+            :showFilterMenu="false"
+          :showFilterOperator="false"
+          :showClearButton="false"
+          :showFilterMatchModes="false"
+          :showApplyButton="false"
+          >
             <template #body="slotProps">
               <div class="isMobile">
                 {{ slotProps.data.kenar }}
               </div>
             </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Edge"
-              />
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
         </DataTable>
