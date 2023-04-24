@@ -40,6 +40,9 @@
         <TabPanel header="ÇEKİ LİSTESİ">
           <ceki-listesi :siparisNo="dtSiparisNo" :yeniSiparis="yeniSiparis" />
         </TabPanel>
+        <!-- <TabPanel header="Etiketler">
+            <Etiketler/>
+          </TabPanel> -->
         <TabPanel header=" CHAT">
           <chat :siparisNo="dtSiparisNo" :yeniSiparis="yeniSiparis" />
         </TabPanel>
@@ -48,6 +51,7 @@
             :selectOrderNo="dtSiparisNo"
           ></gidecek-sip-bilgileri>
         </TabPanel>
+        
         
       </TabView>
     </div>

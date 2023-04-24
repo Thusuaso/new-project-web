@@ -365,6 +365,8 @@ export default {
         { code: "VKCS-FM01-K", urun: "GOLD (VKCS-FM01)" },
         { code: "VKCS-FM02-K", urun: "SILVER (VKCS-FM02)" },
         { code: "STS-01-K", urun: "IVORY RUSTIC (STS01)" },
+        { code: "SAS01", urun: "ELA MOSAIC (SAS01)" },
+
       ],
 
       etiketlerNovaKasa: [
