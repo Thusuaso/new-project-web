@@ -4,76 +4,108 @@
             <Dropdown v-model="yil" :options="yil_list" optionLabel="year" placeholder="Select a Year" class="w-full md:w-14rem" @change="is_change_year($event)"/>
         </div>
     </div>
-    <Card>
-        <template #title >
-            Maliyet Logları
+        <DataTable v-model:filters="filters" v-model:value="logs_maliyet" paginator :rows="10" filterDisplay="row">
+        <template #header>
+            <div class="flex justify-content-start">
+                    Maliyet Logları
+            </div>
         </template>
-        <template #content>
-            <DataTable :value="logs_maliyet" v-model:filters="filters" filterDisplay="row" paginator :rows="15">
-                <Column field="yil" header="Yıl">
-                    <template #filter="{ filterModel, filterCallback }">
-                        <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
+            <Column field="yil" header="Yıl" 
+            :showFilterMenu="false"
+            :showFilterOperator="false"
+            :showClearButton="false"
+            :showApplyButton="false"
+            :showFilterMatchModes="false"
+            :showAddButton="false"
+            >
+                <template #body="slotProps">
+                    {{ slotProps.data.yil }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+                </template>
+            </Column>
+            <Column field="ay" header="Ay" 
+            :showFilterMenu="false"
+            :showFilterOperator="false"
+            :showClearButton="false"
+            :showApplyButton="false"
+            :showFilterMatchModes="false"
+            :showAddButton="false"
+            >
+                <template #body="slotProps">
+                    {{ slotProps.data.ay }}
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+                </template>
+            </Column>
+            <Column field="gun" header="Gün" 
+                :showFilterMenu="false"
+                :showFilterOperator="false"
+                :showClearButton="false"
+                :showApplyButton="false"
+                :showFilterMatchModes="false"
+                :showAddButton="false"
+                >
+                    <template #body="slotProps">
+                        {{ slotProps.data.gun }}
                     </template>
-                </Column>
-                <Column field="ay" header="Ay">
                     <template #filter="{ filterModel, filterCallback }">
-                        <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
+                        <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
                     </template>
-                </Column>
-                <Column field="gun" header="Gün">
-                    <template #filter="{ filterModel, filterCallback }">
-                        <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
+            </Column>
+            <Column field="kayit_kisi" header="Değişim Yapan" 
+                    :showFilterMenu="false"
+                    :showFilterOperator="false"
+                    :showClearButton="false"
+                    :showApplyButton="false"
+                    :showFilterMatchModes="false"
+                    :showAddButton="false"
+                    >
+                        <template #body="slotProps">
+                            {{ slotProps.data.kayit_kisi }}
+                        </template>
+                        <template #filter="{ filterModel, filterCallback }">
+                            <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+                        </template>
+            </Column>
+            <Column field="siparis_no" header="PO" 
+                :showFilterMenu="false"
+                :showFilterOperator="false"
+                :showClearButton="false"
+                :showApplyButton="false"
+                :showFilterMatchModes="false"
+                :showAddButton="false"
+                >
+                    <template #body="slotProps">
+                        {{ slotProps.data.siparis_no }}
                     </template>
-                </Column>
-                <Column field="siparis_no" header="PO">
                     <template #filter="{ filterModel, filterCallback }">
-                            <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
+                        <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+                    </template>
+            </Column>
+            <Column field="yukleme_tarihi" header="Y.Tarihi" 
+                    >
+                        <template #body="slotProps">
+                            {{ slotProps.data.yukleme_tarihi }}
                         </template>
                 </Column>
-                <Column field="yukleme_tarihi" header="Yükleme Tarihi"></Column>
-                <Column field="info" header="Değişiklik"></Column>
-                <Column field="kayit_kisi" header="Değişimi Yapan">
-                    <template #filter="{ filterModel, filterCallback }">
-                                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
-                            </template>
-                </Column>
+            <Column field="info" header="Bilgi" 
+                    :showFilterMenu="false"
+                    :showFilterOperator="false"
+                    :showClearButton="false"
+                    :showApplyButton="false"
+                    :showFilterMatchModes="false"
+                    :showAddButton="false"
+                    >
+                        <template #body="slotProps">
+                            {{ slotProps.data.info }}
+                        </template>
+            </Column>
         </DataTable>
-        </template>
-    </Card>
-    <Card>
-        <template #title>
-            Diğer Loglar
-        </template>
-        <template #content>
-            <DataTable :value="logs_degisimler" v-model:filters="filters2" filterDisplay="row" paginator :rows="15">
-            <Column field="year" header="Yıl">
-                <template #filter="{ filterModel, filterCallback }">
-                            <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
-                        </template>
-            </Column>
-            <Column field="month" header="Ay">
-                <template #filter="{ filterModel, filterCallback }">
-                            <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
-                        </template>
-            </Column>
-                <Column field="day" header="Gün">
-                    <template #filter="{ filterModel, filterCallback }">
-                            <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by " />
-                        </template>
-                </Column>
 
-            <Column field="degisiklikYapan" header="Değişiklik Yapan"></Column>
-            <Column field="yapilanDegisiklik" header="Değişiklik"></Column>
-        </DataTable>
-        </template>
-    </Card>
-    <vs-button
-    :active="active == 0"
-    @click="active = 0"
-    >
-    Active
-    </vs-button>
-    
+
     
 </template>
 <script>
@@ -109,16 +141,18 @@ export default {
         return {
             active:0,
             filters: {
-                yil: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-               ay: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                gun: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                yil:        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                ay:         { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                gun:        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                 siparis_no: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                kayit_kisi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                
 
             },
             filters2: {
-                year: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                year:  { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                 month: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                day: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+                day:   { value: null, matchMode: FilterMatchMode.STARTS_WITH }
             }
         }
     },

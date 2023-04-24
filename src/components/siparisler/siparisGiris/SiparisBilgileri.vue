@@ -78,6 +78,7 @@
                 optionLabel="birimAdi"
                 :dropdown="true"
                 :class="{ 'p-invalid': v$.urunBirim.$invalid && submitted }"
+                @item-select="isBirimSelected($event)"
               />
             </div>
             <div class="column is-2">
@@ -85,7 +86,7 @@
                 <InputText
                   style="width: 60px"
                   class="p-inputtext-sm"
-                  :disabled="dis_urun_giris"
+                  :disabled="dis_urun_giris_miktar"
                   @input="miktar_input_event(siparis.miktar)"
                   id="miktar"
                   v-model="siparis.miktar"
@@ -472,6 +473,11 @@ export default {
     MoneyInput
   },
   methods: {
+    isBirimSelected(event) {
+      if(event.value){
+        this.dis_urun_giris_miktar = false;
+      }
+    },
     isf_change_event() {
       this.isfDelete(this.siparis.tedarikciId, this.siparisNo);
     },
@@ -1322,6 +1328,7 @@ export default {
   },
   data() {
     return {
+      dis_urun_giris_miktar:true,
       submitted: false,
       kategoriAdi: "",
       urunKartBilgisi: null,
