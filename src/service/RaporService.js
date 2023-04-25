@@ -781,6 +781,9 @@ const raporService = {
   },
   getLogs(year) {
     return axios.get(`/raporlar/mekmar/logs/${year}`).then(res=>res.data)
+  },
+  getUretimSatisciInfo() {
+    return axios.get('/uretim/satisci/info').then(res => res.data);
   }
 };
 

@@ -63,6 +63,20 @@ const routes = [
     },
   },
   {
+    path: '/uretimSatisci',
+    component: () => import("@/views/UretimSatisciInfo"),
+    beforeEnter(to, from, next) {
+      if (store.getters.__isAuthentication) {
+        raporService.getUretimSatisciInfo().then(data => {
+          store.dispatch('siparis_satisci_info_act', data);
+          next();
+        })
+      } else {
+        next("/login");
+      }
+    }
+  },
+  {
     path: "/satisci",
     component: () => import("@/views/Customers"),
     beforeEnter(to, from, next) {

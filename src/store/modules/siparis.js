@@ -7,7 +7,8 @@ const state = {
   teslimTurList: [],
   odemeTurList: [],
   faturaKesimTurList: [],
-  ulkeList2:[]
+  ulkeList2: [],
+  siparisSatisciInfo:[]
 };
 
 const actions = {
@@ -38,6 +39,9 @@ const actions = {
   },
   ulke_tur_load_act({ commit }, data) {
     commit('ulke_tur_load_mut',data)
+  },
+  siparis_satisci_info_act({ commit }, data) {
+    commit('siparis_satisci_info_mut', data);
   }
 };
 
@@ -71,6 +75,9 @@ const mutations = {
   },
   profData_load_mut(state, data) {
     state.profData = data
+  },
+  siparis_satisci_info_mut(state, data) {
+    state.siparisSatisciInfo = data;
   }
 };
 
@@ -104,6 +111,9 @@ const getters = {
   ,
   ulkeList2(state) {
     return state.ulkeList2
+  },
+  siparisSatisciInfo(state) {
+    return state.siparisSatisciInfo
   }
 };
 
