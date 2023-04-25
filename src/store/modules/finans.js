@@ -108,7 +108,6 @@ const mutations = {
       state.finans_toplam_bakiye += Number(item.kapanmayan_siparis);
       state.finans_toplam_pesinat += Number(item.pesinat);
       state.finans_toplam_genel_bakiye += Number(item.genel_bakiye);
-      console.log(item.genel_bakiye);
       state.finans_toplam_eski_pesinat += Number(item.eski_pesinat);
     }
   },

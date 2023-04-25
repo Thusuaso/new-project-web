@@ -784,6 +784,9 @@ const raporService = {
   },
   getUretimSatisciInfo() {
     return axios.get('/uretim/satisci/info').then(res => res.data);
+  },
+  setOpSsChange(po,ss,op) {
+    return axios.get(`/uretim/satisci/change/${po}/${ss}/${op}`).then(res => res.data);
   }
 };
 

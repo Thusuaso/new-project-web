@@ -8,7 +8,14 @@ const state = {
   odemeTurList: [],
   faturaKesimTurList: [],
   ulkeList2: [],
-  siparisSatisciInfo:[]
+  siparisSatisciInfo: [],
+  opOzetList: [],
+  ssOzetList: [],
+  kullaniciList: [],
+  satisciInfoSum: 0,
+  opSum: 0,
+  ssSum:0
+  
 };
 
 const actions = {
@@ -77,7 +84,20 @@ const mutations = {
     state.profData = data
   },
   siparis_satisci_info_mut(state, data) {
-    state.siparisSatisciInfo = data;
+    state.siparisSatisciInfo = data.infoList;
+    state.opOzetList = data.opOzet;
+    state.ssOzetList = data.ssOzet;
+    state.kullaniciList = data.kullaniciList;
+    state.satisciInfoSum = data.infoList.length;
+    state.opSum = 0;
+    state.ssSum = 0;
+
+    for (const item of data.opOzet) {
+      state.opSum += item.adet;
+    }
+    for (const item of data.ssOzet) {
+      state.ssSum += item.adet;
+    }
   }
 };
 
@@ -114,6 +134,24 @@ const getters = {
   },
   siparisSatisciInfo(state) {
     return state.siparisSatisciInfo
+  },
+  opOzetList(state) {
+    return state.opOzetList;
+  },
+  ssOzetList(state) {
+    return state.ssOzetList;
+  },
+  kullaniciList(state) {
+    return state.kullaniciList;
+  },
+  satisciInfoSum(state) {
+    return state.satisciInfoSum;
+  },
+  ssSum(state) {
+    return state.ssSum;
+  },
+  opSum(state) {
+    return state.opSum;
   }
 };
 

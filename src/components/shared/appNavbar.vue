@@ -377,6 +377,8 @@
                 <li><a class="dropdown-item" href="/satisci">Takip</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/bgpNetwork">Bgp Project</a></li>
+                <li><hr class="dropdown-divider"></li>
+
                 <li><a class="dropdown-item" href="/uretimSatisci">Üretim</a></li>
 
               </ul>
