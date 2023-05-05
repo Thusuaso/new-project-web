@@ -449,7 +449,6 @@ export default {
               if(!data){
                 this.$toast.add({severity:'error',detail:'Dosya yükleme başarısız',life:3000})
               }
-              
             });
           this.KayitIslemi();
         }

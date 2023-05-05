@@ -69,9 +69,8 @@
                 <Column field="ad" header="Ad"></Column>
                 <Column field="adet" header="Adet">
                     <template #footer>
-                                {{ opSum }}
-
-                            </template>
+                        {{ opSum }}
+                    </template>
                 </Column>
             </DataTable>
         </div>

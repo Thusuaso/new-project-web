@@ -7,7 +7,9 @@
       placeholder="Select a Year"
       @change="isSelectedYear"
     />
-    <div class="columns">
+    <Button @click="excel_cikti_click" label="Excel" class="p-button-success ml-3" />
+
+    <div class="columns mt-4">
       <div class="column is-12">
         <DataTable
           :value="tumtekliflist"
@@ -238,9 +240,16 @@
 <script>
 import TeklifGirisForm from "./TeklifGirisForm";
 import { FilterMatchMode } from "primevue/api"
+import teklifService from '../../service/TeklifService';
+import { mapGetters } from 'vuex';
 export default {
   components: {
     teklifGirisForm: TeklifGirisForm,
+  },
+  computed: {
+    ...mapGetters([
+      'servis_adres'
+    ])
   },
   data() {
     return {
@@ -275,6 +284,25 @@ export default {
   },
   props: ["tumtekliflist"],
   methods: {
+    excel_cikti_click() {
+      this.$store.dispatch('fullscreenLoadingAct', true)
+
+      teklifService
+        .getTekliflerExcel(this.tumtekliflist)
+        .then((res) => {
+          if (res.status) {
+            const link = document.createElement("a");
+            link.href =
+              this.servis_adres +
+              "/raporlar/dosyalar/tekliflerRaporExcelListe";
+
+            link.setAttribute("download", "teklifler_listesi.xlsx");
+            document.body.appendChild(link);
+            link.click();
+            this.$store.dispatch('fullscreenLoadingAct', false)
+          }
+        });
+    },
     formatPrice(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

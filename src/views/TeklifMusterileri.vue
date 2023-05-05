@@ -232,12 +232,6 @@ export default {
         alert("Bu müşteri zaten mevcut!")
       }
       this.newTeklifMusteri.customer = value
-      
-
-
-
-
-
     },
     copyToCustomers() {
       if (confirm('Müşterilere kopyalamak istediğinize emin misiniz ?')) {

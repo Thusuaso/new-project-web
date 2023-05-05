@@ -407,7 +407,6 @@ export default {
       this.dis_numuneDosyayukle = true;
 
       service.getNakliyeIslemListesi().then((data) => {
-        console.log("getNakliyeIslemListesi",data)
         this.firma_list = data.nakliye_liste;
         this.siparis_list = data.siparis_list;
       });

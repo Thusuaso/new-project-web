@@ -22,19 +22,19 @@
                     {{ i.surfaceName }}
                 </h3>
                 <DataTable 
-                :value="i.dataList" 
-                :scrollable="true" 
-                scrollHeight="flex" 
-                v-model:filters="filters"
-                filterDisplay="row" 
-                :resizableColumns="true" 
-                columnResizeMode="fit" 
-                showGridlines 
-                responsiveLayout="scroll"
-                style="font-size:80%;"
-                v-model:selection="selectedProduct1"
-                selectionMode="single"
-                @row-select="isSelectedCust($event)"
+                    :value="i.dataList" 
+                    :scrollable="true" 
+                    scrollHeight="flex" 
+                    v-model:filters="filters"
+                    filterDisplay="row" 
+                    :resizableColumns="true" 
+                    columnResizeMode="fit" 
+                    showGridlines 
+                    responsiveLayout="scroll"
+                    style="font-size:80%;"
+                    v-model:selection="selectedProduct1"
+                    selectionMode="single"
+                    @row-select="isSelectedCust($event)"
                 >
                     <Column field="firstName" header="Name" :showFilterMenu="false">
                         <template #filter="{filterModel,filterCallback}">

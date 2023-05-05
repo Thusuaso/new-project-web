@@ -100,6 +100,9 @@ const teklifService = {
   },
   getCustomersList(){
     return axios.get('islemler/teklif/teklifMusteriler').then(res =>res.data)
+  },
+  getTekliflerExcel(data) {
+    return axios.post('/raporlar/dosyalar/tekliflerRaporExcelListe', data).then(res => res.data);
   }
 };
 
