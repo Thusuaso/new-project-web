@@ -67,7 +67,6 @@ const mutations = {
         state.mekmerSumDdp =  0
         state.byMarketingMonthLoadIcPiyasaList = data.icPiyasa
         for (let item of data.icPiyasa) {
-            console.log(item)
             state.icPiyasaSumFob +=  item.fob
             state.icPiyasaSumDdp +=  item.ddp
         }

@@ -1237,6 +1237,7 @@ export default {
       }
     },
     siparisUrunSec(event) {
+      this.dis_urun_giris_miktar = true;
       this.dis_yeni = true;
       this.dis_degistir = false;
       this.dis_iptal = false;

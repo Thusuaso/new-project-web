@@ -42,6 +42,9 @@ const anasayfaRapor = {
       .get("/raporlar/anaSayfa/tahminiDegisiklik")
       .then((res) => res.data);
   },
+  getLogsMaliyet(year) {
+    return axios.get(`/raporlar/mekmar/logs/${year}`).then(res => res.data);
+  },
   getEtaSuresiControl() {
     return axios.get("kontroller/musterietatakipislem").then(res=>res.data)
   }

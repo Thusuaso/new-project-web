@@ -491,44 +491,117 @@
           responsiveLayout="scroll"
           :paginator="true"
           :rows="30"
+          v-model:filters="filters"
+          filterDisplay="row"
         >
           <Column
-            field="degisiklikAlani"
-            header="Değişiklik Alanı"
+            field="siparis_no"
+            header="Po"
             headerStyle="width:10%;"
             bodyStyle="text-align:center;"
-          ></Column>
+            :showFilterMenu="false"
+            :showFilterOperator="false"
+            :showClearButton="false"
+            :showApplyButton="false"
+            :showFilterMatchModes="false"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+            </template>
+          </Column>
           <Column
-            field="degisiklik"
-            header="Değişiklik"
+            field="info"
+            header="Bilgi"
             headerStyle="width:50%;"
             bodyStyle="text-align:center;"
-          ></Column>
+                        :showFilterMenu="false"
+              :showFilterOperator="false"
+              :showClearButton="false"
+              :showApplyButton="false"
+              :showFilterMatchModes="false"
+          >
+          
+        </Column>
           <Column
-            field="year"
-            header="Yil"
-            headerStyle="width:10%;"
-            bodyStyle="text-align:center;"
-          ></Column>
-          <Column
-            field="month"
-            header="Ay"
-            headerStyle="width:10%;"
-            bodyStyle="text-align:center;"
-          ></Column>
-          <Column
-            field="day"
+            field="gun"
             header="Gün"
             headerStyle="width:10%;"
             bodyStyle="text-align:center;"
-          ></Column>
+                        :showFilterMenu="false"
+              :showFilterOperator="false"
+              :showClearButton="false"
+              :showApplyButton="false"
+              :showFilterMatchModes="false"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+            </template>
+          </Column>
           <Column
-            field="watch"
-            header="Saat"
+            field="ay"
+            header="Ay"
             headerStyle="width:10%;"
             bodyStyle="text-align:center;"
+                        :showFilterMenu="false"
+              :showFilterOperator="false"
+              :showClearButton="false"
+              :showApplyButton="false"
+              :showFilterMatchModes="false"
           >
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+            </template>
           </Column>
+          <Column
+            field="yil"
+            header="Yıl"
+            headerStyle="width:10%;"
+            bodyStyle="text-align:center;"
+                        :showFilterMenu="false"
+              :showFilterOperator="false"
+              :showClearButton="false"
+              :showApplyButton="false"
+              :showFilterMatchModes="false"
+          >
+          <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+            </template>
+          </Column>
+          <Column
+            field="kayit_kisi"
+            header="Kayıt Kişi"
+            headerStyle="width:10%;"
+            bodyStyle="text-align:center;"
+                        :showFilterMenu="false"
+              :showFilterOperator="false"
+              :showClearButton="false"
+              :showApplyButton="false"
+              :showFilterMatchModes="false"
+          >
+          <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
+            </template>
+          </Column>
+          <Column field="yuklenen_bu_ay_sip" header="Bu Ay Hariç(Yüklenen)">
+                  <template #body="slotProps"> 
+                      {{ formatPrice(slotProps.data.yuklenen_bu_ay_sip) }}
+                  </template>
+              </Column>
+              <Column field="yuklenen_yil_sonu_tahmin" header="Yüklenen Yıl Sonu Tahmin">
+                      <template #body="slotProps"> 
+                          {{ formatPrice(slotProps.data.yuklenen_yil_sonu_tahmin) }}
+                      </template>
+                  </Column>
+                  <Column field="siparis_bu_ay" header="Bu Ay Hariç(Sipariş)">
+                      <template #body="slotProps"> 
+                          {{ formatPrice(slotProps.data.siparis_bu_ay) }}
+                      </template>
+                  </Column>
+                  <Column field="siparis_yil_sonu_tahmin" header="Sipariş Yıl Sonu Tahmin">
+                      <template #body="slotProps"> 
+                          {{ formatPrice(slotProps.data.siparis_yil_sonu_tahmin) }}
+                      </template>
+                  </Column>
         </DataTable>
       </div>
     </Dialog>
@@ -540,6 +613,8 @@
 import { mapGetters } from "vuex";
 import service from "@/service/AnasayfaRapor";
 import { defineAsyncComponent } from "vue";
+import { FilterMatchMode } from 'primevue/api';
+
 export default {
   components: {
     DashboardNewAltKisim: defineAsyncComponent(() => import("./DashboardNewAltKisim"))
@@ -568,6 +643,16 @@ export default {
       altComponent: "",
       is_click_form: true,
       tahmini_form: false,
+      filters: {
+        siparis_no: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
+        gun: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
+        ay: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
+        yil: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
+        kayit_kisi: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
+
+
+      },
+
     };
   },
   created() {
@@ -591,8 +676,9 @@ export default {
   methods: {
 
     yilSonuTahminiAktiviteler() {
-      service.getTahminiDegisiklik().then((data) => {
-        this.$store.dispatch("tahmini_degisiklik_load", data);
+      service.getLogsMaliyet(new Date().getFullYear()).then((data) => {
+        console.log(data);
+        this.$store.dispatch("tahmini_degisiklik_load", data.maliyet);
         this.tahmini_form = true;
       });
     },

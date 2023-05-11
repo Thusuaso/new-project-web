@@ -23,7 +23,7 @@
                       >Aylık Toplam Yükleme (Bütün Pazarlamalar)
                     </span>
                   </div>
-                </div>
+                </div> 
               </template>
               <Column field="ay" header="Ay" bodyStyle="text-align:center;">
                 <template #body="slotProps">
@@ -151,6 +151,9 @@
       <TabPanel header="Yıllık Yükleme Raporu">
         <ayBazindaMarketingYuklemeler></ayBazindaMarketingYuklemeler>
       </TabPanel>
+      <TabPanel header="Yükleme ve Sevkiyat Raporu">
+          <yuklemeveSevkiyatRaporu />
+      </TabPanel>
     </TabView>
   </section>
 </template>
@@ -159,14 +162,15 @@ import service from "../service/RaporService";
 import musteriBazindaUretim from "../components/newyuklemeraporlari/musteriBazindaUretim";
 import byMarketingYukleme from "../components/newyuklemeraporlari/byMarketingYukleme";
 import ayBazindaMarketingYuklemeler from "../components/newyuklemeraporlari/ayBazindaMarketingYuklemeler";
-
+import yuklemeveSevkiyatRaporu from '../components/newyuklemeraporlari/yuklemeveSevkiyatRaporu';
 import { mapGetters } from "vuex";
 
 export default {
   components: {
     musteriBazindaUretim,
     byMarketingYukleme,
-    ayBazindaMarketingYuklemeler
+    ayBazindaMarketingYuklemeler,
+    yuklemeveSevkiyatRaporu
   },
   data() {
     return {

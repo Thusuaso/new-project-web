@@ -103,6 +103,26 @@
                             {{ slotProps.data.info }}
                         </template>
             </Column>
+            <Column field="yuklenen_bu_ay_sip" header="Bu Ay Hariç(Yüklenen)">
+                <template #body="slotProps"> 
+                    {{ formatPrice(slotProps.data.yuklenen_bu_ay_sip) }}
+                </template>
+            </Column>
+            <Column field="yuklenen_yil_sonu_tahmin" header="Yüklenen Yıl Sonu Tahmin">
+                    <template #body="slotProps"> 
+                        {{ formatPrice(slotProps.data.yuklenen_yil_sonu_tahmin) }}
+                    </template>
+                </Column>
+                <Column field="siparis_bu_ay" header="Bu Ay Hariç(Sipariş)">
+                    <template #body="slotProps"> 
+                        {{ formatPrice(slotProps.data.siparis_bu_ay) }}
+                    </template>
+                </Column>
+                <Column field="siparis_yil_sonu_tahmin" header="Sipariş Yıl Sonu Tahmin">
+                    <template #body="slotProps"> 
+                        {{ formatPrice(slotProps.data.siparis_yil_sonu_tahmin) }}
+                    </template>
+                </Column>
         </DataTable>
 
 
@@ -165,7 +185,14 @@ export default {
                 store.dispatch("logs_degisimler_load_act", data.digerleri);
                 store.dispatch('fullscreenLoadingAct', false)
             })
-        } 
+        }, formatPrice(value) {
+            let val = (value / 1).toFixed(2).replace(".", ",");
+            return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+        formatDecimal(value) {
+            let val = (value / 1).toFixed(2).replace(".", ",");
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
     }
     
 }

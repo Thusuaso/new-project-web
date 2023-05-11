@@ -787,6 +787,12 @@ const raporService = {
   },
   setOpSsChange(po,ss,op) {
     return axios.get(`/uretim/satisci/change/${po}/${ss}/${op}`).then(res => res.data);
+  },
+  getMkYuklenenvSiparisRapor(yil) {
+    return axios.get(`/raporlar/mkrapor/sevksip/${yil}`).then(res => res.data);
+  },
+  getMkYuklenenvSiparislerExcel(data) {
+    return axios.post('/raporlar/mkrapor/sevksip/excel', data).then(response => response.data);
   }
 };
 

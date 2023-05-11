@@ -247,7 +247,7 @@ export default {
   },
   data() {
     return {
-      selectedMonth: { id: 11, month: "Kasım" },
+      selectedMonth: { id: 0, month: "Hepsi" },
       months: [{ id: 0, month: "Hepsi" }],
       byMarketingYukleme: [],
       byMarketingUretim: [],
