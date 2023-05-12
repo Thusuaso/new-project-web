@@ -12,16 +12,16 @@ const raporService = {
   getMarketingRaporlari() {
     return axios.get("/finans/listeler/marketing");
   },
-  getByMarketingYukleme(month) {
-    return axios.get("/finans/listeler/byMarketing/" + month);
+  getByMarketingYukleme(year) {
+    return axios.get("/finans/listeler/byMarketing/" + year)
   },
   getMarketingExcell(data_list) {
     return axios
       .post("/raporlar/dosyalar/marketingExcellCikti", data_list)
       .then((res) => res.data);
   },
-  getMusteriListUretim() {
-    return axios.get("/raporlar/musteri/uretim").then((res) => res.data);
+  getMusteriListUretim(yil) {
+    return axios.get(`/raporlar/musteri/uretim/${yil}`).then((res) => res.data);
   },
   getCustomersExcell(data_list) {
     return axios
@@ -793,6 +793,12 @@ const raporService = {
   },
   getMkYuklenenvSiparislerExcel(data) {
     return axios.post('/raporlar/mkrapor/sevksip/excel', data).then(response => response.data);
+  },
+  getByMarketingRapor(year) {
+    return axios.get(`/raporlar/marketing/poBazinda/siparisPoBazinda/${year}`).then(response => response.data);
+  },
+  getByPoUretimExcel(data) {
+    return axios.post('/raporlar/marketing/poBazinda/siparisPoBazinda/excel', data).then(response => response.data);
   }
 };
 

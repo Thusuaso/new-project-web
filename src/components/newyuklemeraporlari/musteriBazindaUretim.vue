@@ -2,10 +2,13 @@
   <div>
     <Button
       icon="pi pi-file-excel"
-      class="p-button-primary"
+      class="p-button-primary mr-3"
       label="Excel"
       @click="excel_cikti_click"
     />
+    <Dropdown v-model="selectedYear" :options="years" optionLabel="year" class="w-full md:w-14rem" @change="yearSelect($event)"/>
+
+    
     <div class="columns">
       <div class="column">
         <DataTable
@@ -22,47 +25,6 @@
           <Column field="musteriAdi" header="Müşteri Adı"></Column>
           <Column field="marketing" header="Marketing"></Column>
           <Column field="ulkeAdi" header="Ülke"></Column>
-
-          <Column field="satisToplamiBuYil" header="2023">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiBuYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(uretimBuYilTop) }}
-            </template>
-          </Column>
-          <Column field="satisToplamiGecenYil" header="2022">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiGecenYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(uretimGecenYilTop) }}
-            </template>
-          </Column>
-          <Column field="satisToplamiOncekiYil" header="2021">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiOncekiYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(uretimOncekiYilTop) }}
-            </template>
-          </Column>
-          <Column field="satisToplamiOnDokuzYil" header="2020">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiOnDokuzYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(uretimOnDokuzYilTop) }}
-            </template>
-          </Column>
-          <Column field="satisToplamiOnSekizYil" header="2019">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiOnSekizYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(uretimOnSekizYilTop) }}
-            </template>
-          </Column>
           <Column field="toplam" header="Toplam (Fob)">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.toplam) }}
@@ -97,15 +59,6 @@
             </div>
           </template>
           <Column field="musteriAdi" header="Müşteri Adı"></Column>
-
-          <Column field="satisToplamiBuYil" header="2022">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiBuYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(imperialHomesBuYilTop) }}
-            </template>
-          </Column>
           <Column field="toplam" header="Toplam (Fob)">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.toplam) }}
@@ -135,15 +88,6 @@
             <div class="table-header" style="font-size: 15px">Mekmar</div>
           </template>
           <Column field="musteriAdi" header="Müşteri Adı"></Column>
-
-          <Column field="satisToplamiBuYil" header="2022">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiBuYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(mekmarBuYilTop) }}
-            </template>
-          </Column>
           <Column field="toplam" header="Toplam (Fob)">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.toplam) }}
@@ -173,15 +117,6 @@
             <div class="table-header" style="font-size: 15px">İç Piyasa</div>
           </template>
           <Column field="musteriAdi" header="Müşteri Adı"></Column>
-
-          <Column field="satisToplamiBuYil" header="2022">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiBuYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(icPiyasaBuYilTop) }}
-            </template>
-          </Column>
           <Column field="toplam" header="Toplam (Fob)">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.toplam) }}
@@ -211,15 +146,6 @@
             <div class="table-header" style="font-size: 15px">Mekmer</div>
           </template>
           <Column field="musteriAdi" header="Müşteri Adı"></Column>
-
-          <Column field="satisToplamiBuYil" header="2022">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.satisToplamiBuYil) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(mekmerBuYilTop) }}
-            </template>
-          </Column>
           <Column field="toplam" header="Toplam (Fob)">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.toplam) }}
@@ -242,7 +168,7 @@
     <div class="columns">
       <div class="column">
         <DataTable
-          :value="byMarketingProduct"
+          :value="byMarketingUretimList"
           responsiveLayout="scroll"
           :loading="isChangeLoading"
         >
@@ -261,29 +187,29 @@
             bodyStyle="text-align:center"
           ></Column>
           <Column
-            field="fobToplam"
+            field="toplam"
             header="Fob"
             bodyStyle="text-align:center"
             footerStyle="text-align:center;"
           >
             <template #body="slotProps">
-              {{ formatPrice(slotProps.data.fobToplam) }}
+              {{ formatPrice(slotProps.data.toplam) }}
             </template>
             <template #footer>
-              {{ formatPrice(byMarketingProductFobSum) }}
+              {{ formatPrice(byMarketingUretimTotal.fob) }}
             </template>
           </Column>
           <Column
-            field="cfrToplam"
+            field="toplamCfr"
             header="DDP"
             bodyStyle="text-align:center"
             footerStyle="text-align:center;"
           >
             <template #body="slotProps">
-              {{ formatPrice(slotProps.data.cfrToplam) }}
+              {{ formatPrice(slotProps.data.toplamCfr) }}
             </template>
             <template #footer>
-              {{ formatPrice(byMarketingProductCfrSum) }}
+              {{ formatPrice(byMarketingUretimTotal.cfr) }}
             </template>
           </Column>
         </DataTable>
@@ -298,6 +224,19 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      byMarketingUretimTotal: {
+        'fob':0,
+        'cfr':0,
+      },
+      years: [
+        { 'year': 2023 },
+        { 'year': 2022 },
+        { 'year': 2021 },
+        { 'year': 2020 },
+        { 'year': 2019 },
+
+      ],
+      selectedYear:{'year':2023},
       musteriUretimList: null,
       ozel_musteri: null,
       liste: null,
@@ -333,32 +272,61 @@ export default {
     ...mapGetters([
       "servis_adres",
       "byCustomersProduct",
-      "byMarketingProduct",
+      'byMarketingProduct',
       "byMarketingProductFobSum",
       "byMarketingProductCfrSum",
+      'byMarketingUretimList'
     ]),
   },
   created() {
-    service.getMusteriListUretim().then((data) => {
-      this.$store.dispatch("byCustomersProductAct", data);
-      this.imperialHomes = data.filter((x) => x.marketing == "Imperial Homes");
-      this.mekmar = data.filter((x) => x.marketing == "Mekmar");
-      this.mekmer = data.filter((x) => x.marketing == "Mekmer");
-      this.icPiyasa = data.filter((x) => x.marketing == "İç Piyasa");
-
+    service.getMusteriListUretim(new Date().getFullYear()).then((data) => {
+      this.$store.dispatch("byCustomersProductAct", data.uretim);
+      this.$store.dispatch("byMarketingHaliHazirUretimLoadListAct", data.marketing);
+      this.byMarketingUretimToplam(data.marketing);
+      this.imperialHomes = data.uretim.filter((x) => x.marketing == "Imperial Homes");
+      this.mekmar = data.uretim.filter((x) => x.marketing == "Mekmar");
+      this.mekmer = data.uretim.filter((x) => x.marketing == "Mekmer");
+      this.icPiyasa = data.uretim.filter((x) => x.marketing == "İç Piyasa");
       this.imperialHomesTotal(this.imperialHomes);
       this.mekmarTotal(this.mekmar);
       this.mekmerTotal(this.mekmer);
       this.icPiyasaTotal(this.icPiyasa);
-
-      this.uretimToplam(data);
+      this.uretimToplam(data.uretim);
     });
   },
   methods: {
+    byMarketingUretimToplam(data) {
+      this.byMarketingUretimTotal = {
+        'fob': 0,
+        'cfr': 0,
+      };
+      for (let item of data) {
+        this.byMarketingUretimTotal.fob += item.toplam;
+        this.byMarketingUretimTotal.cfr += item.toplamCfr;
+
+      }
+    },
+    yearSelect(event) {
+      service.getMusteriListUretim(event.value.year).then((data) => {
+        this.$store.dispatch("byCustomersProductAct", data.uretim);
+        this.$store.dispatch("byMarketingHaliHazirUretimLoadListAct", data.marketing);
+        this.byMarketingUretimToplam(data.marketing);
+        this.imperialHomes = data.uretim.filter((x) => x.marketing == "Imperial Homes");
+        this.mekmar = data.uretim.filter((x) => x.marketing == "Mekmar");
+        this.mekmer = data.uretim.filter((x) => x.marketing == "Mekmer");
+        this.icPiyasa = data.uretim.filter((x) => x.marketing == "İç Piyasa");
+        this.imperialHomesTotal(this.imperialHomes);
+        this.mekmarTotal(this.mekmar);
+        this.mekmerTotal(this.mekmer);
+        this.icPiyasaTotal(this.icPiyasa);
+
+        this.uretimToplam(data.uretim);
+      });
+    },
     excel_cikti_click() {
       const data = {
         byCustomersProduct: this.byCustomersProduct,
-        byMarketingProduct: this.byMarketingProduct,
+        byMarketingProduct: this.byMarketingUretimList,
         imperialHomes: this.imperialHomes,
         mekmar: this.mekmar,
         mekmer: this.mekmer,

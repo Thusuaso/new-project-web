@@ -10,11 +10,10 @@
     <div class="columns">
       <div class="column">
         <Dropdown
-          v-model="selectedMonth"
-          :options="months"
-          optionLabel="month"
-          @change="isMonthChange"
-          placeholder="Ay Seçiniz"
+          v-model="selectedYear"
+          :options="years"
+          optionLabel="year"
+          @change="isYearChange"
           style="width: 100%"
           :scrollable="true"
           scrollHeight="420px"
@@ -29,7 +28,7 @@
             <div class="columns is-multiline">
               <div class="column is-12">
                 <span style="font-size: 15px"
-                  >{{ selectedMonth.month }} Marketing Yüklemeler</span
+                  >{{ selectedYear.year }} Marketing Yüklemeler</span
                 >
               </div>
             </div>
@@ -53,39 +52,6 @@
           </Column>
         </DataTable>
         <span style="color:red;">Mekmer Marketing Altında Villo Home, Maya ve Atlanta SM Konteynır Yüklemeleri Bulunmaktadır.</span>
-        <DataTable
-          :value="byMarketingWarehouseLoad"
-          responsiveLayout="scroll"
-          :loading="isChangeLoading"
-        >
-          <template #header>
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <span style="font-size: 15px"
-                  >{{ selectedMonth.month }} Depo Kutu Yüklemeleri (Sadece
-                  Ödemesi Gelmiş Olanlar)
-                </span>
-              </div>
-            </div>
-          </template>
-          <Column field="marketing" header="Marketing"></Column>
-          <Column field="fobToplam" header="Fob">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.fobToplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(byMarketingDepoSumFob) }}
-            </template>
-          </Column>
-          <Column field="cfrToplam" header="DDP">
-            <template #body="slotProps">
-              {{ formatPrice(slotProps.data.cfrToplam) }}
-            </template>
-            <template #footer>
-              {{ formatPrice(byMarketingDepoSumCfr) }}
-            </template>
-          </Column>
-        </DataTable>
       </div>
       
     </div>
@@ -241,14 +207,20 @@ export default {
   computed: {
     ...mapGetters([
       "byMarketingLoadMonth",
-      "byMarketingWarehouseLoad",
       "servis_adres",
     ]),
   },
   data() {
     return {
-      selectedMonth: { id: 0, month: "Hepsi" },
-      months: [{ id: 0, month: "Hepsi" }],
+      selectedYear: { 'year': 2023 },
+      years: [
+        { year: 2023 },
+        { year: 2022 },
+        { year: 2021 },
+        { year: 2020 },
+        { year: 2019 },
+        { year: 2018 },
+      ],
       byMarketingYukleme: [],
       byMarketingUretim: [],
       byMarketingDepo: [],
@@ -282,28 +254,10 @@ export default {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    __getMonth(month) {
-      const monthName = [
-        "",
-        "Ocak",
-        "Şubat",
-        "Mart",
-        "Nisan",
-        "Mayıs",
-        "Haziran",
-        "Temmuz",
-        "Ağustos",
-        "Eylül",
-        "Ekim",
-        "Kasım",
-        "Aralık",
-      ];
-      return monthName[month];
-    },
-    isMonthChange() {
+    isYearChange() {
       this.isChangeLoading = true;
 
-      service.getByMarketingYukleme(this.selectedMonth.id).then((data) => {
+      service.getByMarketingYukleme(this.selectedYear.year).then((data) => {
         this.$store.dispatch("byMarketingLoadMonthAct", data);
         this.byMarketingDetailImperialHomes =
           data.data.marketingYuklemeDetail.filter(
@@ -401,7 +355,6 @@ export default {
     excel_cikti_click() {
       const data = {
         byMarketingLoadMonth: this.byMarketingLoadMonth,
-        byMarketingWarehouseLoad: this.byMarketingWarehouseLoad,
         imperialHomes: this.byMarketingDetailImperialHomes,
         mekmar: this.byMarketingDetailMekmar,
         mekmer: this.byMarketingDetailMekmer,
@@ -423,7 +376,7 @@ export default {
   },
   created() {
     this.isChangeLoading = true;
-    service.getByMarketingYukleme(this.selectedMonth.id).then((data) => {
+    service.getByMarketingYukleme(this.selectedYear.year).then((data) => {
       this.$store.dispatch("byMarketingLoadMonthAct", data);
       this.byMarketingDetailImperialHomes =
         data.data.marketingYuklemeDetail.filter(
@@ -451,12 +404,6 @@ export default {
       this.icPiyasaToplam(this.byMarketingDetailIcPiyasa);
       this.isChangeLoading = false;
     });
-
-    const date = new Date();
-    const month = date.getMonth() + 1;
-    for (let i = 1; i <= month; i++) {
-      this.months.push({ id: i, month: this.__getMonth(i) });
-    }
   },
 };
 </script>

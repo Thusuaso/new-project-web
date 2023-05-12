@@ -14,8 +14,9 @@ const state = {
     mekmerSumFob: 0,
     mekmerSumDdp: 0,
     byMarketingProductFobSum: 0,
-    byMarketingProductCfrSum:0,
-    
+    byMarketingProductCfrSum: 0,
+    byMarketingUretimList2: [],
+    byMarketingUretimList: [],
     
 }
 
@@ -34,10 +35,22 @@ const actions = {
     },
     byMarketingLoadMonthListAct({ commit }, data) {
         commit('byMarketingLoadMonthListMut',data)
+    },
+    byMarketingUretimLoadListAct({ commit }, data) {
+        commit('byMarketingUretimLoadListMut', data);
+    },
+    byMarketingHaliHazirUretimLoadListAct({ commit }, data) {
+        commit('byMarketingHaliHazirUretimLoadListMut',data)
     }
 }
 
 const mutations = {
+    byMarketingHaliHazirUretimLoadListMut(state, data) {
+        state.byMarketingUretimList = data;
+    },
+    byMarketingUretimLoadListMut(state, data) {
+        state.byMarketingUretimList2 = data;
+    },
     mekmarLoadMonthsMut(state, data) {
         state.mekmarBdLoadMonths = data.data.marketingBd
         state.mekmarLoadMonths = data.data.marketingYuklemeAylik
@@ -80,6 +93,12 @@ const mutations = {
 }
 
 const getters = {
+    byMarketingUretimList2(state) {
+        return state.byMarketingUretimList2;  
+    },
+    byMarketingUretimList(state) {
+        return state.byMarketingUretimList;
+    },
     mekmarLoadMonths(state) {
         return state.mekmarLoadMonths
     },

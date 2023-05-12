@@ -1,142 +1,8 @@
 <template>
   <section>
     <TabView>
-      <TabPanel header="Aylık Yükleme Raporu">
-        <Button
-          icon="pi pi-file-excel"
-          class="p-button-primary"
-          label="Excel"
-          @click="excel_cikti_click"
-        />
-        <div class="columns is-multiline is-centered">
-          <div class="column is-4">
-            <DataTable
-              :value="mekmarLoadMonths"
-              :scrollable="true"
-              scrollHeight="420px"
-              dataKey="id"
-            >
-              <template #header>
-                <div class="columns is-multiline">
-                  <div class="column is-12">
-                    <span style="font-size: 15px"
-                      >Aylık Toplam Yükleme (Bütün Pazarlamalar)
-                    </span>
-                  </div>
-                </div> 
-              </template>
-              <Column field="ay" header="Ay" bodyStyle="text-align:center;">
-                <template #body="slotProps">
-                  {{ slotProps.data.ay }}
-                </template>
-              </Column>
-              <Column
-                field="fobToplam"
-                header="Fob"
-                bodyStyle="text-align:center;"
-              >
-                <template #body="slotProps">
-                  {{ formatPrice(slotProps.data.fobToplam) }}
-                </template>
-                <template #footer>
-                  {{ formatPrice(totalYuklemeFob) }}
-                </template>
-              </Column>
-              <Column
-                field="cfrToplam"
-                header="DDP"
-                bodyStyle="text-align:center;"
-              >
-                <template #body="slotProps">
-                  {{ formatPrice(slotProps.data.cfrToplam) }}
-                </template>
-                <template #footer>
-                  {{ formatPrice(totalYuklemeCfr) }}
-                </template>
-              </Column>
-            </DataTable>
-          </div>
-          <div class="column is-4">
-            <DataTable
-              :value="mekmarBdLoadMonths"
-              responsiveLayout="scroll"
-              :scrollable="true"
-              scrollHeight="420px"
-            >
-              <template #header>
-                <div class="table-header" style="font-size: 15px">
-                  Kutu Bazında Depo Satışları
-                </div>
-              </template>
-              <Column field="ay" header="Ay">
-                <template #body="slotProps">
-                  {{ slotProps.data.ay }}
-                </template>
-              </Column>
-              <Column field="fobToplam" header="Fob">
-                <template #body="slotProps">
-                  {{ formatPrice(slotProps.data.fobToplam) }}
-                </template>
-                <template #footer>
-                  {{ formatPrice(totalBdFob) }}
-                </template>
-              </Column>
-              <Column field="cfrToplam" header="DDP">
-                <template #body="slotProps">
-                  {{ formatPrice(slotProps.data.cfrToplam) }}
-                </template>
-                <template #footer>
-                  {{ formatPrice(totalBdCfr) }}
-                </template>
-              </Column>
-            </DataTable>
-          </div>
-          <div class="column is-4">
-            <DataTable
-              :value="mekmarTotalLoadMonths"
-              responsiveLayout="scroll"
-              :scrollable="true"
-              scrollHeight="420px"
-            >
-              <template #header>
-                <div class="table-header" style="font-size: 15px">
-                  Toplam
-                </div>
-              </template>
-              <Column field="ay" header="Ay">
-                <template #body="slotProps">
-                  {{ slotProps.data.ay }}
-                </template>
-                <template #filter>
-                  <InputText v-model="filters['ay']" class="p-column-filter" />
-                </template>
-              </Column>
-              <Column field="fobToplam" header="Fob">
-                <template #body="slotProps">
-                  {{ formatPrice(slotProps.data.fobToplami) }}
-                </template>
-                <template #footer>
-                  {{ formatPrice(toplamFob) }}
-                </template>
-              </Column>
-              <Column field="cfrToplam" header="DDP">
-                <template #body="slotProps">
-                  {{ formatPrice(slotProps.data.cfrToplami) }}
-                </template>
-                <template #footer>
-                  {{ formatPrice(toplamCfr) }}
-                </template>
-              </Column>
-            </DataTable>
-          </div>
-        </div>
-        <p style="color: red">
-          * Yükleme tarihleri ve tutarları baz alınmıştır.
-        </p>
-        <p style="color: red">
-          * Depodan Bd kutu satışları baz alınmıştır. BD ödemesi DDP olarak
-          gelirken FOB tutar, DDP' nin %70' i alınarak hesaplanır.
-        </p>
+      <TabPanel header="Yıllık Po Bazında Siparişler">
+        <yillikPoBazindaSiparisler/>
       </TabPanel>
       <TabPanel header="Güncel Üretim Sipariş Raporu">
         <musteriBazindaUretim> </musteriBazindaUretim>
@@ -148,9 +14,6 @@
       <TabPanel header="Yükleme Raporu">
         <byMarketingYukleme></byMarketingYukleme>
       </TabPanel>
-      <TabPanel header="Yıllık Yükleme Raporu">
-        <ayBazindaMarketingYuklemeler></ayBazindaMarketingYuklemeler>
-      </TabPanel>
       <TabPanel header="Yükleme ve Sevkiyat Raporu">
           <yuklemeveSevkiyatRaporu />
       </TabPanel>
@@ -161,16 +24,16 @@
 import service from "../service/RaporService";
 import musteriBazindaUretim from "../components/newyuklemeraporlari/musteriBazindaUretim";
 import byMarketingYukleme from "../components/newyuklemeraporlari/byMarketingYukleme";
-import ayBazindaMarketingYuklemeler from "../components/newyuklemeraporlari/ayBazindaMarketingYuklemeler";
 import yuklemeveSevkiyatRaporu from '../components/newyuklemeraporlari/yuklemeveSevkiyatRaporu';
+import yillikPoBazindaSiparisler from '../components/newyuklemeraporlari/yillikPoBazindaSiparisler';
 import { mapGetters } from "vuex";
 
 export default {
   components: {
     musteriBazindaUretim,
     byMarketingYukleme,
-    ayBazindaMarketingYuklemeler,
-    yuklemeveSevkiyatRaporu
+    yuklemeveSevkiyatRaporu,
+    yillikPoBazindaSiparisler
   },
   data() {
     return {
