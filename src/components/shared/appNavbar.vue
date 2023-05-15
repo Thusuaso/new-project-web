@@ -480,24 +480,17 @@
                         Mekmar Raporları
                         </a>
                         <ul class="dropdown-menu">
-                        <li v-if="is_m_g"><a class="dropdown-item" href="/maliyet/maliyetRaporu">Ayo</a></li>
-                        <li v-if="is_m_g"><hr class="dropdown-divider"></li>
-                        <li v-if="is_m_g"><a class="dropdown-item" href="/maliyetAnalizi">Ayo Maliyet</a></li>
-                        <li v-if="is_m_g"><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/raporlar/yeniYuklemeRaporlari">MK Raporu</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/raporlar/yuklemeRapor">Yükleme</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/raporlar/sevkiyatRaporuAll">Sevkiyat</a></li>
+                            <li v-if="is_m_g"><a class="dropdown-item" href="/maliyet/maliyetRaporu">Ayo</a></li>
+                            <li v-if="is_m_g"><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/raporlar/yeniYuklemeRaporlari">MK Raporu</a></li>
                             <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/raporlar/siparisOzetRapor">Sipariş Özet</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/raporlar/mekusMasraflari">Mekus</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/raporlar/mekmarRaporlari">Mekmar</a></li>
+                            <li><a class="dropdown-item" href="/raporlar/guRaporlari">GU Raporu</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/raporlar/yuklemeRapor">Yükleme</a></li>
                             <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/logs">Logs</a></li>
-
+                                <li><a class="dropdown-item" href="/raporlar/sevkiyatRaporuAll">Sevkiyat</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/raporlar/siparisOzetRapor">Sipariş Özet</a></li>
                         </ul>
             </li>
             <li class="nav-item dropdown" v-if="is_h">

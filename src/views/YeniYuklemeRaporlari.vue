@@ -14,7 +14,7 @@
       <TabPanel header="Yükleme Raporu">
         <byMarketingYukleme></byMarketingYukleme>
       </TabPanel>
-      <TabPanel header="Yükleme ve Sevkiyat Raporu">
+      <TabPanel header="Üretim ve Sevkiyat Raporu">
           <yuklemeveSevkiyatRaporu />
       </TabPanel>
     </TabView>

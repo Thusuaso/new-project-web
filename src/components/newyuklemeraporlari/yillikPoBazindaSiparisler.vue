@@ -1,30 +1,46 @@
 <template>
-    <div>
-        <Dropdown v-model="selectedYear" :options="years" optionLabel="year" class="mr-3" @change="yearChange($event)"/>
-        <Button class="p-button-secondary mr-3" label="Excel" @click="excel_cikti_click"></Button>
-        <DataTable :value="byMarketingUretimList2" tableStyle="min-width: 50rem;mt-3" sortField="tarih" sortOrder="1">
-            <Column field="tarih" header="Tarih"></Column>
-            <Column field="firma" header="Firma"></Column>
-            <Column field="po" header="Po"></Column>
-            <Column field="teslim" header="Teslim Tür"></Column>
-            <Column field="fob" header="Fob">
-                <template #body="slotProps">
-                    {{ formatPrice(slotProps.data.fob) }}
-                </template>
-                <template #footer>
-                    {{ formatPrice(total.fob) }}
-                </template>
-            </Column>
-            <Column field="ddp" header="Ddp">
-                <template #body="slotProps">
-                    {{ formatPrice(slotProps.data.ddp) }}
-                </template>
-                <template #footer>
-                    {{ formatPrice(total.ddp) }}
-                </template>
-            </Column>
+        <Dropdown v-model="selectedYear" :options="years" optionLabel="year" class="w-full md:w-14rem mt-3 mb-3 mr-3"  @change="yearChange($event)"/>
+        <Button
+          icon="pi pi-file-excel"
+          class="p-button-primary  mt-3 mb-3"
+          label="Excel"
+          @click="excel_cikti_click"
+        />
+    <div class="columns">
+        <div class="column">
+            <DataTable 
+            :value="byMarketingUretimList2" 
+            tableStyle="mt-3" sortField="tarih" sortOrder="1" responsiveLayout="scroll">
+            <template #header >
+                <div class="table-header" style="font-size: 15px">
+                    Po Bazında Yıllık Siparişler
+                </div>
+            </template>
 
-        </DataTable>
+                <Column field="tarih" header="Tarih"></Column>
+                <Column field="firma" header="Firma"></Column>
+                <Column field="po" header="Po"></Column>
+                <Column field="teslim" header="Teslim Tür"></Column>
+                <Column field="fob" header="Fob">
+                    <template #body="slotProps">
+                        {{ formatPrice(slotProps.data.fob) }}
+                    </template>
+                    <template #footer>
+                        {{ formatPrice(total.fob) }}
+                    </template>
+                </Column>
+                <Column field="ddp" header="Ddp">
+                    <template #body="slotProps">
+                        {{ formatPrice(slotProps.data.ddp) }}
+                    </template>
+                    <template #footer>
+                        {{ formatPrice(total.ddp) }}
+                    </template>
+                </Column>
+
+            </DataTable>
+        </div>
+        
     </div>
 </template>
 <script>
@@ -94,3 +110,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.p-datatable {
+  font-size: 12px;
+}
+</style>

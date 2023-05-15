@@ -143,16 +143,13 @@ export default {
           'yil'
       ])  
     },
-    beforeRouteEnter(to, from, next) {
-        store.dispatch('fullscreenLoadingAct', true)
+    created() {
         const now = new Date()
         const year = now.getFullYear()
         service.getLogs(year).then(data => {
             store.dispatch('logs_load_act', data.maliyet)
             store.dispatch("logs_degisimler_load_act", data.digerleri);
              store.dispatch("logs_yil_list_load_act",data.yilList)
-            store.dispatch('fullscreenLoadingAct', false)
-            next()
         })
 
         

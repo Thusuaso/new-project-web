@@ -1,14 +1,14 @@
 <template>
-    <div class="row m-auto mt-3">
-        <div class="col">
-            <Dropdown v-model="selectedYear" :options="years" optionLabel="yil" class="w-full md:w-14rem" />
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-secondary" @click="excel_cikti_islem">Excel</button>
-        </div>
-    </div>
-    <div class="row m-auto mt-3">
-        <div class="col">
+
+    <Dropdown v-model="selectedYear" :options="years" optionLabel="yil" class="w-full md:w-14rem mt-3 mb-3 mr-3" />
+    <Button
+        icon="pi pi-file-excel"
+        class="p-button-primary  mt-3 mb-3"
+        label="Excel"
+        @click="excel_cikti_islem"
+        />
+    <div class="columns">
+        <div class="column">
             <DataTable :value="mkRaporListMusteri" >
                 <template #header>
                     {{ selectedYear.yil }} Müşterilere Göre Bu Yıl Gelen Siparişler ve Bu Yıl Yüklemeler
@@ -166,5 +166,7 @@ export default {
 </script>
 
 <style scoped>
-
+.p-datatable {
+  font-size: 12px;
+}
 </style>

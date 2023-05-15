@@ -80,11 +80,9 @@ export default {
       this.miktarTopla(event.filteredValue)
     },
     MekusMasraflarService(year) {
-      this.$store.dispatch('fullscreenLoadingAct',true)
       service.getMekusMasraflar(year).then((data) => {
         this.mekusMasraflar = data;
         this.miktarTopla(data);
-      this.$store.dispatch('fullscreenLoadingAct', false)
 
       });
     },

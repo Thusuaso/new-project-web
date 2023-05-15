@@ -1,23 +1,23 @@
 <template>
   <div>
+    <Dropdown
+              v-model="selectedYear"
+              :options="years"
+              optionLabel="year"
+              @change="isYearChange"
+              :scrollable="true"
+              class="w-full md:w-14rem mt-3 mb-3 mr-3"
+            />
     <Button
       icon="pi pi-file-excel"
-      class="p-button-primary"
+      class="p-button-primary  mt-3 mb-3"
       label="Excel"
       @click="excel_cikti_click"
     />
-
+    
     <div class="columns">
       <div class="column">
-        <Dropdown
-          v-model="selectedYear"
-          :options="years"
-          optionLabel="year"
-          @change="isYearChange"
-          style="width: 100%"
-          :scrollable="true"
-          scrollHeight="420px"
-        />
+        
 
         <DataTable
           :value="byMarketingLoadMonth"
@@ -408,4 +408,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .p-datatable {
+  font-size: 12px;
+}
+</style>

@@ -354,7 +354,6 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('fullscreenLoadingAct',true)
         raporService.getUlkeBazindaSevkiyatYears().then(data => {
             this.years = data
         })
@@ -374,7 +373,6 @@ export default {
             this.tedarikciyeGoreList = data
             this.toplam_tedarikci_sayisi = data.length
             this.toplam_tedarikci(data)
-        this.$store.dispatch('fullscreenLoadingAct', false)
 
         })
 

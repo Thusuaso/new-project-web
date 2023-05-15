@@ -1,12 +1,13 @@
 <template>
   <div>
+    <Dropdown v-model="selectedYear" :options="years" optionLabel="year" class="w-full md:w-14rem mt-3 mb-3 mr-3" @change="yearSelect($event)"/>
+
     <Button
       icon="pi pi-file-excel"
-      class="p-button-primary mr-3"
+      class="p-button-primary mr-3 mt-3 mb-3"
       label="Excel"
       @click="excel_cikti_click"
     />
-    <Dropdown v-model="selectedYear" :options="years" optionLabel="year" class="w-full md:w-14rem" @change="yearSelect($event)"/>
 
     
     <div class="columns">
@@ -446,7 +447,7 @@ export default {
 
 <style scoped>
 .p-datatable {
-  font-size: 10px;
+  font-size: 12px;
 }
 #statuSecim {
   font-size: 12px;

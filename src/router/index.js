@@ -77,6 +77,11 @@ const routes = [
     }
   },
   {
+    path: '/raporlar/guRaporlari',
+    component: () => import("@/views/GuRaporlari.vue"),
+    
+  },
+  {
     path: "/satisci",
     component: () => import("@/views/Customers"),
     beforeEnter(to, from, next) {
