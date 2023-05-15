@@ -22,20 +22,20 @@
                         {{ formatPrice(toplam.siparis) }}
                     </template>
                 </Column>
-                <Column field="yuklenenfob" header="Yüklenen (FOB)">
-                    <template #body="slotProps">
-                        {{ formatPrice(slotProps.data.yuklenenfob) }}
-                    </template>
-                    <template #footer>
-                        {{ formatPrice(toplam.yuklenen) }}
-                    </template>
-                </Column>
                 <Column field="yuklenenddp" header="Yüklenen (DDP)">
                     <template #body="slotProps">
                         {{ formatPrice(slotProps.data.yuklenenddp) }}
                     </template>
                     <template #footer>
                         {{ formatPrice(toplam.yuklenenDdp) }}
+                    </template>
+                </Column>
+                <Column field="total" header="Toplam">
+                    <template #body="slotProps">
+                        {{ formatPrice(slotProps.data.total) }}
+                    </template>
+                    <template #footer>
+                        {{ formatPrice(toplam.total) }}
                     </template>
                 </Column>
             </DataTable>
@@ -119,6 +119,7 @@ export default {
                 'siparis': 0,
                 'yuklenen': 0,
                 'yuklenenDdp': 0,
+                'total':0,
             };
             this.toplamPo = {
                 'siparis': 0,
@@ -131,6 +132,7 @@ export default {
                 this.toplam.siparis += item.siparisfob;
                 this.toplam.yuklenen += item.yuklenenfob;
                 this.toplam.yuklenenDdp += item.yuklenenddp;
+                this.toplam.total += item.total;
             }
             for (let item of data.po) {
                 this.toplamPo.siparis += item.siparisfob;
