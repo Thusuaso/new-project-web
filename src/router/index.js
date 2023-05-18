@@ -6,6 +6,8 @@ import depoService from "../service/DepoService";
 import tedarikciService from "../service/TedarikciService";
 import siparisService from "../service/SiparisService";
 import raporService from "@/service/RaporService";
+import yapilacaklarService from '@/service/YapilacaklarService.js';
+
 
 const routes = [
   {
@@ -740,8 +742,26 @@ const routes = [
         next("/login");
       }
     },
-  }
-  
+  },
+  {
+    path: '/raporlar/yapilacaklar',
+    component: () => import("@/views/Yapilacaklar.vue"),
+    beforeEnter(to, from, next){
+      if (store.getters.__isAuthentication) {
+          yapilacaklarService.getYapilacaklarKullanicilarList().then(users => {
+            yapilacaklarService.getYapilacaklarList(localStorage.getItem('userId')).then(yapilacaklar => {
+              store.dispatch('yapilacaklar_list_load_act',yapilacaklar)
+              store.dispatch('yapilacaklar_users_list_load_act', users);
+            })
+
+          })
+        next();
+      } else {
+        next('/login');
+      }
+    }
+      
+  }  
 ]
 
 const router = createRouter({
@@ -755,7 +775,20 @@ router.beforeEach((to, from, next) => {
   store.commit("_setUserId", userId);
   store.commit("_setUsername", username);
   store.dispatch("setServisAdresAct");
-
+  yapilacaklarService.getYapilacaklarKullanicilarList().then(users => {
+    if (localStorage.getItem('userId') == 10) {
+      yapilacaklarService.getYapilacaklarListGorevVeren(localStorage.getItem('userId')).then(yapilacaklar => {
+        store.dispatch('yapilacaklar_list_load_act',yapilacaklar)
+        store.dispatch('yapilacaklar_users_list_load_act', users);
+      })
+    } else {
+      yapilacaklarService.getYapilacaklarList(localStorage.getItem('userId')).then(yapilacaklar => {
+        store.dispatch('yapilacaklar_list_load_act',yapilacaklar)
+        store.dispatch('yapilacaklar_users_list_load_act', users);
+      })
+    }
+      
+    })
   if (userId != "") {
     next();
   }

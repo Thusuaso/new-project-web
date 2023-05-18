@@ -57,13 +57,16 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
- 
+import Splitter from 'primevue/splitter';
+import SplitterPanel from 'primevue/splitterpanel';
 
 import mitt from 'mitt'
 // var Emitter = require('tiny-emitter');
 // var emitter = new Emitter();
 
 const app = createApp(App)
+app.component("Splitter", Splitter);
+app.component("SplitterPanel", SplitterPanel);
 
 app.component("Listbox", Listbox);
 
