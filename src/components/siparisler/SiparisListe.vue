@@ -211,7 +211,6 @@ export default {
     const year = d.getFullYear();
 
     socket.siparis.on("siparisler_list_emit", () => {
-      this.$store.dispatch('fullscreenLoadingAct',true)
 
       if (this.siparisTur == "bekleyen") siparisDurum = 1;
       if (this.siparisTur == "sevk") siparisDurum = 3;
@@ -221,7 +220,6 @@ export default {
         this.toplamGuncelle(this.siparisler);
         this.dtSiparisler = data;
         this.toplamGuncelle(data);
-        this.$store.dispatch('fullscreenLoadingAct',false)
 
       });
     })
