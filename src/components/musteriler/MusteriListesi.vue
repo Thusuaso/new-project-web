@@ -23,6 +23,9 @@
         />
         <span style="margin-left: 10px">Hepsi</span>
       </div>
+      <div class="column is-1">
+        <Dropdown v-model="selectedYear" :options="yil_listesi" optionLabel="yil" class="w-full md:w-14rem" @change="yearSelected($event)"/>
+      </div>
 
 
 
@@ -295,10 +298,26 @@ export default {
       is_detay_ac: true,
       is_excel: false,
       musteri_data: null,
+      yil_listesi: [
+      ],
+      selectedYear:{'yil':'Hepsi'}
+
     };
   },
 
   methods: {
+    yearSelected(event) {
+      if (event.value.yil == 'Hepsi') {
+        this.musteri_tablo_yukle(this.$store.getters.__getUsername);
+      } else {
+        this.$store.dispatch("fullscreenLoadingAct", true);
+        service.getMusteriListesiYil(event.value.yil).then(data => {
+          this.$store.dispatch("musteri_listesi_yukle_act", data);
+          this.$store.dispatch("fullscreenLoadingAct", false);
+
+        })
+      }
+    },
     is_change_all_customer(event) {
       if (event) {
         service.getMusteriListesi().then((data) => {
@@ -310,7 +329,13 @@ export default {
       }
     },
     musteri_tablo_yukle(users) {
-      this.$store.dispatch("fullscreenLoadingAct",true);
+      this.$store.dispatch("fullscreenLoadingAct", true);
+      service.getMusteriYilList().then(data => {
+        this.yil_listesi.push({ 'yil': 'Hepsi' });
+        for (const item of data) {
+          this.yil_listesi.push(item)
+        }
+      })
       service.getMusteriListesi().then((data) => {
         this.musteri_data = data;
         if (users == "Semih" || users == "Gizem" || users == "Fatih") {

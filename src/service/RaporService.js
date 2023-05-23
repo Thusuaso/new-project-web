@@ -799,6 +799,12 @@ const raporService = {
   },
   getByPoUretimExcel(data) {
     return axios.post('/raporlar/marketing/poBazinda/siparisPoBazinda/excel', data).then(response => response.data);
+  },
+  getSipMusYilList() {
+    return axios.get('/raporlar/musteriler/siparisler/yillar').then(res => res.data);
+  },
+  getSipMusListYillaraGore(year) {
+    return axios.get(`/raporlar/musteriler/siparisler/yillar/liste/${year}`).then(res => res.data);
   }
 };
 

@@ -7,6 +7,16 @@ const MusteriIslemService = {
       .then((res) => res.data);
   },
 
+  getMusteriListesiYil(year) {
+    return axios
+      .get(`/musteriler/listeler/musteriListesi/yil/${year}`)
+      .then((res) => res.data);
+  },
+
+  getMusteriYilList() {
+    return axios.get("/raporlar/musteriler/siparisler/yillar").then(res => res.data);
+  },
+
   getMusteriSiparisListesi() {
     return axios
       .get("musteriler/listeler/musteriSiparisListesi")

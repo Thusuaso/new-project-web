@@ -745,22 +745,7 @@ const routes = [
   },
   {
     path: '/raporlar/yapilacaklar',
-    component: () => import("@/views/Yapilacaklar.vue"),
-    beforeEnter(to, from, next){
-      if (store.getters.__isAuthentication) {
-          yapilacaklarService.getYapilacaklarKullanicilarList().then(users => {
-            yapilacaklarService.getYapilacaklarList(localStorage.getItem('userId')).then(yapilacaklar => {
-              store.dispatch('yapilacaklar_list_load_act',yapilacaklar)
-              store.dispatch('yapilacaklar_users_list_load_act', users);
-            })
-
-          })
-        next();
-      } else {
-        next('/login');
-      }
-    }
-      
+    component: () => import("@/views/YapilacaklarAll.vue"),
   }  
 ]
 

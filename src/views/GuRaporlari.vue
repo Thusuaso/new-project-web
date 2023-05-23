@@ -12,6 +12,7 @@
         <TabPanel header="Logs">
             <Logs/>
         </TabPanel>
+
     </TabView>
 </template>
 <script>
@@ -24,7 +25,7 @@ export default {
         MaliyetRaporuKar,
         MekmarRaporlari,
         mekusMasraflar,
-        Logs
+        Logs,
     }
 }
 </script>

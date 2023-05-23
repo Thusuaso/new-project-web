@@ -6,6 +6,9 @@ const yapilacaklarService = {
     getYapilacaklarList(userId) {
         return axios.get(`/yapilacaklar/list/${userId}`).then(res => res.data);
     },
+    getYapilacaklarListAll() {
+        return axios.get('/yapilacaklar/list/all').then(res => res.data);
+    },
     getYapilacaklarListGorevVeren(userId) {
         return axios.get(`/yapilacaklar/list/gorevveren/${userId}`).then(res => res.data);
     },

@@ -175,6 +175,7 @@ import socket from "@/service/SocketService";
 import MusteriSiparisDetay from "./MusteriSiparisDetay";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import LocalService from '@/service/LocalService';
 export default {
   setup: () => ({ v$: useVuelidate() }),
   validations() {
@@ -424,9 +425,11 @@ export default {
       });
     },
     musteri_kayit_islemi() {
+      this.musteri_model.kayit_tarihi = new LocalService().getDateString(new Date());
       const data = { ...this.musteri_model };
       this.is_kaydet = true;
-      this.$store.dispatch('fullscreenLoadingAct',true)
+      this.$store.dispatch('fullscreenLoadingAct', true)
+      
       service.musteriKaydet(data).then((response) => {
         if (response.status) {
           this.$store.dispatch('fullscreenLoadingAct', false)

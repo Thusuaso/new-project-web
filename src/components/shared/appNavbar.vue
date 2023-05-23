@@ -161,6 +161,8 @@
                                 <li><a class="dropdown-item" href="/raporlar/sevkiyatRaporuAll">Sevkiyat</a></li>
                                 <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="/raporlar/siparisOzetRapor">Sipariş Özet</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/raporlar/yapilacaklar">Yapılacaklar</a></li>
 
                         </ul>
             </li>
