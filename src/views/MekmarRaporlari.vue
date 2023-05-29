@@ -6,14 +6,14 @@
         <div class="columns">
             <div class="column is-4">
                 <DataTable 
-                :value="ulkeyeGoreList" 
-                responsiveLayout="scroll" 
-                v-model:filters="filters1" 
-                filterDisplay="row" 
-                @filter="ulkeye_gore_filtered($event)"
-                v-model:selection="selectedUlkeyeGore" 
-                selectionMode="single"
-                @row-select="ulkeye_gore_selected($event)"
+                    :value="ulkeyeGoreList" 
+                    responsiveLayout="scroll" 
+                    v-model:filters="filters1" 
+                    filterDisplay="row" 
+                    @filter="ulkeye_gore_filtered($event)"
+                    v-model:selection="selectedUlkeyeGore" 
+                    selectionMode="single"
+                    @row-select="ulkeye_gore_selected($event)"
                 
                 
                 >

@@ -27,6 +27,51 @@
                     <yapilacaklar/>
                 </Sidebar>
             </div>
+        <div class="card flex justify-content-center">
+                    <Sidebar v-model:visible="visible3" class="p-sidebar-lg">
+                        <DataTable :value="etaNotificationList" tableStyle="min-width: 50rem">
+                            <Column field="yuklemeTarihi" header="Yükleme">
+                                    <template #body="slotProps"> 
+                                        {{ formatDate(slotProps.data.yuklemeTarihi) }}
+                                    </template>
+                                </Column>
+                            <Column field="etaTarihi" header="Eta">
+                                <template #body="slotProps"> 
+                                    {{ formatDate(slotProps.data.etaTarihi) }}
+                                </template>
+                            </Column>
+                            <Column field="musteri" header="Müşteri"></Column>
+                            <Column field="po" header="Po"></Column>
+                            <Column field="siparisci" header="Siparişçi"></Column>
+                            <Column field="operasyon" header="Operasyon"></Column>
+                            <Column field="satisBedel" header="Satış($)">
+                                <template #body="slotProps">
+                                    {{ formatPrice(slotProps.data.satisBedel) }}
+                                </template>
+                            </Column>
+                            <Column field="odenen" header="Ödenen($)">
+                                <template #body="slotProps">
+                                        {{ formatPrice(slotProps.data.odenen) }}
+                                    </template>
+                            </Column>
+                            <Column field="kalan" header="Kalan($)">
+                                <template #body="slotProps">
+                                            {{ formatPrice(slotProps.data.kalan) }}
+                                        </template>
+                            </Column>
+                                <Column field="odemelerBilgisi" header="Bilgi"></Column>
+                                <Column field="etaSure" header="Kalan Süre"></Column>
+                                <Column header="Durum">
+                                    <template #body="slotProps">
+                                        <button type="button" class="btn btn-primary" @click="goruldu(slotProps.data)">Görüldü</button>
+                                    </template>
+                                </Column>
+    
+
+
+                        </DataTable>
+                    </Sidebar>
+                </div>
         
     <br/>
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" >
@@ -217,9 +262,13 @@
             <li class="navbar-item">
                 <a class="nav-link"  @click="visible2 = true">
                     <i v-badge.danger="yapilacaklarCount" class="pi pi-calendar p-overlay-badge" style="font-size: 2rem" />
-
                 </a>
             </li>
+            <li class="navbar-item" v-if="__getUserId == 10 || __getUserId == 47">
+                    <a class="nav-link"  @click="visible3 = true">
+                        <i v-badge.danger="etaNotificationTotal" class="pi pi-calendar p-overlay-badge" style="font-size: 2rem" />
+                    </a>
+                </li>
             <li class="nav-item">
                 <Button type="button" class="notificationButton" v-if="isNotification > 0" :label="isNotification" @click="toggle" />
                 <OverlayPanel ref="op" style="background-color:#FFD373;">
@@ -306,6 +355,7 @@
     </Dialog>
 
 
+
 </template>
 
 <script>
@@ -320,6 +370,7 @@ import BgpNetworkDetailForm from "@/components/bgpproject/bgpNetworkDetailForm"
 import notificationService from "@/service/AnlikBildirimService"
 import CommentBar from "@/components/shared/commentBar";
 import Yapilacaklar from "@/views/Yapilacaklar.vue";
+import LocalService from '@/service/LocalService';
 export default {
     components: {
         CustomersDetay,
@@ -333,6 +384,7 @@ export default {
   },
   data() {
       return {
+        visible3:false,
         follow_is_true:false,
         visible:false,
         anlikNotificationData:[],
@@ -356,12 +408,22 @@ export default {
       is_tekliform: false,
       is_bgpform:false,
       teklifYeniKayit: false,
-          is_m_g: false,
-      visible2:false,
+        is_m_g: false,
+        visible2: false,
+        etaNotificationTotal: 0,
+        etaNotificationList:[],
     };
   },
     created() {
-
+        notificationService.getNotificationEtaControl().then(data => {
+            this.etaNotificationList = data;
+            this.etaNotificationTotal = data.length;
+            if(data.length >0){
+                if (localStorage.getItem('userId') == 10) {
+                    alert('Sağ Üstten Etaları Kontrol Ediniz.');
+                }
+            }
+        });
         if (this.__getUserId == 47) {
             this.users = [
                 { 'id': 44, 'user': 'Hakan' },
@@ -459,6 +521,23 @@ export default {
     });
   },
     methods: {
+        goruldu(event){
+            console.log(event)
+            notificationService.setEtaControlStatus(event.po,event.etaSure).then(data=>{
+                if (data) {
+                    this.$toast.add({ severity: 'success', detail: 'Durum Başarıyla Değiştirildi', life: 3000 });
+                    socket.siparis.emit('get_yapilacaklar_status_event');
+                }
+            })
+          
+        },
+        formatPrice(value) {
+            let val = (value / 1).toFixed(2).replace(".", ",");
+            return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+        formatDate(value) {
+            return new LocalService().getDateString(value);
+        },
         sendMessage() {
             let who_send_id = this.$store.getters.__getUserId
             let who_send_name = this.$store.getters.__getUsername
@@ -474,7 +553,7 @@ export default {
                 if (status) {
                 this.$toast.add({ severity: 'success', summary: 'Bildirim Durum', detail: 'Mesajınız Başarıyla Gönderildi', life: 3500 })
                     socket.siparis.emit('get_notification_list_event', data)
-                socket.siparis.emit('get_notification_list_follow_event')
+                    socket.siparis.emit('get_notification_list_follow_event')
 
                 } else {
                 this.$toast.add({ severity: 'danger', summary: 'Bildirim Durum', detail: 'Mesajınız Gönderimi Başarısız', life: 3500 })
@@ -582,6 +661,19 @@ export default {
     },
     },
     mounted() {
+
+        socket.siparis.on('get_yapilacaklar_status_on', () => {
+            notificationService.getNotificationEtaControl().then(data => {
+                this.etaNotificationList = data;
+                this.etaNotificationTotal = data.length;
+                if (data.length > 0) {
+                    if (localStorage.getItem('userId') == 10) {
+                        alert('Sağ Üstten Etaları Kontrol Ediniz.');
+                    }
+                }
+            });
+        })
+
         socket.siparis.on('bildirimler_update_emit', () => {
             service.getCustomersHatirlatmaListe(this.__getUserId).then((data) => {
                 this.isNotification = data.length;

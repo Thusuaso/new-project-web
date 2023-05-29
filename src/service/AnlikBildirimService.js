@@ -18,6 +18,12 @@ const notification = {
     },
     setNotificationFollowAnswered(data) {
         return axios.post('/notification/islemler/follow/answered',data).then(res=>res.data)
+    },
+    getNotificationEtaControl() {
+        return axios.get('/eta/yaklasan/bildirim/list').then(res => res.data);
+    },
+    setEtaControlStatus(po,etaSure) {
+        return axios.get(`/eta/yaklasan/bildirim/status/${po}/${etaSure}`).then(res => res.data);
     }
 }
 

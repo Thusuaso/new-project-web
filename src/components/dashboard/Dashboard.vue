@@ -656,7 +656,7 @@ export default {
     };
   },
   created() {
-    service.getEtaSuresiControl()
+    service.getEtaSuresiControl();
     
   },
 

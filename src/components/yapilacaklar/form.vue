@@ -6,7 +6,7 @@
                     <label for="username">Yapılacak</label>
                 </span>
         </div>
-        <div class="col" v-if="gorev_sahibi_dropdown">
+        <div class="col">
             <Dropdown v-model="selectedUser" :options="yapilacaklarUserList" optionLabel="kullanici" placeholder="Görev Sahibi" class="w-full md:w-14rem" @change="userSelected($event)"/>
         </div>
         <div class="col">

@@ -52,7 +52,11 @@
               scrollHeight="650px"
               sortField="musteri_sira"
               sortOrder="-1"
+              @filter="musteriSelected($event)"
             >
+              <template #header>
+                Müşteri Sayısı {{ musteri_total_sum }}
+              </template>
             <Column field="musteri_sira" header="#">
             
             </Column>
@@ -281,6 +285,7 @@ export default {
   },
   data() {
     return {
+      musteri_total_sum:0,
       show_all_customers: false,
       filters: {
         id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -306,6 +311,10 @@ export default {
   },
 
   methods: {
+    musteriSelected(event) {
+          this.musteri_total_list_sum(event.filteredValue);
+
+    },
     yearSelected(event) {
       if (event.value.yil == 'Hepsi') {
         this.musteri_tablo_yukle(this.$store.getters.__getUsername);
@@ -314,6 +323,8 @@ export default {
         service.getMusteriListesiYil(event.value.yil).then(data => {
           this.$store.dispatch("musteri_listesi_yukle_act", data);
           this.$store.dispatch("fullscreenLoadingAct", false);
+          this.musteri_total_list_sum(data);
+
 
         })
       }
@@ -328,6 +339,9 @@ export default {
         this.musteri_tablo_yukle(users);
       }
     },
+    musteri_total_list_sum(data) {
+      this.musteri_total_sum = data.length;
+    },
     musteri_tablo_yukle(users) {
       this.$store.dispatch("fullscreenLoadingAct", true);
       service.getMusteriYilList().then(data => {
@@ -340,9 +354,12 @@ export default {
         this.musteri_data = data;
         if (users == "Semih" || users == "Gizem" || users == "Fatih") {
           this.$store.dispatch("musteri_listesi_yukle_act", data);
+          this.musteri_total_list_sum(data);
         } else {
           const result = data.filter((x) => x.temsilci == users);
           this.$store.dispatch("musteri_listesi_yukle_act", result);
+          this.musteri_total_list_sum(data);
+
         }
 
         this.$store.dispatch("fullscreenLoadingAct",false);
