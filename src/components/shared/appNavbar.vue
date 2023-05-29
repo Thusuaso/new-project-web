@@ -264,7 +264,7 @@
                     <i v-badge.danger="yapilacaklarCount" class="pi pi-calendar p-overlay-badge" style="font-size: 2rem" />
                 </a>
             </li>
-            <li class="navbar-item" v-if="__getUserId == 10 || __getUserId == 47">
+            <li class="navbar-item" v-if="__getUserId == 12">
                     <a class="nav-link"  @click="visible3 = true">
                         <i v-badge.danger="etaNotificationTotal" class="pi pi-calendar p-overlay-badge" style="font-size: 2rem" />
                     </a>
@@ -419,7 +419,7 @@ export default {
             this.etaNotificationList = data;
             this.etaNotificationTotal = data.length;
             if(data.length >0){
-                if (localStorage.getItem('userId') == 10) {
+                if (localStorage.getItem('userId') == 12) {
                     alert('Sağ Üstten Etaları Kontrol Ediniz.');
                 }
             }
