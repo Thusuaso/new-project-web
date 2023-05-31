@@ -1274,6 +1274,7 @@ export default {
           kullaniciAdi: this.$store.getters.__getUsername,
           hatirlatmaDurumu: true,
         };
+        
 
         this.dis_teklifkaydet = true;
         this.$store.dispatch('fullscreenLoadingAct', true)

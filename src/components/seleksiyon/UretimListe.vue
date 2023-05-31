@@ -108,7 +108,6 @@
               style="width:5%;"
               :showFilterMatchModes="false"
                   :showClear="false"
-                  :showFilterMenu="false"
                   :showClearButton="false"
               
               
@@ -163,27 +162,65 @@
                     placeholder="Search by Surface" style="width:70px;"/>
                 </template>
               </Column>
-              <Column field="kasaadet" header="K.Adet" bodyStyle="text-align:left;" style="width:2%;">
+              <Column 
+              field="kasaadet" 
+              header="K.Adet" 
+              bodyStyle="text-align:left;" 
+              style="width:3%;"
+              :showFilterMatchModes="false"
+                    :showClear="false"
+                    :showFilterMenu="false"
+                    :showClearButton="false"
+              >
                 <template #body="slotProps">
                   {{ slotProps.data.kasaadet }}
                 </template>
-
+                <template #filter="{ filterModel, filterCallback }">
+                  <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                    placeholder="Search by Surface" />
+                </template>
               </Column>
-              <Column field="kutuadet" header="Kutu" bodyStyle="text-align:left" style="width:2%;">
+              <Column 
+              field="kutuadet" 
+              header="Kutu"
+               bodyStyle="text-align:left" 
+               style="width:3%;"
+               :showFilterMatchModes="false"
+                    :showClear="false"
+                    :showFilterMenu="false"
+                    :showClearButton="false"
+               >
                 <template #body="slotProps">
                   {{ slotProps.data.kutuadet }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                      placeholder="Search by Surface" />
+                  </template>
               </Column>
-              <Column field="m2" header="M2" bodyStyle="text-align:left;" style="width:2%;">
+              <Column 
+              field="m2" 
+              header="M2" 
+              bodyStyle="text-align:left;" 
+              style="width:3%;"
+              :showFilterMatchModes="false"
+                    :showClear="false"
+                    :showFilterMenu="false"
+                    :showClearButton="false"
+              >
                 <template #body="slotProps">
                   <div style="width:30px;">
-                  {{ slotProps.data.m2 }}
+                    {{ slotProps.data.m2 }}
 
                   </div>
                 </template>
                 <template #footer>
                   {{ formatDecimal(toplam_m2) }}
                 </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
+                      placeholder="Search by Surface"/>
+                  </template>
               </Column>
               <!-- <Column
                     field="adet"
@@ -1329,6 +1366,10 @@ export default {
         boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kenarislem: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        m2: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        kutuadet: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        kasaadet: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+
 
         siparisaciklama: {
           value: null,
