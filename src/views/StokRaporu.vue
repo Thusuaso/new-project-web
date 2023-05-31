@@ -19,49 +19,73 @@
         <h2 class="has-text-centered has-text-weight-bold">STOCK LIST</h2>
         <DataTable :value="uretimKasalar" :rows="30" v-model:filters="filters" filterDisplay="row" selectionMode="single"
           dataKey="id" @row-select="depo_item_sec($event)" v-model:selection="select_depo" groupRowsBy="ebat" sortField="ebat"
-          @filter="stokKasaToplama($event)" rowGroupMode="rowspan" sortMode="many" :sortOrder="1" scrollable
-          scrollHeight="520px" responsiveLayout="scroll">
+          @filter="stokKasaToplama($event)" rowGroupMode="rowspan" sortMode="many" :sortOrder="1" responsiveLayout="scroll" class="isMobile">
           <template #header>
             <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
           </template>
-          <Column field="en" header="En" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false">
+          <Column field="en" header="En" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false"
+                              :showFilterOperator="false"
+                              :showClearButton="false"
+                              :showApplyButton="false"
+                              :showFilterMatchModes="false"
+                              :showAddButton="false" >
             <template style="display: sticky" #body="slotProps">
               {{ slotProps.data.en }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
               <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                 v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-          <Column field="boy" header="Boy" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false">
+          <Column field="boy" header="Boy" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false"
+                              :showFilterOperator="false"
+                              :showClearButton="false"
+                              :showApplyButton="false"
+                              :showFilterMatchModes="false"
+                              :showAddButton="false">
             <template #body="slotProps">
               {{ slotProps.data.boy }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
               <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                 v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-          <Column field="kenar" header="Kenar" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false">
+          <Column field="kenar" header="Kenar" headerStyle="width:12%" bodyStyle="text-align:center" :showFilterMenu="false"
+                              :showFilterOperator="false"
+                              :showClearButton="false"
+                              :showApplyButton="false"
+                              :showFilterMatchModes="false"
+                              :showAddButton="false">
             <template style="display: sticky" #body="slotProps">
               {{ slotProps.data.kenar }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
               <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                 v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-          <Column field="urunAdi" header="Ürün" headerStyle="width:25%" bodyStyle="text-align:center" :showFilterMenu="false">
+          <Column field="urunAdi" header="Ürün" headerStyle="width:25%" bodyStyle="text-align:center" :showFilterMenu="false"
+                              :showFilterOperator="false"
+                              :showClearButton="false"
+                              :showApplyButton="false"
+                              :showFilterMatchModes="false"
+                              :showAddButton="false">
             <template #body="slotProps">
               {{ slotProps.data.urunAdi }}
             </template>
             <template #filter="{ filterModel, filterCallback }">
               <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                 v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
           <Column field="yuzeyIslem" header="Yuzey" headerStyle="width:25%" bodyStyle="text-align:center"
-            :showFilterMenu="false">
+            :showFilterMenu="false"
+                              :showFilterOperator="false"
+                              :showClearButton="false"
+                              :showApplyButton="false"
+                              :showFilterMatchModes="false"
+                              :showAddButton="false">
             <template #body="slotProps">
               <div style="word-break: break-all">
                 {{ slotProps.data.yuzeyIslem }}
@@ -69,7 +93,7 @@
             </template>
             <template #filter="{ filterModel, filterCallback }">
               <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter"
-                :placeholder="`Search by name - `" v-tooltip.top.focus="'Hit enter key to filter'" />
+                 v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
         
             <template #footer> Kasa Toplam : </template>
@@ -521,6 +545,7 @@ export default {
 }
 
 .isMobile {
+  font-size:100%;
 }
 
 .isMobileButton {
@@ -532,6 +557,9 @@ export default {
     height: auto;
     margin-top: -15px;
   }
+  .isMobile {
+  font-size:70%;
+}
 }
 </style>
 

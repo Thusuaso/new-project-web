@@ -23,6 +23,7 @@ import { mapGetters } from 'vuex';
 import LocalService from '@/service/LocalService';
 import yapilacaklarService from '@/service/YapilacaklarService';
 import socket from '@/service/SocketService';
+import { FIRST_LAST_KEYS } from 'element-plus';
 export default {
     computed: {
         ...mapGetters(['yapilacaklarModel','yapilacaklarUserList','__getUserId','yapilacaklarYeniButtonForm'])
@@ -42,10 +43,12 @@ export default {
     },
     localDateService: null,
     created() {
-        if (this.__getUserId == 10) {
-            this.gorev_sahibi_dropdown = true;
-        };
+
         this.localDateService = new LocalService();
+        if (!this.yapilacaklarYeniButtonForm) {
+            this.selectedUser = this.yapilacaklarUserList.find(x => x.id == this.yapilacaklarModel.gorev_veren_id);
+            this.selectedOncelik = this.oncelikler.find(x => x.oncelik == this.yapilacaklarModel.oncelik);
+        }
     },
     methods: {
         yapilacaklarIslem() {
@@ -57,21 +60,13 @@ export default {
         },
         save() {
             this.$store.dispatch('fullscreenLoadingAct', true);
-            if (this.gorev_sahibi_dropdown) {
-                this.yapilacaklarModel.gorev_veren_adi = localStorage.getItem('username');
-                this.yapilacaklarModel.gorev_veren_id = localStorage.getItem('userId');
-                this.yapilacaklarModel.girisTarihi = this.localDateService.getDateString(new Date());
-            } else {
-                this.yapilacaklarModel.gorev_veren_adi = localStorage.getItem('username');
-                this.yapilacaklarModel.gorev_veren_id = localStorage.getItem('userId');
-                this.yapilacaklarModel.girisTarihi = this.localDateService.getDateString(new Date());
-                this.yapilacaklarModel.gorev_sahibi_adi = localStorage.getItem('username');
-                this.yapilacaklarModel.gorev_sahibi_id = localStorage.getItem('userId');
-            }
+
+            this.yapilacaklarModel.gorev_veren_adi = localStorage.getItem('username');
+            this.yapilacaklarModel.gorev_veren_id = localStorage.getItem('userId');
+            this.yapilacaklarModel.girisTarihi = this.localDateService.getDateString(new Date());
             yapilacaklarService.getYapilacaklarModel().then(model => {
                 this.selectedOncelik = {};
                 this.$store.dispatch('yapilacaklar_model_load_act', model);
-
             })
             yapilacaklarService.save(this.yapilacaklarModel).then(status => {
                 if (status) {
@@ -82,13 +77,25 @@ export default {
                 } else {
                     this.$store.dispatch('fullscreenLoadingAct', false);
                     this.$toast.add({ severity: 'error', detail: 'Kaydetme Başarısız', life: 3000 });
-
-
                 }
             })
         },
         update() {
+            this.$store.dispatch('fullscreenLoadingAct', true);
 
+            yapilacaklarService.update(this.yapilacaklarModel).then(data => {
+                if (data.status) {
+                    socket.siparis.emit('get_yapilacaklar_list_event');
+
+                    this.$toast.add({ severity: 'success', detail: 'Başarıyla Güncellendi', life: 3000 });
+                    this.$store.dispatch('fullscreenLoadingAct', false);
+
+                } else {
+                    this.$toast.add({ severity: 'error', detail: 'Güncelleme Başarısız', life: 3000 });
+                    this.$store.dispatch('fullscreenLoadingAct', false);
+
+                }
+            })
         },
         userSelected(event) {
             this.yapilacaklarModel.gorev_sahibi_adi = event.value.kullanici;

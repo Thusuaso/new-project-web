@@ -562,8 +562,6 @@ export default {
         { id: 6, name: "BGP Network" },
         { id: 7, name: "Ziyaret" },
         { id: 8, name: "Stone Add" },
-
-
       ],
       selectTeklifYeri: null,
       teklifYeriList: [

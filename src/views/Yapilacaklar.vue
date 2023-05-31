@@ -6,9 +6,12 @@
                 :value="yapilacaklarYapilmadiList" 
                 rowGroupMode="rowspan" 
                 groupRowsBy="girisTarihi"
-                :sortField="['girisTarihi', 'oncelik']"
+                sortField="girisTarihi"
                 :sortOrder="-1"
                 v-if="yapilacaklarYapilmadiList.length > 0"
+                v-model:selection="selectedYapilacaklar"
+                selectionMode="single"
+                @row-click="yapilacaklarSelected($event)"
             >   
                 <template #header>
                     Yapilacaklar
@@ -25,11 +28,8 @@
                 </Column>
                 <Column header="Sil">
                     <template #body="slotProps" >
-                        <Button v-if="((slotProps.data.gorev_sahibi_adi == slotProps.data.gorev_veren_adi) && slotProps.data.gorev_veren_id == userId) ? true:false" 
-                        class="btn btn-danger" label="Sil" @click="yapilacaklarDelete(slotProps.data.id)"></Button>
-                        <Button v-if="slotProps.data.userStatus" 
+                        <Button 
                             class="btn btn-danger" label="Sil" @click="yapilacaklarDelete(slotProps.data.id)"></Button>
-                        
                     </template>
                 </Column>
             </DataTable>
@@ -39,7 +39,7 @@
                 :value="yapilacaklarYapildiList" 
                 rowGroupMode="rowspan" 
                 groupRowsBy="girisTarihi"
-                :sortField="['girisTarihi', 'oncelik']"
+                sortField="girisTarihi"
                 :sortOrder="-1"
                 v-if="yapilacaklarYapildiList.length > 0"
             >
@@ -90,12 +90,20 @@ export default {
         return {
             yapilacaklar_dialog_form: false,
             userId: null,
+            selectedYapilacaklar: {},
+            
         }
     },
     created() {
         this.userId = localStorage.getItem('userId');
     },
     methods: {
+        yapilacaklarSelected(event) {
+            this.$store.dispatch('yapilacaklar_model_load_act', event.data);
+            this.yapilacaklar_dialog_form = true;
+            this.$store.dispatch('yapilacaklar_yeni_button_form_load_act', false);
+
+        },
         yapilacaklarDelete(id) {
             yapilacaklarService.delete(id).then(data => {
                 if (data.status) {

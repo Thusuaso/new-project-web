@@ -19,14 +19,15 @@ const yapilacaklarService = {
         return axios.post('/yapilacaklar/save', data).then(res => res.data);
     },
     update(data) {
-        return axios.put('/yapilacaklar/update', data).then(res => res.data);
+        return axios.put('/yapilacaklar/save', data).then(res => res.data);
     },
     setYapildiStatus(data) {
         return axios.post('/yapilacaklar/yapildi',data).then(res => res.data);
     },
     delete(id) {
         return axios.get(`/yapilacaklar/delete/${id}`).then(res => res.data);
-    }
+    },
+
 
 }
 export default yapilacaklarService;
