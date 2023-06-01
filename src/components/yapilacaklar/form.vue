@@ -23,7 +23,6 @@ import { mapGetters } from 'vuex';
 import LocalService from '@/service/LocalService';
 import yapilacaklarService from '@/service/YapilacaklarService';
 import socket from '@/service/SocketService';
-import { FIRST_LAST_KEYS } from 'element-plus';
 export default {
     computed: {
         ...mapGetters(['yapilacaklarModel','yapilacaklarUserList','__getUserId','yapilacaklarYeniButtonForm'])

@@ -170,8 +170,6 @@
     <div class="column">
       <DataTable
         :value="aylik_liste"
-        :scrollable="true"
-        scrollHeight="420px"
         v-model:filters="filters"
         filterDisplay="menu"
         dataKey="id"
@@ -184,6 +182,9 @@
             </div>
           </div>
         </template>
+        <Column field="yukleme_tarihi" header="Yükleme Tarihi">
+
+        </Column>
         <Column
           field="siparis_no"
           header="Sipariş Numarası"

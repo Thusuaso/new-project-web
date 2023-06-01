@@ -62,7 +62,7 @@
 
         <div class="col-6" style="margin-top:10px;">
           <span class="p-float-label">
-            <InputText id="not" type="text" :disabled="is_form" v-model="thmusteri.aciklama" />
+            <Textarea id="not" v-model="thmusteri.aciklama" rows="5" cols="45" :disabled="is_form"/>
             <label for="not">Not</label>
           </span>
         </div>
