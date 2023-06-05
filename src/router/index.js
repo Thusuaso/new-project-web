@@ -7,7 +7,7 @@ import tedarikciService from "../service/TedarikciService";
 import siparisService from "../service/SiparisService";
 import raporService from "@/service/RaporService";
 import yapilacaklarService from '@/service/YapilacaklarService.js';
-
+import maliyetHataRaporService from '@/service/MaliyetHataRaporService';
 
 const routes = [
   {
@@ -744,9 +744,26 @@ const routes = [
     },
   },
   {
+    path: '/raporlar/maliyet/hatalar',
+    component: () => import("@/views/MaliyetHatalari.vue"),
+    beforeEnter(to, from, next) {
+      store.dispatch("fullscreenLoadingAct",true);
+      maliyetHataRaporService.getList().then(data => {
+        store.dispatch('maliyet_hata_list_load_act', data);
+        store.dispatch("fullscreenLoadingAct",false);
+        next();
+        
+      })
+    }
+  },
+  {
     path: '/raporlar/yapilacaklar',
     component: () => import("@/views/YapilacaklarAll.vue"),
-  }  
+  },
+  {
+    path: '/musteriBazinda',
+    component:()=>import('@/components/musteriraporlari/musteriBazinda.vue')
+  }
 ]
 
 const router = createRouter({

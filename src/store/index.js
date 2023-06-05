@@ -41,6 +41,7 @@ import mekmerDisFatura from "./modules/mekmerDisFatura";
 import siparis_masraflar_mail_control from "./modules/siparis_masraflar_mail_control";
 import logs from "./modules/logs";
 import yapilacaklar from './modules/yapilacaklar';
+import maliyet from './modules/maliyet';
 // import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
@@ -86,7 +87,8 @@ export default createStore({
     efestahsilat,
     mekmerDisFatura,
     siparis_masraflar_mail_control,
-    yapilacaklar
+    yapilacaklar,
+    maliyet
 
   },
   // plugins: [createPersistedState()],

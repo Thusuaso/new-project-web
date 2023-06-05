@@ -141,7 +141,7 @@
 
           <Column
             field="BuYilUretim"
-            header="               2022                                         Uretim    -    Sevkiyat"
+            header="               2023                                         Uretim    -    Sevkiyat"
             headerStyle="width:100px;white-space:pre-wrap;"
             bodyStyle="text-align:center"
           >
@@ -159,7 +159,7 @@
 
           <Column
             field="GecenYil"
-            header="2021 - Ddp"
+            header="2022 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -170,7 +170,7 @@
           </Column>
           <Column
             field="OncekiYil"
-            header="2020 - Ddp"
+            header="2021 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -182,7 +182,7 @@
 
           <Column
             field="OnDokuzYili"
-            header="2019 - Ddp"
+            header="2020 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -194,7 +194,7 @@
 
           <Column
             field="OnSekizYili"
-            header="2018 - Ddp"
+            header="2019 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -205,7 +205,7 @@
           </Column>
           <Column
             field="OnYediYili"
-            header="2017 - Ddp"
+            header="2018 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -216,7 +216,7 @@
           </Column>
           <Column
             field="OnAltiYili"
-            header="2016 - Ddp"
+            header="2017 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -227,7 +227,7 @@
           </Column>
           <Column
             field="OnBesYili"
-            header="2015 - Ddp"
+            header="2016 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -238,7 +238,7 @@
           </Column>
           <Column
             field="OnDortYili"
-            header="2014 - Ddp"
+            header="2015 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -249,7 +249,7 @@
           </Column>
           <Column
             field="OnUcYili"
-            header="2013 - Ddp"
+            header="2014 - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"
@@ -260,7 +260,7 @@
           </Column>
           <Column
             field="OnUcYiliOncesi"
-            header="2013 Öncesi - Ddp"
+            header="2013 ve Öncesi - Ddp"
             headerStyle="width:60px;"
             bodyStyle="text-align:center"
             style="flex-grow: 1; flex-basis: 100px"

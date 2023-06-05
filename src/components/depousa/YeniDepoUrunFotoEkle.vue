@@ -28,7 +28,6 @@ export default {
             let fotoList = [];
             for (let key in event.files) {
                 if (event.files[key].name.split('.')[1] != 'jpg') {
-
                     this.fileControl = true
                     this.$toast.add({ severity: 'error', summary: 'Fotoğraf Kayıt', detail: 'Lütfen dosya uzantısını .jpg olarak değiştirerek deneyiniz.', life: 3000 })
                     break;
@@ -36,9 +35,7 @@ export default {
             }
             if (!this.fileControl) {
                 for (let key in event.files) {
-
                     fotoList.push({ 'productId': this.productId, 'image': event.files[key].name, 'webp': event.files[key].name });
-
                 }
             }
 

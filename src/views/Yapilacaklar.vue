@@ -7,7 +7,7 @@
                 rowGroupMode="rowspan" 
                 groupRowsBy="girisTarihi"
                 sortField="girisTarihi"
-                :sortOrder="-1"
+                :sortOrder="1"
                 v-if="yapilacaklarYapilmadiList.length > 0"
                 v-model:selection="selectedYapilacaklar"
                 selectionMode="single"
@@ -40,7 +40,7 @@
                 rowGroupMode="rowspan" 
                 groupRowsBy="girisTarihi"
                 sortField="girisTarihi"
-                :sortOrder="-1"
+                :sortOrder="1"
                 v-if="yapilacaklarYapildiList.length > 0"
             >
             <template #header>

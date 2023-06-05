@@ -17,6 +17,9 @@
       <TabPanel header="Üretim ve Sevkiyat Raporu">
           <yuklemeveSevkiyatRaporu />
       </TabPanel>
+      <TabPanel header="Müşteriler Raporları">
+          <musteriRaporlari />
+      </TabPanel>
     </TabView>
   </section>
 </template>
@@ -26,6 +29,8 @@ import musteriBazindaUretim from "../components/newyuklemeraporlari/musteriBazin
 import byMarketingYukleme from "../components/newyuklemeraporlari/byMarketingYukleme";
 import yuklemeveSevkiyatRaporu from '../components/newyuklemeraporlari/yuklemeveSevkiyatRaporu';
 import yillikPoBazindaSiparisler from '../components/newyuklemeraporlari/yillikPoBazindaSiparisler';
+import musteriRaporlari from '../components/musteriraporlari/musteriBazinda';
+
 import { mapGetters } from "vuex";
 
 export default {
@@ -33,7 +38,8 @@ export default {
     musteriBazindaUretim,
     byMarketingYukleme,
     yuklemeveSevkiyatRaporu,
-    yillikPoBazindaSiparisler
+    yillikPoBazindaSiparisler,
+    musteriRaporlari
   },
   data() {
     return {
