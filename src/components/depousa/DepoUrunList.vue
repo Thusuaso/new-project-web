@@ -114,12 +114,12 @@
           position="top"
         >
 
-                  <DepoUrunForm
-                    :depostock="depostock"
-                    :urunDetay="urunDetay"
-                    :keyList="keyList"
-                    :sliceFotoList="sliceFotoList"
-                  />
+          <DepoUrunForm
+            :depostock="depostock"
+            :urunDetay="urunDetay"
+            :keyList="keyList"
+            :sliceFotoList="sliceFotoList"
+          />
 
         </Dialog>
       </div>
