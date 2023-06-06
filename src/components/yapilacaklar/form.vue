@@ -63,10 +63,7 @@ export default {
             this.yapilacaklarModel.gorev_veren_adi = localStorage.getItem('username');
             this.yapilacaklarModel.gorev_veren_id = localStorage.getItem('userId');
             this.yapilacaklarModel.girisTarihi = this.localDateService.getDateString(new Date());
-            yapilacaklarService.getYapilacaklarModel().then(model => {
-                this.selectedOncelik = {};
-                this.$store.dispatch('yapilacaklar_model_load_act', model);
-            })
+            
             yapilacaklarService.save(this.yapilacaklarModel).then(status => {
                 if (status) {
                     socket.siparis.emit('get_yapilacaklar_list_event')
@@ -77,6 +74,10 @@ export default {
                     this.$store.dispatch('fullscreenLoadingAct', false);
                     this.$toast.add({ severity: 'error', detail: 'Kaydetme Başarısız', life: 3000 });
                 }
+            })
+            yapilacaklarService.getYapilacaklarModel().then(model => {
+                this.selectedOncelik = {};
+                this.$store.dispatch('yapilacaklar_model_load_act', model);
             })
         },
         update() {

@@ -1,5 +1,4 @@
 <template>
-  <section>
     <div class="columns is-multiline is-centered">
       <div class="column is-1">
         <span style="margin-right:10px;">Hepsi</span>
@@ -14,7 +13,6 @@
           placeholder="Select a Year"
         />
       </div>
-
       <div class="column is-2">
         <div class="columns">
           <div class="column">
@@ -57,278 +55,276 @@
           label="Excell"
         />
       </div>
-
     </div>
-    <div class="columns is-centered">
-      <div class="column is-12">
-        <DataTable
-          v-model:filters="filters"
-          :value="stok_rapor_list_all"
-          :paginator="true"
-          :rows="15"
-          ref="sevkiyat_tablo"
-          @row-select="isSevkiyatListSelected"
-          selectionMode="single"
-          filterDisplay="menu"
-          @filter="isSevkiyatList"
+
+    <DataTable
+      v-model:filters="filters"
+      :value="stok_rapor_list_all"
+      :paginator="true"
+      :rows="15"
+      ref="sevkiyat_tablo"
+      @row-select="isSevkiyatListSelected"
+      selectionMode="single"
+      filterDisplay="menu"
+      @filter="isSevkiyatList"
+      tableStyle="margin-left:-48px"
+    >
+      <Column
+        field="tarih"
+        header="Tarih"
+        bodyStyle="text-align:center"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data.tarih }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Date"
+          />
+        </template>
+      </Column>
+      <Column field="musteriadi" header="Kime" >
+        <template #body="slotProps">
+          {{ slotProps.data.musteriadi }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Customer"
+          />
+        </template>
+      </Column>
+      <Column field="kimden" header="Kimden">
+        <template #body="slotProps">
+          {{ slotProps.data.kimden }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Representative"
+          />
+        </template>
+      </Column>
+
+      <Column
+        field="urunKartID"
+        header="Ürün Kart Id"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data.urunKartID }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Product Id"
+          />
+        </template>
+      </Column>
+      <Column field="kategori" header="Kategori" >
+        <template #body="slotProps">
+          {{ slotProps.data.kategori }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Category"
+          />
+        </template>
+      </Column>
+      <Column
+        field="kasano"
+        header="No"
+        bodyStyle="text-align:center"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data.kasano }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Crate"
+          />
+        </template>
+      </Column>
+      <Column field="urunadi" header="Ürün">
+        <template #body="slotProps">
+          {{ slotProps.data.urunadi }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Product"
+          />
+        </template>
+      </Column>
+      <Column field="ocakadi" header="Ocak" >
+        <template #body="slotProps">
+          {{ slotProps.data.ocakadi }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Quarry"
+          />
+        </template>
+      </Column>
+      <Column field="yuzeyadi" header="İşlem">
+        <template #body="slotProps">
+          {{ slotProps.data.yuzeyadi }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Surface"
+          />
+        </template>
+      </Column>
+      <Column
+        field="en"
+        header="E"
+        bodyStyle="text-align:center"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data.en }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Width"
+          />
+        </template>
+      </Column>
+      <Column
+        field="boy"
+        header="B"
+        bodyStyle="text-align:center"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data.boy }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Height"
+          />
+        </template>
+      </Column>
+      <Column
+        field="kenar"
+        header="K"
+        bodyStyle="text-align:center"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data.kenar }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Edge"
+          />
+        </template>
+      </Column>
+      <Column
+          field="kutuadet"
+          header="Kutu"
+          bodyStyle="text-align:center"
         >
-          <Column
-            field="tarih"
-            header="Tarih"
-            bodyStyle="text-align:center"
-            headerStyle="width:14%"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.tarih }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Date"
-              />
-            </template>
-          </Column>
-          <Column field="musteriadi" header="Kime" headerStyle="width:15%">
-            <template #body="slotProps">
-              {{ slotProps.data.musteriadi }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Customer"
-              />
-            </template>
-          </Column>
-          <Column field="kimden" header="Kimden" headerStyle="width:14%">
-            <template #body="slotProps">
-              {{ slotProps.data.kimden }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Representative"
-              />
-            </template>
-          </Column>
+          <template #body="slotProps">
+            {{ slotProps.data.kutuadet }}
+          </template>
+        </Column>
+      <Column
+        field="adet"
+        header="K.Adet"
+        bodyStyle="text-align:center"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data.adet }}
+        </template>
+      </Column>
 
-          <Column
-            field="urunKartID"
-            header="Ürün Kart Id"
-            headerStyle="width:14%"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.urunKartID }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Product Id"
-              />
-            </template>
-          </Column>
-          <Column field="kategori" header="Kategori" headerStyle="width:14%">
-            <template #body="slotProps">
-              {{ slotProps.data.kategori }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Category"
-              />
-            </template>
-          </Column>
-          <Column
-            field="kasano"
-            header="No"
-            headerStyle="width:13%"
-            bodyStyle="text-align:center"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.kasano }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Crate"
-              />
-            </template>
-          </Column>
-          <Column field="urunadi" header="Ürün" headerStyle="width:15%">
-            <template #body="slotProps">
-              {{ slotProps.data.urunadi }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Product"
-              />
-            </template>
-          </Column>
-          <Column field="ocakadi" header="Ocak" headerStyle="width:15%">
-            <template #body="slotProps">
-              {{ slotProps.data.ocakadi }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Quarry"
-              />
-            </template>
-          </Column>
-          <Column field="yuzeyadi" header="İşlem" headerStyle="width:27%">
-            <template #body="slotProps">
-              {{ slotProps.data.yuzeyadi }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Surface"
-              />
-            </template>
-          </Column>
-          <Column
-            field="en"
-            header="E"
-            bodyStyle="text-align:center"
-            headerStyle="width:11%"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.en }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Width"
-              />
-            </template>
-          </Column>
-          <Column
-            field="boy"
-            header="B"
-            bodyStyle="text-align:center"
-            headerStyle="width:11%"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.boy }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Height"
-              />
-            </template>
-          </Column>
-          <Column
-            field="kenar"
-            header="K"
-            bodyStyle="text-align:center"
-            headerStyle="width:10%"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.kenar }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Edge"
-              />
-            </template>
-          </Column>
-          <Column
-            field="adet"
-            header="K.Adet"
-            bodyStyle="text-align:center"
-            headerStyle="width:11%"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.adet }}
-            </template>
-          </Column>
+      <Column
+        field="miktar"
+        header="Miktar"
+        bodyStyle="text-align:center"
+      >
+        <template #body="slotProps">
+          {{ formatDecimal(slotProps.data.miktar) }}
+        </template>
+        <template #footer>
+          {{ formatDecimal(miktar_toplam) }}
+        </template>
+      </Column>
+      <Column
+        field="birimadi"
+        header="Birim"
+        bodyStyle="text-align:center"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data.birimadi }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by Unit"
+          />
+        </template>
+      </Column>
+      <Column field="siparisno" header="Po">
+        <template #body="slotProps">
+          {{ slotProps.data.siparisno }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText
+            type="text"
+            v-model="filterModel.value"
+            class="p-column-filter"
+            placeholder="Search by PO"
+          />
+        </template>
+      </Column>
+      <Column field="birimfiyat" header="B.Fiyat">
+        <template #body="slotProps">
+          {{ formatDecimal(slotProps.data.birimfiyat) }}
+        </template>
+      </Column>
+      <Column field="toplam" header="Toplam">
+        <template #body="slotProps">
+          {{ slotProps.data.toplam }}
+        </template>
+        <template #footer>
+          {{ formatPrice(tutar_toplam) }}
+        </template>
+      </Column>
+    </DataTable>
 
-          <Column
-            field="miktar"
-            header="Miktar"
-            bodyStyle="text-align:center"
-            headerStyle="width:13%"
-          >
-            <template #body="slotProps">
-              {{ formatDecimal(slotProps.data.miktar) }}
-            </template>
-            <template #footer>
-              {{ formatDecimal(miktar_toplam) }}
-            </template>
-          </Column>
-          <Column
-            field="birimadi"
-            header="Birim"
-            bodyStyle="text-align:center"
-            headerStyle="width:11%"
-          >
-            <template #body="slotProps">
-              {{ slotProps.data.birimadi }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by Unit"
-              />
-            </template>
-          </Column>
-          <Column field="siparisno" header="Po" headerStyle="width:15%">
-            <template #body="slotProps">
-              {{ slotProps.data.siparisno }}
-            </template>
-            <template #filter="{ filterModel }">
-              <InputText
-                type="text"
-                v-model="filterModel.value"
-                class="p-column-filter"
-                placeholder="Search by PO"
-              />
-            </template>
-          </Column>
-          <Column field="birimfiyat" header="B.Fiyat" headerStyle="width:11%">
-            <template #body="slotProps">
-              {{ formatDecimal(slotProps.data.birimfiyat) }}
-            </template>
-          </Column>
-          <Column field="toplam" header="Toplam" headerStyle="width:16%">
-            <template #body="slotProps">
-              {{ slotProps.data.toplam }}
-            </template>
-            <template #footer>
-              {{ formatPrice(tutar_toplam) }}
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-    </div>
 
     <div>
       <Dialog
@@ -410,7 +406,6 @@
     </div>
 
     <UrunKartMenu @urunKartSelect="urunkart_change_event($event)" />
-  </section>
 </template>
 <script>
 import service from "../service/RaporService";
