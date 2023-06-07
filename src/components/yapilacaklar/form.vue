@@ -12,7 +12,6 @@
         <div class="col">
             <Dropdown v-model="selectedOncelik" :options="oncelikler" optionLabel="oncelik" placeholder="Önceliklendirme" class="w-full md:w-14rem" @change="oncelikSelected($event)"/>
         </div>
-        
     </div>
     <div class="row m-auto mt-3">
         <Button label="Kaydet" @click="yapilacaklarIslem" class="btn btn-success"></Button>
@@ -63,7 +62,9 @@ export default {
             this.yapilacaklarModel.gorev_veren_adi = localStorage.getItem('username');
             this.yapilacaklarModel.gorev_veren_id = localStorage.getItem('userId');
             this.yapilacaklarModel.girisTarihi = this.localDateService.getDateString(new Date());
-            
+            this.yapilacaklarModel.gorev_sahibi_adi = this.selectedUser.kullanici;
+            this.yapilacaklarModel.gorev_sahibi_id = this.selectedUser.id;
+
             yapilacaklarService.save(this.yapilacaklarModel).then(status => {
                 if (status) {
                     socket.siparis.emit('get_yapilacaklar_list_event')
