@@ -105,14 +105,17 @@ export default {
 
         },
         yapilacaklarDelete(id) {
-            yapilacaklarService.delete(id).then(data => {
-                if (data.status) {
-                    socket.siparis.emit('get_yapilacaklar_list_event')
-                    this.$toast.add({ severity: 'success', detail: 'Başarıyla Silindi', life: 3000 });
-                } else {
-                    this.$toast.add({ severity: 'error', detail: 'Silme Başarısız', life: 3000 });
-                }
-            })
+            if (confirm('Are you sure you want to delete')) {
+                 yapilacaklarService.delete(id).then(data => {
+                    if (data.status) {
+                        socket.siparis.emit('get_yapilacaklar_list_event')
+                        this.$toast.add({ severity: 'success', detail: 'Başarıyla Silindi', life: 3000 });
+                    } else {
+                        this.$toast.add({ severity: 'error', detail: 'Silme Başarısız', life: 3000 });
+                    }
+                })
+            }
+           
         },
         yapilacaklarNewButton() {
             this.$store.dispatch('yapilacaklar_yeni_button_form_load_act', true);
