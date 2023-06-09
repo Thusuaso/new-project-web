@@ -458,7 +458,7 @@ export default {
                 this.siparis_miktar = 0;
                 this.kalan = 0;
                 this.$store.dispatch('fullscreenLoadingAct', true)
-
+                this.is_sevk_disabled = false;
 
 
               }
