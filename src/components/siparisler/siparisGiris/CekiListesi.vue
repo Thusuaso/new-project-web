@@ -169,6 +169,9 @@
             <template #body="slotProps">
               {{ formatDecimal(slotProps.data.tonaj) }}
             </template>
+            <template #footer>
+              {{ formatDecimal(toplam_tonaj) }}
+            </template>
           </Column>
       </DataTable>
     </div>
@@ -183,6 +186,7 @@ export default {
   components: {},
   data() {
     return {
+      toplam_tonaj: 0,
       selectCeki: null,
       cekiListesi: null,
       toplam_miktar: 0,
@@ -221,6 +225,7 @@ export default {
 
         for (let key in this.cekiListesi) {
           this.toplam_miktar += this.cekiListesi[key].miktar;
+          this.toplam_tonaj += this.cekiListesi[key].tonaj;
         }
       });
     }
