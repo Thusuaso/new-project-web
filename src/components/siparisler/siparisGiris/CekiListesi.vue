@@ -151,13 +151,23 @@
           </template>
         </Column>
         <Column
-            field="kasaOlcusu"
-            header="Olcu"
+          field="kasaOlcusu"
+          header="Olcu"
+          headerStyle="width:5%;"
+          bodyStyle="text-align:left;"
+        >
+          <template #body="slotProps">
+            {{ slotProps.data.kasaOlcusu }}
+          </template>
+        </Column>
+        <Column
+            field="tonaj"
+            header="Tonaj"
             headerStyle="width:5%;"
             bodyStyle="text-align:left;"
           >
             <template #body="slotProps">
-              {{ slotProps.data.kasaOlcusu }}
+              {{ formatDecimal(slotProps.data.tonaj) }}
             </template>
           </Column>
       </DataTable>
