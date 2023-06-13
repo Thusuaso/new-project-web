@@ -6,8 +6,6 @@
                 :value="yapilacaklarYapilmadiList" 
                 rowGroupMode="rowspan" 
                 groupRowsBy="girisTarihi"
-                sortField="girisTarihi"
-                :sortOrder="1"
                 v-if="yapilacaklarYapilmadiList.length > 0"
                 v-model:selection="selectedYapilacaklar"
                 selectionMode="single"
@@ -18,7 +16,13 @@
                 </template>
                 <Column field="girisTarihi" header="Giriş Tarihi"></Column>
                 <Column field="gorev_sahibi_adi" header="Görev Sahibi"></Column>
-                <Column field="yapilacak" header="Görev"></Column>
+                <Column field="yapilacak" header="Görev">
+                    <template #body="slotProps">
+                        <div :style="{'backgroundColor':slotProps.data.gorev_veren_id == 10 ? 'yellow':''}">
+                            {{ slotProps.data.yapilacak }}
+                        </div>
+                    </template>
+                </Column>
                 <Column field="gorev_veren_adi" header="Görevi Veren"></Column>
                 <Column field="oncelik" header="Öncelik"></Column>
                 <Column header="Durum">
@@ -39,8 +43,6 @@
                 :value="yapilacaklarYapildiList" 
                 rowGroupMode="rowspan" 
                 groupRowsBy="girisTarihi"
-                sortField="girisTarihi"
-                :sortOrder="1"
                 v-if="yapilacaklarYapildiList.length > 0"
             >
             <template #header>
