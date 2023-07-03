@@ -437,7 +437,7 @@ export default {
       filters: {
         musteriAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         siparisNo: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        urunAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        urunAdi: { value: null, matchMode: FilterMatchMode.CONTAINS },
         en: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -493,7 +493,7 @@ export default {
       this.filters= {
         musteriAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         siparisNo: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        urunAdi: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        urunAdi: { value: null, matchMode: FilterMatchMode.CONTAINS },
         en: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         boy: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         kenar: { value: null, matchMode: FilterMatchMode.STARTS_WITH },

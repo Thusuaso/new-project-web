@@ -168,6 +168,26 @@
   <Dialog v-model:visible="is_tahsilat_form" v-model:header="tahsilat_form_baslik" maximizable :modal="true">
     <Tahsilat />
   </Dialog>
+
+  <div>
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Toplam Sipariş</th>
+        <th scope="col">Gelen Bedel</th>
+        <th scope="col">Kalan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ formatPrice(finans_ayrinti_siparis_total) }}</td>
+        <td>{{ formatPrice(finans_ayrinti_odenen_total) }}</td>
+        <td>{{ formatPrice(finans_ayrinti_siparis_total - finans_ayrinti_odenen_total) }}</td>
+      </tr>
+    </tbody>
+  </table>
+    
+  </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -214,6 +234,7 @@ export default {
       "finans_odeme_secim_toplam",
       "finans_odeme_secim_list",
       "servis_adres",
+      "finans_ayrinti_odenen_total"
     ]),
   },
   methods: {

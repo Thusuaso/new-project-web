@@ -346,7 +346,6 @@ export default {
         this.tedarikciList = data.tedarikciliste;
       });
   },
-
   created() {
     this.localService = new LocalService();
 
@@ -547,8 +546,8 @@ export default {
     },
     faturaOtomatikDosyaGonderme(event) {
 
-      this.urunList[0].kullaniciAdi = this.$store.getters.__getUsername;
-      const evrak = this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
+          this.urunList[0].kullaniciAdi = this.$store.getters.__getUsername;
+          const evrak = this.tedarikci.tedarikciadi + "-" + this.siparisNo + ".pdf";
           fileService.faturaDosyaGonder(event, 3, evrak).then((data) => {
             console.log(data) 
             const bilgi = {

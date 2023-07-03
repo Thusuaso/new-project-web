@@ -146,7 +146,7 @@ const SeleksiyonService = {
   },
   setIcSiparisKayit(item) {
     return axios
-      .post("islemler/tedarikci/icsiparisKaydet", item)
+      .post("/islemler/tedarikci/icsiparisKaydet", item)
       .then((res) => res.data);
   },
   setIcSiparisDosyaKayit(icsiparis) {

@@ -19,7 +19,8 @@ const state = {
   finans_odeme_secim_toplam: 0,
   finans_po_list: [],
   maya_gelen_bedeller_sip_list: [],
-  maya_gelen_bedeller_num_list:[]
+  maya_gelen_bedeller_num_list: [],
+  finans_ayrinti_odenen_total: 0,
   
 };
 
@@ -145,14 +146,20 @@ const mutations = {
     state.finans_ayrinti_siparis_total = 0;
     state.finans_ayrinti_siparis_pesinat = 0;
     state.finans_ayrinti_siparis_odenen_tutar = 0;
-    var total = 0;
+    state.finans_ayrinti_odenen_total = 0;
+    // var total = 0;
     for (let key in state.finans_ayrinti_list) {
       const item = state.finans_ayrinti_list[key];
 
-      if (item.tip != "Yükleme") total = 0;
-      else total = item.siparis_total;
+      // if (item.tip != "Yükleme") total = 0;
+      // else total = item.siparis_total;
 
-      state.finans_ayrinti_siparis_total += total;
+
+
+      state.finans_ayrinti_siparis_total += item.siparis_total;
+      state.finans_ayrinti_odenen_total += item.odenen_tutar;
+
+
       state.finans_ayrinti_siparis_pesinat += item.pesinat;
       if (item.tip == "Üretim") {
         state.finans_ayrinti_kalan_toplam += item.kalan + item.odenen_tutar;
@@ -194,6 +201,9 @@ const mutations = {
 };
 
 const getters = {
+  finans_ayrinti_odenen_total(state) {
+    return state.finans_ayrinti_odenen_total;
+  },
   konteyner_ana_list_all(state) {
     return state.konteyner_ana_list_all;
   },
